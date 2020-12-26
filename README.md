@@ -10,6 +10,6 @@
 如果这个项目对您有很大帮助，并且您希望支持该项目的开发和维护，请随时扫描一下二维码进行捐赠。非常感谢您的捐款，谢谢！
 
 <center class="half">
-    <img src="images\Alipay.png" alt="Alipay" width="300" />
-    <img src="images\WeChat.png" alt="WeChat" width="300" />
+    <img src="images\Alipay.png" alt="Alipay" width="300" /><img src="images\WeChat.png" alt="WeChat" width="300" />
 </center>
+
