@@ -1,0 +1,193 @@
+﻿using Core.aria2cNet.client;
+using System;
+using System.Diagnostics;
+using System.IO;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+
+namespace Core.aria2cNet.server
+{
+    public static class AriaServer
+    {
+        public static int ListenPort; // 服务器端口
+        private static Process Server;
+
+        /// <summary>
+        /// 启动aria2c服务器
+        /// </summary>
+        /// <param name="listenPort"></param>
+        /// <param name="output"></param>
+        /// <param name="window"></param>
+        /// <returns></returns>
+        public static async Task<bool> StartServerAsync(AriaConfig config, TextBox output = null, Window window = null)
+        {
+            ListenPort = config.ListenPort;
+            string ariaDir = Environment.CurrentDirectory + "\\aria\\"; // aria目录
+            string sessionFile = ariaDir + "aira.session.gz"; // 会话文件
+            string logFile = ariaDir + "aira.log"; // 日志文件
+            int saveSessionInterval = 30; // 自动保存会话文件的时间间隔
+
+            // --enable-rpc --rpc-listen-all=true --rpc-allow-origin-all=true --continue=true
+            await Task.Run(() =>
+            {
+                // 创建目录和文件
+                if (!Directory.Exists(ariaDir))
+                {
+                    Directory.CreateDirectory(ariaDir);
+                }
+                if (!File.Exists(sessionFile))
+                {
+                    var stream = File.Create(sessionFile);
+                    stream.Close();
+                }
+                if (!File.Exists(logFile))
+                {
+                    var stream = File.Create(logFile);
+                    stream.Close();
+                }
+                else
+                {
+                    // 日志文件存在，如果大于100M，则删除
+                    try
+                    {
+                        var stream = File.Open(logFile, FileMode.Open);
+                        if (stream.Length >= 1024 * 1024 * 1024L)
+                        {
+                            stream.SetLength(0);
+                        }
+                        stream.Close();
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("StartServerAsync()发生其他异常: {0}", e);
+                    }
+                }
+
+                ExcuteProcess("aria2c.exe",
+                    $"--enable-rpc --rpc-listen-all=true --rpc-allow-origin-all=true " +
+                    $"--rpc-listen-port={config.ListenPort} " +
+                    $"--rpc-secret={config.Token} " +
+                    $"--input-file=\"{sessionFile}\" --save-session=\"{sessionFile}\" " +
+                    $"--save-session-interval={saveSessionInterval} " +
+                    $"--log=\"{logFile}\" --log-level={config.LogLevel.ToString("G").ToLower()} " + // log-level: 'debug' 'info' 'notice' 'warn' 'error'
+                    $"--max-concurrent-downloads={config.MaxConcurrentDownloads} " + // 最大同时下载数(任务数)
+                    $"--max-connection-per-server={config.MaxConnectionPerServer} " + // 同服务器连接数
+                    $"--split={config.Split} " + // 单文件最大线程数
+                    $"--min-split-size={config.MinSplitSize}M " + // 最小文件分片大小, 下载线程数上限取决于能分出多少片, 对于小文件重要
+                    $"--max-overall-download-limit={config.MaxOverallDownloadLimit} " + // 下载速度限制
+                    $"--max-download-limit={config.MaxDownloadLimit} " + // 下载单文件速度限制
+                    $"--max-overall-upload-limit={config.MaxOverallUploadLimit} " + // 上传速度限制
+                    $"--max-upload-limit={config.MaxUploadLimit} " + // 上传单文件速度限制
+                    $"--continue {config.ContinueDownload.ToString().ToLower()} " + // 断点续传
+                    $"--allow-overwrite true " + // 允许复写文件
+                    $"--file-allocation={config.FileAllocation.ToString("G").ToLower()} " + // 文件预分配, none prealloc
+                    "",
+                    null, (s, e) =>
+                    {
+                        if (e.Data == null || e.Data == "" || e.Data.Replace(" ", "") == "") { return; }
+                        Console.WriteLine(e.Data);
+                        if (output != null && window != null)
+                        {
+                            window.Dispatcher.Invoke(new Action(() =>
+                            {
+                                output.Text += e.Data + "\n";
+                                output.ScrollToEnd();
+                            }));
+                        }
+                    });
+            });
+
+            return true;
+        }
+
+        /// <summary>
+        /// 关闭aria2c服务器，异步方法
+        /// </summary>
+        /// <returns></returns>
+        public static async Task<bool> CloseServerAsync()
+        {
+            await AriaClient.ShutdownAsync();
+            return true;
+        }
+
+        /// <summary>
+        /// 强制关闭aria2c服务器，异步方法
+        /// </summary>
+        /// <returns></returns>
+        public static async Task<bool> ForceCloseServerAsync()
+        {
+            //await Task.Run(() =>
+            //{
+            //    if (Server == null) { return; }
+
+            //    Server.Kill();
+            //    Server = null; // 将Server指向null
+            //});
+            //return true;
+            await AriaClient.ForceShutdownAsync();
+            return true;
+        }
+
+        /// <summary>
+        /// 关闭aria2c服务器
+        /// </summary>
+        /// <returns></returns>
+        public static bool CloseServer()
+        {
+            var task = AriaClient.ShutdownAsync();
+            if (task.Result != null && task.Result.Result != null && task.Result.Result == "OK")
+            { return true; }
+            return false;
+        }
+
+        /// <summary>
+        /// 强制关闭aria2c服务器
+        /// </summary>
+        /// <returns></returns>
+        public static bool ForceCloseServer()
+        {
+            var task = AriaClient.ForceShutdownAsync();
+            if (task.Result != null && task.Result.Result != null && task.Result.Result == "OK")
+            { return true; }
+            return false;
+        }
+
+
+        private static void ExcuteProcess(string exe, string arg, string workingDirectory, DataReceivedEventHandler output)
+        {
+            using (var p = new Process())
+            {
+                Server = p;
+
+                p.StartInfo.FileName = exe;
+                p.StartInfo.Arguments = arg;
+
+                // 工作目录
+                if (workingDirectory != null)
+                {
+                    p.StartInfo.WorkingDirectory = workingDirectory;
+                }
+
+                p.StartInfo.UseShellExecute = false;    //输出信息重定向
+                p.StartInfo.CreateNoWindow = true;
+                p.StartInfo.RedirectStandardError = true;
+                p.StartInfo.RedirectStandardOutput = true;
+
+                // 将 StandardErrorEncoding 改为 UTF-8 才不会出现中文乱码
+                p.StartInfo.StandardOutputEncoding = Encoding.UTF8;
+                p.StartInfo.StandardErrorEncoding = Encoding.UTF8;
+
+                p.OutputDataReceived += output;
+                p.ErrorDataReceived += output;
+
+                p.Start();                    //启动线程
+                p.BeginOutputReadLine();
+                p.BeginErrorReadLine();
+                p.WaitForExit();            //等待进程结束
+            }
+        }
+
+    }
+}
