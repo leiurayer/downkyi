@@ -1,5 +1,5 @@
 # downkyi
-哔哩下载姬
+![Alipay](images/app/index.png)
 
 ## 关于
 
@@ -11,7 +11,7 @@
 
 ## 下载
 
-[哔哩下载姬 v1.3.0 beta](https://github.com/FlySelfLog/downkyi/releases/download/v1.3.0-beta/DownKyi-23-1.3.0.beta.zip)
+[哔哩下载姬 v1.3.1 beta](https://github.com/FlySelfLog/downkyi/releases/download/v1.3.1-beta/DownKyi-24-1.3.1.beta.zip)
 
 ## 赞助
 

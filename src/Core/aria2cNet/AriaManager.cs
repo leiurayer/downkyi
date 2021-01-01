@@ -64,7 +64,20 @@ namespace Core.aria2cNet
                 }
                 if (status.Result.Result.ErrorCode != null && status.Result.Result.ErrorCode != "0")
                 {
-                    Console.WriteLine(status.Result.Result.ErrorMessage);
+                    Console.WriteLine("ErrorMessage: " + status.Result.Result.ErrorMessage);
+
+                    //// 如果返回状态码不是200，则继续
+                    //if (status.Result.Result.ErrorMessage.Contains("The response status is not successful"))
+                    //{
+                    //    Thread.Sleep(1000);
+                    //    continue;
+                    //}
+
+                    // aira中删除记录
+                    var ariaRemove1 = AriaClient.RemoveDownloadResultAsync(gid);
+                    Console.WriteLine(ariaRemove1);
+
+                    // 返回回调信息，退出函数
                     OnDownloadFinish(false, null, gid, status.Result.Result.ErrorMessage);
                     return DownloadStatus.FAILED;
                 }
@@ -75,6 +88,35 @@ namespace Core.aria2cNet
             OnDownloadFinish(true, filePath, gid, null);
             return DownloadStatus.SUCCESS;
         }
+
+
+        //private async void Poll()
+        //{
+        //    while (true)
+        //    {
+        //        // 查询全局status
+        //        var globalStatus = await AriaClient.GetGlobalStatAsync();
+        //        if (globalStatus == null || globalStatus.Result == null) { continue; }
+
+        //        long globalSpeed = long.Parse(globalStatus.Result.DownloadSpeed);
+        //        // 回调
+        //        OnGetGlobalStatus(globalSpeed);
+
+        //        // 查询gid对应的项目的status
+        //        foreach (var gid in gidList)
+        //        {
+        //            var status = await AriaClient.TellStatus(gid);
+        //            if (status == null || status.Result == null) { continue; }
+
+        //            long totalLength = long.Parse(status.Result.TotalLength);
+        //            long completedLength = long.Parse(status.Result.CompletedLength);
+        //            long speed = long.Parse(status.Result.DownloadSpeed);
+        //            // 回调
+        //            OnTellStatus(totalLength, completedLength, speed, gid);
+        //        }
+
+        //    }
+        //}
 
     }
 

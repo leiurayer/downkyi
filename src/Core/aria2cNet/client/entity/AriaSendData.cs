@@ -36,6 +36,15 @@ namespace Core.aria2cNet.client.entity
         [JsonProperty("dir")]
         public string Dir { get; set; }
 
+        //[JsonProperty("header")]
+        //public string Header { get; set; }
+
+        //[JsonProperty("use-head")]
+        //public string UseHead { get; set; }
+
+        //[JsonProperty("user-agent")]
+        //public string UserAgent { get; set; }
+
         public override string ToString()
         {
             return JsonConvert.SerializeObject(this);

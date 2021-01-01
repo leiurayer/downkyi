@@ -23,11 +23,20 @@ namespace Core.aria2cNet.server
         /// <returns></returns>
         public static async Task<bool> StartServerAsync(AriaConfig config, TextBox output = null, Window window = null)
         {
+            // aria端口
             ListenPort = config.ListenPort;
-            string ariaDir = Environment.CurrentDirectory + "\\aria\\"; // aria目录
-            string sessionFile = ariaDir + "aira.session.gz"; // 会话文件
-            string logFile = ariaDir + "aira.log"; // 日志文件
-            int saveSessionInterval = 30; // 自动保存会话文件的时间间隔
+            // aria目录
+            string ariaDir = Environment.CurrentDirectory + "\\aria\\";
+            // 会话文件
+#if DEBUG
+            string sessionFile = ariaDir + "aira.session";
+#else
+            string sessionFile = ariaDir + "aira.session.gz";
+#endif
+            // 日志文件
+            string logFile = ariaDir + "aira.log";
+            // 自动保存会话文件的时间间隔
+            int saveSessionInterval = 30;
 
             // --enable-rpc --rpc-listen-all=true --rpc-allow-origin-all=true --continue=true
             await Task.Run(() =>
@@ -65,6 +74,17 @@ namespace Core.aria2cNet.server
                     }
                 }
 
+                // header 解析
+                string headers = string.Empty;
+                if (config.Headers != null)
+                {
+                    foreach (var header in config.Headers)
+                    {
+                        headers += $"--header=\"{header}\" ";
+                    }
+                }
+                Console.WriteLine(headers);
+
                 ExcuteProcess("aria2c.exe",
                     $"--enable-rpc --rpc-listen-all=true --rpc-allow-origin-all=true " +
                     $"--rpc-listen-port={config.ListenPort} " +
@@ -75,14 +95,17 @@ namespace Core.aria2cNet.server
                     $"--max-concurrent-downloads={config.MaxConcurrentDownloads} " + // 最大同时下载数(任务数)
                     $"--max-connection-per-server={config.MaxConnectionPerServer} " + // 同服务器连接数
                     $"--split={config.Split} " + // 单文件最大线程数
+                                                 //$"--max-tries={config.MaxTries} retry-wait=3 " + // 尝试重连次数
                     $"--min-split-size={config.MinSplitSize}M " + // 最小文件分片大小, 下载线程数上限取决于能分出多少片, 对于小文件重要
                     $"--max-overall-download-limit={config.MaxOverallDownloadLimit} " + // 下载速度限制
                     $"--max-download-limit={config.MaxDownloadLimit} " + // 下载单文件速度限制
                     $"--max-overall-upload-limit={config.MaxOverallUploadLimit} " + // 上传速度限制
                     $"--max-upload-limit={config.MaxUploadLimit} " + // 上传单文件速度限制
-                    $"--continue {config.ContinueDownload.ToString().ToLower()} " + // 断点续传
-                    $"--allow-overwrite true " + // 允许复写文件
+                    $"--continue={config.ContinueDownload.ToString().ToLower()} " + // 断点续传
+                    $"--allow-overwrite=true " + // 允许复写文件
+                    $"--auto-file-renaming=false " +
                     $"--file-allocation={config.FileAllocation.ToString("G").ToLower()} " + // 文件预分配, none prealloc
+                    $"{headers}" + // header
                     "",
                     null, (s, e) =>
                     {
@@ -152,6 +175,28 @@ namespace Core.aria2cNet.server
             if (task.Result != null && task.Result.Result != null && task.Result.Result == "OK")
             { return true; }
             return false;
+        }
+
+        /// <summary>
+        /// 杀死Aria进程
+        /// </summary>
+        /// <param name="processName"></param>
+        /// <returns></returns>
+        public static bool KillServer(string processName = "aria2c")
+        {
+            Process[] processes = Process.GetProcessesByName(processName);
+            foreach (var process in processes)
+            {
+                try
+                {
+                    process.Kill();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("KillServer()发生异常: {0}", e);
+                }
+            }
+            return true;
         }
 
 
