@@ -7,11 +7,11 @@
 
 ## 更新日志
 
-[CHANGELOG](https://github.com/FlySelfLog/downkyi/blob/main/Changelog.md)
+[CHANGELOG](https://github.com/FlySelfLog/downkyi/blob/main/CHANGELOG.md)
 
 ## 下载
 
-[哔哩下载姬 v1.3.1 beta](https://github.com/FlySelfLog/downkyi/releases/download/v1.3.1-beta/DownKyi-24-1.3.1.beta.zip)
+[哔哩下载姬 v1.3.2 beta](https://github.com/FlySelfLog/downkyi/releases/download/v1.3.2-beta/DownKyi-25-1.3.2.beta.zip)
 
 ## 赞助
 
