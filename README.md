@@ -14,7 +14,7 @@
 - [x] 支持断点续传
 - [x] 支持Aria2c
 - [x] 支持下载历史记录保存
-- [x] 支持av、bv互转
+- [x] 支持av、BV互转
 - [x] 支持弹幕发送者查询
 - [x] 支持音视频分离
 - [x] 支持去水印
@@ -50,7 +50,7 @@
 - [x] 番剧（电影、电视剧）md号：https://www.bilibili.com/bangumi/media/md28228367
 - [x] 课程ss号：https://www.bilibili.com/cheese/play/ss205
 - [x] 课程ep号：https://www.bilibili.com/cheese/play/ep3489
-- [ ] 用户空间：uid928123，https://space.bilibili.com/928123
+- [x] 用户空间：uid928123，UID:928123，https://space.bilibili.com/928123
 
 `注：因为番剧和课程都有ss号和ep号，因此暂时不能直接输入ss号和ep号。`
 
@@ -58,11 +58,14 @@
 
 [全部更新日志](https://github.com/FlySelfLog/downkyi/blob/main/CHANGELOG.md)
 
-* `2021/01/05` v1.3.2 beta
-    1. [修复] 向Aria添加下载时参数错误问题。
-    2. [修复] 分P标题为空时，标题为总标题+数字。
-    3. [优化] 更新视频分区。
-    4. [优化] 文件夹、订阅、稍后再看的健壮性。
+* `2021/01/30` v1.3.3
+    1. [修复] 输入avid和bvid可能无法解析的问题。
+    2. [优化] 程序的一些显示。
+    3. [优化] 程序核心代码结构。
+    4. [新增] 访问用户空间。
+    5. [新增] UP主投稿视频列表展示。
+    6. [新增] UP主频道列表展示。
+    7. [新增] 意见反馈入口，将进入github的issue页。
 
 ## 下载
 
