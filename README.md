@@ -71,7 +71,7 @@
 
 ## 下载
 
-- [哔哩下载姬最新版](https://github.com/FlySelfLog/downkyi/releases/download/v1.3.5/DownKyi-28-1.3.5.zip)
+- [哔哩下载姬最新版](https://github.com/FlySelfLog/downkyi/releases/download/v1.3.6/DownKyi-29-1.3.6.zip)
 
 - [下载页面](https://github.com/FlySelfLog/downkyi/releases)
 
