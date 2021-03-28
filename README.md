@@ -60,18 +60,20 @@
 
 [全部更新日志](https://github.com/FlySelfLog/downkyi/blob/main/CHANGELOG.md)
 
-* `2021/03/04` v1.3.6
-    1. [修复] 下载FLV时失败的问题。
-    2. [修复] 主页的登录信息更新不及时的问题。
-    3. [优化] 主页下方按钮居中。
-    4. [优化] 首页搜索框添加搜索按钮，点击可进行搜索。
-    5. [新增] 监听剪贴板。
-    6. [新增] 已下载视频列表排序。
-    7. [新增] 下载管理页面增加全部暂停、全部开始、全部删除。
+* `2021/03/28` v1.3.7
+    1. [修复] 播放数为空白的视频存在时，整页视频列表无法加载的问题。
+    2. [修复] 特殊字符（控制字符、末尾空格等）导致的下载失败。
+    3. [修复] 由于某些封面图片metadata损坏导致的程序崩溃。
+    4. [修复] 监听剪贴板数据异常报错的问题。
+    5. [优化] 部分界面显示。
+    6. [优化] 程序逻辑。
+    7. [新增] 监听剪贴板和自动解析的设置持久化。
+    8. [新增] 列表支持shift&ctrl多选。
+    9. [新增] 下载中列表重试按钮。
 
 ## 下载
 
-- [哔哩下载姬最新版](https://github.com/FlySelfLog/downkyi/releases/download/v1.3.6/DownKyi-29-1.3.6.zip)
+- [哔哩下载姬最新版](https://github.com/FlySelfLog/downkyi/releases/download/v1.3.7/DownKyi-1.3.7.zip)
 
 - [下载页面](https://github.com/FlySelfLog/downkyi/releases)
 
