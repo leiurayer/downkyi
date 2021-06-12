@@ -1,0 +1,20 @@
+﻿syntax = "proto3";
+
+message DanmakuElem {
+    int64 id = 1;       //弹幕dmID
+    int32 progress = 2; //出现时间
+    int32 mode = 3;     //弹幕类型
+    int32 fontsize = 4; //文字大小
+    uint32 color = 5;   //弹幕颜色
+    string midHash = 6; //发送者UID的HASH
+    string content = 7; //弹幕内容
+    int64 ctime = 8;    //发送时间
+    int32 weight = 9;   //权重
+    string action = 10; //动作？
+    int32 pool = 11;    //弹幕池
+    string idStr = 12;  //弹幕dmID（字串形式）
+}
+
+message DmSegMobileReply {
+    repeated DanmakuElem elems = 1; //弹幕条目
+}

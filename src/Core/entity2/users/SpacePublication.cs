@@ -65,6 +65,8 @@ namespace Core.entity2.users
         public SpacePublicationListTypeVideoZone Technology { get; set; }
         [JsonProperty("188")]
         public SpacePublicationListTypeVideoZone Digital { get; set; }
+        [JsonProperty("223")]
+        public SpacePublicationListTypeVideoZone Car { get; set; }
         [JsonProperty("160")]
         public SpacePublicationListTypeVideoZone Life { get; set; }
         [JsonProperty("211")]

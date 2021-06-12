@@ -62,7 +62,7 @@ namespace Core.aria2cNet.server
                     try
                     {
                         var stream = File.Open(logFile, FileMode.Open);
-                        if (stream.Length >= 1024 * 1024 * 1024L)
+                        if (stream.Length >= 512 * 1024 * 1024L)
                         {
                             stream.SetLength(0);
                         }
@@ -83,7 +83,6 @@ namespace Core.aria2cNet.server
                         headers += $"--header=\"{header}\" ";
                     }
                 }
-                Console.WriteLine(headers);
 
                 ExcuteProcess("aria2c.exe",
                     $"--enable-rpc --rpc-listen-all=true --rpc-allow-origin-all=true " +

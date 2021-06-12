@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Core.api.users
 {
@@ -99,24 +100,28 @@ namespace Core.api.users
         /// <param name="tid">视频分区</param>
         /// <param name="keyword">搜索关键词</param>
         /// <returns></returns>
-        public List<SpacePublicationListVideo> GetAllPublication(long mid, PublicationOrder order = PublicationOrder.PUBDATE, int tid = 0, string keyword = "")
+        public async Task<List<SpacePublicationListVideo>> GetAllPublication(long mid, int tid = 0, PublicationOrder order = PublicationOrder.PUBDATE, string keyword = "")
         {
             List<SpacePublicationListVideo> result = new List<SpacePublicationListVideo>();
 
-            int i = 0;
-            while (true)
+            await Task.Run(() =>
             {
-                i++;
-                int ps = 100;
+                int i = 0;
+                while (true)
+                {
+                    i++;
+                    int ps = 100;
 
-                var data = GetPublication(mid, i, ps, tid, order, keyword);
-                //if (data == null) { continue; }
+                    var data = GetPublication(mid, i, ps, tid, order, keyword);
+                    //if (data == null) { continue; }
 
-                if (data == null || data.Vlist == null || data.Vlist.Count == 0)
-                { break; }
+                    if (data == null || data.Vlist == null || data.Vlist.Count == 0)
+                    { break; }
 
-                result.AddRange(data.Vlist);
-            }
+                    result.AddRange(data.Vlist);
+                }
+            });
+
             return result;
         }
 
@@ -138,7 +143,20 @@ namespace Core.api.users
 
             try
             {
-                var spacePublication = JsonConvert.DeserializeObject<SpacePublicationOrigin>(response);
+                // 忽略play的值为“--”时的类型错误
+                var settings = new JsonSerializerSettings
+                {
+                    Error = (sender, args) =>
+                    {
+                        if (Equals(args.ErrorContext.Member, "play") &&
+                            args.ErrorContext.OriginalObject.GetType() == typeof(SpacePublicationListVideo))
+                        {
+                            args.ErrorContext.Handled = true;
+                        }
+                    }
+                };
+
+                var spacePublication = JsonConvert.DeserializeObject<SpacePublicationOrigin>(response, settings);
                 if (spacePublication == null || spacePublication.Data == null) { return null; }
                 return spacePublication.Data.List;
             }
@@ -440,7 +458,7 @@ namespace Core.api.users
         /// <returns></returns>
         public BangumiFollowData GetBangumiFollow(long mid, BangumiType type, int pn, int ps)
         {
-            string url = $"https://api.bilibili.com/x/space/bangumi/follow/list?vmid={mid}&type={type.ToString("D")}&pn={pn}&ps={ps}";
+            string url = $"https://api.bilibili.com/x/space/bangumi/follow/list?vmid={mid}&type={type:D}&pn={pn}&ps={ps}";
             string referer = "https://www.bilibili.com";
             string response = Utils.RequestWeb(url, referer);
 

@@ -14,14 +14,6 @@ namespace Core.aria2cNet
             TellStatus?.Invoke(totalLength, completedLength, speed, gid);
         }
 
-        // 全局下载状态
-        public delegate void GetGlobalStatusHandler(long speed);
-        public event GetGlobalStatusHandler GetGlobalStatus;
-        protected virtual void OnGetGlobalStatus(long speed)
-        {
-            GetGlobalStatus?.Invoke(speed);
-        }
-
         // 下载结果回调
         public delegate void DownloadFinishHandler(bool isSuccess, string downloadPath, string gid, string msg = null);
         public event DownloadFinishHandler DownloadFinish;
@@ -30,6 +22,19 @@ namespace Core.aria2cNet
             DownloadFinish?.Invoke(isSuccess, downloadPath, gid, msg);
         }
 
+        // 全局下载状态
+        public delegate void GetGlobalStatusHandler(long speed);
+        public event GetGlobalStatusHandler GlobalStatus;
+        protected virtual void OnGlobalStatus(long speed)
+        {
+            GlobalStatus?.Invoke(speed);
+        }
+
+        /// <summary>
+        /// 获取gid下载项的状态
+        /// </summary>
+        /// <param name="gid"></param>
+        /// <returns></returns>
         public DownloadStatus GetDownloadStatus(string gid)
         {
             string filePath = "";
@@ -83,10 +88,30 @@ namespace Core.aria2cNet
                 }
 
                 // 降低CPU占用
-                Thread.Sleep(500);
+                Thread.Sleep(100);
             }
             OnDownloadFinish(true, filePath, gid, null);
             return DownloadStatus.SUCCESS;
+        }
+
+        /// <summary>
+        /// 获取全局下载速度
+        /// </summary>
+        public async void GetGlobalStatus()
+        {
+            while (true)
+            {
+                // 查询全局status
+                var globalStatus = await AriaClient.GetGlobalStatAsync();
+                if (globalStatus == null || globalStatus.Result == null) { continue; }
+
+                long globalSpeed = long.Parse(globalStatus.Result.DownloadSpeed);
+                // 回调
+                OnGlobalStatus(globalSpeed);
+
+                // 降低CPU占用
+                Thread.Sleep(100);
+            }
         }
 
 

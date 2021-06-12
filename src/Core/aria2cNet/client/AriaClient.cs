@@ -1035,8 +1035,10 @@ namespace Core.aria2cNet.client
         /// <returns></returns>
         private async static Task<T> GetRpcResponseAsync<T>(AriaSendData ariaSend)
         {
+            // 去掉null
+            var jsonSetting = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
             // 转换为json字符串
-            string sendJson = JsonConvert.SerializeObject(ariaSend);
+            string sendJson = JsonConvert.SerializeObject(ariaSend, Formatting.Indented, jsonSetting);
             // 向服务器请求数据
             string result = string.Empty;
             await Task.Run(() =>
