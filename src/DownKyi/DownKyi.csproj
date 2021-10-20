@@ -1,0 +1,447 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{97075FCD-6E8F-4FF9-B73A-994197F3765A}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DownKyi</RootNamespace>
+    <AssemblyName>DownKyi</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\favicon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="CustomControl\GifImage.cs" />
+    <Compile Include="Events\MessageEvent.cs" />
+    <Compile Include="Events\NavigationEvent.cs" />
+    <Compile Include="Events\NavigationParam.cs" />
+    <Compile Include="Images\ButtonIcon.cs" />
+    <Compile Include="Images\LogoIcon.cs" />
+    <Compile Include="Images\NavigationIcon.cs" />
+    <Compile Include="Images\NormalIcon.cs" />
+    <Compile Include="Models\ParseScopeDisplay.cs" />
+    <Compile Include="Models\Resolution.cs" />
+    <Compile Include="Models\TabHeader.cs" />
+    <Compile Include="Models\VideoQuality.cs" />
+    <Compile Include="Models\VideoInfoView.cs" />
+    <Compile Include="Models\VideoPage.cs" />
+    <Compile Include="Models\VideoSection.cs" />
+    <Compile Include="Services\BangumiInfoService.cs" />
+    <Compile Include="Services\CheeseInfoService.cs" />
+    <Compile Include="Services\IInfoService.cs" />
+    <Compile Include="Services\IResolutionService.cs" />
+    <Compile Include="Services\ResolutionService.cs" />
+    <Compile Include="Services\Utils.cs" />
+    <Compile Include="Services\VideoInfoService.cs" />
+    <Compile Include="Utils\ClipboardHooker.cs" />
+    <Compile Include="Utils\DialogUtils.cs" />
+    <Compile Include="Utils\DictionaryResource.cs" />
+    <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\ViewDirectorySelectorViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\BaseDialogViewModel.cs" />
+    <Compile Include="ViewModels\Settings\ViewBasicViewModel.cs" />
+    <Compile Include="ViewModels\Settings\ViewAboutViewModel.cs" />
+    <Compile Include="ViewModels\Settings\ViewDanmakuViewModel.cs" />
+    <Compile Include="ViewModels\DownloadManager\ViewDownloadFinishedViewModel.cs" />
+    <Compile Include="ViewModels\DownloadManager\ViewDownloadingViewModel.cs" />
+    <Compile Include="ViewModels\Toolbox\ViewBiliHelperViewModel.cs" />
+    <Compile Include="ViewModels\Toolbox\ViewDelogoViewModel.cs" />
+    <Compile Include="ViewModels\ViewDownloadManagerViewModel.cs" />
+    <Compile Include="ViewModels\Toolbox\ViewExtractMediaViewModel.cs" />
+    <Compile Include="ViewModels\ViewIndexViewModel.cs" />
+    <Compile Include="ViewModels\ViewLoginViewModel.cs" />
+    <Compile Include="ViewModels\Settings\ViewNetworkViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\ViewParsingSelectorViewModel.cs" />
+    <Compile Include="ViewModels\ViewMySpaceViewModel.cs" />
+    <Compile Include="ViewModels\ViewPublicFavoritesViewModel.cs" />
+    <Compile Include="ViewModels\ViewSettingsViewModel.cs" />
+    <Compile Include="ViewModels\ViewToolboxViewModel.cs" />
+    <Compile Include="ViewModels\ViewUserSpaceViewModel.cs" />
+    <Compile Include="ViewModels\ViewVideoDetailViewModel.cs" />
+    <Compile Include="ViewModels\Settings\ViewVideoViewModel.cs" />
+    <Compile Include="Views\Dialogs\ViewDirectorySelector.xaml.cs">
+      <DependentUpon>ViewDirectorySelector.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\ViewParsingSelector.xaml.cs">
+      <DependentUpon>ViewParsingSelector.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DownloadManager\ViewDownloadFinished.xaml.cs">
+      <DependentUpon>ViewDownloadFinished.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DownloadManager\ViewDownloading.xaml.cs">
+      <DependentUpon>ViewDownloading.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Settings\ViewAbout.xaml.cs">
+      <DependentUpon>ViewAbout.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Settings\ViewBasic.xaml.cs">
+      <DependentUpon>ViewBasic.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Settings\ViewDanmaku.xaml.cs">
+      <DependentUpon>ViewDanmaku.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Settings\ViewNetwork.xaml.cs">
+      <DependentUpon>ViewNetwork.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Settings\ViewVideo.xaml.cs">
+      <DependentUpon>ViewVideo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Toolbox\ViewBiliHelper.xaml.cs">
+      <DependentUpon>ViewBiliHelper.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Toolbox\ViewDelogo.xaml.cs">
+      <DependentUpon>ViewDelogo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Toolbox\ViewExtractMedia.xaml.cs">
+      <DependentUpon>ViewExtractMedia.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewDownloadManager.xaml.cs">
+      <DependentUpon>ViewDownloadManager.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewIndex.xaml.cs">
+      <DependentUpon>ViewIndex.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewLogin.xaml.cs">
+      <DependentUpon>ViewLogin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewMySpace.xaml.cs">
+      <DependentUpon>ViewMySpace.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewPublicFavorites.xaml.cs">
+      <DependentUpon>ViewPublicFavorites.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewSettings.xaml.cs">
+      <DependentUpon>ViewSettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewToolbox.xaml.cs">
+      <DependentUpon>ViewToolbox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewUserSpace.xaml.cs">
+      <DependentUpon>ViewUserSpace.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewVideoDetail.xaml.cs">
+      <DependentUpon>ViewVideoDetail.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Languages\en_US.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Languages\zh_TW.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Languages\zh_CN.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Languages\Default.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\ColorBrush.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Colors\ColorDiy.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Colors\ColorDefault.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Styles\StyleListBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Styles\StyleListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Styles\StyleCheckBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Styles\StyleBtn.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Styles\StyleImageBtn.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Styles\StyleRadio.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Styles\StyleSystemBtn.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\ThemeDiy.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\ThemeDefault.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\ViewDirectorySelector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\ViewParsingSelector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DownloadManager\ViewDownloadFinished.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DownloadManager\ViewDownloading.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Images\SystemIcon.cs" />
+    <Compile Include="Images\VectorImage.cs" />
+    <Compile Include="Models\AppInfo.cs" />
+    <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="Views\MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="Views\Settings\ViewAbout.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Settings\ViewBasic.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Settings\ViewDanmaku.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Settings\ViewNetwork.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Settings\ViewVideo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Toolbox\ViewBiliHelper.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Toolbox\ViewDelogo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Toolbox\ViewExtractMedia.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewDownloadManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewIndex.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewLogin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewMySpace.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewPublicFavorites.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewSettings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewToolbox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewUserSpace.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewVideoDetail.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="app.manifest" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Prism.DryIoc" Version="8.1.97" />
+    <PackageReference Include="System.Data.SQLite.Core">
+      <Version>1.0.112.2</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\favicon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\default_header.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DownKyi.Core\DownKyi.Core.csproj">
+      <Project>{4fde0364-f65b-4812-bfe8-34e886624fbd}</Project>
+      <Name>DownKyi.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\login\login_top_bar.png" />
+    <Resource Include="Resources\login\qrcode_login_2233.png" />
+    <Resource Include="Resources\login\qrcode_login_tip.png" />
+    <Resource Include="Resources\login\scan_succeed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 和 x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\loading\loading.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\no-data.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="aria2c.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="aria2_COPYING.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ffmpeg.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="FFmpeg_LICENSE.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="打不开DownKyi请点我.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="AfterCompile">
+    <Exec Command="echo &quot;&quot;" />
+  </Target>
+</Project>

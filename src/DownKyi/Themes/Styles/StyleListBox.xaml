@@ -1,0 +1,84 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Style x:Key="LeftTabHeaderItemStyle" TargetType="{x:Type ListBoxItem}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <Grid x:Name="panel" Height="60">
+                        <StackPanel
+                            Margin="20,0,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Orientation="Horizontal">
+                            <ContentControl
+                                Width="24"
+                                Height="24"
+                                Margin="0,0,5,0">
+                                <ContentControl.Style>
+                                    <Style TargetType="{x:Type ContentControl}">
+                                        <Setter Property="Visibility" Value="Visible" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Image}" Value="{x:Null}">
+                                                <Setter Property="Visibility" Value="Collapsed" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ContentControl.Style>
+
+                                <Path
+                                    x:Name="image"
+                                    Width="{Binding Image.Width}"
+                                    Height="{Binding Image.Height}"
+                                    Data="{Binding Image.Data}"
+                                    Fill="{Binding Image.Fill}"
+                                    Stretch="UniformToFill" />
+                            </ContentControl>
+                            <TextBlock
+                                x:Name="text"
+                                VerticalAlignment="Center"
+                                FontSize="12"
+                                Text="{Binding Title}" />
+                        </StackPanel>
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="False">
+                            <Setter TargetName="panel" Property="Background" Value="{DynamicResource BrushTabHeaderGrey}" />
+                            <Setter TargetName="text" Property="Foreground" Value="{DynamicResource BrushTextDark}" />
+                            <Setter TargetName="image" Property="Fill" Value="{Binding Image.Fill}" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="panel" Property="Background" Value="{DynamicResource BrushBackgroundGreyTranslucent2}" />
+                            <Setter TargetName="text" Property="Foreground" Value="{DynamicResource BrushPrimary}" />
+                            <Setter TargetName="image" Property="Fill" Value="{DynamicResource BrushPrimary}" />
+                        </Trigger>
+                        <Trigger Property="Selector.IsSelected" Value="true">
+                            <Setter TargetName="panel" Property="Background" Value="{DynamicResource BrushBackground}" />
+                            <Setter TargetName="text" Property="Foreground" Value="{DynamicResource BrushPrimary}" />
+                            <Setter TargetName="image" Property="Fill" Value="{DynamicResource BrushPrimary}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="LeftTabHeaderStyle" TargetType="{x:Type ListBox}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListBox">
+                    <Border
+                        Padding="0"
+                        Background="{DynamicResource BrushTabHeaderGrey}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}">
+                        <ScrollViewer Focusable="False">
+                            <ItemsPresenter />
+                        </ScrollViewer>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

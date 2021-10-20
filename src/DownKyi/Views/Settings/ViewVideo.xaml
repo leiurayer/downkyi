@@ -1,0 +1,197 @@
+﻿<UserControl
+    x:Class="DownKyi.Views.Settings.ViewVideo"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:prism="http://prismlibrary.com/"
+    prism:ViewModelLocator.AutoWireViewModel="True">
+
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="50,0" Orientation="Vertical">
+
+            <StackPanel Margin="0,20,0,0" Orientation="Horizontal">
+                <TextBlock FontSize="18" Text="{DynamicResource Video}" />
+            </StackPanel>
+
+            <StackPanel Margin="0,20,0,0" Orientation="Horizontal">
+                <TextBlock
+                    VerticalAlignment="Center"
+                    FontSize="12"
+                    Foreground="{DynamicResource BrushTextDark}"
+                    Text="{DynamicResource FirstVideoCodecs}" />
+                <ComboBox
+                    Name="nameVideoCodecs"
+                    Width="120"
+                    VerticalContentAlignment="Center"
+                    ItemsSource="{Binding VideoCodecs}"
+                    SelectedValue="{Binding SelectedVideoCodec}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding VideoCodecsCommand}" CommandParameter="{Binding ElementName=nameVideoCodecs, Path=SelectedValue}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
+            </StackPanel>
+
+            <StackPanel Margin="0,20,0,0" Orientation="Horizontal">
+                <TextBlock
+                    VerticalAlignment="Center"
+                    FontSize="12"
+                    Foreground="{DynamicResource BrushTextDark}"
+                    Text="{DynamicResource FirstVideoQuality}" />
+                <ComboBox
+                    Name="nameVideoQualityList"
+                    Width="120"
+                    VerticalContentAlignment="Center"
+                    DisplayMemberPath="Name"
+                    ItemsSource="{Binding VideoQualityList}"
+                    SelectedItem="{Binding SelectedVideoQuality}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding VideoQualityCommand}" CommandParameter="{Binding ElementName=nameVideoQualityList, Path=SelectedItem}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
+            </StackPanel>
+
+            <TextBlock
+                Height="1"
+                Margin="0,20,0,0"
+                Background="{DynamicResource BrushBorder}" />
+
+            <StackPanel Margin="0,20,0,0" Orientation="Horizontal">
+                <CheckBox
+                    Name="nameIsAddVideoOrder"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Command="{Binding IsAddVideoOrderCommand}"
+                    Content="{DynamicResource IsAddVideoOrder}"
+                    FontSize="12"
+                    Foreground="{DynamicResource BrushTextDark}"
+                    IsChecked="{Binding IsAddVideoOrder, Mode=TwoWay}"
+                    Style="{StaticResource CheckBoxStyle}" />
+
+                <TextBlock
+                    Margin="10,0,0,0"
+                    VerticalAlignment="Center"
+                    FontSize="12"
+                    Foreground="{DynamicResource BrushTextGrey}"
+                    Text="{DynamicResource IsAddVideoOrderTip}" />
+            </StackPanel>
+
+            <CheckBox
+                Margin="0,20,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Command="{Binding IsTranscodingFlvToMp4Command}"
+                Content="{DynamicResource IsTranscodingFlvToMp4}"
+                FontSize="12"
+                Foreground="{DynamicResource BrushTextDark}"
+                IsChecked="{Binding IsTranscodingFlvToMp4, Mode=TwoWay}"
+                Style="{StaticResource CheckBoxStyle}" />
+
+            <TextBlock
+                Height="1"
+                Margin="0,20,0,0"
+                Background="{DynamicResource BrushBorder}" />
+
+            <CheckBox
+                Name="nameIsUseDefaultDirectory"
+                Margin="0,20,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Command="{Binding IsUseDefaultDirectoryCommand}"
+                Content="{DynamicResource IsUseDefaultDirectory}"
+                FontSize="12"
+                Foreground="{DynamicResource BrushTextDark}"
+                IsChecked="{Binding IsUseDefaultDirectory, Mode=TwoWay}"
+                Style="{StaticResource CheckBoxStyle}" />
+
+            <StackPanel Margin="0,20,0,0" Orientation="Vertical">
+                <StackPanel.Style>
+                    <Style TargetType="{x:Type StackPanel}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=nameIsUseDefaultDirectory, Path=IsChecked}" Value="false">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=nameIsUseDefaultDirectory, Path=IsChecked}" Value="true">
+                                <Setter Property="Visibility" Value="Visible" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackPanel.Style>
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        FontSize="12"
+                        Foreground="{DynamicResource BrushTextDark}"
+                        Text="{DynamicResource DefaultDirectory}" />
+                    <TextBlock
+                        Margin="10,0,0,0"
+                        VerticalAlignment="Center"
+                        FontSize="12"
+                        Foreground="{DynamicResource BrushTextGrey}"
+                        Text="{DynamicResource DefaultDirectoryTip}" />
+                </StackPanel>
+
+                <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
+                    <TextBlock
+                        MaxWidth="600"
+                        VerticalAlignment="Center"
+                        FontSize="12"
+                        Foreground="{DynamicResource BrushTextDark}"
+                        Text="{Binding SaveVideoDirectory}"
+                        TextTrimming="CharacterEllipsis"
+                        ToolTip="{Binding SaveVideoDirectory}" />
+                    <Button
+                        Width="75"
+                        Margin="30,0,0,0"
+                        Command="{Binding ChangeSaveVideoDirectoryCommand}"
+                        Content="{DynamicResource ChangeDirectory}"
+                        FontSize="12"
+                        Style="{StaticResource BtnBorderStyle}" />
+                </StackPanel>
+            </StackPanel>
+
+            <CheckBox
+                Margin="0,20,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Command="{Binding IsCreateFolderForMediaCommand}"
+                Content="{DynamicResource IsCreateFolderForMedia}"
+                FontSize="12"
+                Foreground="{DynamicResource BrushTextDark}"
+                IsChecked="{Binding IsCreateFolderForMedia, Mode=TwoWay}"
+                Style="{StaticResource CheckBoxStyle}" />
+
+            <TextBlock
+                Height="1"
+                Margin="0,20,0,0"
+                Background="{DynamicResource BrushBorder}" />
+
+            <CheckBox
+                Margin="0,20,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Command="{Binding IsDownloadDanmakuCommand}"
+                Content="{DynamicResource IsDownloadDanmaku}"
+                FontSize="12"
+                Foreground="{DynamicResource BrushTextDark}"
+                IsChecked="{Binding IsDownloadDanmaku, Mode=TwoWay}"
+                Style="{StaticResource CheckBoxStyle}" />
+
+            <CheckBox
+                Margin="0,20,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Command="{Binding IsDownloadCoverCommand}"
+                Content="{DynamicResource IsDownloadCover}"
+                FontSize="12"
+                Foreground="{DynamicResource BrushTextDark}"
+                IsChecked="{Binding IsDownloadCover, Mode=TwoWay}"
+                Style="{StaticResource CheckBoxStyle}" />
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

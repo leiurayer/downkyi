@@ -1,0 +1,10 @@
+﻿<UserControl
+    x:Class="DownKyi.Views.ViewPublicFavorites"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:prism="http://prismlibrary.com/"
+    prism:ViewModelLocator.AutoWireViewModel="True">
+    <Grid>
+        <TextBlock>公开访问的收藏夹</TextBlock>
+    </Grid>
+</UserControl>

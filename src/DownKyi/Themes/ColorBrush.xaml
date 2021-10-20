@@ -1,0 +1,43 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:DownKyi.Themes">
+
+    <SolidColorBrush x:Key="BrushWindowBorder" Color="{DynamicResource ColorWindowBorder}" />
+    <SolidColorBrush x:Key="BrushCaptionForeground" Color="{DynamicResource ColorCaptionForeground}" />
+    <SolidColorBrush x:Key="BrushCaptionBackground" Color="{DynamicResource ColorCaptionBackground}" />
+
+    <SolidColorBrush x:Key="BrushSystemBtnTint" Color="{DynamicResource ColorSystemBtnTint}" />
+    <SolidColorBrush x:Key="BrushSystemBtnTintDark" Color="{DynamicResource ColorSystemBtnTintDark}" />
+    <SolidColorBrush x:Key="BrushSystemBtnHover" Color="{DynamicResource ColorSystemBtnHover}" />
+    <SolidColorBrush x:Key="BrushSystemBtnPressed" Color="{DynamicResource ColorSystemBtnPressed}" />
+    <SolidColorBrush x:Key="BrushCloseBtnHover" Color="{DynamicResource ColorCloseBtnHover}" />
+    <SolidColorBrush x:Key="BrushCloseBtnPressed" Color="{DynamicResource ColorCloseBtnPressed}" />
+
+    <SolidColorBrush x:Key="BrushPrimary" Color="{DynamicResource ColorPrimary}" />
+    <SolidColorBrush x:Key="BrushPrimaryTranslucent" Color="{DynamicResource ColorPrimaryTranslucent}" />
+    <SolidColorBrush x:Key="BrushPrimaryTranslucent2" Color="{DynamicResource ColorPrimaryTranslucent2}" />
+    <SolidColorBrush x:Key="BrushPrimaryTranslucent3" Color="{DynamicResource ColorPrimaryTranslucent3}" />
+    <SolidColorBrush x:Key="BrushForeground" Color="{DynamicResource ColorForeground}" />
+    <SolidColorBrush x:Key="BrushBackground" Color="{DynamicResource ColorBackground}" />
+    <SolidColorBrush x:Key="BrushForegroundDark" Color="{DynamicResource ColorForegroundDark}" />
+    <SolidColorBrush x:Key="BrushBackgroundDark" Color="{DynamicResource ColorBackgroundDark}" />
+    <SolidColorBrush x:Key="BrushForegroundGrey" Color="{DynamicResource ColorForegroundGrey}" />
+    <SolidColorBrush x:Key="BrushBackgroundGrey" Color="{DynamicResource ColorBackgroundGrey}" />
+    <SolidColorBrush x:Key="BrushBackgroundGreyTranslucent" Color="{DynamicResource ColorBackgroundGreyTranslucent}" />
+    <SolidColorBrush x:Key="BrushBackgroundGreyTranslucent2" Color="{DynamicResource ColorBackgroundGreyTranslucent2}" />
+    <SolidColorBrush x:Key="BrushBackgroundGreyTranslucent3" Color="{DynamicResource ColorBackgroundGreyTranslucent3}" />
+
+    <SolidColorBrush x:Key="BrushTabHeaderGrey" Color="{DynamicResource ColorTabHeaderGrey}" />
+
+    <SolidColorBrush x:Key="BrushHeaderGrey" Color="{DynamicResource ColorHeaderGrey}" />
+    <SolidColorBrush x:Key="BrushBorder" Color="{DynamicResource ColorBorder}" />
+
+    <SolidColorBrush x:Key="BrushImageBorder" Color="{DynamicResource ColorImageBorder}" />
+    <SolidColorBrush x:Key="BrushImageBackground" Color="{DynamicResource ColorImageBackground}" />
+
+    <SolidColorBrush x:Key="BrushText" Color="{DynamicResource ColorText}" />
+    <SolidColorBrush x:Key="BrushTextDark" Color="{DynamicResource ColorTextDark}" />
+    <SolidColorBrush x:Key="BrushTextGrey" Color="{DynamicResource ColorTextGrey}" />
+
+</ResourceDictionary>

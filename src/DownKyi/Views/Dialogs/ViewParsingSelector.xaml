@@ -1,0 +1,126 @@
+﻿<UserControl
+    x:Class="DownKyi.Views.Dialogs.ViewParsingSelector"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:prism="http://prismlibrary.com/"
+    prism:ViewModelLocator.AutoWireViewModel="True">
+    <prism:Dialog.WindowStyle>
+        <Style TargetType="Window">
+            <Setter Property="prism:Dialog.WindowStartupLocation" Value="CenterOwner" />
+            <Setter Property="ResizeMode" Value="NoResize" />
+            <Setter Property="ShowInTaskbar" Value="False" />
+            <Setter Property="SizeToContent" Value="WidthAndHeight" />
+            <Setter Property="WindowStyle" Value="None" />
+        </Style>
+    </prism:Dialog.WindowStyle>
+
+    <Border BorderBrush="{DynamicResource BrushWindowBorder}" BorderThickness="1,1,1,0.6">
+        <Grid Background="{DynamicResource BrushBackground}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <Grid
+                Grid.Row="0"
+                Background="{DynamicResource BrushCaptionBackground}"
+                KeyboardNavigation.TabNavigation="None">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseLeftButtonDown">
+                        <i:InvokeCommandAction Command="{Binding DragMoveCommand}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="50" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="50" />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock
+                    Grid.Column="0"
+                    Margin="10,0"
+                    VerticalAlignment="Center"
+                    FontSize="12"
+                    Foreground="{DynamicResource BrushCaptionForeground}"
+                    Text="{Binding Title}" />
+
+                <Button
+                    Grid.Column="4"
+                    Command="{Binding CloseCommand}"
+                    Style="{StaticResource CloseBtnStyle}"
+                    ToolTip="{DynamicResource Close}">
+                    <Path
+                        Width="{Binding CloseIcon.Width}"
+                        Height="{Binding CloseIcon.Height}"
+                        Data="{Binding CloseIcon.Data}"
+                        Fill="{Binding CloseIcon.Fill}"
+                        Stretch="UniformToFill" />
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseEnter">
+                            <i:InvokeCommandAction Command="{Binding CloseEnterCommand}" />
+                        </i:EventTrigger>
+                        <i:EventTrigger EventName="MouseLeave">
+                            <i:InvokeCommandAction Command="{Binding CloseLeaveCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+            </Grid>
+
+            <StackPanel
+                Grid.Row="1"
+                MinWidth="250"
+                Margin="15,10"
+                Orientation="Vertical">
+
+                <Button
+                    Width="160"
+                    Height="35"
+                    Margin="0,10,0,0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Command="{Binding ParseSelectedItemCommand}"
+                    Content="{DynamicResource ParseSelectedItem}"
+                    FontSize="12"
+                    Foreground="{DynamicResource BrushText}"
+                    Style="{StaticResource BtnStyle}" />
+
+                <Button
+                    Width="160"
+                    Height="35"
+                    Margin="0,30,0,0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Command="{Binding ParseCurrentSectionCommand}"
+                    Content="{DynamicResource ParseCurrentSection}"
+                    FontSize="12"
+                    Foreground="{DynamicResource BrushText}"
+                    Style="{StaticResource BtnStyle}" />
+
+                <Button
+                    Width="160"
+                    Height="35"
+                    Margin="0,30,0,0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Command="{Binding ParseAllCommand}"
+                    Content="{DynamicResource ParseAll}"
+                    FontSize="12"
+                    Foreground="{DynamicResource BrushText}"
+                    Style="{StaticResource BtnStyle}" />
+
+                <CheckBox
+                    Margin="0,30,0,0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Content="{DynamicResource SetParseDefault}"
+                    Foreground="{DynamicResource BrushTextDark}"
+                    IsChecked="{Binding IsParseDefault, Mode=TwoWay}"
+                    Style="{StaticResource CheckBoxStyle}" />
+
+            </StackPanel>
+        </Grid>
+    </Border>
+</UserControl>

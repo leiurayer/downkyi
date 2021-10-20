@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31019.35
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DownKyi", "DownKyi\DownKyi.csproj", "{97075FCD-6E8F-4FF9-B73A-994197F3765A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4FDE0364-F65B-4812-BFE8-34E886624FBD} = {4FDE0364-F65B-4812-BFE8-34E886624FBD}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DownKyi.Core", "DownKyi.Core\DownKyi.Core.csproj", "{4FDE0364-F65B-4812-BFE8-34E886624FBD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{97075FCD-6E8F-4FF9-B73A-994197F3765A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97075FCD-6E8F-4FF9-B73A-994197F3765A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97075FCD-6E8F-4FF9-B73A-994197F3765A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97075FCD-6E8F-4FF9-B73A-994197F3765A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4FDE0364-F65B-4812-BFE8-34E886624FBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FDE0364-F65B-4812-BFE8-34E886624FBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FDE0364-F65B-4812-BFE8-34E886624FBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FDE0364-F65B-4812-BFE8-34E886624FBD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B8FC6858-6EAD-46C9-AC9A-01E6DEBA32BC}
+	EndGlobalSection
+EndGlobal
