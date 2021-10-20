@@ -1,0 +1,73 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:DownKyi.Themes.Styles">
+
+    <Style x:Key="BtnStyle" TargetType="{x:Type Button}">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="BorderBrush" Value="{x:Null}" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border
+                        Padding="10,5"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="5">
+                        <ContentPresenter
+                            Name="content"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center" />
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource BrushPrimaryTranslucent}" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="False">
+                            <Setter Property="Background" Value="{DynamicResource BrushPrimary}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="BtnBorderStyle" TargetType="{x:Type Button}">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Background" Value="{DynamicResource BrushBackground}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderBrush" Value="{x:Null}" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border
+                        Padding="10,5"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{DynamicResource BrushPrimary}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="5">
+                        <ContentPresenter
+                            Name="content"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center" />
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource BrushPrimaryTranslucent3}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

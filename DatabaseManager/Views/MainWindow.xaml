@@ -1,0 +1,32 @@
+﻿<Window x:Class="DatabaseManager.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:prism="http://prismlibrary.com/" xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        prism:ViewModelLocator.AutoWireViewModel="True"
+        Title="{Binding Title}" Height="700" Width="1200">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <ListBox Grid.Column="0" BorderThickness="0 0 1 0">
+            <ListBoxItem Content="Cover">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseLeftButtonUp">
+                        <i:InvokeCommandAction Command="{Binding CoverCommand}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </ListBoxItem>
+            <ListBoxItem Content="Header">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseLeftButtonUp">
+                        <i:InvokeCommandAction Command="{Binding HeaderCommand}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </ListBoxItem>
+        </ListBox>
+
+        <ContentControl Grid.Column="1" prism:RegionManager.RegionName="ContentRegion" />
+    </Grid>
+</Window>

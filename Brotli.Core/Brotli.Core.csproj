@@ -1,0 +1,46 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net45;netstandard2.0</TargetFrameworks>
+    <Version>2.1.1.0</Version>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>Brotli.NET</PackageId>
+    <Authors>Jinjun Xie</Authors>
+    <Company>Jinjun Xie</Company>
+    <Copyright>Copyright Jinjun Xie 2016</Copyright>
+    <PackageLicenseUrl></PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/XieJJ99/brotli.net</PackageProjectUrl>
+    <PackageTags>Brotli Compress Decompress .NET Standard Stream</PackageTags>
+    <PackageReleaseNotes>Add async stream support, update brotli core to v1.0.9</PackageReleaseNotes>
+    <Description>Supported on dotnet standard2(Windows/Linux/OSX), provide similar interface to Google offical API.Quality and window control is supported.
+The library use the native runtime and its performance should be better than System.IO.Compress.BrotliStream.
+For more document,please visit https://github.com/XieJJ99/brotli.net.</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <AssemblyVersion>2.1.1.0</AssemblyVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- <None Update="runtimes\**" Pack="true" PackagePath="." /> -->
+    <None Include="runtimes\**">
+      <PackagePath>runtimes</PackagePath>
+      <Pack>true</Pack>
+    </None>    
+  </ItemGroup>
+  <Import Project="build\Brotli.NET.targets" />
+  <ItemGroup>
+    <None Remove="build\Brotli.NET.targets~RF6be2dbfa.TMP" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- <None Update="runtimes\**" Pack="true" PackagePath="." /> -->
+    <!-- <None Include="runtimes\**\*.dll">
+      <PackagePath>build\runtimes</PackagePath>
+      <Pack>true</Pack>
+    </None>     -->
+    <None Include="build\Brotli.NET.targets">
+      <PackagePath>build</PackagePath>
+      <Pack>true</Pack>
+    </None>    
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="System.Runtime.InteropServices.RuntimeInformation" Version="4.3.0" Condition=" '$(TargetFramework)' == 'net45' " />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31019.35
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DownKyi", "DownKyi\DownKyi.csproj", "{97075FCD-6E8F-4FF9-B73A-994197F3765A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4FDE0364-F65B-4812-BFE8-34E886624FBD} = {4FDE0364-F65B-4812-BFE8-34E886624FBD}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DownKyi.Core", "DownKyi.Core\DownKyi.Core.csproj", "{4FDE0364-F65B-4812-BFE8-34E886624FBD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Brotli.Core", "Brotli.Core\Brotli.Core.csproj", "{3107CD63-E257-455E-AE81-1FD3582B067A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DownKyi.Core.Test", "DownKyi.Core.Test\DownKyi.Core.Test.csproj", "{81B9719E-DA29-444F-BB72-CBD5819A654D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseManager", "DatabaseManager\DatabaseManager.csproj", "{95F12C16-86B5-43D5-AF3E-D2489E2DB239}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{97075FCD-6E8F-4FF9-B73A-994197F3765A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97075FCD-6E8F-4FF9-B73A-994197F3765A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97075FCD-6E8F-4FF9-B73A-994197F3765A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97075FCD-6E8F-4FF9-B73A-994197F3765A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4FDE0364-F65B-4812-BFE8-34E886624FBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FDE0364-F65B-4812-BFE8-34E886624FBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FDE0364-F65B-4812-BFE8-34E886624FBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FDE0364-F65B-4812-BFE8-34E886624FBD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3107CD63-E257-455E-AE81-1FD3582B067A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3107CD63-E257-455E-AE81-1FD3582B067A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3107CD63-E257-455E-AE81-1FD3582B067A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3107CD63-E257-455E-AE81-1FD3582B067A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81B9719E-DA29-444F-BB72-CBD5819A654D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81B9719E-DA29-444F-BB72-CBD5819A654D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81B9719E-DA29-444F-BB72-CBD5819A654D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81B9719E-DA29-444F-BB72-CBD5819A654D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95F12C16-86B5-43D5-AF3E-D2489E2DB239}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95F12C16-86B5-43D5-AF3E-D2489E2DB239}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95F12C16-86B5-43D5-AF3E-D2489E2DB239}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95F12C16-86B5-43D5-AF3E-D2489E2DB239}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B8FC6858-6EAD-46C9-AC9A-01E6DEBA32BC}
+	EndGlobalSection
+EndGlobal

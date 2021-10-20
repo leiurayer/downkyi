@@ -1,0 +1,15 @@
+﻿<prism:PrismApplication
+    x:Class="DownKyi.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:DownKyi"
+    xmlns:prism="http://prismlibrary.com/">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Themes/ThemeDefault.xaml" />
+                <ResourceDictionary Source="Languages/Default.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</prism:PrismApplication>

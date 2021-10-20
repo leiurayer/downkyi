@@ -1,0 +1,28 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:DownKyi.Themes">
+    <ResourceDictionary.MergedDictionaries>
+        <!--  每个主题都相同  -->
+        <ResourceDictionary Source="ColorBrush.xaml" />
+
+        <!--  根据实际需要调整  -->
+        <ResourceDictionary Source="Colors/ColorDiy.xaml" />
+        <ResourceDictionary Source="Styles/StyleBtn.xaml" />
+        <ResourceDictionary Source="Styles/StyleImageBtn.xaml" />
+        <ResourceDictionary Source="Styles/StyleSystemBtn.xaml" />
+        <ResourceDictionary Source="Styles/StyleCheckBox.xaml" />
+        <ResourceDictionary Source="Styles/StyleListBox.xaml" />
+        <ResourceDictionary Source="Styles/StyleListView.xaml" />
+        <ResourceDictionary Source="Styles/StyleRadio.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <!--  设置字体  -->
+    <Style TargetType="{x:Type TextElement}">
+        <Setter Property="FontFamily" Value="Microsoft YaHei UI, Source Han Sans Normal" />
+    </Style>
+    <Style TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily" Value="Microsoft YaHei UI, Source Han Sans Normal" />
+    </Style>
+
+</ResourceDictionary>

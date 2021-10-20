@@ -1,0 +1,18 @@
+﻿<UserControl x:Class="DatabaseManager.Views.ViewCover"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:prism="http://prismlibrary.com/"             
+             prism:ViewModelLocator.AutoWireViewModel="True">
+    <Grid>
+        <DataGrid ItemsSource="{Binding CoverList}" AutoGenerateColumns="False" >
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Avid" Binding="{Binding Avid}"/>
+                <DataGridTextColumn Header="Bvid" Binding="{Binding Bvid}"/>
+                <DataGridTextColumn Header="Cid" Binding="{Binding Cid}"/>
+                <DataGridTextColumn Header="Url" Binding="{Binding Url}"/>
+                <DataGridTextColumn Header="Md5" Binding="{Binding Md5}"/>
+            </DataGrid.Columns>
+
+        </DataGrid>
+    </Grid>
+</UserControl>
