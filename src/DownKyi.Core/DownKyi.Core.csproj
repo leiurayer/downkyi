@@ -36,6 +36,9 @@
     <Reference Include="Brotli.Core, Version=2.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Brotli.NET.2.1.1\lib\net45\Brotli.Core.dll</HintPath>
     </Reference>
+    <Reference Include="Google.Protobuf, Version=3.18.1.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Protobuf.3.18.1\lib\net45\Google.Protobuf.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -45,13 +48,25 @@
       <HintPath>..\packages\QRCoder.1.4.1\lib\net40\QRCoder.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
     <Reference Include="System.Core" />
     <Reference Include="System.Data.SQLite, Version=1.0.112.1, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Data.SQLite.Core.1.0.112.2\lib\net40\System.Data.SQLite.dll</HintPath>
     </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Management" />
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
     <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.5.0.0\lib\net45\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
       <Private>True</Private>
@@ -123,6 +138,8 @@
     <Compile Include="BiliApi\Cheese\Models\CheeseStat.cs" />
     <Compile Include="BiliApi\Cheese\Models\CheeseUpInfo.cs" />
     <Compile Include="BiliApi\Cheese\Models\CheeseView.cs" />
+    <Compile Include="BiliApi\Danmaku\DanmakuProtobuf.cs" />
+    <Compile Include="BiliApi\Danmaku\Models\BiliDanmaku.cs" />
     <Compile Include="BiliApi\Login\LoginHelper.cs" />
     <Compile Include="BiliApi\Models\BaseModel.cs" />
     <Compile Include="BiliApi\Login\LoginInfo.cs" />
@@ -134,6 +151,7 @@
     <Compile Include="BiliApi\Login\Models\UserInfoForNavigation.cs" />
     <Compile Include="BiliApi\Models\Dimension.cs" />
     <Compile Include="BiliApi\Models\VideoOwner.cs" />
+    <Compile Include="BiliApi\protobuf\bilibili\community\service\dm\v1\Dm.cs" />
     <Compile Include="BiliApi\VideoStream\Models\PlayUrl.cs" />
     <Compile Include="BiliApi\VideoStream\Models\PlayUrlDash.cs" />
     <Compile Include="BiliApi\VideoStream\Models\PlayUrlDashVideo.cs" />
@@ -161,6 +179,20 @@
     <Compile Include="BiliApi\WebClient.cs" />
     <Compile Include="BiliApi\Zone\VideoZone.cs" />
     <Compile Include="BiliApi\Zone\ZoneAttr.cs" />
+    <Compile Include="Danmaku2Ass\Bilibili.cs" />
+    <Compile Include="Danmaku2Ass\Collision.cs" />
+    <Compile Include="Danmaku2Ass\Config.cs" />
+    <Compile Include="Danmaku2Ass\Creater.cs" />
+    <Compile Include="Danmaku2Ass\Danmaku.cs" />
+    <Compile Include="Danmaku2Ass\Display.cs" />
+    <Compile Include="Danmaku2Ass\Filter.cs" />
+    <Compile Include="Danmaku2Ass\Producer.cs" />
+    <Compile Include="Danmaku2Ass\Studio.cs" />
+    <Compile Include="Danmaku2Ass\Subtitle.cs" />
+    <Compile Include="Danmaku2Ass\Utils.cs" />
+    <Compile Include="Downloader\MultiThreadDownloader.cs" />
+    <Compile Include="Downloader\PartialDownloader.cs" />
+    <Compile Include="FFmpeg\FFmpegHelper.cs" />
     <Compile Include="Logging\LogInfo.cs" />
     <Compile Include="Logging\LogLevel.cs" />
     <Compile Include="Logging\LogManager.cs" />
@@ -210,6 +242,7 @@
     <Compile Include="Utils\Web.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
@@ -221,6 +254,8 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Brotli.NET.2.1.1\build\Brotli.NET.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Brotli.NET.2.1.1\build\Brotli.NET.targets'))" />
     <Error Condition="!Exists('..\packages\System.Data.SQLite.Core.1.0.112.2\build\net40\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Data.SQLite.Core.1.0.112.2\build\net40\System.Data.SQLite.Core.targets'))" />
+    <Error Condition="!Exists('..\packages\Google.Protobuf.Tools.3.18.1\build\Google.Protobuf.Tools.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Google.Protobuf.Tools.3.18.1\build\Google.Protobuf.Tools.targets'))" />
   </Target>
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.112.2\build\net40\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.112.2\build\net40\System.Data.SQLite.Core.targets')" />
+  <Import Project="..\packages\Google.Protobuf.Tools.3.18.1\build\Google.Protobuf.Tools.targets" Condition="Exists('..\packages\Google.Protobuf.Tools.3.18.1\build\Google.Protobuf.Tools.targets')" />
 </Project>

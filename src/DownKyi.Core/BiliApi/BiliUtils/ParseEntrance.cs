@@ -13,6 +13,7 @@ namespace DownKyi.Core.BiliApi.BiliUtils
     /// 番剧（电影、电视剧）md号：md28228367, MD28228367, https://www.bilibili.com/bangumi/media/md28228367 <para/>
     /// 课程ss号：https://www.bilibili.com/cheese/play/ss205 <para/>
     /// 课程ep号：https://www.bilibili.com/cheese/play/ep3489 <para/>
+    /// 收藏夹：ml1329019876, ML1329019876, https://www.bilibili.com/medialist/detail/ml1329019876 <para/>
     /// 用户空间：uid928123, UID928123, uid:928123, UID:928123, https://space.bilibili.com/928123
     /// </summary>
     public static class ParseEntrance
@@ -25,6 +26,7 @@ namespace DownKyi.Core.BiliApi.BiliUtils
         public static readonly string BangumiUrl = $"{WwwUrl}/bangumi/play/";
         public static readonly string BangumiMediaUrl = $"{WwwUrl}/bangumi/media/";
         public static readonly string CheeseUrl = $"{WwwUrl}/cheese/play/";
+        public static readonly string FavoritesUrl = $"{WwwUrl}/medialist/detail/";
 
         #region 视频
 
@@ -286,6 +288,52 @@ namespace DownKyi.Core.BiliApi.BiliUtils
         public static long GetCheeseEpisodeId(string input)
         {
             return IsCheeseEpisodeUrl(input) ? Number.GetInt(GetCheeseId(input).Remove(0, 2)) : -1;
+        }
+
+        #endregion
+
+        #region 收藏夹
+
+        /// <summary>
+        /// 是否为收藏夹id
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public static bool IsFavoritesId(string input)
+        {
+            return IsIntId(input, "ml");
+        }
+
+        /// <summary>
+        /// 是否为收藏夹url
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public static bool IsFavoritesUrl(string input)
+        {
+            string favoritesId = GetId(input, FavoritesUrl);
+            return IsFavoritesId(favoritesId);
+        }
+
+        /// <summary>
+        /// 获取收藏夹id
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public static long GetFavoritesId(string input)
+        {
+            if (IsFavoritesId(input))
+            {
+                return Number.GetInt(input.Remove(0, 2));
+            }
+            else if (IsFavoritesUrl(input))
+            {
+                return Number.GetInt(GetId(input, FavoritesUrl).Remove(0, 2));
+            }
+            else
+            {
+                return -1;
+            }
         }
 
         #endregion
