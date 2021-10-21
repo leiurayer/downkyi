@@ -140,6 +140,8 @@
     <Compile Include="BiliApi\Cheese\Models\CheeseView.cs" />
     <Compile Include="BiliApi\Danmaku\DanmakuProtobuf.cs" />
     <Compile Include="BiliApi\Danmaku\Models\BiliDanmaku.cs" />
+    <Compile Include="BiliApi\Favorites\FavoritesInfo.cs" />
+    <Compile Include="BiliApi\Favorites\Models\FavoritesMetaInfo.cs" />
     <Compile Include="BiliApi\Login\LoginHelper.cs" />
     <Compile Include="BiliApi\Models\BaseModel.cs" />
     <Compile Include="BiliApi\Login\LoginInfo.cs" />
