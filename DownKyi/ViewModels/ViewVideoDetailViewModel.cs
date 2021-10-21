@@ -196,7 +196,7 @@ namespace DownKyi.ViewModels
             }
             catch (Exception e)
             {
-                Core.Utils.Debug.Console.PrintLine("InputCommand()发生异常: {0}", e);
+                Core.Utils.Debugging.Console.PrintLine("InputCommand()发生异常: {0}", e);
                 LogManager.Error(Tag, e);
 
                 LoadingVisibility = Visibility.Collapsed;
@@ -355,7 +355,7 @@ namespace DownKyi.ViewModels
             }
             catch (Exception e)
             {
-                Core.Utils.Debug.Console.PrintLine("ParseCommand()发生异常: {0}", e);
+                Core.Utils.Debugging.Console.PrintLine("ParseCommand()发生异常: {0}", e);
                 LogManager.Error(Tag, e);
 
                 LoadingVisibility = Visibility.Collapsed;
@@ -462,7 +462,7 @@ namespace DownKyi.ViewModels
             }
             catch (Exception e)
             {
-                Core.Utils.Debug.Console.PrintLine("ParseCommand()发生异常: {0}", e);
+                Core.Utils.Debugging.Console.PrintLine("ParseCommand()发生异常: {0}", e);
                 LogManager.Error(Tag, e);
 
                 LoadingVisibility = Visibility.Collapsed;
