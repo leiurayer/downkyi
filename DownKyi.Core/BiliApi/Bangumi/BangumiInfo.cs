@@ -27,7 +27,7 @@ namespace DownKyi.Core.BiliApi.Bangumi
             }
             catch (Exception e)
             {
-                Utils.Debug.Console.PrintLine("BangumiMediaInfo()发生异常: {0}", e);
+                Utils.Debugging.Console.PrintLine("BangumiMediaInfo()发生异常: {0}", e);
                 LogManager.Error("BangumiInfo", e);
                 return null;
             }
@@ -58,7 +58,7 @@ namespace DownKyi.Core.BiliApi.Bangumi
             }
             catch (Exception e)
             {
-                Utils.Debug.Console.PrintLine("BangumiSeasonInfo()发生异常: {0}", e);
+                Utils.Debugging.Console.PrintLine("BangumiSeasonInfo()发生异常: {0}", e);
                 LogManager.Error("BangumiInfo", e);
                 return null;
             }

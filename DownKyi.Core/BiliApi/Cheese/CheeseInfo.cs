@@ -33,7 +33,7 @@ namespace DownKyi.Core.BiliApi.Cheese
             }
             catch (Exception e)
             {
-                Utils.Debug.Console.PrintLine("CheeseViewInfo()发生异常: {0}", e);
+                Utils.Debugging.Console.PrintLine("CheeseViewInfo()发生异常: {0}", e);
                 LogManager.Error("CheeseInfo", e); 
                 return null;
             }
@@ -60,7 +60,7 @@ namespace DownKyi.Core.BiliApi.Cheese
             }
             catch (Exception e)
             {
-                Utils.Debug.Console.PrintLine("CheeseEpisodeList()发生异常: {0}", e);
+                Utils.Debugging.Console.PrintLine("CheeseEpisodeList()发生异常: {0}", e);
                 LogManager.Error("CheeseInfo", e); 
                 return null;
             }

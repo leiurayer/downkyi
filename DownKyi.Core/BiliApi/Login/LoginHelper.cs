@@ -38,7 +38,7 @@ namespace DownKyi.Core.BiliApi.Login
                 }
                 catch (Exception e)
                 {
-                    Utils.Debug.Console.PrintLine("SaveLoginInfoCookies()发生异常: {0}", e);
+                    Utils.Debugging.Console.PrintLine("SaveLoginInfoCookies()发生异常: {0}", e);
                     Logging.LogManager.Error(e);
                     return false;
                 }
@@ -70,7 +70,7 @@ namespace DownKyi.Core.BiliApi.Login
                 }
                 catch (Exception e)
                 {
-                    Utils.Debug.Console.PrintLine("GetLoginInfoCookies()发生异常: {0}", e);
+                    Utils.Debugging.Console.PrintLine("GetLoginInfoCookies()发生异常: {0}", e);
                     Logging.LogManager.Error(e);
                     if (File.Exists(tempFile))
                     {
@@ -135,7 +135,7 @@ namespace DownKyi.Core.BiliApi.Login
                 }
                 catch (IOException e)
                 {
-                    Utils.Debug.Console.PrintLine("Logout()发生异常: {0}", e);
+                    Utils.Debugging.Console.PrintLine("Logout()发生异常: {0}", e);
                     Logging.LogManager.Error(e);
                     return false;
                 }

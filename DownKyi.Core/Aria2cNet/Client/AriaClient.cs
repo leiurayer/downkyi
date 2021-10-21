@@ -1093,7 +1093,7 @@ namespace DownKyi.Core.Aria2cNet.Client
             }
             catch (WebException e)
             {
-                Utils.Debug.Console.PrintLine("Request()发生Web异常: {0}", e);
+                Utils.Debugging.Console.PrintLine("Request()发生Web异常: {0}", e);
                 LogManager.Error("AriaClient", e);
                 //return Request(url, parameters, retry - 1);
 
@@ -1114,13 +1114,13 @@ namespace DownKyi.Core.Aria2cNet.Client
             }
             catch (IOException e)
             {
-                Utils.Debug.Console.PrintLine("Request()发生IO异常: {0}", e);
+                Utils.Debugging.Console.PrintLine("Request()发生IO异常: {0}", e);
                 LogManager.Error("AriaClient", e);
                 return Request(url, parameters, retry - 1);
             }
             catch (Exception e)
             {
-                Utils.Debug.Console.PrintLine("Request()发生其他异常: {0}", e);
+                Utils.Debugging.Console.PrintLine("Request()发生其他异常: {0}", e);
                 LogManager.Error("AriaClient", e);
                 return Request(url, parameters, retry - 1);
             }

@@ -30,7 +30,7 @@ namespace DownKyi.Core.BiliApi.Video
             }
             catch (Exception e)
             {
-                Utils.Debug.Console.PrintLine("RegionDynamicList()发生异常: {0}", e);
+                Utils.Debugging.Console.PrintLine("RegionDynamicList()发生异常: {0}", e);
                 LogManager.Error("Dynamic", e);
                 return null;
             }

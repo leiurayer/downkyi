@@ -30,7 +30,7 @@ namespace DownKyi.Core.BiliApi.Favorites
             }
             catch (Exception e)
             {
-                Utils.Debug.Console.PrintLine("GetFavoritesInfo()发生异常: {0}", e);
+                Utils.Debugging.Console.PrintLine("GetFavoritesInfo()发生异常: {0}", e);
                 LogManager.Error("FavoritesInfo", e);
                 return null;
             }

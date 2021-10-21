@@ -69,7 +69,7 @@ namespace DownKyi.Core.Aria2cNet
                 }
                 if (status.Result.Result.ErrorCode != null && status.Result.Result.ErrorCode != "0")
                 {
-                    Utils.Debug.Console.PrintLine("ErrorMessage: " + status.Result.Result.ErrorMessage);
+                    Utils.Debugging.Console.PrintLine("ErrorMessage: " + status.Result.Result.ErrorMessage);
                     LogManager.Error("AriaManager", status.Result.Result.ErrorMessage);
 
                     //// 如果返回状态码不是200，则继续
@@ -81,7 +81,7 @@ namespace DownKyi.Core.Aria2cNet
 
                     // aira中删除记录
                     var ariaRemove1 = AriaClient.RemoveDownloadResultAsync(gid);
-                    Utils.Debug.Console.PrintLine(ariaRemove1);
+                    Utils.Debugging.Console.PrintLine(ariaRemove1);
                     LogManager.Debug("AriaManager", ariaRemove1.Result.Result);
 
                     // 返回回调信息，退出函数

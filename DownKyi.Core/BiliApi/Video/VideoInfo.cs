@@ -33,7 +33,7 @@ namespace DownKyi.Core.BiliApi.Video
             }
             catch (Exception e)
             {
-                Utils.Debug.Console.PrintLine("VideoInfo()发生异常: {0}", e);
+                Utils.Debugging.Console.PrintLine("VideoInfo()发生异常: {0}", e);
                 LogManager.Error("VideoInfo", e);
                 return null;
             }
@@ -64,7 +64,7 @@ namespace DownKyi.Core.BiliApi.Video
             }
             catch (Exception e)
             {
-                Utils.Debug.Console.PrintLine("VideoDescription()发生异常: {0}", e);
+                Utils.Debugging.Console.PrintLine("VideoDescription()发生异常: {0}", e);
                 LogManager.Error("VideoInfo", e);
                 return null;
             }
@@ -95,7 +95,7 @@ namespace DownKyi.Core.BiliApi.Video
             }
             catch (Exception e)
             {
-                Utils.Debug.Console.PrintLine("VideoPagelist()发生异常: {0}", e);
+                Utils.Debugging.Console.PrintLine("VideoPagelist()发生异常: {0}", e);
                 LogManager.Error("VideoInfo", e);
                 return null;
             }
