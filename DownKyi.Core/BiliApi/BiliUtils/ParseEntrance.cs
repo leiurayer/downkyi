@@ -496,8 +496,16 @@ namespace DownKyi.Core.BiliApi.BiliUtils
             url = DeleteUrlParam(url);
 
             url = url.Replace(ShareWwwUrl, WwwUrl);
-            url = url.Replace(ShortUrl, VideoUrl);
             url = url.Replace(MobileUrl, WwwUrl);
+
+            if (url.Contains("b23.tv/ss") || url.Contains("b23.tv/ep"))
+            {
+                url = url.Replace(ShortUrl, BangumiUrl);
+            }
+            else
+            {
+                url = url.Replace(ShortUrl, VideoUrl);
+            }
 
             if (!url.StartsWith(baseUrl)) { return ""; }
 
