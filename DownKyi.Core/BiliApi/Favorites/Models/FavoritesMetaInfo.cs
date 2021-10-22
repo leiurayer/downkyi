@@ -50,30 +50,4 @@ namespace DownKyi.Core.BiliApi.Favorites.Models
         public int MediaCount { get; set; }
     }
 
-    public class FavUpper : BaseModel
-    {
-        [JsonProperty("mid")]
-        public long Mid { get; set; }
-        [JsonProperty("name")]
-        public string Name { get; set; }
-        [JsonProperty("face")]
-        public string Face { get; set; }
-        [JsonProperty("followed")]
-        public bool Followed { get; set; }
-        // vip_type
-        // vip_statue
-    }
-
-    public class FavStatus : BaseModel
-    {
-        [JsonProperty("collect")]
-        public long Collect { get; set; }
-        [JsonProperty("play")]
-        public long Play { get; set; }
-        [JsonProperty("thumb_up")]
-        public long ThumbUp { get; set; }
-        [JsonProperty("share")]
-        public long Share { get; set; }
-    }
-
 }

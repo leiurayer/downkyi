@@ -141,7 +141,15 @@
     <Compile Include="BiliApi\Danmaku\DanmakuProtobuf.cs" />
     <Compile Include="BiliApi\Danmaku\Models\BiliDanmaku.cs" />
     <Compile Include="BiliApi\Favorites\FavoritesInfo.cs" />
+    <Compile Include="BiliApi\Favorites\FavoritesResource.cs" />
+    <Compile Include="BiliApi\Favorites\Models\FavoritesList.cs" />
+    <Compile Include="BiliApi\Favorites\Models\FavoritesMedia.cs" />
+    <Compile Include="BiliApi\Favorites\Models\FavoritesMediaId.cs" />
+    <Compile Include="BiliApi\Favorites\Models\FavoritesMediaResource.cs" />
     <Compile Include="BiliApi\Favorites\Models\FavoritesMetaInfo.cs" />
+    <Compile Include="BiliApi\Favorites\Models\FavStatus.cs" />
+    <Compile Include="BiliApi\Favorites\Models\FavUpper.cs" />
+    <Compile Include="BiliApi\Favorites\Models\MediaStatus.cs" />
     <Compile Include="BiliApi\Login\LoginHelper.cs" />
     <Compile Include="BiliApi\Models\BaseModel.cs" />
     <Compile Include="BiliApi\Login\LoginInfo.cs" />
