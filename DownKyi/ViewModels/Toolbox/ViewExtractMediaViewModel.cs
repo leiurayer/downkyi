@@ -60,7 +60,7 @@ namespace DownKyi.ViewModels.Toolbox
                 return;
             }
 
-            VideoPath = SelectVideoFile();
+            VideoPath = DialogUtils.SelectVideoFile();
         }
 
         // 提取音频事件
@@ -154,25 +154,6 @@ namespace DownKyi.ViewModels.Toolbox
         }
 
         #endregion
-
-        /// <summary>
-        /// 选择视频dialog
-        /// </summary>
-        /// <returns></returns>
-        private string SelectVideoFile()
-        {
-            // 选择文件
-            var dialog = new Microsoft.Win32.OpenFileDialog
-            {
-                Filter = "mp4 (*.mp4)|*.mp4"
-            };
-            var showDialog = dialog.ShowDialog();
-            if (showDialog == true)
-            {
-                return dialog.FileName;
-            }
-            else { return ""; }
-        }
 
     }
 }
