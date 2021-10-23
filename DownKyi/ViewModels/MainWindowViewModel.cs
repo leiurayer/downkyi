@@ -361,6 +361,43 @@ namespace DownKyi.ViewModels
             {
                 NavigationView(ViewVideoDetailViewModel.Tag, input);
             }
+            // 用户（参数传入mid）
+            else if (ParseEntrance.IsUserId(input))
+            {
+                NavigateToViewUserSpace(ParseEntrance.GetUserId(input));
+            }
+            else if (ParseEntrance.IsUserUrl(input))
+            {
+                NavigateToViewUserSpace(ParseEntrance.GetUserId(input));
+            }
+            // 收藏夹
+            else if (ParseEntrance.IsFavoritesId(input))
+            {
+                NavigationView(ViewPublicFavoritesViewModel.Tag, ParseEntrance.GetFavoritesId(input));
+            }
+            else if (ParseEntrance.IsFavoritesUrl(input))
+            {
+                NavigationView(ViewPublicFavoritesViewModel.Tag, ParseEntrance.GetFavoritesId(input));
+            }
+        }
+
+        /// <summary>
+        /// 导航到用户空间，
+        /// 如果传入的mid与本地登录的mid一致，
+        /// 则进入我的用户空间。
+        /// </summary>
+        /// <param name="mid"></param>
+        private void NavigateToViewUserSpace(long mid)
+        {
+            var userInfo = SettingsManager.GetInstance().GetUserInfo();
+            if (userInfo != null && userInfo.Mid == mid)
+            {
+                NavigationView(ViewMySpaceViewModel.Tag, mid);
+            }
+            else
+            {
+                NavigationView(ViewUserSpaceViewModel.Tag, mid);
+            }
         }
 
         /// <summary>
@@ -368,7 +405,7 @@ namespace DownKyi.ViewModels
         /// </summary>
         /// <param name="viewName"></param>
         /// <param name="param"></param>
-        private void NavigationView(string viewName, string param)
+        private void NavigationView(string viewName, object param)
         {
             LogManager.Debug("OnClipboardUpdated", $"NavigationView: {viewName}, Parameter: {param}");
 
