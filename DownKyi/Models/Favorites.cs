@@ -1,11 +1,9 @@
 ﻿using Prism.Mvvm;
-using System;
 using System.Windows.Media.Imaging;
 
 namespace DownKyi.Models
 {
-    [Serializable]
-    public class VideoInfoView : BindableBase
+    public class Favorites : BindableBase
     {
         public string CoverUrl { get; set; }
         public long UpperMid { get; set; }
@@ -24,13 +22,6 @@ namespace DownKyi.Models
             set { SetProperty(ref title, value); }
         }
 
-        private string videoZone;
-        public string VideoZone
-        {
-            get { return videoZone; }
-            set { SetProperty(ref videoZone, value); }
-        }
-
         private string createTime;
         public string CreateTime
         {
@@ -45,25 +36,11 @@ namespace DownKyi.Models
             set { SetProperty(ref playNumber, value); }
         }
 
-        private string danmakuNumber;
-        public string DanmakuNumber
-        {
-            get { return danmakuNumber; }
-            set { SetProperty(ref danmakuNumber, value); }
-        }
-
         private string likeNumber;
         public string LikeNumber
         {
             get { return likeNumber; }
             set { SetProperty(ref likeNumber, value); }
-        }
-
-        private string coinNumber;
-        public string CoinNumber
-        {
-            get { return coinNumber; }
-            set { SetProperty(ref coinNumber, value); }
         }
 
         private string favoriteNumber;
@@ -80,18 +57,18 @@ namespace DownKyi.Models
             set { SetProperty(ref shareNumber, value); }
         }
 
-        private string replyNumber;
-        public string ReplyNumber
-        {
-            get { return replyNumber; }
-            set { SetProperty(ref replyNumber, value); }
-        }
-
         private string description;
         public string Description
         {
             get { return description; }
             set { SetProperty(ref description, value); }
+        }
+
+        private int mediaCount;
+        public int MediaCount
+        {
+            get { return mediaCount; }
+            set { SetProperty(ref mediaCount, value); }
         }
 
         private string upName;
@@ -107,6 +84,5 @@ namespace DownKyi.Models
             get { return upHeader; }
             set { SetProperty(ref upHeader, value); }
         }
-
     }
 }

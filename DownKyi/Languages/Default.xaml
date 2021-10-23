@@ -62,6 +62,7 @@
     <system:String x:Key="Parse">解析</system:String>
     <system:String x:Key="ParseVideo">解析视频</system:String>
     <system:String x:Key="DownloadSelected">下载选中项</system:String>
+    <system:String x:Key="AddAllToDownload">下载全部</system:String>
 
     <!--  DownloadManager  -->
     <system:String x:Key="Downloading">正在下载</system:String>
@@ -172,6 +173,10 @@
     <system:String x:Key="ExtractMedia">音视频分离</system:String>
     <system:String x:Key="ExtractAudio">提取音频</system:String>
     <system:String x:Key="ExtractVideo">提取视频</system:String>
+
+    <!--  PublicFavorites  -->
+    <system:String x:Key="Favorites">收藏夹</system:String>
+    <system:String x:Key="FavoritesMediaCount">个内容</system:String>
 
     <!--  Dialog  -->
     <system:String x:Key="Cancel">取消</system:String>

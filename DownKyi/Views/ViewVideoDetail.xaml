@@ -243,7 +243,7 @@
                 VerticalAlignment="Center"
                 Command="{Binding DownloadManagerCommand}"
                 Style="{StaticResource ImageBtnStyle}"
-                ToolTip="{DynamicResource DownloadManage}">
+                ToolTip="{DynamicResource DownloadManager}">
                 <ContentControl>
                     <Path
                         Width="{Binding DownloadManage.Width}"
@@ -281,7 +281,7 @@
                         <ContextMenu>
                             <MenuItem Command="{Binding CopyCoverCommand}" Header="{DynamicResource CopyCover}" />
                             <MenuItem Command="{Binding CopyCoverUrlCommand}" Header="{DynamicResource CopyCoverUrl}" />
-                            <!--  复制封面到文件  -->
+                            <!--  TODO 复制封面到文件  -->
                         </ContextMenu>
                     </Image.ContextMenu>
                 </Image>
@@ -335,12 +335,17 @@
                                 Grid.Row="2"
                                 VerticalAlignment="Center"
                                 Orientation="Horizontal">
-                                <TextBlock
-                                    Margin="0,0,10,0"
-                                    Foreground="{DynamicResource BrushTextGrey}"
-                                    Text="{Binding VideoInfoView.PlayNumber, StringFormat={}{0}播放}">
-                                    <TextBlock.Style>
-                                        <Style TargetType="{x:Type TextBlock}">
+                                <StackPanel Margin="0,0,10,0" Orientation="Horizontal">
+                                    <TextBlock
+                                        FontSize="12"
+                                        Foreground="{DynamicResource BrushTextGrey}"
+                                        Text="{Binding VideoInfoView.PlayNumber}" />
+                                    <TextBlock
+                                        FontSize="12"
+                                        Foreground="{DynamicResource BrushTextGrey}"
+                                        Text="{DynamicResource Play}" />
+                                    <StackPanel.Style>
+                                        <Style TargetType="{x:Type StackPanel}">
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{Binding VideoInfoView.PlayNumber}" Value="0">
                                                     <Setter Property="Visibility" Value="Collapsed" />
@@ -350,14 +355,20 @@
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
-                                    </TextBlock.Style>
-                                </TextBlock>
-                                <TextBlock
-                                    Margin="0,0,10,0"
-                                    Foreground="{DynamicResource BrushTextGrey}"
-                                    Text="{Binding VideoInfoView.DanmakuNumber, StringFormat={}{0}弹幕}">
-                                    <TextBlock.Style>
-                                        <Style TargetType="{x:Type TextBlock}">
+                                    </StackPanel.Style>
+                                </StackPanel>
+
+                                <StackPanel Margin="0,0,10,0" Orientation="Horizontal">
+                                    <TextBlock
+                                        FontSize="12"
+                                        Foreground="{DynamicResource BrushTextGrey}"
+                                        Text="{Binding VideoInfoView.DanmakuNumber}" />
+                                    <TextBlock
+                                        FontSize="12"
+                                        Foreground="{DynamicResource BrushTextGrey}"
+                                        Text="{DynamicResource Danmaku}" />
+                                    <StackPanel.Style>
+                                        <Style TargetType="{x:Type StackPanel}">
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{Binding VideoInfoView.DanmakuNumber}" Value="0">
                                                     <Setter Property="Visibility" Value="Collapsed" />
@@ -367,14 +378,20 @@
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
-                                    </TextBlock.Style>
-                                </TextBlock>
-                                <TextBlock
-                                    Margin="0,0,10,0"
-                                    Foreground="{DynamicResource BrushTextGrey}"
-                                    Text="{Binding VideoInfoView.LikeNumber, StringFormat={}{0}点赞}">
-                                    <TextBlock.Style>
-                                        <Style TargetType="{x:Type TextBlock}">
+                                    </StackPanel.Style>
+                                </StackPanel>
+
+                                <StackPanel Margin="0,0,10,0" Orientation="Horizontal">
+                                    <TextBlock
+                                        FontSize="12"
+                                        Foreground="{DynamicResource BrushTextGrey}"
+                                        Text="{Binding VideoInfoView.LikeNumber}" />
+                                    <TextBlock
+                                        FontSize="12"
+                                        Foreground="{DynamicResource BrushTextGrey}"
+                                        Text="{DynamicResource Like}" />
+                                    <StackPanel.Style>
+                                        <Style TargetType="{x:Type StackPanel}">
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{Binding VideoInfoView.LikeNumber}" Value="0">
                                                     <Setter Property="Visibility" Value="Collapsed" />
@@ -384,14 +401,20 @@
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
-                                    </TextBlock.Style>
-                                </TextBlock>
-                                <TextBlock
-                                    Margin="0,0,10,0"
-                                    Foreground="{DynamicResource BrushTextGrey}"
-                                    Text="{Binding VideoInfoView.CoinNumber, StringFormat={}{0}投币}">
-                                    <TextBlock.Style>
-                                        <Style TargetType="{x:Type TextBlock}">
+                                    </StackPanel.Style>
+                                </StackPanel>
+
+                                <StackPanel Margin="0,0,10,0" Orientation="Horizontal">
+                                    <TextBlock
+                                        FontSize="12"
+                                        Foreground="{DynamicResource BrushTextGrey}"
+                                        Text="{Binding VideoInfoView.CoinNumber}" />
+                                    <TextBlock
+                                        FontSize="12"
+                                        Foreground="{DynamicResource BrushTextGrey}"
+                                        Text="{DynamicResource Coin}" />
+                                    <StackPanel.Style>
+                                        <Style TargetType="{x:Type StackPanel}">
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{Binding VideoInfoView.CoinNumber}" Value="0">
                                                     <Setter Property="Visibility" Value="Collapsed" />
@@ -401,14 +424,20 @@
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
-                                    </TextBlock.Style>
-                                </TextBlock>
-                                <TextBlock
-                                    Margin="0,0,10,0"
-                                    Foreground="{DynamicResource BrushTextGrey}"
-                                    Text="{Binding VideoInfoView.FavoriteNumber, StringFormat={}{0}收藏}">
-                                    <TextBlock.Style>
-                                        <Style TargetType="{x:Type TextBlock}">
+                                    </StackPanel.Style>
+                                </StackPanel>
+
+                                <StackPanel Margin="0,0,10,0" Orientation="Horizontal">
+                                    <TextBlock
+                                        FontSize="12"
+                                        Foreground="{DynamicResource BrushTextGrey}"
+                                        Text="{Binding VideoInfoView.FavoriteNumber}" />
+                                    <TextBlock
+                                        FontSize="12"
+                                        Foreground="{DynamicResource BrushTextGrey}"
+                                        Text="{DynamicResource Favorite}" />
+                                    <StackPanel.Style>
+                                        <Style TargetType="{x:Type StackPanel}">
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{Binding VideoInfoView.FavoriteNumber}" Value="0">
                                                     <Setter Property="Visibility" Value="Collapsed" />
@@ -418,14 +447,20 @@
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
-                                    </TextBlock.Style>
-                                </TextBlock>
-                                <TextBlock
-                                    Margin="0,0,10,0"
-                                    Foreground="{DynamicResource BrushTextGrey}"
-                                    Text="{Binding VideoInfoView.ShareNumber, StringFormat={}{0}分享}">
-                                    <TextBlock.Style>
-                                        <Style TargetType="{x:Type TextBlock}">
+                                    </StackPanel.Style>
+                                </StackPanel>
+
+                                <StackPanel Margin="0,0,10,0" Orientation="Horizontal">
+                                    <TextBlock
+                                        FontSize="12"
+                                        Foreground="{DynamicResource BrushTextGrey}"
+                                        Text="{Binding VideoInfoView.ShareNumber}" />
+                                    <TextBlock
+                                        FontSize="12"
+                                        Foreground="{DynamicResource BrushTextGrey}"
+                                        Text="{DynamicResource Share}" />
+                                    <StackPanel.Style>
+                                        <Style TargetType="{x:Type StackPanel}">
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{Binding VideoInfoView.ShareNumber}" Value="0">
                                                     <Setter Property="Visibility" Value="Collapsed" />
@@ -435,14 +470,20 @@
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
-                                    </TextBlock.Style>
-                                </TextBlock>
-                                <TextBlock
-                                    Margin="0,0,10,0"
-                                    Foreground="{DynamicResource BrushTextGrey}"
-                                    Text="{Binding VideoInfoView.ReplyNumber, StringFormat={}{0}评论}">
-                                    <TextBlock.Style>
-                                        <Style TargetType="{x:Type TextBlock}">
+                                    </StackPanel.Style>
+                                </StackPanel>
+
+                                <StackPanel Margin="0,0,10,0" Orientation="Horizontal">
+                                    <TextBlock
+                                        FontSize="12"
+                                        Foreground="{DynamicResource BrushTextGrey}"
+                                        Text="{Binding VideoInfoView.ReplyNumber}" />
+                                    <TextBlock
+                                        FontSize="12"
+                                        Foreground="{DynamicResource BrushTextGrey}"
+                                        Text="{DynamicResource Reply}" />
+                                    <StackPanel.Style>
+                                        <Style TargetType="{x:Type StackPanel}">
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{Binding VideoInfoView.ReplyNumber}" Value="0">
                                                     <Setter Property="Visibility" Value="Collapsed" />
@@ -452,8 +493,8 @@
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
-                                    </TextBlock.Style>
-                                </TextBlock>
+                                    </StackPanel.Style>
+                                </StackPanel>
                             </StackPanel>
                         </Grid>
 
@@ -464,7 +505,7 @@
                             ToolTip="{Binding VideoInfoView.UpName}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="MouseLeftButtonUp">
-                                    <i:InvokeCommandAction Command="{Binding}" />
+                                    <i:InvokeCommandAction Command="{Binding UpperCommand}" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
 
@@ -482,6 +523,7 @@
                             <TextBlock
                                 Margin="0,2,0,0"
                                 HorizontalAlignment="Center"
+                                FontSize="12"
                                 Foreground="{DynamicResource BrushTextDark}"
                                 Text="{Binding VideoInfoView.UpName}"
                                 TextTrimming="CharacterEllipsis" />
@@ -496,6 +538,7 @@
                             Background="{x:Null}"
                             BorderBrush="{x:Null}"
                             BorderThickness="0"
+                            FontSize="12"
                             Foreground="{DynamicResource BrushTextDark}"
                             IsReadOnly="True"
                             Text="{Binding VideoInfoView.Description}"

@@ -39,5 +39,6 @@
     <Color x:Key="ColorText">white</Color>
     <Color x:Key="ColorTextDark">black</Color>
     <Color x:Key="ColorTextGrey">#FF999999</Color>
+    <Color x:Key="ColorTextGrey2">#FF757575</Color>
 
 </ResourceDictionary>

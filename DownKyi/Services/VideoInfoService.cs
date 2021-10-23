@@ -200,7 +200,7 @@ namespace DownKyi.Services
             {
                 videoInfoView.CoverUrl = coverUrl;
 
-                videoInfoView.Cover = new BitmapImage(new Uri(cover));
+                videoInfoView.Cover = cover == null ? null : new BitmapImage(new Uri(cover));
                 videoInfoView.Title = videoView.Title;
 
                 videoInfoView.VideoZone = videoZone;
@@ -223,6 +223,8 @@ namespace DownKyi.Services
                 {
                     StorageHeader storageHeader = new StorageHeader();
                     videoInfoView.UpHeader = storageHeader.GetHeaderThumbnail(header, 48, 48);
+
+                    videoInfoView.UpperMid = videoView.Owner.Mid;
                 }
                 else
                 {

@@ -137,8 +137,6 @@ namespace DownKyi.ViewModels
         /// </summary>
         private void ExecuteBackSpace()
         {
-            InitView();
-
             NavigationParam parameter = new NavigationParam
             {
                 ViewName = ParentView,
@@ -240,6 +238,18 @@ namespace DownKyi.ViewModels
             // 复制封面url到剪贴板
             Clipboard.SetText(VideoInfoView.CoverUrl);
             LogManager.Info(Tag, "复制封面url到剪贴板");
+        }
+
+        // 前往UP主页事件
+        private DelegateCommand upperCommand;
+        public DelegateCommand UpperCommand => upperCommand ?? (upperCommand = new DelegateCommand(ExecuteUpperCommand));
+
+        /// <summary>
+        /// 前往UP主页事件
+        /// </summary>
+        private void ExecuteUpperCommand()
+        {
+            NavigateToView.NavigateToViewUserSpace(eventAggregator, Tag, VideoInfoView.UpperMid);
         }
 
         // 视频章节选择事件
@@ -614,6 +624,7 @@ namespace DownKyi.ViewModels
             {
                 LoadingVisibility = Visibility.Collapsed;
                 ContentVisibility = Visibility.Visible;
+                NoDataVisibility = Visibility.Collapsed;
             }
 
             var videoSections = videoInfoService.GetVideoSections();

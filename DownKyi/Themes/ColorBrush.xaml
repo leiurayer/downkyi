@@ -39,5 +39,6 @@
     <SolidColorBrush x:Key="BrushText" Color="{DynamicResource ColorText}" />
     <SolidColorBrush x:Key="BrushTextDark" Color="{DynamicResource ColorTextDark}" />
     <SolidColorBrush x:Key="BrushTextGrey" Color="{DynamicResource ColorTextGrey}" />
+    <SolidColorBrush x:Key="BrushTextGrey2" Color="{DynamicResource ColorTextGrey2}" />
 
 </ResourceDictionary>
