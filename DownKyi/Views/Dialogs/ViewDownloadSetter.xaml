@@ -1,5 +1,5 @@
 ﻿<UserControl
-    x:Class="DownKyi.Views.Dialogs.ViewDirectorySelector"
+    x:Class="DownKyi.Views.Dialogs.ViewDownloadSetter"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
@@ -74,6 +74,7 @@
                 MinWidth="600"
                 Margin="15,10">
                 <Grid.RowDefinitions>
+                    <RowDefinition />
                     <RowDefinition />
                     <RowDefinition />
                     <RowDefinition />
@@ -195,6 +196,86 @@
                 </Grid>
 
                 <Grid Grid.Row="2" Margin="0,30,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="75" />
+                        <ColumnDefinition Width="75" />
+                        <ColumnDefinition Width="75" />
+                        <ColumnDefinition Width="75" />
+                        <ColumnDefinition Width="75" />
+                        <ColumnDefinition Width="75" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock
+                        Grid.Column="0"
+                        VerticalAlignment="Center"
+                        FontSize="12"
+                        Foreground="{DynamicResource BrushTextDark}"
+                        Text="{DynamicResource DownloadContent}" />
+
+                    <CheckBox
+                        Grid.Column="1"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Command="{Binding DownloadAllCommand}"
+                        Content="{DynamicResource DownloadAll}"
+                        Foreground="{DynamicResource BrushTextDark}"
+                        IsChecked="{Binding DownloadAll, Mode=TwoWay}"
+                        Style="{StaticResource CheckBoxStyle}" />
+
+                    <CheckBox
+                        Grid.Column="2"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Command="{Binding DownloadAudioCommand}"
+                        Content="{DynamicResource DownloadAudio}"
+                        Foreground="{DynamicResource BrushTextDark}"
+                        IsChecked="{Binding DownloadAudio, Mode=TwoWay}"
+                        Style="{StaticResource CheckBoxStyle}" />
+
+                    <CheckBox
+                        Grid.Column="3"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Command="{Binding DownloadVideoCommand}"
+                        Content="{DynamicResource DownloadVideo}"
+                        Foreground="{DynamicResource BrushTextDark}"
+                        IsChecked="{Binding DownloadVideo, Mode=TwoWay}"
+                        Style="{StaticResource CheckBoxStyle}" />
+
+                    <CheckBox
+                        Grid.Column="4"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Command="{Binding DownloadDanmakuCommand}"
+                        Content="{DynamicResource DownloadDanmaku}"
+                        Foreground="{DynamicResource BrushTextDark}"
+                        IsChecked="{Binding DownloadDanmaku, Mode=TwoWay}"
+                        Style="{StaticResource CheckBoxStyle}" />
+
+                    <CheckBox
+                        Grid.Column="5"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Command="{Binding DownloadSubtitleCommand}"
+                        Content="{DynamicResource DownloadSubtitle}"
+                        Foreground="{DynamicResource BrushTextDark}"
+                        IsChecked="{Binding DownloadSubtitle, Mode=TwoWay}"
+                        Style="{StaticResource CheckBoxStyle}" />
+
+                    <CheckBox
+                        Grid.Column="6"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Command="{Binding DownloadCoverCommand}"
+                        Content="{DynamicResource DownloadCover}"
+                        Foreground="{DynamicResource BrushTextDark}"
+                        IsChecked="{Binding DownloadCover, Mode=TwoWay}"
+                        Style="{StaticResource CheckBoxStyle}" />
+
+                </Grid>
+
+                <Grid Grid.Row="3" Margin="0,30,0,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
                         <ColumnDefinition />

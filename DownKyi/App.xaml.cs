@@ -63,7 +63,7 @@ namespace DownKyi
             containerRegistry.RegisterForNavigation<ViewExtractMedia>(ViewExtractMediaViewModel.Tag);
 
             // dialogs
-            containerRegistry.RegisterDialog<ViewDirectorySelector>(ViewDirectorySelectorViewModel.Tag);
+            containerRegistry.RegisterDialog<ViewDownloadSetter>(ViewDownloadSetterViewModel.Tag);
             containerRegistry.RegisterDialog<ViewParsingSelector>(ViewParsingSelectorViewModel.Tag);
 
         }

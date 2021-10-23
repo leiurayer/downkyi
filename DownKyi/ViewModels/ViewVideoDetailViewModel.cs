@@ -492,6 +492,13 @@ namespace DownKyi.ViewModels
             // 选择的下载文件夹
             string directory = string.Empty;
 
+            // 下载内容
+            bool downloadAudio = true;
+            bool downloadVideo = true;
+            bool downloadDanmaku = true;
+            bool downloadSubtitle = true;
+            bool downloadCover = true;
+
             // 是否使用默认下载目录
             if (SettingsManager.GetInstance().IsUseSaveVideoRootPath() == AllowStatus.YES)
             {
@@ -500,24 +507,36 @@ namespace DownKyi.ViewModels
             else
             {
                 // 打开文件夹选择器
-                dialogService.ShowDialog(ViewDirectorySelectorViewModel.Tag, null, result =>
+                dialogService.ShowDialog(ViewDownloadSetterViewModel.Tag, null, result =>
                 {
                     if (result.Result == ButtonResult.OK)
                     {
                         // 选择的下载文件夹
                         directory = result.Parameters.GetValue<string>("directory");
 
+                        // 下载内容
+                        downloadAudio = result.Parameters.GetValue<bool>("downloadAudio");
+                        downloadVideo = result.Parameters.GetValue<bool>("downloadVideo");
+                        downloadDanmaku = result.Parameters.GetValue<bool>("downloadDanmaku");
+                        downloadSubtitle = result.Parameters.GetValue<bool>("downloadSubtitle");
+                        downloadCover = result.Parameters.GetValue<bool>("downloadCover");
+
                         // 文件夹不存在则创建
                         if (!Directory.Exists(directory))
                         {
                             Directory.CreateDirectory(directory);
                         }
-
-                        // 添加到下载
-                        eventAggregator.GetEvent<MessageEvent>().Publish(directory);
                     }
                 });
             }
+
+            // 下载设置dialog中如果点击取消或者关闭窗口，
+            // 会返回空字符串，
+            // 这时直接退出
+            if (directory == string.Empty) { return; }
+
+            // 添加到下载
+            eventAggregator.GetEvent<MessageEvent>().Publish(directory);
         }
 
         /// <summary>

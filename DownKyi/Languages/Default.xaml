@@ -177,15 +177,21 @@
     <system:String x:Key="Cancel">取消</system:String>
     <system:String x:Key="SelectDirectory">请选择文件夹</system:String>
 
-    <!--  ViewDirectorySelector  -->
-    <system:String x:Key="DownloadDirectorySelector">设置下载文件夹</system:String>
+    <!--  ViewDownloadSetter  -->
+    <system:String x:Key="DownloadSetter">下载设置</system:String>
     <system:String x:Key="Location">位置：</system:String>
     <system:String x:Key="Browse">浏览</system:String>
     <system:String x:Key="HardDiskFreeSpace">盘剩余空间：</system:String>
+    <system:String x:Key="DownloadContent">下载内容：</system:String>
+    <system:String x:Key="DownloadAll">所有</system:String>
+    <system:String x:Key="DownloadAudio">音频</system:String>
+    <system:String x:Key="DownloadVideo">视频</system:String>
+    <system:String x:Key="DownloadDanmaku">弹幕</system:String>
+    <system:String x:Key="DownloadSubtitle">字幕</system:String>
+    <system:String x:Key="DownloadCover">封面</system:String>
     <system:String x:Key="IsDefaultDownloadDirectory">设此文件夹为默认下载文件夹</system:String>
     <system:String x:Key="IsDefaultDownloadDirectoryTip">选中后下次将不会弹出此窗口</system:String>
     <system:String x:Key="Download">下载</system:String>
-
     <system:String x:Key="WarningNullDirectory">文件夹路径不能为空</system:String>
 
     <!--  ViewParsingSelector  -->

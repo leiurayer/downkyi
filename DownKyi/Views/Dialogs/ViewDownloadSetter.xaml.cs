@@ -3,11 +3,11 @@
 namespace DownKyi.Views.Dialogs
 {
     /// <summary>
-    /// Interaction logic for ViewDirectorySelector
+    /// Interaction logic for ViewDownloadSetter
     /// </summary>
-    public partial class ViewDirectorySelector : UserControl
+    public partial class ViewDownloadSetter : UserControl
     {
-        public ViewDirectorySelector()
+        public ViewDownloadSetter()
         {
             InitializeComponent();
         }

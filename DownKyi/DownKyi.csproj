@@ -105,7 +105,7 @@
     <Compile Include="Utils\DialogUtils.cs" />
     <Compile Include="Utils\DictionaryResource.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
-    <Compile Include="ViewModels\Dialogs\ViewDirectorySelectorViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\ViewDownloadSetterViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\BaseDialogViewModel.cs" />
     <Compile Include="ViewModels\Settings\ViewBasicViewModel.cs" />
     <Compile Include="ViewModels\Settings\ViewAboutViewModel.cs" />
@@ -127,8 +127,8 @@
     <Compile Include="ViewModels\ViewUserSpaceViewModel.cs" />
     <Compile Include="ViewModels\ViewVideoDetailViewModel.cs" />
     <Compile Include="ViewModels\Settings\ViewVideoViewModel.cs" />
-    <Compile Include="Views\Dialogs\ViewDirectorySelector.xaml.cs">
-      <DependentUpon>ViewDirectorySelector.xaml</DependentUpon>
+    <Compile Include="Views\Dialogs\ViewDownloadSetter.xaml.cs">
+      <DependentUpon>ViewDownloadSetter.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Dialogs\ViewParsingSelector.xaml.cs">
       <DependentUpon>ViewParsingSelector.xaml</DependentUpon>
@@ -254,7 +254,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Dialogs\ViewDirectorySelector.xaml">
+    <Page Include="Views\Dialogs\ViewDownloadSetter.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
