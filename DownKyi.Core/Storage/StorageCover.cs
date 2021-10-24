@@ -161,7 +161,14 @@ namespace DownKyi.Core.Storage
 
                     if (File.Exists(localFile))
                     {
-                        File.Move(localFile, $"{StorageManager.GetCover()}/{md5}");
+                        string destFile = $"{StorageManager.GetCover()}/{md5}";
+
+                        // 如果不存在
+                        if (!File.Exists(destFile))
+                        {
+                            // 移动到指定位置
+                            File.Move(localFile, destFile);
+                        }
 
                         return md5;
                     }
