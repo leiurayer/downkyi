@@ -24,7 +24,7 @@ namespace DownKyi.Core.BiliApi.Favorites.Models
         [JsonProperty("medias")]
         public List<FavoritesMedia> Medias { get; set; }
         [JsonProperty("has_more")]
-        public int HasMore { get; set; }
+        public bool HasMore { get; set; }
     }
 
 }

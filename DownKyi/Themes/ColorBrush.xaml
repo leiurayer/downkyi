@@ -28,6 +28,8 @@
     <SolidColorBrush x:Key="BrushBackgroundGreyTranslucent2" Color="{DynamicResource ColorBackgroundGreyTranslucent2}" />
     <SolidColorBrush x:Key="BrushBackgroundGreyTranslucent3" Color="{DynamicResource ColorBackgroundGreyTranslucent3}" />
 
+    <SolidColorBrush x:Key="BrushMask" Color="{DynamicResource ColorMask}" />
+
     <SolidColorBrush x:Key="BrushTabHeaderGrey" Color="{DynamicResource ColorTabHeaderGrey}" />
 
     <SolidColorBrush x:Key="BrushHeaderGrey" Color="{DynamicResource ColorHeaderGrey}" />

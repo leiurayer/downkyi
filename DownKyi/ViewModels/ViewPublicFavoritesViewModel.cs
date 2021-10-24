@@ -6,11 +6,9 @@ using DownKyi.Services;
 using DownKyi.Utils;
 using Prism.Commands;
 using Prism.Events;
-using Prism.Mvvm;
 using Prism.Regions;
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -64,11 +62,11 @@ namespace DownKyi.ViewModels
             set { SetProperty(ref favorites, value); }
         }
 
-        private List<FavoritesMedia> favoritesMedia;
-        public List<FavoritesMedia> FavoritesMedia
+        private ObservableCollection<FavoritesMedia> favoritesMedias;
+        public ObservableCollection<FavoritesMedia> FavoritesMedias
         {
-            get { return favoritesMedia; }
-            set { SetProperty(ref favoritesMedia, value); }
+            get { return favoritesMedias; }
+            set { SetProperty(ref favoritesMedias, value); }
         }
 
         private Visibility contentVisibility;
@@ -105,6 +103,8 @@ namespace DownKyi.ViewModels
 
             Share = NormalIcon.Instance().Share;
             Share.Fill = DictionaryResource.GetColor("ColorTextGrey2");
+
+            FavoritesMedias = new ObservableCollection<FavoritesMedia>();
 
             #endregion
         }
@@ -202,6 +202,8 @@ namespace DownKyi.ViewModels
 
             ContentVisibility = Visibility.Collapsed;
             NoDataVisibility = Visibility.Collapsed;
+
+            FavoritesMedias.Clear();
         }
 
         /// <summary>
@@ -224,6 +226,7 @@ namespace DownKyi.ViewModels
                 NoDataVisibility = Visibility.Collapsed;
             }
 
+            favoritesService.GetFavoritesMediaList(favoritesId, FavoritesMedias);
         }
 
         /// <summary>

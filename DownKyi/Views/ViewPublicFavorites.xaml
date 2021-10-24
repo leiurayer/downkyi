@@ -281,9 +281,165 @@
                     Style="{StaticResource BtnStyle}" />
             </StackPanel>
 
-
             <!--  右侧内容区  -->
-            <ContentControl Grid.Column="1" prism:RegionManager.RegionName="SettingsContentRegion" />
+            <ListBox
+                x:Name="nameFavoritesMedias"
+                Grid.Column="1"
+                Margin="30,0,0,0"
+                ItemsSource="{Binding FavoritesMedias, Mode=TwoWay}"
+                SelectionMode="Extended">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction Command="{Binding FavoritesMediasCommand}" CommandParameter="{Binding ElementName=nameFavoritesMedias, Path=SelectedItem}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                <ListBox.Template>
+                    <ControlTemplate TargetType="{x:Type ListBox}">
+                        <ScrollViewer
+                            CanContentScroll="False"
+                            HorizontalScrollBarVisibility="Disabled"
+                            VerticalScrollBarVisibility="Auto">
+                            <StackPanel IsItemsHost="True" Orientation="Vertical" />
+                        </ScrollViewer>
+                    </ControlTemplate>
+                </ListBox.Template>
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListBoxItem}">
+                        <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                    <Grid Margin="0,10" Background="{DynamicResource BrushBackground}">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="auto" />
+                                            <ColumnDefinition Width="150" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock
+                                            Grid.Column="0"
+                                            Width="35"
+                                            Margin="0,0,5,0"
+                                            VerticalAlignment="Center"
+                                            FontSize="14"
+                                            Foreground="{DynamicResource BrushTextDark}"
+                                            Text="{Binding Order}" />
+
+                                        <Image Grid.Column="1" Source="{Binding Cover}" />
+                                        
+                                        <Border
+                                            x:Name="nameInfoPanel"
+                                            Grid.Column="1"
+                                            Width="150"
+                                            Height="95"
+                                            Background="{DynamicResource BrushMask}"
+                                            Visibility="Hidden">
+                                            <TextBlock
+                                                Margin="5,0,0,5"
+                                                HorizontalAlignment="Left"
+                                                VerticalAlignment="Bottom"
+                                                FontSize="12"
+                                                Foreground="{DynamicResource BrushText}"
+                                                Text="{Binding Duration}" />
+                                        </Border>
+
+                                        <Grid Grid.Column="2" Margin="20,0">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition />
+                                                <RowDefinition Height="auto" />
+                                                <RowDefinition Height="auto" />
+                                            </Grid.RowDefinitions>
+
+                                            <TextBlock
+                                                Grid.Row="0"
+                                                HorizontalAlignment="Left"
+                                                VerticalAlignment="Top"
+                                                Cursor="Hand"
+                                                FontSize="14"
+                                                Text="{Binding Title}"
+                                                TextTrimming="CharacterEllipsis"
+                                                ToolTip="{Binding Title}">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="Foreground" Value="{DynamicResource BrushTextDark}" />
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter Property="Foreground" Value="{DynamicResource BrushPrimary}" />
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+
+                                            <StackPanel Grid.Row="1" Orientation="Horizontal">
+                                                <TextBlock
+                                                    FontSize="12"
+                                                    Foreground="{DynamicResource BrushTextGrey}"
+                                                    Text="{Binding PlayNumber}" />
+                                                <TextBlock
+                                                    FontSize="12"
+                                                    Foreground="{DynamicResource BrushTextGrey}"
+                                                    Text="{DynamicResource Play}" />
+                                                <TextBlock
+                                                    FontSize="12"
+                                                    Foreground="{DynamicResource BrushTextGrey}"
+                                                    Text=" · " />
+
+                                                <TextBlock
+                                                    FontSize="12"
+                                                    Foreground="{DynamicResource BrushTextGrey}"
+                                                    Text="{Binding DanmakuNumber}" />
+                                                <TextBlock
+                                                    FontSize="12"
+                                                    Foreground="{DynamicResource BrushTextGrey}"
+                                                    Text="{DynamicResource Danmaku}" />
+                                                <TextBlock
+                                                    FontSize="12"
+                                                    Foreground="{DynamicResource BrushTextGrey}"
+                                                    Text=" · " />
+
+                                                <TextBlock
+                                                    FontSize="12"
+                                                    Foreground="{DynamicResource BrushTextGrey}"
+                                                    Text="{Binding FavoriteNumber}" />
+                                                <TextBlock
+                                                    FontSize="12"
+                                                    Foreground="{DynamicResource BrushTextGrey}"
+                                                    Text="{DynamicResource Favorite}" />
+                                            </StackPanel>
+
+                                            <TextBlock
+                                                Grid.Row="2"
+                                                HorizontalAlignment="Left"
+                                                VerticalAlignment="Top"
+                                                Cursor="Hand"
+                                                FontSize="12"
+                                                Text="{Binding UpName, StringFormat={}UP: {0}}">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="Foreground" Value="{DynamicResource BrushTextGrey}" />
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter Property="Foreground" Value="{DynamicResource BrushPrimary}" />
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                        </Grid>
+                                    </Grid>
+
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="nameInfoPanel" Property="Visibility" Value="Visible" />
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+            </ListBox>
         </Grid>
 
         <!--  没有数据提示  -->

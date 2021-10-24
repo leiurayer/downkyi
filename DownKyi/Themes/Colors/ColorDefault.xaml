@@ -28,6 +28,8 @@
     <Color x:Key="ColorBackgroundGreyTranslucent2">#7FBDBDBD</Color>
     <Color x:Key="ColorBackgroundGreyTranslucent3">#33BDBDBD</Color>
 
+    <Color x:Key="ColorMask">#7F000000</Color>
+
     <Color x:Key="ColorTabHeaderGrey">#FFF4F4F4</Color>
 
     <Color x:Key="ColorHeaderGrey">#FFF4F4F4</Color>

@@ -3,7 +3,9 @@ using DownKyi.Core.Storage;
 using DownKyi.Core.Utils;
 using DownKyi.Models;
 using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading;
 using System.Windows.Media.Imaging;
 
 namespace DownKyi.Services
@@ -82,9 +84,45 @@ namespace DownKyi.Services
         /// </summary>
         /// <param name="mediaId"></param>
         /// <returns></returns>
-        public List<FavoritesMedia> GetFavoritesMediaList(long mediaId)
+        public void GetFavoritesMediaList(long mediaId, ObservableCollection<FavoritesMedia> result)
         {
-            throw new NotImplementedException();
+            var medias = FavoritesResource.GetAllFavoritesMedia(mediaId);
+            if (medias.Count == 0) { return; }
+
+            int order = 0;
+            foreach (var media in medias)
+            {
+                order++;
+
+                // 查询、保存封面
+                StorageCover storageCover = new StorageCover();
+                string coverUrl = media.Cover;
+                string cover = storageCover.GetCover(media.Id, media.Bvid, -1, coverUrl);
+
+                App.PropertyChangeAsync(new Action(() =>
+                {
+                    FavoritesMedia newMedia = new FavoritesMedia
+                    {
+                        Avid = media.Id,
+                        Bvid = media.Bvid,
+                        Order = order,
+                        Cover = cover == null ? null : new BitmapImage(new Uri(cover)),
+                        Title = media.Title,
+                        PlayNumber = media.CntInfo != null ? Format.FormatNumber(media.CntInfo.Play) : "0",
+                        DanmakuNumber = media.CntInfo != null ? Format.FormatNumber(media.CntInfo.Danmaku) : "0",
+                        FavoriteNumber = media.CntInfo != null ? Format.FormatNumber(media.CntInfo.Collect) : "0",
+                        Duration = Format.FormatDuration2(media.Duration),
+                        UpName = media.Upper != null ? media.Upper.Name : string.Empty,
+                        UpperMid = media.Upper != null ? media.Upper.Mid : -1
+                    };
+
+                    if (!result.ToList().Exists(t => t.Avid == newMedia.Avid))
+                    {
+                        result.Add(newMedia);
+                        Thread.Sleep(50);
+                    }
+                }));
+            }
         }
     }
 }
