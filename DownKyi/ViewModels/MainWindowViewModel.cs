@@ -149,6 +149,7 @@ namespace DownKyi.ViewModels
                 clipboardHooker = new ClipboardHooker(Application.Current.MainWindow);
                 clipboardHooker.ClipboardUpdated += OnClipboardUpdated;
 
+                // 进入首页
                 var param = new NavigationParameters
                 {
                     { "Parent", "" },
@@ -292,8 +293,32 @@ namespace DownKyi.ViewModels
             icon.Fill = DictionaryResource.GetColor("ColorSystemBtnTintDark");
         }
 
+        #region 剪贴板
+
+        private int times = 0;
+
+        /// <summary>
+        /// 监听剪贴板更新事件，会执行两遍以上
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnClipboardUpdated(object sender, EventArgs e)
         {
+            times += 1;
+            DispatcherTimer timer = new DispatcherTimer
+            {
+                Interval = new TimeSpan(0, 0, 0, 0, 300)
+            };
+            timer.Tick += (s, ex) => { timer.IsEnabled = false; times = 0; };
+            timer.IsEnabled = true;
+
+            if (times % 2 == 0)
+            {
+                timer.IsEnabled = false;
+                times = 0;
+                return;
+            }
+
             AllowStatus isListenClipboard = SettingsManager.GetInstance().IsListenClipboard();
             if (isListenClipboard != AllowStatus.YES)
             {
@@ -380,6 +405,8 @@ namespace DownKyi.ViewModels
                 NavigateToView.NavigationView(eventAggregator, ViewPublicFavoritesViewModel.Tag, ViewIndexViewModel.Tag, ParseEntrance.GetFavoritesId(input));
             }
         }
+
+        #endregion
 
     }
 }
