@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using DownKyi.Core.Logging;
+using System;
+using System.Collections.Generic;
 
 namespace DownKyi.Core.Storage.Database
 {
@@ -26,8 +28,16 @@ namespace DownKyi.Core.Storage.Database
         /// <param name="header"></param>
         public void Insert(Header header)
         {
-            string sql = $"insert into header values ({header.Mid}, '{header.Name}', '{header.Url}', '{header.Md5}')";
-            dbHelper.ExecuteNonQuery(sql);
+            try
+            {
+                string sql = $"insert into header values ({header.Mid}, '{header.Name}', '{header.Url}', '{header.Md5}')";
+                dbHelper.ExecuteNonQuery(sql);
+            }
+            catch (Exception e)
+            {
+                Utils.Debugging.Console.PrintLine("Insert()发生异常: {0}", e);
+                LogManager.Error("HeaderDb", e);
+            }
         }
 
         /// <summary>
@@ -36,8 +46,16 @@ namespace DownKyi.Core.Storage.Database
         /// <param name="header"></param>
         public void Update(Header header)
         {
-            string sql = $"update header set name='{header.Name}', url='{header.Url}', md5='{header.Md5}' where mid={header.Mid}";
-            dbHelper.ExecuteNonQuery(sql);
+            try
+            {
+                string sql = $"update header set name='{header.Name}', url='{header.Url}', md5='{header.Md5}' where mid={header.Mid}";
+                dbHelper.ExecuteNonQuery(sql);
+            }
+            catch (Exception e)
+            {
+                Utils.Debugging.Console.PrintLine("Update()发生异常: {0}", e);
+                LogManager.Error("HeaderDb", e);
+            }
         }
 
         /// <summary>
@@ -89,7 +107,7 @@ namespace DownKyi.Core.Storage.Database
                         Mid = (long)reader["mid"],
                         Name = (string)reader["name"],
                         Url = (string)reader["url"],
-                        Md5=(string)reader["md5"]
+                        Md5 = (string)reader["md5"]
                     };
                     headers.Add(header);
                 }

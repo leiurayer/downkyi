@@ -25,7 +25,7 @@ namespace DownKyi.Core.Storage
             }
             catch (Exception e)
             {
-                Utils.Debug.Console.PrintLine("DownloadImage()发生异常: {0}", e);
+                Utils.Debugging.Console.PrintLine("DownloadImage()发生异常: {0}", e);
                 LogManager.Error("StorageUtils", e);
                 return false;
             }

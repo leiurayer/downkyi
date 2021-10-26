@@ -4,7 +4,6 @@ using DownKyi.Core.Logging;
 using DownKyi.Core.Settings;
 using DownKyi.Core.Settings.Models;
 using DownKyi.Core.Storage;
-using DownKyi.Events;
 using DownKyi.Images;
 using DownKyi.Utils;
 using Prism.Commands;
@@ -149,7 +148,7 @@ namespace DownKyi.ViewModels
         {
             if (UserName == null)
             {
-                NavigationView(ViewLoginViewModel.Tag, null);
+                NavigateToView.NavigationView(eventAggregator, ViewLoginViewModel.Tag, Tag, null);
             }
             else
             {
@@ -157,7 +156,7 @@ namespace DownKyi.ViewModels
                 var userInfo = SettingsManager.GetInstance().GetUserInfo();
                 if (userInfo != null && userInfo.Mid != -1)
                 {
-                    NavigationView(ViewMySpaceViewModel.Tag, userInfo.Mid);
+                    NavigateToView.NavigationView(eventAggregator, ViewMySpaceViewModel.Tag, Tag, userInfo.Mid);
                 }
             }
         }
@@ -171,7 +170,7 @@ namespace DownKyi.ViewModels
         /// </summary>
         private void ExecuteSettingsCommand()
         {
-            NavigationView(ViewSettingsViewModel.Tag, null);
+            NavigateToView.NavigationView(eventAggregator, ViewSettingsViewModel.Tag, Tag, null);
         }
 
         // 进入下载管理页面
@@ -183,7 +182,7 @@ namespace DownKyi.ViewModels
         /// </summary>
         private void ExecuteDownloadManagerCommand()
         {
-            NavigationView(ViewDownloadManagerViewModel.Tag, null);
+            NavigateToView.NavigationView(eventAggregator, ViewDownloadManagerViewModel.Tag, Tag, null);
         }
 
         // 进入工具箱页面
@@ -195,7 +194,7 @@ namespace DownKyi.ViewModels
         /// </summary>
         private void ExecuteToolboxCommand()
         {
-            NavigationView(ViewToolboxViewModel.Tag, null);
+            NavigateToView.NavigationView(eventAggregator, ViewToolboxViewModel.Tag, Tag, null);
         }
 
         #endregion
@@ -227,67 +226,67 @@ namespace DownKyi.ViewModels
             // 视频
             if (ParseEntrance.IsAvId(InputText))
             {
-                NavigationView(ViewVideoDetailViewModel.Tag, $"{ParseEntrance.VideoUrl}{InputText.ToLower()}");
+                NavigateToView.NavigationView(eventAggregator, ViewVideoDetailViewModel.Tag, Tag, $"{ParseEntrance.VideoUrl}{InputText.ToLower()}");
             }
             else if (ParseEntrance.IsAvUrl(InputText))
             {
-                NavigationView(ViewVideoDetailViewModel.Tag, InputText);
+                NavigateToView.NavigationView(eventAggregator, ViewVideoDetailViewModel.Tag, Tag, InputText);
             }
             else if (ParseEntrance.IsBvId(InputText))
             {
-                NavigationView(ViewVideoDetailViewModel.Tag, $"{ParseEntrance.VideoUrl}{InputText}");
+                NavigateToView.NavigationView(eventAggregator, ViewVideoDetailViewModel.Tag, Tag, $"{ParseEntrance.VideoUrl}{InputText}");
             }
             else if (ParseEntrance.IsBvUrl(InputText))
             {
-                NavigationView(ViewVideoDetailViewModel.Tag, InputText);
+                NavigateToView.NavigationView(eventAggregator, ViewVideoDetailViewModel.Tag, Tag, InputText);
             }
             // 番剧（电影、电视剧）
             else if (ParseEntrance.IsBangumiSeasonId(InputText))
             {
-                NavigationView(ViewVideoDetailViewModel.Tag, $"{ParseEntrance.BangumiUrl}{InputText.ToLower()}");
+                NavigateToView.NavigationView(eventAggregator, ViewVideoDetailViewModel.Tag, Tag, $"{ParseEntrance.BangumiUrl}{InputText.ToLower()}");
             }
             else if (ParseEntrance.IsBangumiSeasonUrl(InputText))
             {
-                NavigationView(ViewVideoDetailViewModel.Tag, InputText);
+                NavigateToView.NavigationView(eventAggregator, ViewVideoDetailViewModel.Tag, Tag, InputText);
             }
             else if (ParseEntrance.IsBangumiEpisodeId(InputText))
             {
-                NavigationView(ViewVideoDetailViewModel.Tag, $"{ParseEntrance.BangumiUrl}{InputText.ToLower()}");
+                NavigateToView.NavigationView(eventAggregator, ViewVideoDetailViewModel.Tag, Tag, $"{ParseEntrance.BangumiUrl}{InputText.ToLower()}");
             }
             else if (ParseEntrance.IsBangumiEpisodeUrl(InputText))
             {
-                NavigationView(ViewVideoDetailViewModel.Tag, InputText);
+                NavigateToView.NavigationView(eventAggregator, ViewVideoDetailViewModel.Tag, Tag, InputText);
             }
             else if (ParseEntrance.IsBangumiMediaId(InputText))
             {
-                NavigationView(ViewVideoDetailViewModel.Tag, $"{ParseEntrance.BangumiMediaUrl}{InputText.ToLower()}");
+                NavigateToView.NavigationView(eventAggregator, ViewVideoDetailViewModel.Tag, Tag, $"{ParseEntrance.BangumiMediaUrl}{InputText.ToLower()}");
             }
             else if (ParseEntrance.IsBangumiMediaUrl(InputText))
             {
-                NavigationView(ViewVideoDetailViewModel.Tag, InputText);
+                NavigateToView.NavigationView(eventAggregator, ViewVideoDetailViewModel.Tag, Tag, InputText);
             }
             // 课程
             else if (ParseEntrance.IsCheeseSeasonUrl(InputText) || ParseEntrance.IsCheeseEpisodeUrl(InputText))
             {
-                NavigationView(ViewVideoDetailViewModel.Tag, InputText);
+                NavigateToView.NavigationView(eventAggregator, ViewVideoDetailViewModel.Tag, Tag, InputText);
             }
             // 用户（参数传入mid）
             else if (ParseEntrance.IsUserId(InputText))
             {
-                NavigateToViewUserSpace(ParseEntrance.GetUserId(InputText));
+                NavigateToView.NavigateToViewUserSpace(eventAggregator, Tag, ParseEntrance.GetUserId(InputText));
             }
             else if (ParseEntrance.IsUserUrl(InputText))
             {
-                NavigateToViewUserSpace(ParseEntrance.GetUserId(InputText));
+                NavigateToView.NavigateToViewUserSpace(eventAggregator, Tag, ParseEntrance.GetUserId(InputText));
             }
             // 收藏夹
             else if (ParseEntrance.IsFavoritesId(InputText))
             {
-                NavigationView(ViewPublicFavoritesViewModel.Tag, ParseEntrance.GetFavoritesId(InputText));
+                NavigateToView.NavigationView(eventAggregator, ViewPublicFavoritesViewModel.Tag, Tag, ParseEntrance.GetFavoritesId(InputText));
             }
             else if (ParseEntrance.IsFavoritesUrl(InputText))
             {
-                NavigationView(ViewPublicFavoritesViewModel.Tag, ParseEntrance.GetFavoritesId(InputText));
+                NavigateToView.NavigationView(eventAggregator, ViewPublicFavoritesViewModel.Tag, Tag, ParseEntrance.GetFavoritesId(InputText));
             }
             // TODO 关键词搜索
             else
@@ -295,43 +294,6 @@ namespace DownKyi.ViewModels
             }
 
             InputText = string.Empty;
-        }
-
-        /// <summary>
-        /// 导航到用户空间，
-        /// 如果传入的mid与本地登录的mid一致，
-        /// 则进入我的用户空间。
-        /// </summary>
-        /// <param name="mid"></param>
-        private void NavigateToViewUserSpace(long mid)
-        {
-            var userInfo = SettingsManager.GetInstance().GetUserInfo();
-            if (userInfo != null && userInfo.Mid == mid)
-            {
-                NavigationView(ViewMySpaceViewModel.Tag, mid);
-            }
-            else
-            {
-                NavigationView(ViewUserSpaceViewModel.Tag, mid);
-            }
-        }
-
-        /// <summary>
-        /// 导航到其他页面
-        /// </summary>
-        /// <param name="viewName"></param>
-        /// <param name="param"></param>
-        private void NavigationView(string viewName, object param)
-        {
-            LogManager.Debug(Tag, $"NavigationView: {viewName}, Parameter: {param}");
-
-            NavigationParam parameter = new NavigationParam
-            {
-                ViewName = viewName,
-                ParentViewName = Tag,
-                Parameter = param
-            };
-            eventAggregator.GetEvent<NavigationEvent>().Publish(parameter);
         }
 
         /// <summary>

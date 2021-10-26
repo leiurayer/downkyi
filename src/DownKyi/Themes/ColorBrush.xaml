@@ -28,6 +28,8 @@
     <SolidColorBrush x:Key="BrushBackgroundGreyTranslucent2" Color="{DynamicResource ColorBackgroundGreyTranslucent2}" />
     <SolidColorBrush x:Key="BrushBackgroundGreyTranslucent3" Color="{DynamicResource ColorBackgroundGreyTranslucent3}" />
 
+    <SolidColorBrush x:Key="BrushMask" Color="{DynamicResource ColorMask}" />
+
     <SolidColorBrush x:Key="BrushTabHeaderGrey" Color="{DynamicResource ColorTabHeaderGrey}" />
 
     <SolidColorBrush x:Key="BrushHeaderGrey" Color="{DynamicResource ColorHeaderGrey}" />
@@ -39,5 +41,6 @@
     <SolidColorBrush x:Key="BrushText" Color="{DynamicResource ColorText}" />
     <SolidColorBrush x:Key="BrushTextDark" Color="{DynamicResource ColorTextDark}" />
     <SolidColorBrush x:Key="BrushTextGrey" Color="{DynamicResource ColorTextGrey}" />
+    <SolidColorBrush x:Key="BrushTextGrey2" Color="{DynamicResource ColorTextGrey2}" />
 
 </ResourceDictionary>

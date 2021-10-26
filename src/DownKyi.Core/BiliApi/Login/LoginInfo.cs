@@ -31,7 +31,7 @@ namespace DownKyi.Core.BiliApi.Login
             }
             catch (Exception e)
             {
-                Utils.Debug.Console.PrintLine("GetUserInfoForNavigation()发生异常: {0}", e);
+                Utils.Debugging.Console.PrintLine("GetUserInfoForNavigation()发生异常: {0}", e);
                 LogManager.Error("LoginInfo", e);
                 return null;
             }

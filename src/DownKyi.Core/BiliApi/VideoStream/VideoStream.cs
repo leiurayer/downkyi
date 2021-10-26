@@ -91,7 +91,7 @@ namespace DownKyi.Core.BiliApi.VideoStream
             }
             catch (Exception e)
             {
-                Utils.Debug.Console.PrintLine("GetPlayUrl()发生异常: {0}", e);
+                Utils.Debugging.Console.PrintLine("GetPlayUrl()发生异常: {0}", e);
                 LogManager.Error("GetPlayUrl", e);
                 return null;
             }

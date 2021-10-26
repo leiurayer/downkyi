@@ -32,7 +32,7 @@ namespace DownKyi.Core.Utils.Encryptor
             }
             catch (Exception e)
             {
-                Debug.Console.PrintLine("EncryptString()发生异常: {0}", e);
+                Debugging.Console.PrintLine("EncryptString()发生异常: {0}", e);
                 LogManager.Error("Encryptor", e);
                 return encryptString;
             }
@@ -60,7 +60,7 @@ namespace DownKyi.Core.Utils.Encryptor
             }
             catch (Exception e)
             {
-                Debug.Console.PrintLine("DecryptString()发生异常: {0}", e);
+                Debugging.Console.PrintLine("DecryptString()发生异常: {0}", e);
                 LogManager.Error("Encryptor", e);
                 return decryptString;
             }

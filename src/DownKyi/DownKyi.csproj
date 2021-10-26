@@ -87,6 +87,8 @@
     <Compile Include="Images\LogoIcon.cs" />
     <Compile Include="Images\NavigationIcon.cs" />
     <Compile Include="Images\NormalIcon.cs" />
+    <Compile Include="Models\Favorites.cs" />
+    <Compile Include="Models\FavoritesMedia.cs" />
     <Compile Include="Models\ParseScopeDisplay.cs" />
     <Compile Include="Models\Resolution.cs" />
     <Compile Include="Models\TabHeader.cs" />
@@ -96,6 +98,8 @@
     <Compile Include="Models\VideoSection.cs" />
     <Compile Include="Services\BangumiInfoService.cs" />
     <Compile Include="Services\CheeseInfoService.cs" />
+    <Compile Include="Services\FavoritesService.cs" />
+    <Compile Include="Services\IFavoritesService.cs" />
     <Compile Include="Services\IInfoService.cs" />
     <Compile Include="Services\IResolutionService.cs" />
     <Compile Include="Services\ResolutionService.cs" />
@@ -104,8 +108,9 @@
     <Compile Include="Utils\ClipboardHooker.cs" />
     <Compile Include="Utils\DialogUtils.cs" />
     <Compile Include="Utils\DictionaryResource.cs" />
+    <Compile Include="Utils\NavigateToView.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
-    <Compile Include="ViewModels\Dialogs\ViewDirectorySelectorViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\ViewDownloadSetterViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\BaseDialogViewModel.cs" />
     <Compile Include="ViewModels\Settings\ViewBasicViewModel.cs" />
     <Compile Include="ViewModels\Settings\ViewAboutViewModel.cs" />
@@ -127,8 +132,8 @@
     <Compile Include="ViewModels\ViewUserSpaceViewModel.cs" />
     <Compile Include="ViewModels\ViewVideoDetailViewModel.cs" />
     <Compile Include="ViewModels\Settings\ViewVideoViewModel.cs" />
-    <Compile Include="Views\Dialogs\ViewDirectorySelector.xaml.cs">
-      <DependentUpon>ViewDirectorySelector.xaml</DependentUpon>
+    <Compile Include="Views\Dialogs\ViewDownloadSetter.xaml.cs">
+      <DependentUpon>ViewDownloadSetter.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Dialogs\ViewParsingSelector.xaml.cs">
       <DependentUpon>ViewParsingSelector.xaml</DependentUpon>
@@ -254,7 +259,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Dialogs\ViewDirectorySelector.xaml">
+    <Page Include="Views\Dialogs\ViewDownloadSetter.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -435,6 +440,7 @@
     <Content Include="FFmpeg_LICENSE.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\checked.png" />
     <Content Include="打不开DownKyi请点我.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

@@ -124,7 +124,7 @@ namespace DownKyi.ViewModels.Toolbox
                 {
                     UserMid = null;
 
-                    Core.Utils.Debug.Console.PrintLine("FindDanmakuSenderCommand()发生异常: {0}", e);
+                    Core.Utils.Debugging.Console.PrintLine("FindDanmakuSenderCommand()发生异常: {0}", e);
                     LogManager.Error(Tag, e);
                 }
             });

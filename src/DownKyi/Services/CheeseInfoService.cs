@@ -98,13 +98,12 @@ namespace DownKyi.Services
         {
             if (cheeseView == null) { return null; }
 
-
             // 查询、保存封面
             // 将SeasonId保存到avid字段中
             // 每集封面的cid保存到cid字段，EpisodeId保存到bvid字段中
             StorageCover storageCover = new StorageCover();
             string coverUrl = cheeseView.Cover;
-            string cover = storageCover.GetCover(cheeseView.SeasonId, "", -1, coverUrl);
+            string cover = storageCover.GetCover(cheeseView.SeasonId, "cheese", -1, coverUrl);
 
             // 获取用户头像
             string upName;
@@ -127,7 +126,7 @@ namespace DownKyi.Services
             {
                 videoInfoView.CoverUrl = coverUrl;
 
-                videoInfoView.Cover = new BitmapImage(new Uri(cover));
+                videoInfoView.Cover = cover == null ? null : new BitmapImage(new Uri(cover));
                 videoInfoView.Title = cheeseView.Title;
 
                 videoInfoView.VideoZone = DictionaryResource.GetString("Cheese");
@@ -147,6 +146,8 @@ namespace DownKyi.Services
                 {
                     StorageHeader storageHeader = new StorageHeader();
                     videoInfoView.UpHeader = storageHeader.GetHeaderThumbnail(header, 48, 48);
+
+                    videoInfoView.UpperMid = cheeseView.UpInfo.Mid;
                 }
                 else
                 {

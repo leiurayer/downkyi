@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using DownKyi.Core.Logging;
+using System;
+using System.Collections.Generic;
 
 namespace DownKyi.Core.Storage.Database
 {
@@ -26,8 +28,16 @@ namespace DownKyi.Core.Storage.Database
         /// <param name="cover"></param>
         public void Insert(Cover cover)
         {
-            string sql = $"insert into cover values ({cover.Avid}, '{cover.Bvid}', {cover.Cid}, '{cover.Url}', '{cover.Md5}')";
-            dbHelper.ExecuteNonQuery(sql);
+            try
+            {
+                string sql = $"insert into cover values ({cover.Avid}, '{cover.Bvid}', {cover.Cid}, '{cover.Url}', '{cover.Md5}')";
+                dbHelper.ExecuteNonQuery(sql);
+            }
+            catch (Exception e)
+            {
+                Utils.Debugging.Console.PrintLine("Insert()发生异常: {0}", e);
+                LogManager.Error("CoverDb", e);
+            }
         }
 
         /// <summary>
@@ -36,8 +46,17 @@ namespace DownKyi.Core.Storage.Database
         /// <param name="cover"></param>
         public void Update(Cover cover)
         {
-            string sql = $"update cover set avid={cover.Avid}, bvid='{cover.Bvid}', cid={cover.Cid}, md5='{cover.Md5}' where url glob '{cover.Url}'";
-            dbHelper.ExecuteNonQuery(sql);
+            try
+            {
+                string sql = $"update cover set avid={cover.Avid}, bvid='{cover.Bvid}', cid={cover.Cid}, md5='{cover.Md5}' where url glob '{cover.Url}'";
+                dbHelper.ExecuteNonQuery(sql);
+            }
+            catch (Exception e)
+            {
+                Utils.Debugging.Console.PrintLine("Update()发生异常: {0}", e);
+                LogManager.Error("CoverDb", e);
+            }
+           
         }
 
         /// <summary>

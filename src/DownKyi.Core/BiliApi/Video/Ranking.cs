@@ -30,7 +30,7 @@ namespace DownKyi.Core.BiliApi.Video
             }
             catch (Exception e)
             {
-                Utils.Debug.Console.PrintLine("RegionRankingList()发生异常: {0}", e);
+                Utils.Debugging.Console.PrintLine("RegionRankingList()发生异常: {0}", e);
                 LogManager.Error("Ranking", e);
                 return null;
             }

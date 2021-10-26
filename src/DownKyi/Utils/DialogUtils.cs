@@ -22,5 +22,24 @@ namespace DownKyi.Utils
                 ? string.IsNullOrEmpty(dialog.SelectedPath) ? "" : dialog.SelectedPath : "";
         }
 
+        /// <summary>
+        /// 选择视频dialog
+        /// </summary>
+        /// <returns></returns>
+        public static string SelectVideoFile()
+        {
+            // 选择文件
+            var dialog = new Microsoft.Win32.OpenFileDialog
+            {
+                Filter = "mp4 (*.mp4)|*.mp4"
+            };
+            var showDialog = dialog.ShowDialog();
+            if (showDialog == true)
+            {
+                return dialog.FileName;
+            }
+            else { return ""; }
+        }
+
     }
 }

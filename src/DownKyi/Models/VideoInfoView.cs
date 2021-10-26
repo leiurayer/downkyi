@@ -8,6 +8,7 @@ namespace DownKyi.Models
     public class VideoInfoView : BindableBase
     {
         public string CoverUrl { get; set; }
+        public long UpperMid { get; set; }
 
         private BitmapImage cover;
         public BitmapImage Cover

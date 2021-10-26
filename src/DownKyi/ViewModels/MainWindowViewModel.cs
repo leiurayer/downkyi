@@ -149,6 +149,7 @@ namespace DownKyi.ViewModels
                 clipboardHooker = new ClipboardHooker(Application.Current.MainWindow);
                 clipboardHooker.ClipboardUpdated += OnClipboardUpdated;
 
+                // 进入首页
                 var param = new NavigationParameters
                 {
                     { "Parent", "" },
@@ -292,8 +293,32 @@ namespace DownKyi.ViewModels
             icon.Fill = DictionaryResource.GetColor("ColorSystemBtnTintDark");
         }
 
+        #region 剪贴板
+
+        private int times = 0;
+
+        /// <summary>
+        /// 监听剪贴板更新事件，会执行两遍以上
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnClipboardUpdated(object sender, EventArgs e)
         {
+            times += 1;
+            DispatcherTimer timer = new DispatcherTimer
+            {
+                Interval = new TimeSpan(0, 0, 0, 0, 300)
+            };
+            timer.Tick += (s, ex) => { timer.IsEnabled = false; times = 0; };
+            timer.IsEnabled = true;
+
+            if (times % 2 == 0)
+            {
+                timer.IsEnabled = false;
+                times = 0;
+                return;
+            }
+
             AllowStatus isListenClipboard = SettingsManager.GetInstance().IsListenClipboard();
             if (isListenClipboard != AllowStatus.YES)
             {
@@ -317,69 +342,71 @@ namespace DownKyi.ViewModels
             // 视频
             if (ParseEntrance.IsAvId(input))
             {
-                NavigationView(ViewVideoDetailViewModel.Tag, $"{ParseEntrance.VideoUrl}{input.ToLower()}");
+                NavigateToView.NavigationView(eventAggregator, ViewVideoDetailViewModel.Tag, ViewIndexViewModel.Tag, $"{ParseEntrance.VideoUrl}{input.ToLower()}");
             }
             else if (ParseEntrance.IsAvUrl(input))
             {
-                NavigationView(ViewVideoDetailViewModel.Tag, input);
+                NavigateToView.NavigationView(eventAggregator, ViewVideoDetailViewModel.Tag, ViewIndexViewModel.Tag, input);
             }
             else if (ParseEntrance.IsBvId(input))
             {
-                NavigationView(ViewVideoDetailViewModel.Tag, $"{ParseEntrance.VideoUrl}{input}");
+                NavigateToView.NavigationView(eventAggregator, ViewVideoDetailViewModel.Tag, ViewIndexViewModel.Tag, $"{ParseEntrance.VideoUrl}{input}");
             }
             else if (ParseEntrance.IsBvUrl(input))
             {
-                NavigationView(ViewVideoDetailViewModel.Tag, input);
+                NavigateToView.NavigationView(eventAggregator, ViewVideoDetailViewModel.Tag, ViewIndexViewModel.Tag, input);
             }
             // 番剧（电影、电视剧）
             else if (ParseEntrance.IsBangumiSeasonId(input))
             {
-                NavigationView(ViewVideoDetailViewModel.Tag, $"{ParseEntrance.BangumiUrl}{input.ToLower()}");
+                NavigateToView.NavigationView(eventAggregator, ViewVideoDetailViewModel.Tag, ViewIndexViewModel.Tag, $"{ParseEntrance.BangumiUrl}{input.ToLower()}");
             }
             else if (ParseEntrance.IsBangumiSeasonUrl(input))
             {
-                NavigationView(ViewVideoDetailViewModel.Tag, input);
+                NavigateToView.NavigationView(eventAggregator, ViewVideoDetailViewModel.Tag, ViewIndexViewModel.Tag, input);
             }
             else if (ParseEntrance.IsBangumiEpisodeId(input))
             {
-                NavigationView(ViewVideoDetailViewModel.Tag, $"{ParseEntrance.BangumiUrl}{input.ToLower()}");
+                NavigateToView.NavigationView(eventAggregator, ViewVideoDetailViewModel.Tag, ViewIndexViewModel.Tag, $"{ParseEntrance.BangumiUrl}{input.ToLower()}");
             }
             else if (ParseEntrance.IsBangumiEpisodeUrl(input))
             {
-                NavigationView(ViewVideoDetailViewModel.Tag, input);
+                NavigateToView.NavigationView(eventAggregator, ViewVideoDetailViewModel.Tag, ViewIndexViewModel.Tag, input);
             }
             else if (ParseEntrance.IsBangumiMediaId(input))
             {
-                NavigationView(ViewVideoDetailViewModel.Tag, $"{ParseEntrance.BangumiMediaUrl}{input.ToLower()}");
+                NavigateToView.NavigationView(eventAggregator, ViewVideoDetailViewModel.Tag, ViewIndexViewModel.Tag, $"{ParseEntrance.BangumiMediaUrl}{input.ToLower()}");
             }
             else if (ParseEntrance.IsBangumiMediaUrl(input))
             {
-                NavigationView(ViewVideoDetailViewModel.Tag, input);
+                NavigateToView.NavigationView(eventAggregator, ViewVideoDetailViewModel.Tag, ViewIndexViewModel.Tag, input);
             }
             // 课程
             else if (ParseEntrance.IsCheeseSeasonUrl(input) || ParseEntrance.IsCheeseEpisodeUrl(input))
             {
-                NavigationView(ViewVideoDetailViewModel.Tag, input);
+                NavigateToView.NavigationView(eventAggregator, ViewVideoDetailViewModel.Tag, ViewIndexViewModel.Tag, input);
+            }
+            // 用户（参数传入mid）
+            else if (ParseEntrance.IsUserId(input))
+            {
+                NavigateToView.NavigateToViewUserSpace(eventAggregator, ViewIndexViewModel.Tag, ParseEntrance.GetUserId(input));
+            }
+            else if (ParseEntrance.IsUserUrl(input))
+            {
+                NavigateToView.NavigateToViewUserSpace(eventAggregator, ViewIndexViewModel.Tag, ParseEntrance.GetUserId(input));
+            }
+            // 收藏夹
+            else if (ParseEntrance.IsFavoritesId(input))
+            {
+                NavigateToView.NavigationView(eventAggregator, ViewPublicFavoritesViewModel.Tag, ViewIndexViewModel.Tag, ParseEntrance.GetFavoritesId(input));
+            }
+            else if (ParseEntrance.IsFavoritesUrl(input))
+            {
+                NavigateToView.NavigationView(eventAggregator, ViewPublicFavoritesViewModel.Tag, ViewIndexViewModel.Tag, ParseEntrance.GetFavoritesId(input));
             }
         }
 
-        /// <summary>
-        /// 导航到其他页面
-        /// </summary>
-        /// <param name="viewName"></param>
-        /// <param name="param"></param>
-        private void NavigationView(string viewName, string param)
-        {
-            LogManager.Debug("OnClipboardUpdated", $"NavigationView: {viewName}, Parameter: {param}");
-
-            NavigationParam parameter = new NavigationParam
-            {
-                ViewName = viewName,
-                ParentViewName = ViewIndexViewModel.Tag,
-                Parameter = param
-            };
-            eventAggregator.GetEvent<NavigationEvent>().Publish(parameter);
-        }
+        #endregion
 
     }
 }

@@ -116,7 +116,7 @@ namespace DownKyi.ViewModels
             }
 
             PropertyChangeAsync(new Action(() => { LoginQRCode = LoginQR.GetLoginQRCode(loginUrl.Data.Url); }));
-            Core.Utils.Debug.Console.PrintLine(loginUrl.Data.Url + "\n");
+            Core.Utils.Debugging.Console.PrintLine(loginUrl.Data.Url + "\n");
             LogManager.Debug(Tag, loginUrl.Data.Url);
 
             GetLoginStatus(loginUrl.Data.OauthKey);
@@ -135,7 +135,7 @@ namespace DownKyi.ViewModels
                 var loginStatus = LoginQR.GetLoginStatus(oauthKey);
                 if (loginStatus == null) { continue; }
 
-                Core.Utils.Debug.Console.PrintLine(loginStatus.Code + "\n" + loginStatus.Message + "\n" + loginStatus.Url + "\n");
+                Core.Utils.Debugging.Console.PrintLine(loginStatus.Code + "\n" + loginStatus.Message + "\n" + loginStatus.Url + "\n");
 
                 switch (loginStatus.Code)
                 {
@@ -195,7 +195,7 @@ namespace DownKyi.ViewModels
                         }
                         catch (Exception e)
                         {
-                            Core.Utils.Debug.Console.PrintLine("PageLogin 保存登录信息发生异常: {0}", e);
+                            Core.Utils.Debugging.Console.PrintLine("PageLogin 保存登录信息发生异常: {0}", e);
                             LogManager.Error(e);
                             eventAggregator.GetEvent<MessageEvent>().Publish(DictionaryResource.GetString("LoginFailed"));
                         }
@@ -212,7 +212,7 @@ namespace DownKyi.ViewModels
                 // 判断是否该结束线程，若为true，跳出while循环
                 if (cancellationToken.IsCancellationRequested)
                 {
-                    Core.Utils.Debug.Console.PrintLine("停止Login线程，跳出while循环");
+                    Core.Utils.Debugging.Console.PrintLine("停止Login线程，跳出while循环");
                     LogManager.Debug(Tag, "登录操作结束");
                     break;
                 }

@@ -161,7 +161,14 @@ namespace DownKyi.Core.Storage
 
                     if (File.Exists(localFile))
                     {
-                        File.Move(localFile, $"{StorageManager.GetCover()}/{md5}");
+                        string destFile = $"{StorageManager.GetCover()}/{md5}";
+
+                        // 如果不存在
+                        if (!File.Exists(destFile))
+                        {
+                            // 移动到指定位置
+                            File.Move(localFile, destFile);
+                        }
 
                         return md5;
                     }
@@ -172,7 +179,7 @@ namespace DownKyi.Core.Storage
                 }
                 catch (Exception e)
                 {
-                    Utils.Debug.Console.PrintLine("DownloadImage()发生异常: {0}", e);
+                    Utils.Debugging.Console.PrintLine("DownloadImage()发生异常: {0}", e);
                     LogManager.Error("StorageCover", e);
                     return null;
                 }

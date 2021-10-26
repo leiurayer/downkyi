@@ -140,6 +140,16 @@
     <Compile Include="BiliApi\Cheese\Models\CheeseView.cs" />
     <Compile Include="BiliApi\Danmaku\DanmakuProtobuf.cs" />
     <Compile Include="BiliApi\Danmaku\Models\BiliDanmaku.cs" />
+    <Compile Include="BiliApi\Favorites\FavoritesInfo.cs" />
+    <Compile Include="BiliApi\Favorites\FavoritesResource.cs" />
+    <Compile Include="BiliApi\Favorites\Models\FavoritesList.cs" />
+    <Compile Include="BiliApi\Favorites\Models\FavoritesMedia.cs" />
+    <Compile Include="BiliApi\Favorites\Models\FavoritesMediaId.cs" />
+    <Compile Include="BiliApi\Favorites\Models\FavoritesMediaResource.cs" />
+    <Compile Include="BiliApi\Favorites\Models\FavoritesMetaInfo.cs" />
+    <Compile Include="BiliApi\Favorites\Models\FavStatus.cs" />
+    <Compile Include="BiliApi\Favorites\Models\FavUpper.cs" />
+    <Compile Include="BiliApi\Favorites\Models\MediaStatus.cs" />
     <Compile Include="BiliApi\Login\LoginHelper.cs" />
     <Compile Include="BiliApi\Models\BaseModel.cs" />
     <Compile Include="BiliApi\Login\LoginInfo.cs" />
@@ -227,7 +237,7 @@
     <Compile Include="Storage\StorageHeader.cs" />
     <Compile Include="Storage\StorageManager.cs" />
     <Compile Include="Storage\StorageUtils.cs" />
-    <Compile Include="Utils\Debug\Console.cs" />
+    <Compile Include="Utils\Debugging\Console.cs" />
     <Compile Include="Utils\Encryptor\Encryptor.File.cs" />
     <Compile Include="Utils\Encryptor\Encryptor.String.cs" />
     <Compile Include="Utils\Encryptor\Hash.cs" />

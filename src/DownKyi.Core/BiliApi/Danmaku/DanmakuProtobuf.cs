@@ -35,7 +35,7 @@ namespace DownKyi.Core.BiliApi.Danmaku
             }
             catch (Exception e)
             {
-                Utils.Debug.Console.PrintLine("GetDanmakuProto()发生异常: {0}", e);
+                Utils.Debugging.Console.PrintLine("GetDanmakuProto()发生异常: {0}", e);
                 //Logging.LogManager.Error(e);
             }
 
@@ -72,7 +72,7 @@ namespace DownKyi.Core.BiliApi.Danmaku
             }
             catch (Exception e)
             {
-                Utils.Debug.Console.PrintLine("GetDanmakuProto()发生异常: {0}", e);
+                Utils.Debugging.Console.PrintLine("GetDanmakuProto()发生异常: {0}", e);
                 //Logging.LogManager.Error(e);
                 return null;
             }

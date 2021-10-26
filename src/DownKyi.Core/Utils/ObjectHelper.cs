@@ -46,7 +46,7 @@ namespace DownKyi.Core.Utils
 
                 // 添加cookie
                 cookieContainer.Add(new Cookie(name, value, "/", ".bilibili.com") { Expires = dateTime });
-                Debug.Console.PrintLine(name + ": " + value + "\t" + cookieContainer.Count);
+                Debugging.Console.PrintLine(name + ": " + value + "\t" + cookieContainer.Count);
             }
 
             return cookieContainer;
@@ -115,24 +115,24 @@ namespace DownKyi.Core.Utils
             {
                 using (Stream stream = File.Create(file))
                 {
-                    Debug.Console.PrintLine("Writing object to disk... ");
+                    Debugging.Console.PrintLine("Writing object to disk... ");
 
                     BinaryFormatter formatter = new BinaryFormatter();
                     formatter.Serialize(stream, obj);
 
-                    Debug.Console.PrintLine("Done.");
+                    Debugging.Console.PrintLine("Done.");
                     return true;
                 }
             }
             catch (IOException e)
             {
-                Debug.Console.PrintLine("WriteObjectToDisk()发生IO异常: {0}", e);
+                Debugging.Console.PrintLine("WriteObjectToDisk()发生IO异常: {0}", e);
                 Logging.LogManager.Error(e);
                 return false;
             }
             catch (Exception e)
             {
-                Debug.Console.PrintLine("WriteObjectToDisk()发生异常: {0}", e);
+                Debugging.Console.PrintLine("WriteObjectToDisk()发生异常: {0}", e);
                 Logging.LogManager.Error(e);
                 return false;
             }
@@ -149,21 +149,21 @@ namespace DownKyi.Core.Utils
             {
                 using (Stream stream = File.Open(file, FileMode.Open))
                 {
-                    Debug.Console.PrintLine("Reading object from disk... ");
+                    Debugging.Console.PrintLine("Reading object from disk... ");
                     BinaryFormatter formatter = new BinaryFormatter();
-                    Debug.Console.PrintLine("Done.");
+                    Debugging.Console.PrintLine("Done.");
                     return formatter.Deserialize(stream);
                 }
             }
             catch (IOException e)
             {
-                Debug.Console.PrintLine("ReadObjectFromDisk()发生IO异常: {0}", e);
+                Debugging.Console.PrintLine("ReadObjectFromDisk()发生IO异常: {0}", e);
                 Logging.LogManager.Error(e);
                 return null;
             }
             catch (Exception e)
             {
-                Debug.Console.PrintLine("ReadObjectFromDisk()发生异常: {0}", e);
+                Debugging.Console.PrintLine("ReadObjectFromDisk()发生异常: {0}", e);
                 Logging.LogManager.Error(e);
                 return null;
             }

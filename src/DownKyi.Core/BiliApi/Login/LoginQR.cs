@@ -31,7 +31,7 @@ namespace DownKyi.Core.BiliApi.Login
             }
             catch (Exception e)
             {
-                Utils.Debug.Console.PrintLine("GetLoginUrl()发生异常: {0}", e);
+                Utils.Debugging.Console.PrintLine("GetLoginUrl()发生异常: {0}", e);
                 LogManager.Error("LoginQR", e);
                 return null;
             }
@@ -86,7 +86,7 @@ namespace DownKyi.Core.BiliApi.Login
             }
             catch (Exception e)
             {
-                Utils.Debug.Console.PrintLine("GetLoginInfo()发生异常: {0}", e);
+                Utils.Debugging.Console.PrintLine("GetLoginInfo()发生异常: {0}", e);
                 LogManager.Error("LoginQR", e);
                 return null;
             }
@@ -106,7 +106,7 @@ namespace DownKyi.Core.BiliApi.Login
             }
             catch (Exception e)
             {
-                Utils.Debug.Console.PrintLine("GetLoginQRCode()发生异常: {0}", e);
+                Utils.Debugging.Console.PrintLine("GetLoginQRCode()发生异常: {0}", e);
                 LogManager.Error("LoginQR", e);
                 return null;
             }

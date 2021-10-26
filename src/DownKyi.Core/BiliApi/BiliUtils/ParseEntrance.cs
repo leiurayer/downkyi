@@ -19,7 +19,10 @@ namespace DownKyi.Core.BiliApi.BiliUtils
     public static class ParseEntrance
     {
         public static readonly string WwwUrl = "https://www.bilibili.com";
+        public static readonly string ShareWwwUrl = "https://www.bilibili.com/s";
+        public static readonly string ShortUrl = "https://b23.tv/";
         public static readonly string MobileUrl = "https://m.bilibili.com";
+
         public static readonly string SpaceUrl = "https://space.bilibili.com";
 
         public static readonly string VideoUrl = $"{WwwUrl}/video/";
@@ -492,7 +495,17 @@ namespace DownKyi.Core.BiliApi.BiliUtils
             string url = EnableHttps(input);
             url = DeleteUrlParam(url);
 
+            url = url.Replace(ShareWwwUrl, WwwUrl);
             url = url.Replace(MobileUrl, WwwUrl);
+
+            if (url.Contains("b23.tv/ss") || url.Contains("b23.tv/ep"))
+            {
+                url = url.Replace(ShortUrl, BangumiUrl);
+            }
+            else
+            {
+                url = url.Replace(ShortUrl, VideoUrl);
+            }
 
             if (!url.StartsWith(baseUrl)) { return ""; }
 
