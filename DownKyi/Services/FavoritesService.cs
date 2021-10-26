@@ -2,6 +2,7 @@
 using DownKyi.Core.Storage;
 using DownKyi.Core.Utils;
 using DownKyi.Models;
+using Prism.Events;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -84,7 +85,7 @@ namespace DownKyi.Services
         /// </summary>
         /// <param name="mediaId"></param>
         /// <returns></returns>
-        public void GetFavoritesMediaList(long mediaId, ObservableCollection<FavoritesMedia> result)
+        public void GetFavoritesMediaList(long mediaId, ObservableCollection<FavoritesMedia> result, IEventAggregator eventAggregator)
         {
             var medias = FavoritesResource.GetAllFavoritesMedia(mediaId);
             if (medias.Count == 0) { return; }
@@ -101,7 +102,7 @@ namespace DownKyi.Services
 
                 App.PropertyChangeAsync(new Action(() =>
                 {
-                    FavoritesMedia newMedia = new FavoritesMedia
+                    FavoritesMedia newMedia = new FavoritesMedia(eventAggregator)
                     {
                         Avid = media.Id,
                         Bvid = media.Bvid,

@@ -20,6 +20,13 @@ namespace DownKyi.ViewModels
 
         #region 页面属性申明
 
+        private string pageName = Tag;
+        public string PageName
+        {
+            get { return pageName; }
+            set { SetProperty(ref pageName, value); }
+        }
+
         private VectorImage arrowBack;
         public VectorImage ArrowBack
         {
@@ -191,6 +198,18 @@ namespace DownKyi.ViewModels
         {
         }
 
+        // 列表选择事件
+        private DelegateCommand<object> favoritesMediasCommand;
+        public DelegateCommand<object> FavoritesMediasCommand => favoritesMediasCommand ?? (favoritesMediasCommand = new DelegateCommand<object>(ExecuteFavoritesMediasCommand));
+
+        /// <summary>
+        /// 列表选择事件
+        /// </summary>
+        /// <param name="parameter"></param>
+        private void ExecuteFavoritesMediasCommand(object parameter)
+        {
+        }
+
         #endregion
 
         /// <summary>
@@ -226,7 +245,7 @@ namespace DownKyi.ViewModels
                 NoDataVisibility = Visibility.Collapsed;
             }
 
-            favoritesService.GetFavoritesMediaList(favoritesId, FavoritesMedias);
+            favoritesService.GetFavoritesMediaList(favoritesId, FavoritesMedias, eventAggregator);
         }
 
         /// <summary>
@@ -237,8 +256,6 @@ namespace DownKyi.ViewModels
         {
             base.OnNavigatedTo(navigationContext);
 
-            InitView();
-
             // 根据传入参数不同执行不同任务
             long parameter = navigationContext.Parameters.GetValue<long>("Parameter");
             if (parameter == 0)
@@ -246,6 +263,7 @@ namespace DownKyi.ViewModels
                 return;
             }
 
+            InitView();
             await Task.Run(new Action(() =>
             {
                 UpdateView(new FavoritesService(), parameter);

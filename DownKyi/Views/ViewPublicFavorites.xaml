@@ -314,6 +314,7 @@
                                             <ColumnDefinition Width="auto" />
                                             <ColumnDefinition Width="150" />
                                             <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="auto" />
                                         </Grid.ColumnDefinitions>
 
                                         <TextBlock
@@ -326,7 +327,7 @@
                                             Text="{Binding Order}" />
 
                                         <Image Grid.Column="1" Source="{Binding Cover}" />
-                                        
+
                                         <Border
                                             x:Name="nameInfoPanel"
                                             Grid.Column="1"
@@ -342,6 +343,16 @@
                                                 Foreground="{DynamicResource BrushText}"
                                                 Text="{Binding Duration}" />
                                         </Border>
+
+                                        <Image
+                                            x:Name="nameIsSelected"
+                                            Grid.Column="1"
+                                            Width="24"
+                                            Height="24"
+                                            Margin="10"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Top"
+                                            Source="/DownKyi;component/Resources/checked.png" />
 
                                         <Grid Grid.Column="2" Margin="20,0">
                                             <Grid.RowDefinitions>
@@ -359,6 +370,11 @@
                                                 Text="{Binding Title}"
                                                 TextTrimming="CharacterEllipsis"
                                                 ToolTip="{Binding Title}">
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="MouseLeftButtonUp">
+                                                        <i:InvokeCommandAction Command="{Binding TitleCommand}" CommandParameter="{Binding DataContext.PageName, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}" />
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
                                                 <TextBlock.Style>
                                                     <Style TargetType="{x:Type TextBlock}">
                                                         <Setter Property="Foreground" Value="{DynamicResource BrushTextDark}" />
@@ -415,6 +431,11 @@
                                                 Cursor="Hand"
                                                 FontSize="12"
                                                 Text="{Binding UpName, StringFormat={}UP: {0}}">
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="MouseLeftButtonUp">
+                                                        <i:InvokeCommandAction Command="{Binding VideoUpperCommand}" CommandParameter="{Binding DataContext.PageName, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}" />
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
                                                 <TextBlock.Style>
                                                     <Style TargetType="{x:Type TextBlock}">
                                                         <Setter Property="Foreground" Value="{DynamicResource BrushTextGrey}" />
@@ -427,11 +448,19 @@
                                                 </TextBlock.Style>
                                             </TextBlock>
                                         </Grid>
+
+
                                     </Grid>
 
                                     <ControlTemplate.Triggers>
                                         <Trigger Property="IsMouseOver" Value="True">
                                             <Setter TargetName="nameInfoPanel" Property="Visibility" Value="Visible" />
+                                        </Trigger>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter TargetName="nameIsSelected" Property="Visibility" Value="Visible" />
+                                        </Trigger>
+                                        <Trigger Property="IsSelected" Value="False">
+                                            <Setter TargetName="nameIsSelected" Property="Visibility" Value="Collapsed" />
                                         </Trigger>
                                     </ControlTemplate.Triggers>
                                 </ControlTemplate>
