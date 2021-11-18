@@ -45,10 +45,14 @@
     <Reference Include="Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\MSTest.TestFramework.2.1.1\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BiliApi\UnitTest1.cs" />
     <Compile Include="BiliApi\Video\DynamicTest.cs" />
     <Compile Include="BiliApi\Video\RankingTest.cs" />
     <Compile Include="BiliApi\Video\VideoInfoTest.cs" />
@@ -60,6 +64,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Brotli.Core\Brotli.Core.csproj">
+      <Project>{3107CD63-E257-455E-AE81-1FD3582B067A}</Project>
+      <Name>Brotli.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DownKyi.Core\DownKyi.Core.csproj">
       <Project>{4fde0364-f65b-4812-bfe8-34e886624fbd}</Project>
       <Name>DownKyi.Core</Name>

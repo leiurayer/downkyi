@@ -304,6 +304,7 @@ namespace DownKyi.ViewModels
         /// <param name="e"></param>
         private void OnClipboardUpdated(object sender, EventArgs e)
         {
+            #region 执行第二遍时跳过
             times += 1;
             DispatcherTimer timer = new DispatcherTimer
             {
@@ -318,6 +319,8 @@ namespace DownKyi.ViewModels
                 times = 0;
                 return;
             }
+
+            #endregion
 
             AllowStatus isListenClipboard = SettingsManager.GetInstance().IsListenClipboard();
             if (isListenClipboard != AllowStatus.YES)

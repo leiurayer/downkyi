@@ -87,9 +87,13 @@
     <Compile Include="Images\LogoIcon.cs" />
     <Compile Include="Images\NavigationIcon.cs" />
     <Compile Include="Images\NormalIcon.cs" />
+    <Compile Include="Models\DownloadedItem.cs" />
+    <Compile Include="Models\DownloadingItem.cs" />
+    <Compile Include="Models\DownloadStatus.cs" />
     <Compile Include="Models\Favorites.cs" />
     <Compile Include="Models\FavoritesMedia.cs" />
     <Compile Include="Models\ParseScopeDisplay.cs" />
+    <Compile Include="Models\PlayStreamType.cs" />
     <Compile Include="Models\Resolution.cs" />
     <Compile Include="Models\TabHeader.cs" />
     <Compile Include="Models\VideoQuality.cs" />
@@ -98,7 +102,10 @@
     <Compile Include="Models\VideoSection.cs" />
     <Compile Include="Services\BangumiInfoService.cs" />
     <Compile Include="Services\CheeseInfoService.cs" />
+    <Compile Include="Services\Download\AriaDownloadService.cs" />
+    <Compile Include="Services\Download\DownloadService.cs" />
     <Compile Include="Services\FavoritesService.cs" />
+    <Compile Include="Services\Download\IDownloadService.cs" />
     <Compile Include="Services\IFavoritesService.cs" />
     <Compile Include="Services\IInfoService.cs" />
     <Compile Include="Services\IResolutionService.cs" />

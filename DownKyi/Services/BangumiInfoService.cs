@@ -8,6 +8,7 @@ using DownKyi.Models;
 using DownKyi.Utils;
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using System.Windows.Media.Imaging;
 
 namespace DownKyi.Services
@@ -63,21 +64,28 @@ namespace DownKyi.Services
                 string name;
 
                 // 判断title是否为数字，如果是，则将share_copy作为name，否则将title作为name
-                if (int.TryParse(episode.Title, out int result))
-                {
-                    name = episode.ShareCopy;
-                }
-                else
-                {
-                    if (episode.LongTitle != null && episode.LongTitle != "")
-                    {
-                        name = $"{episode.Title} {episode.LongTitle}";
-                    }
-                    else
-                    {
-                        name = episode.Title;
-                    }
-                }
+                //if (int.TryParse(episode.Title, out int result))
+                //{
+                //    name = Regex.Replace(episode.ShareCopy, @"《.*?》", "");
+                //    //name = episode.ShareCopy;
+                //}
+                //else
+                //{
+                //    if (episode.LongTitle != null && episode.LongTitle != "")
+                //    {
+                //        name = $"{episode.Title} {episode.LongTitle}";
+                //    }
+                //    else
+                //    {
+                //        name = episode.Title;
+                //    }
+                //}
+
+                // 将share_copy作为name，删除《》中的标题
+                name = Regex.Replace(episode.ShareCopy, @"^《.*?》", "");
+
+                // 删除前后空白符
+                name = name.Trim();
 
                 VideoPage page = new VideoPage
                 {

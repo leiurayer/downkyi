@@ -3,7 +3,7 @@
     /// <summary>
     /// 下载状态
     /// </summary>
-    public enum DownloadStatus
+    public enum DownloadResult
     {
         SUCCESS = 1,
         FAILED,

@@ -1,0 +1,117 @@
+﻿using System.Collections.Generic;
+
+namespace DownKyi.Core.FileName
+{
+    public class FileName
+    {
+        private readonly List<FileNamePart> nameParts;
+        private int order = -1;
+        private string mainTitle = "MAIN_TITLE";
+        private string pageTitle = "PAGE_TITLE";
+        private string videoZone = "VIDEO_ZONE";
+        private string audioQuality = "AUDIO_QUALITY";
+        private string videoQuality = "VIDEO_QUALITY";
+        private string videoCodec = "VIDEO_CODEC";
+
+        private FileName(List<FileNamePart> nameParts)
+        {
+            this.nameParts = nameParts;
+        }
+
+        public static FileName Builder(List<FileNamePart> nameParts)
+        {
+            return new FileName(nameParts);
+        }
+
+        public FileName SetOrder(int order)
+        {
+            this.order = order;
+            return this;
+        }
+
+        public FileName SetMainTitle(string mainTitle)
+        {
+            this.mainTitle = mainTitle;
+            return this;
+        }
+
+        public FileName SetPageTitle(string pageTitle)
+        {
+            this.pageTitle = pageTitle;
+            return this;
+        }
+
+        public FileName SetVideoZone(string videoZone)
+        {
+            this.videoZone = videoZone;
+            return this;
+        }
+
+        public FileName SetAudioQuality(string audioQuality)
+        {
+            this.audioQuality = audioQuality;
+            return this;
+        }
+
+        public FileName SetVideoQuality(string videoQuality)
+        {
+            this.videoQuality = videoQuality;
+            return this;
+        }
+
+        public FileName SetVideoCodec(string videoCodec)
+        {
+            this.videoCodec = videoCodec;
+            return this;
+        }
+
+        public string RelativePath()
+        {
+            string path = string.Empty;
+
+            foreach (FileNamePart part in nameParts)
+            {
+                switch (part)
+                {
+                    case FileNamePart.ORDER:
+                        if (order != -1)
+                        {
+                            path += order;
+                        }
+                        else
+                        {
+                            path += "ORDER";
+                        }
+                        break;
+                    case FileNamePart.MAIN_TITLE:
+                        path += mainTitle;
+                        break;
+                    case FileNamePart.PAGE_TITLE:
+                        path += pageTitle;
+                        break;
+                    case FileNamePart.VIDEO_ZONE:
+                        path += videoZone;
+                        break;
+                    case FileNamePart.AUDIO_QUALITY:
+                        path += audioQuality;
+                        break;
+                    case FileNamePart.VIDEO_QUALITY:
+                        path += videoQuality;
+                        break;
+                    case FileNamePart.VIDEO_CODEC:
+                        path += videoCodec;
+                        break;
+                }
+
+                if (((int)part) >= 100)
+                {
+                    path += HyphenSeparated.Hyphen[(int)part];
+                }
+            }
+
+            // 避免以斜杠开头和结尾的情况
+            return path.TrimEnd('/').TrimStart('/');
+        }
+
+    }
+}

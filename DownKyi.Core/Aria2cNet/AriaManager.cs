@@ -1,5 +1,6 @@
 ﻿using DownKyi.Core.Aria2cNet.Client;
 using DownKyi.Core.Logging;
+using System;
 using System.Threading;
 
 namespace DownKyi.Core.Aria2cNet
@@ -32,10 +33,14 @@ namespace DownKyi.Core.Aria2cNet
 
         /// <summary>
         /// 获取gid下载项的状态
+        /// 
+        /// TODO
+        /// 对于下载的不同状态的返回值的测试
         /// </summary>
         /// <param name="gid"></param>
+        /// <param name="action"></param>
         /// <returns></returns>
-        public DownloadStatus GetDownloadStatus(string gid)
+        public DownloadResult GetDownloadStatus(string gid, Action action = null)
         {
             string filePath = "";
             while (true)
@@ -48,7 +53,7 @@ namespace DownKyi.Core.Aria2cNet
                     if (status.Result.Error.Message.Contains("is not found"))
                     {
                         OnDownloadFinish(false, null, gid, status.Result.Error.Message);
-                        return DownloadStatus.ABORT;
+                        return DownloadResult.ABORT;
                     }
                 }
 
@@ -60,8 +65,15 @@ namespace DownKyi.Core.Aria2cNet
                 long totalLength = long.Parse(status.Result.Result.TotalLength);
                 long completedLength = long.Parse(status.Result.Result.CompletedLength);
                 long speed = long.Parse(status.Result.Result.DownloadSpeed);
+
                 // 回调
                 OnTellStatus(totalLength, completedLength, speed, gid);
+
+                // 在外部执行
+                if (action != null)
+                {
+                    action.Invoke();
+                }
 
                 if (status.Result.Result.Status == "complete")
                 {
@@ -86,14 +98,14 @@ namespace DownKyi.Core.Aria2cNet
 
                     // 返回回调信息，退出函数
                     OnDownloadFinish(false, null, gid, status.Result.Result.ErrorMessage);
-                    return DownloadStatus.FAILED;
+                    return DownloadResult.FAILED;
                 }
 
                 // 降低CPU占用
                 Thread.Sleep(100);
             }
             OnDownloadFinish(true, filePath, gid, null);
-            return DownloadStatus.SUCCESS;
+            return DownloadResult.SUCCESS;
         }
 
         /// <summary>
