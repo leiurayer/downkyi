@@ -2,7 +2,6 @@
 
 namespace DownKyi.Core.BiliApi.Zone
 {
-
     public class VideoZone
     {
         private static VideoZone that;
@@ -59,7 +58,7 @@ namespace DownKyi.Core.BiliApi.Zone
             zones.Add(new ZoneAttr(30, "vocaloid", "VOCALOID·UTAU", 3)); //以雅马哈Vocaloid和UTAU引擎为基础，包含其他调教引擎，运用各类音源进行的歌曲创作内容
             zones.Add(new ZoneAttr(194, "electronic", "电音", 3)); //以电子合成器、音乐软体等产生的电子声响制作的音乐
             zones.Add(new ZoneAttr(59, "perform", "演奏", 3)); //传统或非传统乐器及器材的演奏作品
-            zones.Add(new ZoneAttr(193, "mv", "MV", 3)); //音乐录影带，为搭配音乐而拍摄的短片
+            zones.Add(new ZoneAttr(193, "mv", "MV", 3)); //音乐录影带，为搭配音乐而拍摄或制作的视频
             zones.Add(new ZoneAttr(29, "live", "音乐现场", 3)); //音乐实况表演视频
             zones.Add(new ZoneAttr(130, "other", "音乐综合", 3)); //收录无法定义到其他音乐子分区的音乐视频
 
@@ -84,37 +83,48 @@ namespace DownKyi.Core.BiliApi.Zone
             zones.Add(new ZoneAttr(19, "mugen", "Mugen", 4)); //以Mugen引擎为平台制作、或与Mugen相关的游戏视频
 
             //知识
-            zones.Add(new ZoneAttr(36, "technology", "知识")); // 主分区
+            zones.Add(new ZoneAttr(36, "knowledge", "知识")); // 主分区
             zones.Add(new ZoneAttr(201, "science", "科学科普", 36)); //回答你的十万个为什么
-            zones.Add(new ZoneAttr(124, "fun", "社科人文", 36)); //聊聊互联网社会法律，看看历史趣闻艺术，品品文化心理人物
-            zones.Add(new ZoneAttr(207, "finance", "财经", 36)); //宏观经济分析，证券市场动态，商业帝国故事，知识与财富齐飞~
-            zones.Add(new ZoneAttr(208, "campus", "校园学习", 36)); //老师很有趣，同学多人才，我们都爱搞学习
-            zones.Add(new ZoneAttr(209, "career", "职业职场", 36)); //职场加油站，成为最有料的职场人
-            zones.Add(new ZoneAttr(122, "wild", "野生技术协会", 36)); //炫酷技能大集合，是时候展现真正的技术了
+            zones.Add(new ZoneAttr(124, "social_science", "社科·法律·心理", 36)); //基于社会科学、法学、心理学展开或个人观点输出的知识视频
+            zones.Add(new ZoneAttr(228, "humanity_history", "人文历史", 36)); //看看古今人物，聊聊历史过往，品品文学典籍
+            zones.Add(new ZoneAttr(207, "business", "财经商业", 36)); //说金融市场，谈宏观经济，一起畅聊商业故事
+            zones.Add(new ZoneAttr(208, "campus", "校园学习", 36)); //老师很有趣，学生也有才，我们一起搞学习
+            zones.Add(new ZoneAttr(209, "career", "职业职场", 36)); //职业分享、升级指南，一起成为最有料的职场人
+            zones.Add(new ZoneAttr(229, "design", "设计·创意", 36)); //天马行空，创意设计，都在这里
+            zones.Add(new ZoneAttr(122, "skill", "野生技能协会", 36)); //技能党集合，是时候展示真正的技术了
 
-            //数码
-            zones.Add(new ZoneAttr(188, "digital", "数码")); // 主分区
-            zones.Add(new ZoneAttr(95, "mobile", "手机平板", 188)); //手机平板、app 和产品教程等相关视频
-            zones.Add(new ZoneAttr(189, "pc", "电脑装机", 188)); //电脑、笔记本、装机配件、外设和软件教程等相关视频
-            zones.Add(new ZoneAttr(190, "photography", "摄影摄像", 188)); //摄影摄像器材、拍摄剪辑技巧、拍摄作品分享等相关视频
-            zones.Add(new ZoneAttr(191, "intelligence_av", "影音智能", 188)); //影音设备、智能硬件、生活家电等相关视频
+            //科技
+            zones.Add(new ZoneAttr(188, "tech", "科技")); // 主分区
+            zones.Add(new ZoneAttr(95, "digital", "数码", 188)); //科技数码产品大全，一起来做发烧友
+            zones.Add(new ZoneAttr(230, "application", "软件应用", 188)); //超全软件应用指南
+            zones.Add(new ZoneAttr(231, "computer_tech", "计算机技术", 188)); //研究分析、教学演示、经验分享......有关计算机技术的都在这里
+            zones.Add(new ZoneAttr(232, "industry", "工业·工程·机械", 188)); //前方高能，机甲重工即将出没
+            zones.Add(new ZoneAttr(233, "diy", "极客DIY", 188)); //炫酷技能，极客文化，硬核技巧，准备好你的惊讶
+
+            //运动
+            zones.Add(new ZoneAttr(234, "sports", "运动")); // 主分区
+            zones.Add(new ZoneAttr(235, "basketballfootball", "篮球·足球", 234)); //与篮球、足球相关的视频，包括但不限于篮足球赛事、教学、评述、剪辑、剧情等相关内容
+            zones.Add(new ZoneAttr(164, "aerobics", "健身", 234)); //与健身相关的视频，包括但不限于瑜伽、CrossFit、健美、力量举、普拉提、街健等相关内容
+            zones.Add(new ZoneAttr(236, "athletic", "竞技体育", 234)); //与竞技体育相关的视频，包括但不限于乒乓、羽毛球、排球、赛车等竞技项目的赛事、评述、剪辑、剧情等相关内容
+            zones.Add(new ZoneAttr(237, "culture", "运动文化", 234)); //与运动文化相关的视频，包络但不限于球鞋、球衣、球星卡等运动衍生品的分享、解读，体育产业的分析、科普等相关内容
+            zones.Add(new ZoneAttr(238, "comprehensive", "运动综合", 234)); //与运动综合相关的视频，包括但不限于钓鱼、骑行、滑板等日常运动分享、教学、Vlog等相关内容
 
             //汽车
             zones.Add(new ZoneAttr(223, "car", "汽车")); // 主分区
             zones.Add(new ZoneAttr(176, "life", "汽车生活", 223)); //分享汽车及出行相关的生活体验类视频
             zones.Add(new ZoneAttr(224, "culture", "汽车文化", 223)); //车迷的精神圣地，包括汽车赛事、品牌历史、汽车改装、经典车型和汽车模型等
             zones.Add(new ZoneAttr(225, "geek", "汽车极客", 223)); //汽车硬核达人聚集地，包括DIY造车、专业评测和技术知识分享
+            zones.Add(new ZoneAttr(240, "motorcycle", "摩托车", 223)); //骑士们集合啦
             zones.Add(new ZoneAttr(226, "smart", "智能出行", 223)); //探索新能源汽车和未来智能出行的前沿阵地
             zones.Add(new ZoneAttr(227, "strategy", "购车攻略", 223)); //丰富详实的购车建议和新车体验
 
             //生活
             zones.Add(new ZoneAttr(160, "life", "生活")); // 主分区
             zones.Add(new ZoneAttr(138, "funny", "搞笑", 160)); //各种沙雕有趣的搞笑剪辑，挑战，表演，配音等视频
-            zones.Add(new ZoneAttr(21, "daily", "日常", 160)); //记录日常生活，分享生活故事
+            zones.Add(new ZoneAttr(239, "home", "家居房产", 160)); //与买房、装修、居家生活相关的分享
             zones.Add(new ZoneAttr(161, "handmake", "手工", 160)); //手工制品的制作过程或成品展示、教程、测评类视频
             zones.Add(new ZoneAttr(162, "painting", "绘画", 160)); //绘画过程或绘画教程，以及绘画相关的所有视频
-            zones.Add(new ZoneAttr(163, "sports", "运动", 160)); //运动相关的记录、教程、装备评测和精彩瞬间剪辑视频
-            zones.Add(new ZoneAttr(174, "other", "其他", 160)); //对分区归属不明的视频进行归纳整合的特定分区
+            zones.Add(new ZoneAttr(21, "daily", "日常", 160)); //记录日常生活，分享生活故事
 
             //美食
             zones.Add(new ZoneAttr(211, "food", "美食")); // 主分区
@@ -143,11 +153,9 @@ namespace DownKyi.Core.BiliApi.Zone
 
             //时尚
             zones.Add(new ZoneAttr(155, "fashion", "时尚")); // 主分区
-            zones.Add(new ZoneAttr(157, "makeup", "美妆", 155)); //涵盖妆容、发型、美甲等教程，彩妆、护肤相关产品测评、分享等
-            zones.Add(new ZoneAttr(158, "clothing", "服饰", 155)); //服饰风格、搭配技巧相关的展示和教程视频
-            zones.Add(new ZoneAttr(164, "aerobics", "健身", 155)); //器械、有氧、拉伸运动等，以达到强身健体、减肥瘦身、形体塑造目的
-            zones.Add(new ZoneAttr(159, "catwalk", "T台", 155)); //发布会走秀现场及模特相关时尚片、采访、后台花絮
-            zones.Add(new ZoneAttr(192, "trends", "风尚标", 155)); //时尚明星专访、街拍、时尚购物相关知识科普
+            zones.Add(new ZoneAttr(157, "makeup", "美妆护肤", 155)); //彩妆护肤、美甲美发、仿妆、医美相关内容分享或产品测评
+            zones.Add(new ZoneAttr(158, "clothing", "穿搭", 155)); //穿搭风格、穿搭技巧的展示分享，涵盖衣服、鞋靴、箱包配件、配饰（帽子、钟表、珠宝首饰）等
+            zones.Add(new ZoneAttr(159, "trend", "时尚潮流", 155)); //时尚街拍、时装周、时尚大片，时尚品牌、潮流等行业相关记录及知识科普
 
             //资讯
             zones.Add(new ZoneAttr(202, "information", "资讯")); // 主分区
@@ -158,8 +166,10 @@ namespace DownKyi.Core.BiliApi.Zone
 
             //娱乐
             zones.Add(new ZoneAttr(5, "ent", "娱乐")); // 主分区
-            zones.Add(new ZoneAttr(71, "variety", "综艺", 5)); //国内外有趣的综艺和综艺相关精彩剪辑
-            zones.Add(new ZoneAttr(137, "star", "明星", 5)); //娱乐圈动态、明星资讯相关
+            zones.Add(new ZoneAttr(71, "variety", "综艺", 5)); //所有综艺相关，全部一手掌握！
+            zones.Add(new ZoneAttr(241, "talker", "娱乐杂谈", 5)); //娱乐人物解读、娱乐热点点评、娱乐行业分析
+            zones.Add(new ZoneAttr(242, "fans", "粉丝创作", 5)); //粉丝向创作视频
+            zones.Add(new ZoneAttr(137, "celebrity", "明星综合", 5)); //娱乐圈动态、明星资讯相关
 
             //影视
             zones.Add(new ZoneAttr(181, "cinephile", "影视")); // 主分区

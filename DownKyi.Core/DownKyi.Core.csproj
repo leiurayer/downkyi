@@ -194,6 +194,7 @@
     <Compile Include="BiliApi\Video\VideoInfo.cs" />
     <Compile Include="BiliApi\WebClient.cs" />
     <Compile Include="BiliApi\Zone\VideoZone.cs" />
+    <Compile Include="BiliApi\Zone\VideoZoneIcon.cs" />
     <Compile Include="BiliApi\Zone\ZoneAttr.cs" />
     <Compile Include="Danmaku2Ass\Bilibili.cs" />
     <Compile Include="Danmaku2Ass\Collision.cs" />
@@ -264,7 +265,12 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Page Include="BiliApi\Zone\ZoneImage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Brotli.NET.2.1.1\build\Brotli.NET.targets" Condition="Exists('..\packages\Brotli.NET.2.1.1\build\Brotli.NET.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

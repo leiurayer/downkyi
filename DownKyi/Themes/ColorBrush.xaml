@@ -23,6 +23,7 @@
     <SolidColorBrush x:Key="BrushForegroundDark" Color="{DynamicResource ColorForegroundDark}" />
     <SolidColorBrush x:Key="BrushBackgroundDark" Color="{DynamicResource ColorBackgroundDark}" />
     <SolidColorBrush x:Key="BrushForegroundGrey" Color="{DynamicResource ColorForegroundGrey}" />
+    <SolidColorBrush x:Key="BrushForegroundGrey2" Color="{DynamicResource ColorForegroundGrey2}" />
     <SolidColorBrush x:Key="BrushBackgroundGrey" Color="{DynamicResource ColorBackgroundGrey}" />
     <SolidColorBrush x:Key="BrushBackgroundGreyTranslucent" Color="{DynamicResource ColorBackgroundGreyTranslucent}" />
     <SolidColorBrush x:Key="BrushBackgroundGreyTranslucent2" Color="{DynamicResource ColorBackgroundGreyTranslucent2}" />
@@ -34,6 +35,7 @@
 
     <SolidColorBrush x:Key="BrushHeaderGrey" Color="{DynamicResource ColorHeaderGrey}" />
     <SolidColorBrush x:Key="BrushBorder" Color="{DynamicResource ColorBorder}" />
+    <SolidColorBrush x:Key="BrushBorderTranslucent" Color="{DynamicResource ColorBorderTranslucent}" />
 
     <SolidColorBrush x:Key="BrushImageBorder" Color="{DynamicResource ColorImageBorder}" />
     <SolidColorBrush x:Key="BrushImageBackground" Color="{DynamicResource ColorImageBackground}" />

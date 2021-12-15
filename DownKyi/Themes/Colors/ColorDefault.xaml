@@ -23,6 +23,7 @@
     <Color x:Key="ColorForegroundDark">#FFFFFFFF</Color>
     <Color x:Key="ColorBackgroundDark">#FF00A1D6</Color>
     <Color x:Key="ColorForegroundGrey">#FFBDBDBD</Color>
+    <Color x:Key="ColorForegroundGrey2">#FFE4E4E4</Color>
     <Color x:Key="ColorBackgroundGrey">#FFBDBDBD</Color>
     <Color x:Key="ColorBackgroundGreyTranslucent">#C8BDBDBD</Color>
     <Color x:Key="ColorBackgroundGreyTranslucent2">#7FBDBDBD</Color>
@@ -34,6 +35,7 @@
 
     <Color x:Key="ColorHeaderGrey">#FFF4F4F4</Color>
     <Color x:Key="ColorBorder">#FF999999</Color>
+    <Color x:Key="ColorBorderTranslucent">#7F999999</Color>
 
     <Color x:Key="ColorImageBorder">#7FD0D0D0</Color>
     <Color x:Key="ColorImageBackground">#7FD0D0D0</Color>

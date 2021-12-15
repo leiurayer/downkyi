@@ -1,4 +1,5 @@
 ﻿using DownKyi.Models;
+using System.Collections.Generic;
 
 namespace DownKyi.Services.Download
 {
@@ -7,10 +8,10 @@ namespace DownKyi.Services.Download
         void Parse(DownloadingItem downloading);
         string DownloadAudio(DownloadingItem downloading);
         string DownloadVideo(DownloadingItem downloading);
-        void DownloadDanmaku(DownloadingItem downloading);
-        void DownloadSubtitle(DownloadingItem downloading);
-        void DownloadCover(DownloadingItem downloading);
-        void MixedFlow(DownloadingItem downloading, string audioUid, string videoUid);
+        string DownloadDanmaku(DownloadingItem downloading);
+        List<string> DownloadSubtitle(DownloadingItem downloading);
+        string DownloadCover(DownloadingItem downloading);
+        string MixedFlow(DownloadingItem downloading, string audioUid, string videoUid);
 
         void Start();
         void End();

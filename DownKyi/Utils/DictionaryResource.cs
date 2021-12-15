@@ -26,7 +26,7 @@ namespace DownKyi.Utils
         /// <returns></returns>
         public static string GetString(string resourceKey)
         {
-            return (string)Application.Current.Resources[resourceKey];
+            return Application.Current == null ? "" : (string)Application.Current.Resources[resourceKey];
         }
 
         /// <summary>

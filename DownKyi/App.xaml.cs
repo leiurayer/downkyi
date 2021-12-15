@@ -40,9 +40,80 @@ namespace DownKyi
             //DictionaryResource.LoadLanguage("en_US");
 
             // 初始化数据
-            // TODO 从数据库读取
             DownloadingList = new ObservableCollection<DownloadingItem>();
             DownloadedList = new ObservableCollection<DownloadedItem>();
+
+            // test DownloadingList data
+            DownloadingList.Add(new DownloadingItem
+            {
+                MainTitle = "Test1",
+                Name = "name1=name1=name1=name1=name1=name1=name1=name1=name1=name1=name1",
+                ZoneImage = (System.Windows.Media.DrawingImage)Current.Resources[Core.BiliApi.Zone.VideoZoneIcon.Instance().GetZoneImageKey(4)],
+                Resolution = new Resolution
+                {
+                    Name = "1080P",
+                    Id = 64
+                },
+                AudioCodecName = "194K",
+            });
+            DownloadingList.Add(new DownloadingItem
+            {
+                MainTitle = "Test2",
+                Name = "name2",
+                ZoneImage = (System.Windows.Media.DrawingImage)Current.Resources[Core.BiliApi.Zone.VideoZoneIcon.Instance().GetZoneImageKey(3)],
+                Resolution = new Resolution
+                {
+                    Name = "1080P",
+                    Id = 64
+                },
+                Duration = "1h23m50s",
+                VideoCodecName = "HEVC",
+                AudioCodecName = "194K",
+            });
+            DownloadingList.Add(new DownloadingItem
+            {
+                MainTitle = "Test3",
+                Name = "name3",
+                ZoneImage = (System.Windows.Media.DrawingImage)Current.Resources[Core.BiliApi.Zone.VideoZoneIcon.Instance().GetZoneImageKey(3)],
+                Resolution = new Resolution
+                {
+                    Name = "720P",
+                    Id = 64
+                },
+                Duration = "23m50s",
+                VideoCodecName = "AVC",
+                AudioCodecName = "194K",
+            });
+            DownloadingList.Add(new DownloadingItem
+            {
+                MainTitle = "Test4",
+                Name = "name4",
+                ZoneImage = (System.Windows.Media.DrawingImage)Current.Resources[Core.BiliApi.Zone.VideoZoneIcon.Instance().GetZoneImageKey(3)],
+                Resolution = new Resolution
+                {
+                    Name = "720P",
+                    Id = 64
+                },
+                Duration = "23m50s",
+                VideoCodecName = "AVC",
+                AudioCodecName = "194K",
+            });
+            DownloadingList.Add(new DownloadingItem
+            {
+                MainTitle = "Test5",
+                Name = "name5",
+                ZoneImage = (System.Windows.Media.DrawingImage)Current.Resources[Core.BiliApi.Zone.VideoZoneIcon.Instance().GetZoneImageKey(5)],
+                Resolution = new Resolution
+                {
+                    Name = "720P",
+                    Id = 64
+                },
+                Duration = "23m50s",
+                VideoCodecName = "AVC",
+                AudioCodecName = "194K",
+            });
+
+            // TODO 从数据库读取
 
             // 启动下载服务
             downloadService = new AriaDownloadService(DownloadingList, DownloadedList);

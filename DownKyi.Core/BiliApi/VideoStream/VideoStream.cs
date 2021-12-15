@@ -49,6 +49,7 @@ namespace DownKyi.Core.BiliApi.VideoStream
 
             // 获取播放器信息
             var player = PlayerV2(avid, bvid, cid);
+            if (player == null) { return subRipTexts; }
 
             foreach (var subtitle in player.Subtitle.Subtitles)
             {

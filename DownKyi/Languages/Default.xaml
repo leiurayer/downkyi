@@ -68,6 +68,23 @@
     <system:String x:Key="Downloading">正在下载</system:String>
     <system:String x:Key="DownloadFinished">已下载</system:String>
 
+    <system:String x:Key="DownloadingAudio">音频</system:String>
+    <system:String x:Key="DownloadingVideo">视频</system:String>
+    <system:String x:Key="DownloadingDanmaku">弹幕</system:String>
+    <system:String x:Key="DownloadingSubtitle">字幕</system:String>
+    <system:String x:Key="DownloadingCover">封面</system:String>
+    <system:String x:Key="Parsing">正在解析……</system:String>
+    <system:String x:Key="WhileDownloading">下载中……</system:String>
+    <system:String x:Key="MixedFlow">混流中……</system:String>
+    <system:String x:Key="Pausing">暂停中……</system:String>
+    <system:String x:Key="Waiting">等待中……</system:String>
+
+    <system:String x:Key="TotalDownloading1">正在下载</system:String>
+    <system:String x:Key="TotalDownloading2">个视频！</system:String>
+    <system:String x:Key="PauseAllDownloading">全部暂停</system:String>
+    <system:String x:Key="ContinueAllDownloading">全部开始</system:String>
+    <system:String x:Key="DeleteAllDownloading">全部删除</system:String>
+
     <!--  Settings  -->
     <system:String x:Key="PressEnterToApplySettingTip">按回车键应用设置</system:String>
 

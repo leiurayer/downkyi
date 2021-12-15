@@ -4,15 +4,20 @@ using DownKyi.Core.Aria2cNet.Client.Entity;
 using DownKyi.Core.Aria2cNet.Server;
 using DownKyi.Core.BiliApi.Login;
 using DownKyi.Core.BiliApi.VideoStream;
+using DownKyi.Core.BiliApi.VideoStream.Models;
 using DownKyi.Core.Danmaku2Ass;
+using DownKyi.Core.FFmpeg;
 using DownKyi.Core.Logging;
 using DownKyi.Core.Settings;
 using DownKyi.Core.Storage;
+using DownKyi.Core.Utils;
 using DownKyi.Models;
+using DownKyi.Utils;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -30,31 +35,164 @@ namespace DownKyi.Services.Download
             Tag = "AriaDownloadService";
         }
 
+        #region 音视频
+
+        /// <summary>
+        /// 下载音频，返回下载文件路径
+        /// </summary>
+        /// <param name="downloading"></param>
+        /// <returns></returns>
         public string DownloadAudio(DownloadingItem downloading)
         {
+            // 更新状态显示
+            downloading.DownloadStatusTitle = DictionaryResource.GetString("WhileDownloading");
+            downloading.DownloadContent = DictionaryResource.GetString("DownloadingAudio");
+
             // 如果没有Dash，返回null
-            if(downloading.PlayUrl.Dash == null) { return null; }
+            if (downloading.PlayUrl == null || downloading.PlayUrl.Dash == null) { return null; }
 
             // 如果audio列表没有内容，则返回null
             if (downloading.PlayUrl.Dash.Audio == null) { return null; }
             else if (downloading.PlayUrl.Dash.Audio.Count == 0) { return null; }
 
+            // 根据音频id匹配
+            PlayUrlDashVideo downloadAudio = null;
+            foreach (PlayUrlDashVideo audio in downloading.PlayUrl.Dash.Audio)
+            {
+                if (audio.Id == downloading.AudioCodecId)
+                {
+                    downloadAudio = audio;
+                    break;
+                }
+            }
 
-            throw new NotImplementedException();
+            return DownloadVideo(downloading, downloadAudio);
+            //// 如果音频为空，说明没有匹配到可下载的音频
+            //if (downloadAudio == null) { return null; }
+
+            //// 下载链接
+            //List<string> audioUrls = new List<string>();
+            //if (downloadAudio.BaseUrl != null) { audioUrls.Add(downloadAudio.BaseUrl); }
+            //if (downloadAudio.BackupUrl != null) { audioUrls.AddRange(downloadAudio.BackupUrl); }
+
+            //// 路径
+            //string[] temp = downloading.FilePath.Split('/');
+            //string path = downloading.FilePath.Replace(temp[temp.Length - 1], "");
+
+            //// 下载文件名
+            //string fileName = Guid.NewGuid().ToString("N");
+            //fileName = Path.Combine(path, fileName);
+
+            //// 记录本次下载的文件
+            //downloading.DownloadFiles.Add(fileName);
+
+            //// 开始下载
+            //DownloadResult downloadStatus = DownloadByAria(downloading, audioUrls, path, fileName);
+            //switch (downloadStatus)
+            //{
+            //    case DownloadResult.SUCCESS:
+            //        return fileName;
+            //    case DownloadResult.FAILED:
+            //        return null;
+            //    case DownloadResult.ABORT:
+            //        return null;
+            //    default:
+            //        return null;
+            //}
         }
+
+        /// <summary>
+        /// 下载视频，返回下载文件路径
+        /// </summary>
+        /// <param name="downloading"></param>
+        /// <returns></returns>
+        public string DownloadVideo(DownloadingItem downloading)
+        {
+            // 更新状态显示
+            downloading.DownloadStatusTitle = DictionaryResource.GetString("WhileDownloading");
+            downloading.DownloadContent = DictionaryResource.GetString("DownloadingVideo");
+
+            // 如果没有Dash，返回null
+            if (downloading.PlayUrl == null || downloading.PlayUrl.Dash == null) { return null; }
+
+            // 如果Video列表没有内容，则返回null
+            if (downloading.PlayUrl.Dash.Video == null) { return null; }
+            else if (downloading.PlayUrl.Dash.Video.Count == 0) { return null; }
+
+            // 根据视频编码匹配
+            PlayUrlDashVideo downloadVideo = null;
+            foreach (PlayUrlDashVideo video in downloading.PlayUrl.Dash.Video)
+            {
+                if (video.Id == downloading.Resolution.Id && video.Codecs == downloading.VideoCodecId)
+                {
+                    downloadVideo = video;
+                    break;
+                }
+            }
+
+            return DownloadVideo(downloading, downloadVideo);
+        }
+
+        /// <summary>
+        /// 将下载音频和视频的函数中相同代码抽象出来
+        /// </summary>
+        /// <param name="downloading"></param>
+        /// <param name="downloadVideo"></param>
+        /// <returns></returns>
+        private string DownloadVideo(DownloadingItem downloading, PlayUrlDashVideo downloadVideo)
+        {
+            // 如果为空，说明没有匹配到可下载的音频视频
+            if (downloadVideo == null) { return null; }
+
+            // 下载链接
+            List<string> urls = new List<string>();
+            if (downloadVideo.BaseUrl != null) { urls.Add(downloadVideo.BaseUrl); }
+            if (downloadVideo.BackupUrl != null) { urls.AddRange(downloadVideo.BackupUrl); }
+
+            // 路径
+            string[] temp = downloading.FilePath.Split('/');
+            string path = downloading.FilePath.Replace(temp[temp.Length - 1], "");
+
+            // 下载文件名
+            string fileName = Guid.NewGuid().ToString("N");
+            fileName = Path.Combine(path, fileName);
+
+            // 记录本次下载的文件
+            downloading.DownloadFiles.Add(fileName);
+
+            // 开始下载
+            DownloadResult downloadStatus = DownloadByAria(downloading, urls, path, fileName);
+            switch (downloadStatus)
+            {
+                case DownloadResult.SUCCESS:
+                    return fileName;
+                case DownloadResult.FAILED:
+                    return null;
+                case DownloadResult.ABORT:
+                    return null;
+                default:
+                    return null;
+            }
+        }
+
+        #endregion
 
         /// <summary>
         /// 下载封面
         /// </summary>
         /// <param name="downloading"></param>
-        public void DownloadCover(DownloadingItem downloading)
+        public string DownloadCover(DownloadingItem downloading)
         {
+            // 更新状态显示
+            downloading.DownloadStatusTitle = DictionaryResource.GetString("WhileDownloading");
+            downloading.DownloadContent = DictionaryResource.GetString("DownloadingCover");
+
             // 查询、保存封面
             StorageCover storageCover = new StorageCover();
             string cover = storageCover.GetCover(downloading.Avid, downloading.Bvid, downloading.Cid, downloading.CoverUrl);
             if (cover == null)
             {
-                return;
+                return null;
             }
 
             // 图片的扩展名
@@ -67,23 +205,38 @@ namespace DownKyi.Services.Download
             // 复制图片到指定位置
             try
             {
-                File.Copy(coverPath, $"{downloading.FilePath}.{fileExtension}");
+                string fileName = $"{downloading.FilePath}.{fileExtension}";
+                File.Copy(coverPath, fileName);
+
+                // 记录本次下载的文件
+                downloading.DownloadFiles.Add(fileName);
+
+                return fileName;
             }
             catch (Exception e)
             {
                 Core.Utils.Debugging.Console.PrintLine(e);
                 LogManager.Error(Tag, e);
             }
+
+            return null;
         }
 
         /// <summary>
         /// 下载弹幕
         /// </summary>
         /// <param name="downloading"></param>
-        public void DownloadDanmaku(DownloadingItem downloading)
+        public string DownloadDanmaku(DownloadingItem downloading)
         {
+            // 更新状态显示
+            downloading.DownloadStatusTitle = DictionaryResource.GetString("WhileDownloading");
+            downloading.DownloadContent = DictionaryResource.GetString("DownloadingDanmaku");
+
             string title = $"{downloading.Name}";
             string assFile = $"{downloading.FilePath}.ass";
+
+            // 记录本次下载的文件
+            downloading.DownloadFiles.Add(assFile);
 
             int screenWidth = SettingsManager.GetInstance().GetDanmakuScreenWidth();
             int screenHeight = SettingsManager.GetInstance().GetDanmakuScreenHeight();
@@ -117,14 +270,22 @@ namespace DownKyi.Services.Download
                 .SetBottomFilter(SettingsManager.GetInstance().GetDanmakuBottomFilter() == AllowStatus.YES)
                 .SetScrollFilter(SettingsManager.GetInstance().GetDanmakuScrollFilter() == AllowStatus.YES)
                 .Create(downloading.Avid, downloading.Cid, subtitleConfig, assFile);
+
+            return assFile;
         }
 
         /// <summary>
         /// 下载字幕
         /// </summary>
         /// <param name="downloading"></param>
-        public void DownloadSubtitle(DownloadingItem downloading)
+        public List<string> DownloadSubtitle(DownloadingItem downloading)
         {
+            // 更新状态显示
+            downloading.DownloadStatusTitle = DictionaryResource.GetString("WhileDownloading");
+            downloading.DownloadContent = DictionaryResource.GetString("DownloadingSubtitle");
+
+            List<string> srtFiles = new List<string>();
+
             var subRipTexts = VideoStream.GetSubtitle(downloading.Avid, downloading.Bvid, downloading.Cid);
             foreach (var subRip in subRipTexts)
             {
@@ -132,6 +293,11 @@ namespace DownKyi.Services.Download
                 try
                 {
                     File.WriteAllText(srtFile, subRip.SrtString);
+
+                    // 记录本次下载的文件
+                    downloading.DownloadFiles.Add(srtFile);
+
+                    srtFiles.Add(srtFile);
                 }
                 catch (Exception e)
                 {
@@ -139,30 +305,44 @@ namespace DownKyi.Services.Download
                     LogManager.Error("DownloadSubtitle()", e);
                 }
             }
-        }
 
-        public string DownloadVideo(DownloadingItem downloading)
-        {
-            throw new NotImplementedException();
+            return srtFiles;
         }
 
         /// <summary>
-        /// 停止下载服务
+        /// 混流音频和视频
         /// </summary>
-        public void End()
+        /// <param name="downloading"></param>
+        /// <param name="audioUid"></param>
+        /// <param name="videoUid"></param>
+        /// <returns></returns>
+        public string MixedFlow(DownloadingItem downloading, string audioUid, string videoUid)
         {
-            // TODO something
+            // 更新状态显示
+            downloading.DownloadStatusTitle = DictionaryResource.GetString("MixedFlow");
+            downloading.DownloadContent = DictionaryResource.GetString("DownloadingVideo");
 
-            // 关闭Aria服务器
-            CloseAriaServer();
+            string finalFile = $"{downloading.FilePath}.mp4";
+            if (videoUid == null)
+            {
+                finalFile = $"{downloading.FilePath}.aac";
+            }
 
-            // 结束任务
-            tokenSource.Cancel();
-        }
+            // 合并音视频
+            FFmpegHelper.MergeVideo(audioUid, videoUid, finalFile);
 
-        public void MixedFlow(DownloadingItem downloading, string audioUid, string videoUid)
-        {
-            throw new NotImplementedException();
+            // 获取文件大小
+            if (File.Exists(finalFile))
+            {
+                FileInfo info = new FileInfo(finalFile);
+                downloading.FileSize = Format.FormatFileSize(info.Length);
+            }
+            else
+            {
+                downloading.FileSize = Format.FormatFileSize(0);
+            }
+
+            return finalFile;
         }
 
         /// <summary>
@@ -171,11 +351,16 @@ namespace DownKyi.Services.Download
         /// <param name="downloading"></param>
         public void Parse(DownloadingItem downloading)
         {
+            // 更新状态显示
+            downloading.DownloadStatusTitle = DictionaryResource.GetString("Parsing");
+            downloading.DownloadContent = string.Empty;
+
             if (downloading.PlayUrl != null && downloading.DownloadStatus == DownloadStatus.NOT_STARTED)
             {
                 return;
             }
 
+            // 解析
             switch (downloading.PlayStreamType)
             {
                 case PlayStreamType.VIDEO:
@@ -193,6 +378,21 @@ namespace DownKyi.Services.Download
         }
 
         /// <summary>
+        /// 停止下载服务
+        /// </summary>
+        public void End()
+        {
+            // TODO
+            // 保存数据
+
+            // 关闭Aria服务器
+            CloseAriaServer();
+
+            // 结束任务
+            tokenSource.Cancel();
+        }
+
+        /// <summary>
         /// 启动下载服务
         /// </summary>
         public async void Start()
@@ -206,58 +406,34 @@ namespace DownKyi.Services.Download
         /// <summary>
         /// 执行任务
         /// </summary>
-        private async void DoWork()
+        private void DoWork()
         {
             CancellationToken cancellationToken = tokenSource.Token;
             while (true)
             {
                 int maxDownloading = SettingsManager.GetInstance().GetAriaMaxConcurrentDownloads();
-                int countDownloading = 0;
-                bool isOutOfMaxDownloading = false;
+                int downloadingCount = 0;
                 foreach (DownloadingItem downloading in downloadingList)
                 {
-                    // 对正在下载的元素计数
                     if (downloading.DownloadStatus == DownloadStatus.DOWNLOADING)
                     {
-                        countDownloading++;
+                        downloadingCount++;
                     }
+                }
 
-                    // 正在下载数量等于最大下载数量，退出本次循环
-                    if (countDownloading == maxDownloading)
+                foreach (DownloadingItem downloading in downloadingList)
+                {
+                    if (downloadingCount >= maxDownloading)
                     {
                         break;
                     }
 
-                    // 正在下载数量大于最大下载数量
-                    if (countDownloading > maxDownloading)
+                    // 开始下载
+                    if (downloading.DownloadStatus == DownloadStatus.NOT_STARTED || downloading.DownloadStatus == DownloadStatus.WAIT_FOR_DOWNLOAD)
                     {
-                        isOutOfMaxDownloading = true;
+                        SingleDownload(downloading);
+                        downloadingCount++;
                     }
-
-                    // 将超过下载数量的元素暂停
-                    if (isOutOfMaxDownloading)
-                    {
-                        if (downloading.DownloadStatus == DownloadStatus.DOWNLOADING)
-                        {
-                            downloading.DownloadStatus = DownloadStatus.PAUSE;
-                        }
-                    }
-
-                    await Task.Run(new Action(() =>
-                    {
-                        downloading.DownloadStatus = DownloadStatus.DOWNLOADING;
-
-                        // 依次下载音频、视频、弹幕、字幕、封面等内容
-                        Parse(downloading);
-                        string audioUid = DownloadAudio(downloading);
-                        string videoUid = DownloadVideo(downloading);
-                        DownloadDanmaku(downloading);
-                        DownloadSubtitle(downloading);
-                        DownloadCover(downloading);
-                        MixedFlow(downloading, audioUid, videoUid);
-                    }),
-                    (tokenSource = new CancellationTokenSource()).Token);
-
                 }
 
                 // 判断是否该结束线程，若为true，跳出while循环
@@ -269,8 +445,165 @@ namespace DownKyi.Services.Download
                 }
 
                 // 降低CPU占用
-                Thread.Sleep(500);
+                Thread.Sleep(100);
             }
+        }
+
+        /// <summary>
+        /// 下载一个视频
+        /// </summary>
+        /// <param name="downloading"></param>
+        /// <returns></returns>
+        private async void SingleDownload(DownloadingItem downloading)
+        {
+            await Task.Run(new Action(() =>
+            {
+                downloading.DownloadStatus = DownloadStatus.DOWNLOADING;
+
+                // 初始化
+                downloading.DownloadStatusTitle = string.Empty;
+                downloading.DownloadContent = string.Empty;
+                downloading.DownloadFiles.Clear();
+
+                // 解析并依次下载音频、视频、弹幕、字幕、封面等内容
+                Parse(downloading);
+
+                // 暂停
+                Pause(downloading);
+
+                string audioUid = null;
+                // 如果需要下载音频
+                if (downloading.NeedDownloadContent["downloadAudio"])
+                {
+                    audioUid = DownloadAudio(downloading);
+                }
+
+                // 暂停
+                Pause(downloading);
+
+                string videoUid = null;
+                // 如果需要下载视频
+                if (downloading.NeedDownloadContent["downloadVideo"])
+                {
+                    videoUid = DownloadVideo(downloading);
+                }
+
+                // 暂停
+                Pause(downloading);
+
+                string outputDanmaku = null;
+                // 如果需要下载弹幕
+                if (downloading.NeedDownloadContent["downloadDanmaku"])
+                {
+                    outputDanmaku = DownloadDanmaku(downloading);
+                }
+
+                // 暂停
+                Pause(downloading);
+
+                List<string> outputSubtitles = null;
+                // 如果需要下载字幕
+                if (downloading.NeedDownloadContent["downloadSubtitle"])
+                {
+                    outputSubtitles = DownloadSubtitle(downloading);
+                }
+
+                // 暂停
+                Pause(downloading);
+
+                string outputCover = null;
+                // 如果需要下载封面
+                if (downloading.NeedDownloadContent["downloadCover"])
+                {
+                    outputCover = DownloadCover(downloading);
+                }
+
+                // 暂停
+                Pause(downloading);
+
+                // 混流
+                string outputMedia = MixedFlow(downloading, audioUid, videoUid);
+
+                // 暂停
+                Pause(downloading);
+
+                // 检测音频、视频是否下载成功
+                if (downloading.NeedDownloadContent["downloadAudio"] || downloading.NeedDownloadContent["downloadVideo"])
+                {
+                    // 只有下载音频不下载视频时才输出aac
+                    // 只要下载视频就输出mp4
+                    if (File.Exists(outputMedia))
+                    {
+                        // 成功
+                    }
+                }
+
+                // 检测弹幕是否下载成功
+                if (downloading.NeedDownloadContent["downloadDanmaku"] && File.Exists(outputDanmaku))
+                {
+                    // 成功
+                }
+
+                // 检测字幕是否下载成功
+                if (downloading.NeedDownloadContent["downloadSubtitle"])
+                {
+                    foreach (string subtitle in outputSubtitles)
+                    {
+                        if (File.Exists(subtitle))
+                        {
+                            // 成功
+                        }
+                    }
+                }
+
+                // 检测封面是否下载成功
+                if (downloading.NeedDownloadContent["downloadCover"] && File.Exists(outputCover))
+                {
+                    // 成功
+                }
+
+                // TODO
+                // 将下载结果写入数据库
+                // 包括下载请求的DownloadingItem对象，
+                // 下载结果是否成功等
+                // 对是否成功的判断：只要outputMedia存在则成功，否则失败
+
+            }));
+        }
+
+        /// <summary>
+        /// 强制暂停
+        /// </summary>
+        /// <param name="downloading"></param>
+        private void Pause(DownloadingItem downloading)
+        {
+            string oldStatus = downloading.DownloadStatusTitle;
+            downloading.DownloadStatusTitle = DictionaryResource.GetString("Pausing");
+            while (downloading.DownloadStatus == DownloadStatus.PAUSE)
+            {
+                // 降低CPU占用
+                Thread.Sleep(100);
+            }
+            downloading.DownloadStatusTitle = DictionaryResource.GetString("Waiting");
+
+            int maxDownloading = SettingsManager.GetInstance().GetAriaMaxConcurrentDownloads();
+            int downloadingCount;
+            do
+            {
+                downloadingCount = 0;
+                foreach (DownloadingItem item in downloadingList)
+                {
+                    if (item.DownloadStatus == DownloadStatus.DOWNLOADING)
+                    {
+                        downloadingCount++;
+                    }
+                }
+
+                // 降低CPU占用
+                Thread.Sleep(100);
+            } while (downloadingCount > maxDownloading);
+
+            downloading.DownloadStatusTitle = oldStatus;
         }
 
         /// <summary>
@@ -340,11 +673,8 @@ namespace DownKyi.Services.Download
         /// </summary>
         /// <param name="downloading"></param>
         /// <returns></returns>
-        private DownloadResult DownloadByAria(DownloadingItem downloading, List<string> urls, string localFileName)
+        private DownloadResult DownloadByAria(DownloadingItem downloading, List<string> urls, string path, string localFileName)
         {
-            string[] temp = downloading.FilePath.Split('/');
-            string path = downloading.FilePath.Replace(temp[temp.Length - 1], "");
-
             AriaSendOption option = new AriaSendOption
             {
                 //HttpProxy = $"http://{Settings.GetAriaHttpProxy()}:{Settings.GetAriaHttpProxyListenPort()}",
@@ -394,12 +724,39 @@ namespace DownKyi.Services.Download
 
         private void AriaTellStatus(long totalLength, long completedLength, long speed, string gid)
         {
-            throw new NotImplementedException();
+            // 当前的下载视频
+            DownloadingItem video = downloadingList.FirstOrDefault(it => it.Gid == gid);
+
+            float percent = 0;
+            if (totalLength != 0)
+            {
+                percent = (float)completedLength / totalLength * 100;
+            }
+
+            // 根据进度判断本次是否需要更新UI
+            // TODO 小于多少需要测试
+            if (percent - video.Progress < 0.01) { return; }
+
+            // 下载进度
+            video.Progress = percent;
+
+            // 下载大小
+            video.DownloadingFileSize = Format.FormatFileSize(completedLength) + "/" + Format.FormatFileSize(totalLength);
+
+            // 下载速度
+            video.SpeedDisplay = Format.FormatSpeed(speed);
+
+            // 最大下载速度
+            if (video.MaxSpeed < speed)
+            {
+                video.MaxSpeed = speed;
+            }
+
         }
 
         private void AriaDownloadFinish(bool isSuccess, string downloadPath, string gid, string msg)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
     }
 }

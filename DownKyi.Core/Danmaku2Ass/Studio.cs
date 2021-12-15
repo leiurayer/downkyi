@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -67,7 +68,12 @@ namespace DownKyi.Core.Danmaku2Ass
 
         public void CreateFile(string fileName, string text)
         {
-            File.WriteAllText(fileName, text);
+            try
+            {
+                File.WriteAllText(fileName, text);
+            }
+            catch (Exception)
+            { }
         }
 
         public Dictionary<string, int> Report()
