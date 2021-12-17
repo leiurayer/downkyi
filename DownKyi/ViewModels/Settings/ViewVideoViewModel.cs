@@ -22,78 +22,78 @@ namespace DownKyi.ViewModels.Settings
         private List<string> videoCodecs;
         public List<string> VideoCodecs
         {
-            get { return videoCodecs; }
-            set { SetProperty(ref videoCodecs, value); }
+            get => videoCodecs;
+            set => SetProperty(ref videoCodecs, value);
         }
 
         private string selectedVideoCodec;
         public string SelectedVideoCodec
         {
-            get { return selectedVideoCodec; }
-            set { SetProperty(ref selectedVideoCodec, value); }
+            get => selectedVideoCodec;
+            set => SetProperty(ref selectedVideoCodec, value);
         }
 
         private List<Resolution> videoQualityList;
         public List<Resolution> VideoQualityList
         {
-            get { return videoQualityList; }
-            set { SetProperty(ref videoQualityList, value); }
+            get => videoQualityList;
+            set => SetProperty(ref videoQualityList, value);
         }
 
         private Resolution selectedVideoQuality;
         public Resolution SelectedVideoQuality
         {
-            get { return selectedVideoQuality; }
-            set { SetProperty(ref selectedVideoQuality, value); }
+            get => selectedVideoQuality;
+            set => SetProperty(ref selectedVideoQuality, value);
         }
 
         private bool isAddVideoOrder;
         public bool IsAddVideoOrder
         {
-            get { return isAddVideoOrder; }
-            set { SetProperty(ref isAddVideoOrder, value); }
+            get => isAddVideoOrder;
+            set => SetProperty(ref isAddVideoOrder, value);
         }
 
         private bool isTranscodingFlvToMp4;
         public bool IsTranscodingFlvToMp4
         {
-            get { return isTranscodingFlvToMp4; }
-            set { SetProperty(ref isTranscodingFlvToMp4, value); }
+            get => isTranscodingFlvToMp4;
+            set => SetProperty(ref isTranscodingFlvToMp4, value);
         }
 
         private bool isUseDefaultDirectory;
         public bool IsUseDefaultDirectory
         {
-            get { return isUseDefaultDirectory; }
-            set { SetProperty(ref isUseDefaultDirectory, value); }
+            get => isUseDefaultDirectory;
+            set => SetProperty(ref isUseDefaultDirectory, value);
         }
 
         private string saveVideoDirectory;
         public string SaveVideoDirectory
         {
-            get { return saveVideoDirectory; }
-            set { SetProperty(ref saveVideoDirectory, value); }
+            get => saveVideoDirectory;
+            set => SetProperty(ref saveVideoDirectory, value);
         }
 
         private bool isCreateFolderForMedia;
         public bool IsCreateFolderForMedia
         {
-            get { return isCreateFolderForMedia; }
-            set { SetProperty(ref isCreateFolderForMedia, value); }
+            get => isCreateFolderForMedia;
+            set => SetProperty(ref isCreateFolderForMedia, value);
         }
 
         private bool isDownloadDanmaku;
         public bool IsDownloadDanmaku
         {
-            get { return isDownloadDanmaku; }
-            set { SetProperty(ref isDownloadDanmaku, value); }
+            get => isDownloadDanmaku;
+            set => SetProperty(ref isDownloadDanmaku, value);
         }
 
         private bool isDownloadCover;
         public bool IsDownloadCover
         {
-            get { return isDownloadCover; }
-            set { SetProperty(ref isDownloadCover, value); }
+            get => isDownloadCover;
+            set => SetProperty(ref isDownloadCover, value);
         }
 
         #endregion
@@ -135,9 +135,9 @@ namespace DownKyi.ViewModels.Settings
             int quality = SettingsManager.GetInstance().GetQuality();
             SelectedVideoQuality = VideoQualityList.FirstOrDefault(t => { return t.Id == quality; });
 
-            // 是否在下载的视频前增加序号
-            AllowStatus isAddOrder = SettingsManager.GetInstance().IsAddOrder();
-            IsAddVideoOrder = isAddOrder == AllowStatus.YES;
+            //// 是否在下载的视频前增加序号
+            //AllowStatus isAddOrder = SettingsManager.GetInstance().IsAddOrder();
+            //IsAddVideoOrder = isAddOrder == AllowStatus.YES;
 
             // 是否下载flv视频后转码为mp4
             AllowStatus isTranscodingFlvToMp4 = SettingsManager.GetInstance().IsTranscodingFlvToMp4();
@@ -150,17 +150,17 @@ namespace DownKyi.ViewModels.Settings
             // 默认下载目录
             SaveVideoDirectory = SettingsManager.GetInstance().GetSaveVideoRootPath();
 
-            // 是否为不同视频分别创建文件夹
-            AllowStatus isCreateFolderForMedia = SettingsManager.GetInstance().IsCreateFolderForMedia();
-            IsCreateFolderForMedia = isCreateFolderForMedia == AllowStatus.YES;
+            //// 是否为不同视频分别创建文件夹
+            //AllowStatus isCreateFolderForMedia = SettingsManager.GetInstance().IsCreateFolderForMedia();
+            //IsCreateFolderForMedia = isCreateFolderForMedia == AllowStatus.YES;
 
-            // 是否在下载视频的同时下载弹幕
-            AllowStatus isDownloadDanmaku = SettingsManager.GetInstance().IsDownloadDanmaku();
-            IsDownloadDanmaku = isDownloadDanmaku == AllowStatus.YES;
+            //// 是否在下载视频的同时下载弹幕
+            //AllowStatus isDownloadDanmaku = SettingsManager.GetInstance().IsDownloadDanmaku();
+            //IsDownloadDanmaku = isDownloadDanmaku == AllowStatus.YES;
 
-            // 是否在下载视频的同时下载封面
-            AllowStatus isDownloadCover = SettingsManager.GetInstance().IsDownloadCover();
-            IsDownloadCover = isDownloadCover == AllowStatus.YES;
+            //// 是否在下载视频的同时下载封面
+            //AllowStatus isDownloadCover = SettingsManager.GetInstance().IsDownloadCover();
+            //IsDownloadCover = isDownloadCover == AllowStatus.YES;
 
             isOnNavigatedTo = false;
         }
@@ -199,20 +199,20 @@ namespace DownKyi.ViewModels.Settings
             PublishTip(isSucceed);
         }
 
-        // 是否在下载的视频前增加序号事件
-        private DelegateCommand IisAddVideoOrderCommand;
-        public DelegateCommand IsAddVideoOrderCommand => IisAddVideoOrderCommand ?? (IisAddVideoOrderCommand = new DelegateCommand(ExecuteIsAddVideoOrderCommand));
+        //// 是否在下载的视频前增加序号事件
+        //private DelegateCommand IisAddVideoOrderCommand;
+        //public DelegateCommand IsAddVideoOrderCommand => IisAddVideoOrderCommand ?? (IisAddVideoOrderCommand = new DelegateCommand(ExecuteIsAddVideoOrderCommand));
 
-        /// <summary>
-        /// 是否在下载的视频前增加序号事件
-        /// </summary>
-        private void ExecuteIsAddVideoOrderCommand()
-        {
-            AllowStatus isAddOrder = IsAddVideoOrder ? AllowStatus.YES : AllowStatus.NO;
+        ///// <summary>
+        ///// 是否在下载的视频前增加序号事件
+        ///// </summary>
+        //private void ExecuteIsAddVideoOrderCommand()
+        //{
+        //    AllowStatus isAddOrder = IsAddVideoOrder ? AllowStatus.YES : AllowStatus.NO;
 
-            bool isSucceed = SettingsManager.GetInstance().IsAddOrder(isAddOrder);
-            PublishTip(isSucceed);
-        }
+        //    bool isSucceed = SettingsManager.GetInstance().IsAddOrder(isAddOrder);
+        //    PublishTip(isSucceed);
+        //}
 
         // 是否下载flv视频后转码为mp4事件
         private DelegateCommand isTranscodingFlvToMp4Command;
@@ -265,50 +265,50 @@ namespace DownKyi.ViewModels.Settings
             }
         }
 
-        // 是否为不同视频分别创建文件夹事件
-        private DelegateCommand isCreateFolderForMediaCommand;
-        public DelegateCommand IsCreateFolderForMediaCommand => isCreateFolderForMediaCommand ?? (isCreateFolderForMediaCommand = new DelegateCommand(ExecuteIsCreateFolderForMediaCommand));
+        //// 是否为不同视频分别创建文件夹事件
+        //private DelegateCommand isCreateFolderForMediaCommand;
+        //public DelegateCommand IsCreateFolderForMediaCommand => isCreateFolderForMediaCommand ?? (isCreateFolderForMediaCommand = new DelegateCommand(ExecuteIsCreateFolderForMediaCommand));
 
-        /// <summary>
-        /// 是否为不同视频分别创建文件夹事件
-        /// </summary>
-        private void ExecuteIsCreateFolderForMediaCommand()
-        {
-            AllowStatus isCreateFolderForMedia = IsCreateFolderForMedia ? AllowStatus.YES : AllowStatus.NO;
+        ///// <summary>
+        ///// 是否为不同视频分别创建文件夹事件
+        ///// </summary>
+        //private void ExecuteIsCreateFolderForMediaCommand()
+        //{
+        //    AllowStatus isCreateFolderForMedia = IsCreateFolderForMedia ? AllowStatus.YES : AllowStatus.NO;
 
-            bool isSucceed = SettingsManager.GetInstance().IsCreateFolderForMedia(isCreateFolderForMedia);
-            PublishTip(isSucceed);
-        }
+        //    bool isSucceed = SettingsManager.GetInstance().IsCreateFolderForMedia(isCreateFolderForMedia);
+        //    PublishTip(isSucceed);
+        //}
 
-        // 是否在下载视频的同时下载弹幕事件
-        private DelegateCommand isDownloadDanmakuCommand;
-        public DelegateCommand IsDownloadDanmakuCommand => isDownloadDanmakuCommand ?? (isDownloadDanmakuCommand = new DelegateCommand(ExecuteIsDownloadDanmakuCommand));
+        //// 是否在下载视频的同时下载弹幕事件
+        //private DelegateCommand isDownloadDanmakuCommand;
+        //public DelegateCommand IsDownloadDanmakuCommand => isDownloadDanmakuCommand ?? (isDownloadDanmakuCommand = new DelegateCommand(ExecuteIsDownloadDanmakuCommand));
 
-        /// <summary>
-        /// 是否在下载视频的同时下载弹幕事件
-        /// </summary>
-        private void ExecuteIsDownloadDanmakuCommand()
-        {
-            AllowStatus isDownloadDanmaku = IsDownloadDanmaku ? AllowStatus.YES : AllowStatus.NO;
+        ///// <summary>
+        ///// 是否在下载视频的同时下载弹幕事件
+        ///// </summary>
+        //private void ExecuteIsDownloadDanmakuCommand()
+        //{
+        //    AllowStatus isDownloadDanmaku = IsDownloadDanmaku ? AllowStatus.YES : AllowStatus.NO;
 
-            bool isSucceed = SettingsManager.GetInstance().IsDownloadDanmaku(isDownloadDanmaku);
-            PublishTip(isSucceed);
-        }
+        //    bool isSucceed = SettingsManager.GetInstance().IsDownloadDanmaku(isDownloadDanmaku);
+        //    PublishTip(isSucceed);
+        //}
 
-        // 是否在下载视频的同时下载封面事件
-        private DelegateCommand isDownloadCoverCommand;
-        public DelegateCommand IsDownloadCoverCommand => isDownloadCoverCommand ?? (isDownloadCoverCommand = new DelegateCommand(ExecuteIsDownloadCoverCommand));
+        //// 是否在下载视频的同时下载封面事件
+        //private DelegateCommand isDownloadCoverCommand;
+        //public DelegateCommand IsDownloadCoverCommand => isDownloadCoverCommand ?? (isDownloadCoverCommand = new DelegateCommand(ExecuteIsDownloadCoverCommand));
 
-        /// <summary>
-        /// 是否在下载视频的同时下载封面事件
-        /// </summary>
-        private void ExecuteIsDownloadCoverCommand()
-        {
-            AllowStatus isDownloadCover = IsDownloadCover ? AllowStatus.YES : AllowStatus.NO;
+        ///// <summary>
+        ///// 是否在下载视频的同时下载封面事件
+        ///// </summary>
+        //private void ExecuteIsDownloadCoverCommand()
+        //{
+        //    AllowStatus isDownloadCover = IsDownloadCover ? AllowStatus.YES : AllowStatus.NO;
 
-            bool isSucceed = SettingsManager.GetInstance().IsDownloadCover(isDownloadCover);
-            PublishTip(isSucceed);
-        }
+        //    bool isSucceed = SettingsManager.GetInstance().IsDownloadCover(isDownloadCover);
+        //    PublishTip(isSucceed);
+        //}
 
         #endregion
 

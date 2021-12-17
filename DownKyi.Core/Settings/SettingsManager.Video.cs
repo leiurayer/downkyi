@@ -15,9 +15,6 @@ namespace DownKyi.Core.Settings
         // 设置优先下载音质
         private readonly int audioQuality = 30280;
 
-        // 是否在下载的视频前增加序号
-        private readonly AllowStatus isAddOrder = AllowStatus.NO;
-
         // 是否下载flv视频后转码为mp4
         private readonly AllowStatus isTranscodingFlvToMp4 = AllowStatus.YES;
 
@@ -29,15 +26,6 @@ namespace DownKyi.Core.Settings
 
         // 是否使用默认下载目录，如果是，则每次点击下载选中项时不再询问下载目录
         private readonly AllowStatus isUseSaveVideoRootPath = AllowStatus.NO;
-
-        // 是否为不同视频分别创建文件夹
-        private readonly AllowStatus isCreateFolderForMedia = AllowStatus.YES;
-
-        // 是否在下载视频的同时下载弹幕
-        private readonly AllowStatus isDownloadDanmaku = AllowStatus.YES;
-
-        // 是否在下载视频的同时下载封面
-        private readonly AllowStatus isDownloadCover = AllowStatus.YES;
 
         /// <summary>
         /// 获取优先下载的视频编码
@@ -117,33 +105,6 @@ namespace DownKyi.Core.Settings
         public bool SetAudioQuality(int quality)
         {
             appSettings.Video.AudioQuality = quality;
-            return SetSettings();
-        }
-
-        /// <summary>
-        /// 获取是否给视频增加序号
-        /// </summary>
-        /// <returns></returns>
-        public AllowStatus IsAddOrder()
-        {
-            appSettings = GetSettings();
-            if (appSettings.Video.IsAddOrder == 0)
-            {
-                // 第一次获取，先设置默认值
-                IsAddOrder(isAddOrder);
-                return isAddOrder;
-            }
-            return appSettings.Video.IsAddOrder;
-        }
-
-        /// <summary>
-        /// 设置是否给视频增加序号
-        /// </summary>
-        /// <param name="isAddOrder"></param>
-        /// <returns></returns>
-        public bool IsAddOrder(AllowStatus isAddOrder)
-        {
-            appSettings.Video.IsAddOrder = isAddOrder;
             return SetSettings();
         }
 
@@ -252,87 +213,6 @@ namespace DownKyi.Core.Settings
         public bool IsUseSaveVideoRootPath(AllowStatus isUseSaveVideoRootPath)
         {
             appSettings.Video.IsUseSaveVideoRootPath = isUseSaveVideoRootPath;
-            return SetSettings();
-        }
-
-        /// <summary>
-        /// 获取是否为不同视频分别创建文件夹
-        /// </summary>
-        /// <returns></returns>
-        public AllowStatus IsCreateFolderForMedia()
-        {
-            appSettings = GetSettings();
-            if (appSettings.Video.IsCreateFolderForMedia == 0)
-            {
-                // 第一次获取，先设置默认值
-                IsCreateFolderForMedia(isCreateFolderForMedia);
-                return isCreateFolderForMedia;
-            }
-            return appSettings.Video.IsCreateFolderForMedia;
-        }
-
-        /// <summary>
-        /// 设置是否为不同视频分别创建文件夹
-        /// </summary>
-        /// <param name="isCreateFolderForMedia"></param>
-        /// <returns></returns>
-        public bool IsCreateFolderForMedia(AllowStatus isCreateFolderForMedia)
-        {
-            appSettings.Video.IsCreateFolderForMedia = isCreateFolderForMedia;
-            return SetSettings();
-        }
-
-        /// <summary>
-        /// 获取是否在下载视频的同时下载弹幕
-        /// </summary>
-        /// <returns></returns>
-        public AllowStatus IsDownloadDanmaku()
-        {
-            appSettings = GetSettings();
-            if (appSettings.Video.IsDownloadDanmaku == 0)
-            {
-                // 第一次获取，先设置默认值
-                IsDownloadDanmaku(isDownloadDanmaku);
-                return isDownloadDanmaku;
-            }
-            return appSettings.Video.IsDownloadDanmaku;
-        }
-
-        /// <summary>
-        /// 设置是否在下载视频的同时下载弹幕
-        /// </summary>
-        /// <param name="isDownloadDanmaku"></param>
-        /// <returns></returns>
-        public bool IsDownloadDanmaku(AllowStatus isDownloadDanmaku)
-        {
-            appSettings.Video.IsDownloadDanmaku = isDownloadDanmaku;
-            return SetSettings();
-        }
-
-        /// <summary>
-        /// 获取是否在下载视频的同时下载封面
-        /// </summary>
-        /// <returns></returns>
-        public AllowStatus IsDownloadCover()
-        {
-            appSettings = GetSettings();
-            if (appSettings.Video.IsDownloadCover == 0)
-            {
-                // 第一次获取，先设置默认值
-                IsDownloadCover(isDownloadCover);
-                return isDownloadCover;
-            }
-            return appSettings.Video.IsDownloadCover;
-        }
-
-        /// <summary>
-        /// 设置是否在下载视频的同时下载封面
-        /// </summary>
-        /// <param name="isDownloadCover"></param>
-        /// <returns></returns>
-        public bool IsDownloadCover(AllowStatus isDownloadCover)
-        {
-            appSettings.Video.IsDownloadCover = isDownloadCover;
             return SetSettings();
         }
 

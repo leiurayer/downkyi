@@ -54,31 +54,6 @@
                 </ComboBox>
             </StackPanel>
 
-            <TextBlock
-                Height="1"
-                Margin="0,20,0,0"
-                Background="{DynamicResource BrushBorder}" />
-
-            <StackPanel Margin="0,20,0,0" Orientation="Horizontal">
-                <CheckBox
-                    Name="nameIsAddVideoOrder"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Center"
-                    Command="{Binding IsAddVideoOrderCommand}"
-                    Content="{DynamicResource IsAddVideoOrder}"
-                    FontSize="12"
-                    Foreground="{DynamicResource BrushTextDark}"
-                    IsChecked="{Binding IsAddVideoOrder, Mode=TwoWay}"
-                    Style="{StaticResource CheckBoxStyle}" />
-
-                <TextBlock
-                    Margin="10,0,0,0"
-                    VerticalAlignment="Center"
-                    FontSize="12"
-                    Foreground="{DynamicResource BrushTextGrey}"
-                    Text="{DynamicResource IsAddVideoOrderTip}" />
-            </StackPanel>
-
             <CheckBox
                 Margin="0,20,0,0"
                 HorizontalAlignment="Left"
@@ -153,44 +128,6 @@
                         Style="{StaticResource BtnBorderStyle}" />
                 </StackPanel>
             </StackPanel>
-
-            <CheckBox
-                Margin="0,20,0,0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Center"
-                Command="{Binding IsCreateFolderForMediaCommand}"
-                Content="{DynamicResource IsCreateFolderForMedia}"
-                FontSize="12"
-                Foreground="{DynamicResource BrushTextDark}"
-                IsChecked="{Binding IsCreateFolderForMedia, Mode=TwoWay}"
-                Style="{StaticResource CheckBoxStyle}" />
-
-            <TextBlock
-                Height="1"
-                Margin="0,20,0,0"
-                Background="{DynamicResource BrushBorder}" />
-
-            <CheckBox
-                Margin="0,20,0,0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Center"
-                Command="{Binding IsDownloadDanmakuCommand}"
-                Content="{DynamicResource IsDownloadDanmaku}"
-                FontSize="12"
-                Foreground="{DynamicResource BrushTextDark}"
-                IsChecked="{Binding IsDownloadDanmaku, Mode=TwoWay}"
-                Style="{StaticResource CheckBoxStyle}" />
-
-            <CheckBox
-                Margin="0,20,0,0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Center"
-                Command="{Binding IsDownloadCoverCommand}"
-                Content="{DynamicResource IsDownloadCover}"
-                FontSize="12"
-                Foreground="{DynamicResource BrushTextDark}"
-                IsChecked="{Binding IsDownloadCover, Mode=TwoWay}"
-                Style="{StaticResource CheckBoxStyle}" />
 
         </StackPanel>
     </ScrollViewer>
