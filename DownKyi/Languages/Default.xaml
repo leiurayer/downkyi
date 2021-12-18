@@ -113,16 +113,22 @@
     <system:String x:Key="Video">视频</system:String>
     <system:String x:Key="FirstVideoCodecs">优先下载的视频编码：</system:String>
     <system:String x:Key="FirstVideoQuality">优先下载的视频画质：</system:String>
-    <system:String x:Key="IsAddVideoOrder">启用视频编号</system:String>
-    <system:String x:Key="IsAddVideoOrderTip">勾选后，将为下载完成的视频的文件名添加上序号</system:String>
     <system:String x:Key="IsTranscodingFlvToMp4">下载FLV视频后转码为mp4</system:String>
     <system:String x:Key="IsUseDefaultDirectory">使用默认下载目录</system:String>
     <system:String x:Key="DefaultDirectory">默认下载目录：</system:String>
     <system:String x:Key="DefaultDirectoryTip">默认将文件下载到该文件夹中</system:String>
     <system:String x:Key="ChangeDirectory">更改目录</system:String>
-    <system:String x:Key="IsCreateFolderForMedia">为不同视频分别创建文件夹</system:String>
-    <system:String x:Key="IsDownloadDanmaku">在下载视频的同时下载弹幕</system:String>
-    <system:String x:Key="IsDownloadCover">在下载视频的同时下载封面</system:String>
+    <system:String x:Key="FileNameParts">文件命名格式</system:String>
+    <system:String x:Key="FileName">文件名：</system:String>
+    <system:String x:Key="OptionalFields">可选字段：</system:String>
+    <system:String x:Key="DisplayOrder">序号</system:String>
+    <system:String x:Key="DisplayMainTitle">视频标题</system:String>
+    <system:String x:Key="DisplayPageTitle">分P标题</system:String>
+    <system:String x:Key="DisplayVideoZone">视频分区</system:String>
+    <system:String x:Key="DisplayAudioQuality">音质</system:String>
+    <system:String x:Key="DisplayVideoQuality">画质</system:String>
+    <system:String x:Key="DisplayVideoCodec">视频编码</system:String>
+    <system:String x:Key="DisplaySpace">空格</system:String>
 
     <system:String x:Key="SettingDanmaku">弹幕</system:String>
     <system:String x:Key="FilterType">按类型屏蔽</system:String>

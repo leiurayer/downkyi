@@ -129,6 +129,72 @@
                 </StackPanel>
             </StackPanel>
 
+            <GroupBox
+                Margin="0,20,0,0"
+                Padding="10,10"
+                HorizontalAlignment="Stretch">
+                <GroupBox.Header>
+                    <TextBlock
+                        FontSize="12"
+                        Foreground="{DynamicResource BrushTextDark}"
+                        Text="{DynamicResource FileNameParts}" />
+                </GroupBox.Header>
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        FontSize="12"
+                        Foreground="{DynamicResource BrushTextDark}"
+                        Text="{DynamicResource FileName}" />
+                    <ListBox
+                        x:Name="nameSelectedFileName"
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Margin="0,0,0,20"
+                        ItemContainerStyle="{StaticResource TagItem2Style}"
+                        ItemsSource="{Binding SelectedFileName, Mode=TwoWay}"
+                        SelectionMode="Single"
+                        Style="{StaticResource Tag2Style}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding SelectedFileNameCommand}" CommandParameter="{Binding ElementName=nameSelectedFileName, Path=SelectedItem}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ListBox>
+
+                    <TextBlock
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        FontSize="12"
+                        Foreground="{DynamicResource BrushTextDark}"
+                        Text="{DynamicResource OptionalFields}" />
+                    <ListBox
+                        Name="nameOptionalFields"
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        ItemContainerStyle="{StaticResource TagItem2Style}"
+                        ItemsSource="{Binding OptionalFields, Mode=TwoWay}"
+                        SelectionMode="Single"
+                        Style="{StaticResource Tag2Style}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding OptionalFieldsCommand}" CommandParameter="{Binding ElementName=nameOptionalFields, Path=SelectedItem}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ListBox>
+                </Grid>
+            </GroupBox>
+
         </StackPanel>
     </ScrollViewer>
 </UserControl>

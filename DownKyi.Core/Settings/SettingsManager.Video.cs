@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DownKyi.Core.FileName;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -26,6 +27,20 @@ namespace DownKyi.Core.Settings
 
         // 是否使用默认下载目录，如果是，则每次点击下载选中项时不再询问下载目录
         private readonly AllowStatus isUseSaveVideoRootPath = AllowStatus.NO;
+
+        // 文件命名格式
+        private readonly List<FileNamePart> fileNameParts = new List<FileNamePart>
+        {
+            FileNamePart.MAIN_TITLE,
+            FileNamePart.SLASH,
+            FileNamePart.ORDER,
+            FileNamePart.HYPHEN,
+            FileNamePart.PAGE_TITLE,
+            FileNamePart.HYPHEN,
+            FileNamePart.VIDEO_QUALITY,
+            FileNamePart.HYPHEN,
+            FileNamePart.VIDEO_CODEC,
+        };
 
         /// <summary>
         /// 获取优先下载的视频编码
@@ -213,6 +228,33 @@ namespace DownKyi.Core.Settings
         public bool IsUseSaveVideoRootPath(AllowStatus isUseSaveVideoRootPath)
         {
             appSettings.Video.IsUseSaveVideoRootPath = isUseSaveVideoRootPath;
+            return SetSettings();
+        }
+
+        /// <summary>
+        /// 获取文件命名格式
+        /// </summary>
+        /// <returns></returns>
+        public List<FileNamePart> GetFileNameParts()
+        {
+            appSettings = GetSettings();
+            if (appSettings.Video.FileNameParts == null)
+            {
+                // 第一次获取，先设置默认值
+                SetFileNameParts(fileNameParts);
+                return fileNameParts;
+            }
+            return appSettings.Video.FileNameParts;
+        }
+
+        /// <summary>
+        /// 设置文件命名格式
+        /// </summary>
+        /// <param name="historyPaths"></param>
+        /// <returns></returns>
+        public bool SetFileNameParts(List<FileNamePart> fileNameParts)
+        {
+            appSettings.Video.FileNameParts = fileNameParts;
             return SetSettings();
         }
 

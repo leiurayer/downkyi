@@ -92,6 +92,7 @@
     <Compile Include="Models\DownloadStatus.cs" />
     <Compile Include="Models\Favorites.cs" />
     <Compile Include="Models\FavoritesMedia.cs" />
+    <Compile Include="Models\DisplayFileNamePart.cs" />
     <Compile Include="Models\ParseScopeDisplay.cs" />
     <Compile Include="Models\PlayStreamType.cs" />
     <Compile Include="Models\Resolution.cs" />

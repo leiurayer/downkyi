@@ -3,13 +3,14 @@
 namespace DownKyi.Core.FileName
 {
     /// <summary>
-    /// 文件名的分隔符
+    /// 文件名字段
     /// </summary>
     public static class HyphenSeparated
     {
+        // 文件名的分隔符
         public static Dictionary<int, string> Hyphen = new Dictionary<int, string>()
         {
-            { 101, "/" },
+            { 100, "/" },
             { 101, "_" },
             { 102, "-" },
             { 103, "+" },
@@ -25,5 +26,6 @@ namespace DownKyi.Core.FileName
             { 113, "}" },
             { 114, " " },
         };
+
     }
 }

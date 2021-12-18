@@ -1,5 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
+    <!--  左侧导航栏  -->
     <Style x:Key="LeftTabHeaderItemStyle" TargetType="{x:Type ListBoxItem}">
         <Setter Property="Template">
             <Setter.Value>
@@ -66,7 +67,7 @@
     <Style x:Key="LeftTabHeaderStyle" TargetType="{x:Type ListBox}">
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="ListBox">
+                <ControlTemplate TargetType="{x:Type ListBox}">
                     <Border
                         Padding="0"
                         Background="{DynamicResource BrushTabHeaderGrey}"
@@ -74,6 +75,122 @@
                         BorderThickness="{TemplateBinding BorderThickness}">
                         <ScrollViewer Focusable="False">
                             <ItemsPresenter />
+                        </ScrollViewer>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  TAG样式1  -->
+    <Style x:Key="TagItemStyle" TargetType="{x:Type ListBoxItem}">
+        <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <Border
+                        Name="Border"
+                        Margin="5,3"
+                        Padding="8,2"
+                        Background="{DynamicResource BrushPrimary}"
+                        CornerRadius="10"
+                        Cursor="Hand">
+                        <ContentPresenter
+                            Name="content"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Content="{Binding Title}" />
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <!--  顺序很重要，不能修改  -->
+                        <Trigger Property="IsSelected" Value="False">
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource BrushBackgroundGrey}" />
+                            <Setter Property="Foreground" Value="{DynamicResource BrushText}" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource BrushPrimaryTranslucent}" />
+                            <Setter Property="Foreground" Value="{DynamicResource BrushText}" />
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource BrushPrimary}" />
+                            <Setter Property="Foreground" Value="{DynamicResource BrushText}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="TagStyle" TargetType="{x:Type ListBox}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBox}">
+                    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled">
+                        <WrapPanel
+                            IsItemsHost="True"
+                            Orientation="Horizontal"
+                            ScrollViewer.CanContentScroll="True" />
+                    </ScrollViewer>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  TAG样式2  -->
+    <Style x:Key="TagItem2Style" TargetType="{x:Type ListBoxItem}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <Border
+                        Name="Border"
+                        Margin="5,3"
+                        Padding="8,2"
+                        Background="{DynamicResource BrushPrimary}"
+                        CornerRadius="10"
+                        Cursor="Hand">
+                        <ContentPresenter
+                            Name="content"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Content="{Binding Title}" />
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <!--  顺序很重要，不能修改  -->
+                        <Trigger Property="IsSelected" Value="False">
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource BrushBackgroundGrey}" />
+                            <Setter Property="Foreground" Value="{DynamicResource BrushText}" />
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource BrushBackgroundGrey}" />
+                            <Setter Property="Foreground" Value="{DynamicResource BrushText}" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource BrushPrimaryTranslucent}" />
+                            <Setter Property="Foreground" Value="{DynamicResource BrushText}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="Tag2Style" TargetType="{x:Type ListBox}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBox}">
+                    <Border
+                        Padding="5"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{DynamicResource BrushBorder}"
+                        BorderThickness="1"
+                        CornerRadius="10">
+                        <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled">
+                            <WrapPanel
+                                IsItemsHost="True"
+                                Orientation="Horizontal"
+                                ScrollViewer.CanContentScroll="True" />
                         </ScrollViewer>
                     </Border>
                 </ControlTemplate>
