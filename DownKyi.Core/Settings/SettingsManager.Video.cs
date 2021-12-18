@@ -240,7 +240,7 @@ namespace DownKyi.Core.Settings
         public List<FileNamePart> GetFileNameParts()
         {
             appSettings = GetSettings();
-            if (appSettings.Video.FileNameParts == null)
+            if (appSettings.Video.FileNameParts == null || appSettings.Video.FileNameParts.Count == 0)
             {
                 // 第一次获取，先设置默认值
                 SetFileNameParts(fileNameParts);

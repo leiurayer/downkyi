@@ -160,6 +160,7 @@
                         x:Name="nameSelectedFileName"
                         Grid.Row="0"
                         Grid.Column="1"
+                        MinHeight="30"
                         Margin="0,0,0,20"
                         ItemContainerStyle="{StaticResource TagItem2Style}"
                         ItemsSource="{Binding SelectedFileName, Mode=TwoWay}"
@@ -184,6 +185,7 @@
                         Grid.Column="1"
                         ItemContainerStyle="{StaticResource TagItem2Style}"
                         ItemsSource="{Binding OptionalFields, Mode=TwoWay}"
+                        SelectedIndex="{Binding SelectedOptionalField}"
                         SelectionMode="Single"
                         Style="{StaticResource Tag2Style}">
                         <i:Interaction.Triggers>

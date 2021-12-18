@@ -85,6 +85,13 @@ namespace DownKyi.ViewModels.Settings
             set => SetProperty(ref optionalFields, value);
         }
 
+        private int selectedOptionalField;
+        public int SelectedOptionalField
+        {
+            get => selectedOptionalField;
+            set => SetProperty(ref selectedOptionalField, value);
+        }
+
         #endregion
 
 
@@ -111,6 +118,8 @@ namespace DownKyi.ViewModels.Settings
                 string display = DisplayFileNamePart(item);
                 OptionalFields.Add(new DisplayFileNamePart { Id = item, Title = display });
             }
+
+            SelectedOptionalField = -1;
 
             #endregion
 
@@ -279,6 +288,11 @@ namespace DownKyi.ViewModels.Settings
         /// <param name="parameter"></param>
         private void ExecuteOptionalFieldsCommand(object parameter)
         {
+            if (SelectedOptionalField == -1)
+            {
+                return;
+            }
+
             SelectedFileName.Add((DisplayFileNamePart)parameter);
 
             List<FileNamePart> fileName = new List<FileNamePart>();
@@ -289,6 +303,8 @@ namespace DownKyi.ViewModels.Settings
 
             bool isSucceed = SettingsManager.GetInstance().SetFileNameParts(fileName);
             PublishTip(isSucceed);
+
+            SelectedOptionalField = -1;
         }
 
 
