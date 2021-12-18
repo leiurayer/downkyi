@@ -33,6 +33,8 @@ namespace DownKyi.Core.Settings
         {
             FileNamePart.MAIN_TITLE,
             FileNamePart.SLASH,
+            FileNamePart.SECTION,
+            FileNamePart.SLASH,
             FileNamePart.ORDER,
             FileNamePart.HYPHEN,
             FileNamePart.PAGE_TITLE,

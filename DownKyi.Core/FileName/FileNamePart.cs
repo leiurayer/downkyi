@@ -4,6 +4,7 @@
     {
         // Video
         ORDER = 1,
+        SECTION,
         MAIN_TITLE,
         PAGE_TITLE,
         VIDEO_ZONE,

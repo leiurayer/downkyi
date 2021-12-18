@@ -122,6 +122,7 @@
     <system:String x:Key="FileName">文件名：</system:String>
     <system:String x:Key="OptionalFields">可选字段：</system:String>
     <system:String x:Key="DisplayOrder">序号</system:String>
+    <system:String x:Key="DisplaySection">视频章节</system:String>
     <system:String x:Key="DisplayMainTitle">视频标题</system:String>
     <system:String x:Key="DisplayPageTitle">分P标题</system:String>
     <system:String x:Key="DisplayVideoZone">视频分区</system:String>

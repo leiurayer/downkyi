@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace DownKyi.Core.FileName
 {
@@ -6,6 +7,7 @@ namespace DownKyi.Core.FileName
     {
         private readonly List<FileNamePart> nameParts;
         private int order = -1;
+        private string section = "SECTION";
         private string mainTitle = "MAIN_TITLE";
         private string pageTitle = "PAGE_TITLE";
         private string videoZone = "VIDEO_ZONE";
@@ -26,6 +28,12 @@ namespace DownKyi.Core.FileName
         public FileName SetOrder(int order)
         {
             this.order = order;
+            return this;
+        }
+
+        public FileName SetSection(string section)
+        {
+            this.section = section;
             return this;
         }
 
@@ -83,6 +91,9 @@ namespace DownKyi.Core.FileName
                             path += "ORDER";
                         }
                         break;
+                    case FileNamePart.SECTION:
+                        path += section;
+                        break;
                     case FileNamePart.MAIN_TITLE:
                         path += mainTitle;
                         break;
@@ -109,6 +120,8 @@ namespace DownKyi.Core.FileName
                 }
             }
 
+            // 避免连续多个斜杠
+            path = Regex.Replace(path, @"//+", "/");
             // 避免以斜杠开头和结尾的情况
             return path.TrimEnd('/').TrimStart('/');
         }

@@ -374,6 +374,9 @@ namespace DownKyi.ViewModels.Settings
                 case FileNamePart.ORDER:
                     display = DictionaryResource.GetString("DisplayOrder");
                     break;
+                case FileNamePart.SECTION:
+                    display = DictionaryResource.GetString("DisplaySection");
+                    break;
                 case FileNamePart.MAIN_TITLE:
                     display = DictionaryResource.GetString("DisplayMainTitle");
                     break;
