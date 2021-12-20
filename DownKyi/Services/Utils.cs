@@ -26,9 +26,9 @@ namespace DownKyi.Services
             page.PlayUrl = playUrl;
 
             // 获取设置
-            var userInfo = SettingsManager.GetInstance().GetUserInfo();
+            UserInfoSettings userInfo = SettingsManager.GetInstance().GetUserInfo();
             int defaultQuality = SettingsManager.GetInstance().GetQuality();
-            var videoCodecs = SettingsManager.GetInstance().GetVideoCodecs();
+            VideoCodecs videoCodecs = SettingsManager.GetInstance().GetVideoCodecs();
             int defaultAudioQuality = SettingsManager.GetInstance().GetAudioQuality();
 
             // 未登录时，最高仅720P
@@ -201,7 +201,7 @@ namespace DownKyi.Services
         /// </summary>
         /// <param name="origin"></param>
         /// <returns></returns>
-        private static string GetVideoCodecName(string origin)
+        internal static string GetVideoCodecName(string origin)
         {
             return origin.Contains("avc") ? "H.264/AVC" : origin.Contains("hev") ? "H.265/HEVC" : "";
         }

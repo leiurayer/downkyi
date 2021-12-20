@@ -78,6 +78,7 @@ namespace DownKyi.Services
                     Bvid = videoView.Bvid,
                     Cid = page.Cid,
                     EpisodeId = -1,
+                    FirstFrame = page.FirstFrame,
                     Order = order,
                     Name = name,
                     Duration = "N/A"
@@ -114,6 +115,7 @@ namespace DownKyi.Services
                         Bvid = episode.Bvid,
                         Cid = episode.Cid,
                         EpisodeId = -1,
+                        FirstFrame = episode.Page.FirstFrame,
                         Order = order,
                         Name = episode.Title,
                         Duration = "N/A"
@@ -202,6 +204,9 @@ namespace DownKyi.Services
 
                 videoInfoView.Cover = cover == null ? null : new BitmapImage(new Uri(cover));
                 videoInfoView.Title = videoView.Title;
+
+                // 分区id
+                videoInfoView.TypeId = videoView.Tid;
 
                 videoInfoView.VideoZone = videoZone;
 

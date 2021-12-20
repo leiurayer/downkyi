@@ -64,6 +64,12 @@
     <system:String x:Key="DownloadSelected">下载选中项</system:String>
     <system:String x:Key="AddAllToDownload">下载全部</system:String>
 
+    <system:String x:Key="TipAlreadyToAddDownloading">已经添加到下载列表~</system:String>
+    <system:String x:Key="TipAlreadyToAddDownloaded">已经下载完成~</system:String>
+    <system:String x:Key="TipAddDownloadingZero">没有选中项符合下载要求！</system:String>
+    <system:String x:Key="TipAddDownloadingFinished1">成功添加了</system:String>
+    <system:String x:Key="TipAddDownloadingFinished2">项~</system:String>
+
     <!--  DownloadManager  -->
     <system:String x:Key="Downloading">正在下载</system:String>
     <system:String x:Key="DownloadFinished">已下载</system:String>

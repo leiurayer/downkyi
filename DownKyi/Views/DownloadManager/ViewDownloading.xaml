@@ -88,7 +88,7 @@
 
                                     <Grid Grid.Row="0" VerticalAlignment="Bottom">
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition />
+                                            <ColumnDefinition Width="100" />
                                             <ColumnDefinition />
                                         </Grid.ColumnDefinitions>
 

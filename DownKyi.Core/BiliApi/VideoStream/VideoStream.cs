@@ -37,7 +37,8 @@ namespace DownKyi.Core.BiliApi.VideoStream
         }
 
         /// <summary>
-        /// 获取所有字幕
+        /// 获取所有字幕<br/>
+        /// 若视频没有字幕，返回null
         /// </summary>
         /// <param name="avid"></param>
         /// <param name="bvid"></param>
@@ -48,8 +49,12 @@ namespace DownKyi.Core.BiliApi.VideoStream
             List<SubRipText> subRipTexts = new List<SubRipText>();
 
             // 获取播放器信息
-            var player = PlayerV2(avid, bvid, cid);
+            PlayerV2 player = PlayerV2(avid, bvid, cid);
             if (player == null) { return subRipTexts; }
+            if (player.Subtitle != null && player.Subtitle.Subtitles != null && player.Subtitle.Subtitles.Count == 0)
+            {
+                return null;
+            }
 
             foreach (var subtitle in player.Subtitle.Subtitles)
             {

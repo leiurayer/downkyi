@@ -1,12 +1,9 @@
-﻿using DownKyi.Models;
+﻿using DownKyi.Images;
+using DownKyi.Models;
+using DownKyi.Utils;
 using Prism.Commands;
 using Prism.Events;
-using Prism.Mvvm;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.Linq;
 
 namespace DownKyi.ViewModels.DownloadManager
 {
@@ -29,15 +26,6 @@ namespace DownKyi.ViewModels.DownloadManager
         {
             // 初始化DownloadingList
             DownloadingList = App.DownloadingList;
-
-
-            //// 下载列表发生变化时执行的任务
-            //DownloadingList.CollectionChanged += new NotifyCollectionChangedEventHandler((object sender, NotifyCollectionChangedEventArgs e) =>
-            //{
-            //    // save the downloading list and finished list.
-            //    //SaveHistory();
-            //});
-
         }
 
         #region 命令申明
@@ -51,6 +39,34 @@ namespace DownKyi.ViewModels.DownloadManager
         /// </summary>
         private void ExecutePauseAllDownloadingCommand()
         {
+            foreach (DownloadingItem downloading in downloadingList)
+            {
+                switch (downloading.DownloadStatus)
+                {
+                    case DownloadStatus.NOT_STARTED:
+                    case DownloadStatus.WAIT_FOR_DOWNLOAD:
+                        downloading.DownloadStatus = DownloadStatus.PAUSE_STARTED;
+                        break;
+                    case DownloadStatus.PAUSE_STARTED:
+                        break;
+                    case DownloadStatus.PAUSE:
+                        break;
+                    case DownloadStatus.DOWNLOADING:
+                        downloading.DownloadStatus = DownloadStatus.PAUSE;
+                        break;
+                    case DownloadStatus.DOWNLOAD_SUCCEED:
+                        // 下载成功后会从下载列表中删除
+                        // 不会出现此分支
+                        break;
+                    case DownloadStatus.DOWNLOAD_FAILED:
+                        break;
+                    default:
+                        break;
+                }
+
+                downloading.StartOrPause = ButtonIcon.Instance().Start;
+                downloading.StartOrPause.Fill = DictionaryResource.GetColor("ColorPrimary");
+            }
         }
 
         // 继续所有下载事件
@@ -62,6 +78,35 @@ namespace DownKyi.ViewModels.DownloadManager
         /// </summary>
         private void ExecuteContinueAllDownloadingCommand()
         {
+            foreach (DownloadingItem downloading in downloadingList)
+            {
+                switch (downloading.DownloadStatus)
+                {
+                    case DownloadStatus.NOT_STARTED:
+                    case DownloadStatus.WAIT_FOR_DOWNLOAD:
+                        break;
+                    case DownloadStatus.PAUSE_STARTED:
+                        downloading.DownloadStatus = DownloadStatus.WAIT_FOR_DOWNLOAD;
+                        break;
+                    case DownloadStatus.PAUSE:
+                        downloading.DownloadStatus = DownloadStatus.DOWNLOADING;
+                        break;
+                    case DownloadStatus.DOWNLOADING:
+                        break;
+                    case DownloadStatus.DOWNLOAD_SUCCEED:
+                        // 下载成功后会从下载列表中删除
+                        // 不会出现此分支
+                        break;
+                    case DownloadStatus.DOWNLOAD_FAILED:
+                        downloading.DownloadStatus = DownloadStatus.WAIT_FOR_DOWNLOAD;
+                        break;
+                    default:
+                        break;
+                }
+
+                downloading.StartOrPause = ButtonIcon.Instance().Pause;
+                downloading.StartOrPause.Fill = DictionaryResource.GetColor("ColorPrimary");
+            }
         }
 
         // 删除所有下载事件
@@ -73,6 +118,7 @@ namespace DownKyi.ViewModels.DownloadManager
         /// </summary>
         private void ExecuteDeleteAllDownloadingCommand()
         {
+            DownloadingList.Clear();
         }
 
         #endregion

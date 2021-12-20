@@ -1,4 +1,6 @@
-﻿namespace DownKyi.Core.Utils
+﻿using System.Text.RegularExpressions;
+
+namespace DownKyi.Core.Utils
 {
     public static class Format
     {
@@ -162,6 +164,40 @@
                 formatFileSize = (fileSize / 1024.0 / 1024.0 / 1024.0).ToString("#.##") + "GB";
             }
             return formatFileSize;
+        }
+
+        /// <summary>
+        /// 去除非法字符
+        /// </summary>
+        /// <param name="originName"></param>
+        /// <returns></returns>
+        public static string FormatFileName(string originName)
+        {
+            string destName = originName;
+            // Windows中不能作为文件名的字符
+            destName = destName.Replace("\\", " ");
+            destName = destName.Replace("/", " ");
+            destName = destName.Replace(":", " ");
+            destName = destName.Replace("*", " ");
+            destName = destName.Replace("?", " ");
+            destName = destName.Replace("\"", " ");
+            destName = destName.Replace("<", " ");
+            destName = destName.Replace(">", " ");
+            destName = destName.Replace("|", " ");
+
+            // 转义字符
+            destName = destName.Replace("\a", "");
+            destName = destName.Replace("\b", "");
+            destName = destName.Replace("\f", "");
+            destName = destName.Replace("\n", "");
+            destName = destName.Replace("\r", "");
+            destName = destName.Replace("\t", "");
+            destName = destName.Replace("\v", "");
+
+            // 控制字符
+            destName = Regex.Replace(destName, @"\p{C}+", string.Empty);
+
+            return destName.Trim();
         }
 
     }

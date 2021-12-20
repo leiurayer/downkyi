@@ -1,6 +1,9 @@
 ﻿using DownKyi.Core.BiliApi.BiliUtils;
+using DownKyi.Core.BiliApi.Zone;
+using DownKyi.Core.FileName;
 using DownKyi.Core.Logging;
 using DownKyi.Core.Settings;
+using DownKyi.Core.Utils;
 using DownKyi.CustomControl;
 using DownKyi.Events;
 using DownKyi.Images;
@@ -13,11 +16,13 @@ using Prism.Events;
 using Prism.Regions;
 using Prism.Services.Dialogs;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 
 namespace DownKyi.ViewModels
 {
@@ -32,75 +37,74 @@ namespace DownKyi.ViewModels
         private VectorImage arrowBack;
         public VectorImage ArrowBack
         {
-            get { return arrowBack; }
-            set { SetProperty(ref arrowBack, value); }
+            get => arrowBack;
+            set => SetProperty(ref arrowBack, value);
         }
 
         private string inputText;
         public string InputText
         {
-            get { return inputText; }
-            set { SetProperty(ref inputText, value); }
+            get => inputText;
+            set => SetProperty(ref inputText, value);
         }
 
         private GifImage loading;
         public GifImage Loading
         {
-            get { return loading; }
-            set { SetProperty(ref loading, value); }
+            get => loading;
+            set => SetProperty(ref loading, value);
         }
 
         private Visibility loadingVisibility;
         public Visibility LoadingVisibility
         {
-            get { return loadingVisibility; }
-            set { SetProperty(ref loadingVisibility, value); }
+            get => loadingVisibility;
+            set => SetProperty(ref loadingVisibility, value);
         }
 
         private VectorImage downloadManage;
         public VectorImage DownloadManage
         {
-            get { return downloadManage; }
-            set { SetProperty(ref downloadManage, value); }
+            get => downloadManage;
+            set => SetProperty(ref downloadManage, value);
         }
 
         private VideoInfoView videoInfoView;
         public VideoInfoView VideoInfoView
         {
-            get { return videoInfoView; }
-            set { SetProperty(ref videoInfoView, value); }
+            get => videoInfoView;
+            set => SetProperty(ref videoInfoView, value);
         }
 
         private ObservableCollection<VideoSection> videoSections;
         public ObservableCollection<VideoSection> VideoSections
         {
-            get { return videoSections; }
-            set { SetProperty(ref videoSections, value); }
+            get => videoSections;
+            set => SetProperty(ref videoSections, value);
         }
 
         private bool isSelectAll;
         public bool IsSelectAll
         {
-            get { return isSelectAll; }
-            set { SetProperty(ref isSelectAll, value); }
+            get => isSelectAll;
+            set => SetProperty(ref isSelectAll, value);
         }
 
         private Visibility contentVisibility;
         public Visibility ContentVisibility
         {
-            get { return contentVisibility; }
-            set { SetProperty(ref contentVisibility, value); }
+            get => contentVisibility;
+            set => SetProperty(ref contentVisibility, value);
         }
 
         private Visibility noDataVisibility;
         public Visibility NoDataVisibility
         {
-            get { return noDataVisibility; }
-            set { SetProperty(ref noDataVisibility, value); }
+            get => noDataVisibility;
+            set => SetProperty(ref noDataVisibility, value);
         }
 
         #endregion
-
 
         public ViewVideoDetailViewModel(IEventAggregator eventAggregator, IDialogService dialogService) : base(eventAggregator)
         {
@@ -265,7 +269,7 @@ namespace DownKyi.ViewModels
             if (!(parameter is VideoSection section)) { return; }
 
             bool isSelectAll = true;
-            foreach (var page in section.VideoPages)
+            foreach (VideoPage page in section.VideoPages)
             {
                 if (!page.IsSelected)
                 {
@@ -304,7 +308,7 @@ namespace DownKyi.ViewModels
         private void ExecuteKeySelectAllCommand(object parameter)
         {
             if (!(parameter is VideoSection section)) { return; }
-            foreach (var page in section.VideoPages)
+            foreach (VideoPage page in section.VideoPages)
             {
                 page.IsSelected = true;
             }
@@ -323,14 +327,14 @@ namespace DownKyi.ViewModels
             if (!(parameter is VideoSection section)) { return; }
             if (IsSelectAll)
             {
-                foreach (var page in section.VideoPages)
+                foreach (VideoPage page in section.VideoPages)
                 {
                     page.IsSelected = true;
                 }
             }
             else
             {
-                foreach (var page in section.VideoPages)
+                foreach (VideoPage page in section.VideoPages)
                 {
                     page.IsSelected = false;
                 }
@@ -424,11 +428,11 @@ namespace DownKyi.ViewModels
                         case ParseScope.NONE:
                             break;
                         case ParseScope.SELECTED_ITEM:
-                            foreach (var section in VideoSections)
+                            foreach (VideoSection section in VideoSections)
                             {
-                                foreach (var page in section.VideoPages)
+                                foreach (VideoPage page in section.VideoPages)
                                 {
-                                    var videoPage = section.VideoPages.FirstOrDefault(t => t == page);
+                                    VideoPage videoPage = section.VideoPages.FirstOrDefault(t => t == page);
 
                                     if (videoPage.IsSelected)
                                     {
@@ -439,13 +443,13 @@ namespace DownKyi.ViewModels
                             }
                             break;
                         case ParseScope.CURRENT_SECTION:
-                            foreach (var section in VideoSections)
+                            foreach (VideoSection section in VideoSections)
                             {
                                 if (section.IsSelected)
                                 {
-                                    foreach (var page in section.VideoPages)
+                                    foreach (VideoPage page in section.VideoPages)
                                     {
-                                        var videoPage = section.VideoPages.FirstOrDefault(t => t == page);
+                                        VideoPage videoPage = section.VideoPages.FirstOrDefault(t => t == page);
 
                                         // 执行解析任务
                                         UnityUpdateView(ParseVideo, null, videoPage);
@@ -454,11 +458,11 @@ namespace DownKyi.ViewModels
                             }
                             break;
                         case ParseScope.ALL:
-                            foreach (var section in VideoSections)
+                            foreach (VideoSection section in VideoSections)
                             {
-                                foreach (var page in section.VideoPages)
+                                foreach (VideoPage page in section.VideoPages)
                                 {
-                                    var videoPage = section.VideoPages.FirstOrDefault(t => t == page);
+                                    VideoPage videoPage = section.VideoPages.FirstOrDefault(t => t == page);
 
                                     // 执行解析任务
                                     UnityUpdateView(ParseVideo, null, videoPage);
@@ -530,12 +534,6 @@ namespace DownKyi.ViewModels
                         downloadDanmaku = result.Parameters.GetValue<bool>("downloadDanmaku");
                         downloadSubtitle = result.Parameters.GetValue<bool>("downloadSubtitle");
                         downloadCover = result.Parameters.GetValue<bool>("downloadCover");
-
-                        // 文件夹不存在则创建
-                        if (!Directory.Exists(directory))
-                        {
-                            Directory.CreateDirectory(directory);
-                        }
                     }
                 });
             }
@@ -545,8 +543,144 @@ namespace DownKyi.ViewModels
             // 这时直接退出
             if (directory == string.Empty) { return; }
 
+            // 文件夹不存在则创建
+            if (!Directory.Exists(directory))
+            {
+                Directory.CreateDirectory(directory);
+            }
+
+            // 添加视频计数
+            int i = 0;
+
             // 添加到下载
-            eventAggregator.GetEvent<MessageEvent>().Publish(directory);
+            foreach (VideoSection section in VideoSections)
+            {
+                foreach (VideoPage page in section.VideoPages)
+                {
+                    // 只下载选中项，跳过未选中项
+                    if (!page.IsSelected) { continue; }
+
+                    // 没有解析的也跳过
+                    if (page.PlayUrl == null) { continue; }
+
+                    // 判断是否同一个视频，需要cid、画质、音质、视频编码都相同
+
+                    // 如果存在正在下载列表，则跳过，并提示
+                    foreach (DownloadingItem item in App.DownloadingList)
+                    {
+                        if (item.Cid == page.Cid && item.Resolution.Id == page.VideoQuality.Quality && item.AudioCodecName == page.AudioQualityFormat && item.VideoCodecName == page.VideoQuality.SelectedVideoCodec)
+                        {
+                            eventAggregator.GetEvent<MessageEvent>().Publish($"{page.Name}{DictionaryResource.GetString("TipAlreadyToAddDownloading")}");
+                            continue;
+                        }
+                    }
+
+                    // 如果存在下载完成列表，弹出选择框是否再次下载
+                    foreach (DownloadedItem item in App.DownloadedList)
+                    {
+                        if (item.Cid == page.Cid && item.Resolution.Id == page.VideoQuality.Quality && item.AudioCodecName == page.AudioQualityFormat && item.VideoCodecName == page.VideoQuality.SelectedVideoCodec)
+                        {
+                            eventAggregator.GetEvent<MessageEvent>().Publish($"{page.Name}{DictionaryResource.GetString("TipAlreadyToAddDownloaded")}");
+                            continue;
+                        }
+                    }
+
+                    // 文件路径
+                    List<FileNamePart> fileNameParts = SettingsManager.GetInstance().GetFileNameParts();
+                    FileName fileName = FileName.Builder(fileNameParts)
+                        .SetOrder(page.Order)
+                        .SetSection(Format.FormatFileName(section.Title))
+                        .SetMainTitle(Format.FormatFileName(VideoInfoView.Title))
+                        .SetPageTitle(Format.FormatFileName(page.Name))
+                        .SetVideoZone(VideoInfoView.VideoZone.Split('>')[0])
+                        .SetAudioQuality(page.AudioQualityFormat)
+                        .SetVideoQuality(page.VideoQuality.QualityFormat)
+                        .SetVideoCodec(page.VideoQuality.SelectedVideoCodec.Contains("AVC") ? "AVC" : page.VideoQuality.SelectedVideoCodec.Contains("HEVC") ? "HEVC" : "");
+                    string filePath = Path.Combine(directory, fileName.RelativePath());
+
+                    // 视频类别
+                    PlayStreamType playStreamType;
+                    switch (VideoInfoView.TypeId)
+                    {
+                        case -10:
+                            playStreamType = PlayStreamType.CHEESE;
+                            break;
+                        case 13:
+                        case 23:
+                        case 177:
+                        case 167:
+                        case 11:
+                            playStreamType = PlayStreamType.BANGUMI;
+                            break;
+                        case 1:
+                        case 3:
+                        case 129:
+                        case 4:
+                        case 36:
+                        case 188:
+                        case 234:
+                        case 223:
+                        case 160:
+                        case 211:
+                        case 217:
+                        case 119:
+                        case 155:
+                        case 202:
+                        case 5:
+                        case 181:
+                        default:
+                            playStreamType = PlayStreamType.VIDEO;
+                            break;
+                    }
+
+                    // 如果不存在，直接添加到下载列表
+                    DownloadingItem downloading = new DownloadingItem
+                    {
+                        PlayUrl = page.PlayUrl,
+
+                        Bvid = page.Bvid,
+                        Avid = page.Avid,
+                        Cid = page.Cid,
+                        EpisodeId = page.EpisodeId,
+
+                        CoverUrl = page.FirstFrame,
+                        ZoneImage = (DrawingImage)Application.Current.Resources[VideoZoneIcon.Instance().GetZoneImageKey(VideoInfoView.TypeId)],
+
+                        Order = page.Order,
+                        MainTitle = VideoInfoView.Title,
+                        Name = page.Name,
+                        Duration = page.Duration,
+                        AudioCodecId = Constant.AudioQualityId[page.AudioQualityFormat],
+                        AudioCodecName = page.AudioQualityFormat,
+                        VideoCodecName = page.VideoQuality.SelectedVideoCodec,
+                        Resolution = new Resolution { Name = page.VideoQuality.QualityFormat, Id = page.VideoQuality.Quality },
+                        FilePath = filePath,
+
+                        PlayStreamType = playStreamType,
+                        DownloadStatus = DownloadStatus.NOT_STARTED,
+                    };
+                    // 需要下载的内容
+                    downloading.NeedDownloadContent["downloadAudio"] = downloadAudio;
+                    downloading.NeedDownloadContent["downloadVideo"] = downloadVideo;
+                    downloading.NeedDownloadContent["downloadDanmaku"] = downloadDanmaku;
+                    downloading.NeedDownloadContent["downloadSubtitle"] = downloadSubtitle;
+                    downloading.NeedDownloadContent["downloadCover"] = downloadCover;
+
+                    // 添加到下载列表
+                    App.DownloadingList.Add(downloading);
+                    i++;
+                }
+            }
+
+            // 通知用户添加到下载列表的结果
+            if (i == 0)
+            {
+                eventAggregator.GetEvent<MessageEvent>().Publish(DictionaryResource.GetString("TipAddDownloadingZero"));
+            }
+            else
+            {
+                eventAggregator.GetEvent<MessageEvent>().Publish($"{DictionaryResource.GetString("TipAddDownloadingFinished1")}{i}{DictionaryResource.GetString("TipAddDownloadingFinished2")}");
+            }
         }
 
         /// <summary>
@@ -627,12 +761,12 @@ namespace DownKyi.ViewModels
                 NoDataVisibility = Visibility.Collapsed;
             }
 
-            var videoSections = videoInfoService.GetVideoSections();
+            List<VideoSection> videoSections = videoInfoService.GetVideoSections();
             if (videoSections == null)
             {
                 LogManager.Debug(Tag, "videoSections is not exist.");
 
-                var pages = videoInfoService.GetVideoPages();
+                List<VideoPage> pages = videoInfoService.GetVideoPages();
 
                 PropertyChangeAsync(new Action(() =>
                 {

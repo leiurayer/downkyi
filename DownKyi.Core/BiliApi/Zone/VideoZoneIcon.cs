@@ -34,6 +34,9 @@
         {
             switch (tid)
             {
+                // 课堂
+                case -10:
+                    return "Zone.cheeseDrawingImage";
                 case 1:
                     return "Zone.dougaDrawingImage";
                 case 13:

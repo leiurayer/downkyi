@@ -18,5 +18,19 @@ namespace DownKyi.Core.BiliApi.Bangumi
              { 10, "Unknown" }
         };
 
+        public static Dictionary<int, int> TypeId = new Dictionary<int, int>()
+        {
+             { 1, 13 },
+             { 2, 23 },
+             { 3, 177 },
+             { 4, 167 },
+             { 5, 11 },
+             { 6, -1 },
+             { 7, -1 },
+             { 8, -1 },
+             { 9, -1 },
+             { 10, -1 }
+        };
+
     }
 }

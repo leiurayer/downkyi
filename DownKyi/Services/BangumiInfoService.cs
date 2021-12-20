@@ -93,6 +93,7 @@ namespace DownKyi.Services
                     Bvid = episode.Bvid,
                     Cid = episode.Cid,
                     EpisodeId = -1,
+                    FirstFrame = episode.Cover,
                     Order = order,
                     Name = name,
                     Duration = "N/A"
@@ -149,6 +150,7 @@ namespace DownKyi.Services
                         Bvid = episode.Bvid,
                         Cid = episode.Cid,
                         EpisodeId = -1,
+                        FirstFrame = episode.Cover,
                         Order = order,
                         Name = name,
                         Duration = "N/A"
@@ -217,6 +219,9 @@ namespace DownKyi.Services
 
                 videoInfoView.Cover = cover == null ? null : new BitmapImage(new Uri(cover));
                 videoInfoView.Title = bangumiSeason.Title;
+
+                // 分区id
+                videoInfoView.TypeId = BangumiType.TypeId[bangumiSeason.Type];
 
                 videoInfoView.VideoZone = DictionaryResource.GetString(BangumiType.Type[bangumiSeason.Type]);
 

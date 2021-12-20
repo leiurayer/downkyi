@@ -87,6 +87,7 @@
     <Compile Include="Images\LogoIcon.cs" />
     <Compile Include="Images\NavigationIcon.cs" />
     <Compile Include="Images\NormalIcon.cs" />
+    <Compile Include="Models\DownloadBaseItem.cs" />
     <Compile Include="Models\DownloadedItem.cs" />
     <Compile Include="Models\DownloadingItem.cs" />
     <Compile Include="Models\DownloadStatus.cs" />
