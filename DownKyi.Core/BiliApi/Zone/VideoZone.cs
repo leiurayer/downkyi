@@ -20,7 +20,7 @@ namespace DownKyi.Core.BiliApi.Zone
             return that;
         }
 
-        public List<ZoneAttr> GetZone()
+        public List<ZoneAttr> GetZones()
         {
             return zones;
         }

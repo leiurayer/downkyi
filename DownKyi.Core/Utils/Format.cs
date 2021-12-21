@@ -122,15 +122,15 @@ namespace DownKyi.Core.Utils
             }
             else if (speed < 1024)
             {
-                formatSpeed = speed.ToString("#.##") + "B/s";
+                formatSpeed = string.Format("{0:F2}", speed) + "B/s";
             }
             else if (speed < 1024 * 1024)
             {
-                formatSpeed = (speed / 1024).ToString("#.##") + "KB/s";
+                formatSpeed = string.Format("{0:F2}", speed / 1024) + "KB/s";
             }
             else
             {
-                formatSpeed = (speed / 1024 / 1024).ToString("#.##") + "MB/s";
+                formatSpeed = string.Format("{0:F2}", speed / 1024 / 1024) + "MB/s";
             }
             return formatSpeed;
         }

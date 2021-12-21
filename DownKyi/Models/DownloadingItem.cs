@@ -1,5 +1,4 @@
-﻿using DownKyi.Core.Aria2cNet.Client;
-using DownKyi.Core.BiliApi.VideoStream.Models;
+﻿using DownKyi.Core.BiliApi.VideoStream.Models;
 using DownKyi.Images;
 using DownKyi.Utils;
 using Prism.Commands;

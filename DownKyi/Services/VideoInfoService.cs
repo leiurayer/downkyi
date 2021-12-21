@@ -162,7 +162,7 @@ namespace DownKyi.Services
 
             // 分区
             string videoZone = string.Empty;
-            var zoneList = Core.BiliApi.Zone.VideoZone.Instance().GetZone();
+            var zoneList = Core.BiliApi.Zone.VideoZone.Instance().GetZones();
             var zone = zoneList.Find(it => it.Id == videoView.Tid);
             if (zone != null)
             {

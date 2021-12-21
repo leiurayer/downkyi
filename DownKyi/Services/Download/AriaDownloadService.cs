@@ -153,6 +153,10 @@ namespace DownKyi.Services.Download
             // 更新状态显示
             downloading.DownloadStatusTitle = DictionaryResource.GetString("WhileDownloading");
             downloading.DownloadContent = DictionaryResource.GetString("DownloadingCover");
+            // 下载大小
+            downloading.DownloadingFileSize = string.Empty;
+            // 下载速度
+            downloading.SpeedDisplay = string.Empty;
 
             // 查询、保存封面
             StorageCover storageCover = new StorageCover();
@@ -198,6 +202,10 @@ namespace DownKyi.Services.Download
             // 更新状态显示
             downloading.DownloadStatusTitle = DictionaryResource.GetString("WhileDownloading");
             downloading.DownloadContent = DictionaryResource.GetString("DownloadingDanmaku");
+            // 下载大小
+            downloading.DownloadingFileSize = string.Empty;
+            // 下载速度
+            downloading.SpeedDisplay = string.Empty;
 
             string title = $"{downloading.Name}";
             string assFile = $"{downloading.FilePath}.ass";
@@ -217,7 +225,7 @@ namespace DownKyi.Services.Download
             //}
 
             // 字幕配置
-            var subtitleConfig = new Config
+            Config subtitleConfig = new Config
             {
                 Title = title,
                 ScreenWidth = screenWidth,
@@ -250,6 +258,10 @@ namespace DownKyi.Services.Download
             // 更新状态显示
             downloading.DownloadStatusTitle = DictionaryResource.GetString("WhileDownloading");
             downloading.DownloadContent = DictionaryResource.GetString("DownloadingSubtitle");
+            // 下载大小
+            downloading.DownloadingFileSize = string.Empty;
+            // 下载速度
+            downloading.SpeedDisplay = string.Empty;
 
             List<string> srtFiles = new List<string>();
 
@@ -293,6 +305,10 @@ namespace DownKyi.Services.Download
             // 更新状态显示
             downloading.DownloadStatusTitle = DictionaryResource.GetString("MixedFlow");
             downloading.DownloadContent = DictionaryResource.GetString("DownloadingVideo");
+            // 下载大小
+            downloading.DownloadingFileSize = string.Empty;
+            // 下载速度
+            downloading.SpeedDisplay = string.Empty;
 
             string finalFile = $"{downloading.FilePath}.mp4";
             if (videoUid == null)
@@ -326,6 +342,10 @@ namespace DownKyi.Services.Download
             // 更新状态显示
             downloading.DownloadStatusTitle = DictionaryResource.GetString("Parsing");
             downloading.DownloadContent = string.Empty;
+            // 下载大小
+            downloading.DownloadingFileSize = string.Empty;
+            // 下载速度
+            downloading.SpeedDisplay = string.Empty;
 
             if (downloading.PlayUrl != null && downloading.DownloadStatus == DownloadStatus.NOT_STARTED)
             {
@@ -654,6 +674,9 @@ namespace DownKyi.Services.Download
         /// <returns></returns>
         private DownloadResult DownloadByAria(DownloadingItem downloading, List<string> urls, string path, string localFileName)
         {
+            // path已斜杠结尾，去掉斜杠
+            path = path.TrimEnd('/').TrimEnd('\\');
+
             AriaSendOption option = new AriaSendOption
             {
                 //HttpProxy = $"http://{Settings.GetAriaHttpProxy()}:{Settings.GetAriaHttpProxyListenPort()}",
@@ -691,6 +714,8 @@ namespace DownKyi.Services.Download
                 {
                     case DownloadStatus.PAUSE:
                         Task<AriaPause> ariaPause = AriaClient.PauseAsync(downloading.Gid);
+                        // 通知UI，并阻塞当前线程
+                        Pause(downloading);
                         break;
                     case DownloadStatus.DOWNLOADING:
                         Task<AriaPause> ariaUnpause = AriaClient.UnpauseAsync(downloading.Gid);
@@ -712,8 +737,7 @@ namespace DownKyi.Services.Download
             }
 
             // 根据进度判断本次是否需要更新UI
-            // TODO 小于多少需要测试
-            if (percent - video.Progress < 0.01) { return; }
+            if (Math.Abs(percent - video.Progress) < 0.01) { return; }
 
             // 下载进度
             video.Progress = percent;
@@ -729,7 +753,6 @@ namespace DownKyi.Services.Download
             {
                 video.MaxSpeed = speed;
             }
-
         }
 
         private void AriaDownloadFinish(bool isSuccess, string downloadPath, string gid, string msg)

@@ -585,11 +585,31 @@ namespace DownKyi.ViewModels
                         }
                     }
 
+                    // 视频分区
+                    int zoneId = -1;
+                    List<ZoneAttr> zoneList = VideoZone.Instance().GetZones();
+                    ZoneAttr zone = zoneList.Find(it => it.Id == VideoInfoView.TypeId);
+                    if (zone != null)
+                    {
+                        ZoneAttr zoneParent = zoneList.Find(it => it.Id == zone.ParentId);
+                        if (zoneParent != null)
+                        {
+                            zoneId = zoneParent.Id;
+                        }
+                    }
+
+                    // 如果只有一个视频章节，则不在命名中出现
+                    string sectionName = string.Empty;
+                    if (VideoSections.Count > 1)
+                    {
+                        sectionName = section.Title;
+                    }
+
                     // 文件路径
                     List<FileNamePart> fileNameParts = SettingsManager.GetInstance().GetFileNameParts();
                     FileName fileName = FileName.Builder(fileNameParts)
                         .SetOrder(page.Order)
-                        .SetSection(Format.FormatFileName(section.Title))
+                        .SetSection(Format.FormatFileName(sectionName))
                         .SetMainTitle(Format.FormatFileName(VideoInfoView.Title))
                         .SetPageTitle(Format.FormatFileName(page.Name))
                         .SetVideoZone(VideoInfoView.VideoZone.Split('>')[0])
@@ -644,7 +664,7 @@ namespace DownKyi.ViewModels
                         EpisodeId = page.EpisodeId,
 
                         CoverUrl = page.FirstFrame,
-                        ZoneImage = (DrawingImage)Application.Current.Resources[VideoZoneIcon.Instance().GetZoneImageKey(VideoInfoView.TypeId)],
+                        ZoneImage = (DrawingImage)Application.Current.Resources[VideoZoneIcon.Instance().GetZoneImageKey(zoneId)],
 
                         Order = page.Order,
                         MainTitle = VideoInfoView.Title,
