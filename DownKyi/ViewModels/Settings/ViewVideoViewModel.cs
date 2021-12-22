@@ -3,7 +3,6 @@ using DownKyi.Core.FileName;
 using DownKyi.Core.Settings;
 using DownKyi.Events;
 using DownKyi.Models;
-using DownKyi.Services;
 using DownKyi.Utils;
 using Prism.Commands;
 using Prism.Events;
@@ -37,29 +36,29 @@ namespace DownKyi.ViewModels.Settings
             set => SetProperty(ref selectedVideoCodec, value);
         }
 
-        private List<Resolution> videoQualityList;
-        public List<Resolution> VideoQualityList
+        private List<Quality> videoQualityList;
+        public List<Quality> VideoQualityList
         {
             get => videoQualityList;
             set => SetProperty(ref videoQualityList, value);
         }
 
-        private Resolution selectedVideoQuality;
-        public Resolution SelectedVideoQuality
+        private Quality selectedVideoQuality;
+        public Quality SelectedVideoQuality
         {
             get => selectedVideoQuality;
             set => SetProperty(ref selectedVideoQuality, value);
         }
 
-        private List<string> audioQualityList;
-        public List<string> AudioQualityList
+        private List<Quality> audioQualityList;
+        public List<Quality> AudioQualityList
         {
             get => audioQualityList;
             set => SetProperty(ref audioQualityList, value);
         }
 
-        private string selectedAudioQuality;
-        public string SelectedAudioQuality
+        private Quality selectedAudioQuality;
+        public Quality SelectedAudioQuality
         {
             get => selectedAudioQuality;
             set => SetProperty(ref selectedAudioQuality, value);
@@ -123,15 +122,10 @@ namespace DownKyi.ViewModels.Settings
             };
 
             // 优先下载画质
-            VideoQualityList = new ResolutionService().GetResolution();
+            VideoQualityList = Constant.GetResolutions();
 
             // 优先下载音质
-            AudioQualityList = new List<string>
-            {
-                "64K",
-                "132K",
-                "192K",
-            };
+            AudioQualityList = Constant.GetAudioQualities();
 
             // 文件命名格式
             SelectedFileName = new ObservableCollection<DisplayFileNamePart>();
@@ -168,7 +162,7 @@ namespace DownKyi.ViewModels.Settings
 
             // 优先下载音质
             int audioQuality = SettingsManager.GetInstance().GetAudioQuality();
-            SelectedAudioQuality = Constant.AudioQuality[audioQuality];
+            SelectedAudioQuality = AudioQualityList.FirstOrDefault(t => { return t.Id == audioQuality; });
 
             // 是否下载flv视频后转码为mp4
             AllowStatus isTranscodingFlvToMp4 = SettingsManager.GetInstance().IsTranscodingFlvToMp4();
@@ -221,23 +215,25 @@ namespace DownKyi.ViewModels.Settings
         /// <param name="parameter"></param>
         private void ExecuteVideoQualityCommand(object parameter)
         {
-            if (!(parameter is Resolution resolution)) { return; }
+            if (!(parameter is Quality resolution)) { return; }
 
             bool isSucceed = SettingsManager.GetInstance().SetQuality(resolution.Id);
             PublishTip(isSucceed);
         }
 
         // 优先下载音质事件
-        private DelegateCommand<string> audioQualityCommand;
-        public DelegateCommand<string> AudioQualityCommand => audioQualityCommand ?? (audioQualityCommand = new DelegateCommand<string>(ExecuteAudioQualityCommand));
+        private DelegateCommand<object> audioQualityCommand;
+        public DelegateCommand<object> AudioQualityCommand => audioQualityCommand ?? (audioQualityCommand = new DelegateCommand<object>(ExecuteAudioQualityCommand));
 
         /// <summary>
         /// 优先下载音质事件
         /// </summary>
         /// <param name="parameter"></param>
-        private void ExecuteAudioQualityCommand(string parameter)
+        private void ExecuteAudioQualityCommand(object parameter)
         {
-            bool isSucceed = SettingsManager.GetInstance().SetAudioQuality(Constant.AudioQualityId[parameter]);
+            if (!(parameter is Quality quality)) { return; }
+
+            bool isSucceed = SettingsManager.GetInstance().SetAudioQuality(quality.Id);
             PublishTip(isSucceed);
         }
 

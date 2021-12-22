@@ -1,6 +1,6 @@
-﻿namespace DownKyi.Models
+﻿namespace DownKyi.Core.BiliApi.BiliUtils
 {
-    public class Resolution
+    public class Quality
     {
         public string Name { get; set; }
         public int Id { get; set; }

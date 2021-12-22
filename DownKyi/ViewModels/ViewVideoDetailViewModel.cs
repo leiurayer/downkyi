@@ -568,7 +568,7 @@ namespace DownKyi.ViewModels
                     // 如果存在正在下载列表，则跳过，并提示
                     foreach (DownloadingItem item in App.DownloadingList)
                     {
-                        if (item.Cid == page.Cid && item.Resolution.Id == page.VideoQuality.Quality && item.AudioCodecName == page.AudioQualityFormat && item.VideoCodecName == page.VideoQuality.SelectedVideoCodec)
+                        if (item.Cid == page.Cid && item.Resolution.Id == page.VideoQuality.Quality && item.AudioCodec.Name == page.AudioQualityFormat && item.VideoCodecName == page.VideoQuality.SelectedVideoCodec)
                         {
                             eventAggregator.GetEvent<MessageEvent>().Publish($"{page.Name}{DictionaryResource.GetString("TipAlreadyToAddDownloading")}");
                             continue;
@@ -578,7 +578,7 @@ namespace DownKyi.ViewModels
                     // 如果存在下载完成列表，弹出选择框是否再次下载
                     foreach (DownloadedItem item in App.DownloadedList)
                     {
-                        if (item.Cid == page.Cid && item.Resolution.Id == page.VideoQuality.Quality && item.AudioCodecName == page.AudioQualityFormat && item.VideoCodecName == page.VideoQuality.SelectedVideoCodec)
+                        if (item.Cid == page.Cid && item.Resolution.Id == page.VideoQuality.Quality && item.AudioCodec.Name == page.AudioQualityFormat && item.VideoCodecName == page.VideoQuality.SelectedVideoCodec)
                         {
                             eventAggregator.GetEvent<MessageEvent>().Publish($"{page.Name}{DictionaryResource.GetString("TipAlreadyToAddDownloaded")}");
                             continue;
@@ -670,15 +670,15 @@ namespace DownKyi.ViewModels
                         MainTitle = VideoInfoView.Title,
                         Name = page.Name,
                         Duration = page.Duration,
-                        AudioCodecId = Constant.AudioQualityId[page.AudioQualityFormat],
-                        AudioCodecName = page.AudioQualityFormat,
                         VideoCodecName = page.VideoQuality.SelectedVideoCodec,
-                        Resolution = new Resolution { Name = page.VideoQuality.QualityFormat, Id = page.VideoQuality.Quality },
+                        Resolution = new Quality { Name = page.VideoQuality.QualityFormat, Id = page.VideoQuality.Quality },
+                        AudioCodec = Constant.GetAudioQualities().FirstOrDefault(t => { return t.Name == page.AudioQualityFormat; }),
                         FilePath = filePath,
 
                         PlayStreamType = playStreamType,
                         DownloadStatus = DownloadStatus.NOT_STARTED,
                     };
+
                     // 需要下载的内容
                     downloading.NeedDownloadContent["downloadAudio"] = downloadAudio;
                     downloading.NeedDownloadContent["downloadVideo"] = downloadVideo;

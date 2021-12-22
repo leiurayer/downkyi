@@ -129,6 +129,7 @@
     <Compile Include="BiliApi\Bangumi\Models\BangumiUpInfo.cs" />
     <Compile Include="BiliApi\BiliUtils\Constant.cs" />
     <Compile Include="BiliApi\BiliUtils\ParseEntrance.cs" />
+    <Compile Include="BiliApi\BiliUtils\Quality.cs" />
     <Compile Include="BiliApi\Cheese\CheeseInfo.cs" />
     <Compile Include="BiliApi\Cheese\Models\CheeseBrief.cs" />
     <Compile Include="BiliApi\Cheese\Models\CheeseEpisode.cs" />

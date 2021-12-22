@@ -65,6 +65,7 @@
                     Name="nameAudioQualityList"
                     Width="120"
                     VerticalContentAlignment="Center"
+                    DisplayMemberPath="Name"
                     ItemsSource="{Binding AudioQualityList}"
                     SelectedItem="{Binding SelectedAudioQuality}">
                     <i:Interaction.Triggers>

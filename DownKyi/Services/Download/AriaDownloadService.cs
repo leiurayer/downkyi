@@ -59,7 +59,7 @@ namespace DownKyi.Services.Download
             PlayUrlDashVideo downloadAudio = null;
             foreach (PlayUrlDashVideo audio in downloading.PlayUrl.Dash.Audio)
             {
-                if (audio.Id == downloading.AudioCodecId)
+                if (audio.Id == downloading.AudioCodec.Id)
                 {
                     downloadAudio = audio;
                     break;

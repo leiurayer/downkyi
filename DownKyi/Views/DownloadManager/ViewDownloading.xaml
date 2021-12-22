@@ -60,7 +60,7 @@
                                                 <Binding Path="Duration" />
                                                 <Binding Path="Resolution.Name" />
                                                 <Binding Path="VideoCodecName" />
-                                                <Binding Path="AudioCodecName" />
+                                                <Binding Path="AudioCodec.Name" />
                                             </MultiBinding>
                                         </TextBlock.Text>
                                     </TextBlock>
