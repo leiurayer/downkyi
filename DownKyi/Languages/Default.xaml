@@ -136,6 +136,7 @@
     <system:String x:Key="DisplayVideoQuality">画质</system:String>
     <system:String x:Key="DisplayVideoCodec">视频编码</system:String>
     <system:String x:Key="DisplaySpace">空格</system:String>
+    <system:String x:Key="Reset">恢复默认</system:String>
 
     <system:String x:Key="SettingDanmaku">弹幕</system:String>
     <system:String x:Key="FilterType">按类型屏蔽</system:String>

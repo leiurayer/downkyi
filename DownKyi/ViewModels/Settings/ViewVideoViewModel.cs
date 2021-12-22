@@ -307,6 +307,27 @@ namespace DownKyi.ViewModels.Settings
             SelectedOptionalField = -1;
         }
 
+        // 重置选中文件名字段
+        private DelegateCommand resetCommand;
+        public DelegateCommand ResetCommand => resetCommand ?? (resetCommand = new DelegateCommand(ExecuteResetCommand));
+
+        /// <summary>
+        /// 重置选中文件名字段
+        /// </summary>
+        private void ExecuteResetCommand()
+        {
+            bool isSucceed = SettingsManager.GetInstance().SetFileNameParts(null);
+            PublishTip(isSucceed);
+
+            List<FileNamePart> fileNameParts = SettingsManager.GetInstance().GetFileNameParts();
+            SelectedFileName.Clear();
+            foreach (FileNamePart item in fileNameParts)
+            {
+                string display = DisplayFileNamePart(item);
+                SelectedFileName.Add(new DisplayFileNamePart { Id = item, Title = display });
+            }
+        }
+
 
         #endregion
 

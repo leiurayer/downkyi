@@ -144,6 +144,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition />
                         <RowDefinition />
+                        <RowDefinition />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="100" />
@@ -194,6 +195,18 @@
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </ListBox>
+
+                    <Button
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        Width="75"
+                        Margin="0,20,0,0"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        Command="{Binding ResetCommand}"
+                        Content="{DynamicResource Reset}"
+                        FontSize="12"
+                        Style="{StaticResource BtnBorderStyle}" />
                 </Grid>
             </GroupBox>
 
