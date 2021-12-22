@@ -42,8 +42,9 @@
                                         TextTrimming="CharacterEllipsis"
                                         ToolTip="{Binding MainTitle}">
                                         <TextBlock.Text>
-                                            <MultiBinding StringFormat="{}{0}-{1}">
+                                            <MultiBinding StringFormat="{}{0}-{1}-{2}">
                                                 <Binding Path="Order" />
+                                                <Binding Path="MainTitle" />
                                                 <Binding Path="Name" />
                                             </MultiBinding>
                                         </TextBlock.Text>

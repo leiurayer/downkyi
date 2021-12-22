@@ -591,10 +591,17 @@ namespace DownKyi.ViewModels
                     ZoneAttr zone = zoneList.Find(it => it.Id == VideoInfoView.TypeId);
                     if (zone != null)
                     {
-                        ZoneAttr zoneParent = zoneList.Find(it => it.Id == zone.ParentId);
-                        if (zoneParent != null)
+                        if (zone.ParentId == 0)
                         {
-                            zoneId = zoneParent.Id;
+                            zoneId = zone.Id;
+                        }
+                        else
+                        {
+                            ZoneAttr zoneParent = zoneList.Find(it => it.Id == zone.ParentId);
+                            if (zoneParent != null)
+                            {
+                                zoneId = zoneParent.Id;
+                            }
                         }
                     }
 
