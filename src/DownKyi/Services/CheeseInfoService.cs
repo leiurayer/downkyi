@@ -61,6 +61,7 @@ namespace DownKyi.Services
                     Bvid = null,
                     Cid = episode.Cid,
                     EpisodeId = episode.Id,
+                    FirstFrame = episode.Cover,
                     Order = order,
                     Name = name,
                     Duration = "N/A"
@@ -128,6 +129,10 @@ namespace DownKyi.Services
 
                 videoInfoView.Cover = cover == null ? null : new BitmapImage(new Uri(cover));
                 videoInfoView.Title = cheeseView.Title;
+
+                // 分区id
+                // 课堂的type id B站没有定义，这里自定义为-10
+                videoInfoView.TypeId = -10;
 
                 videoInfoView.VideoZone = DictionaryResource.GetString("Cheese");
                 videoInfoView.CreateTime = "";

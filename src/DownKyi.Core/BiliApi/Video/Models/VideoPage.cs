@@ -21,5 +21,7 @@ namespace DownKyi.Core.BiliApi.Video.Models
         public string Weblink { get; set; }
         [JsonProperty("dimension")]
         public Dimension Dimension { get; set; }
+        [JsonProperty("first_frame")]
+        public string FirstFrame { get; set; }
     }
 }

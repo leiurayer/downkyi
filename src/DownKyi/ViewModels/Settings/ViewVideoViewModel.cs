@@ -1,4 +1,5 @@
-﻿using DownKyi.Core.Settings;
+﻿using DownKyi.Core.FileName;
+using DownKyi.Core.Settings;
 using DownKyi.Events;
 using DownKyi.Models;
 using DownKyi.Services;
@@ -6,7 +7,9 @@ using DownKyi.Utils;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Regions;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace DownKyi.ViewModels.Settings
@@ -22,81 +25,75 @@ namespace DownKyi.ViewModels.Settings
         private List<string> videoCodecs;
         public List<string> VideoCodecs
         {
-            get { return videoCodecs; }
-            set { SetProperty(ref videoCodecs, value); }
+            get => videoCodecs;
+            set => SetProperty(ref videoCodecs, value);
         }
 
         private string selectedVideoCodec;
         public string SelectedVideoCodec
         {
-            get { return selectedVideoCodec; }
-            set { SetProperty(ref selectedVideoCodec, value); }
+            get => selectedVideoCodec;
+            set => SetProperty(ref selectedVideoCodec, value);
         }
 
         private List<Resolution> videoQualityList;
         public List<Resolution> VideoQualityList
         {
-            get { return videoQualityList; }
-            set { SetProperty(ref videoQualityList, value); }
+            get => videoQualityList;
+            set => SetProperty(ref videoQualityList, value);
         }
 
         private Resolution selectedVideoQuality;
         public Resolution SelectedVideoQuality
         {
-            get { return selectedVideoQuality; }
-            set { SetProperty(ref selectedVideoQuality, value); }
-        }
-
-        private bool isAddVideoOrder;
-        public bool IsAddVideoOrder
-        {
-            get { return isAddVideoOrder; }
-            set { SetProperty(ref isAddVideoOrder, value); }
+            get => selectedVideoQuality;
+            set => SetProperty(ref selectedVideoQuality, value);
         }
 
         private bool isTranscodingFlvToMp4;
         public bool IsTranscodingFlvToMp4
         {
-            get { return isTranscodingFlvToMp4; }
-            set { SetProperty(ref isTranscodingFlvToMp4, value); }
+            get => isTranscodingFlvToMp4;
+            set => SetProperty(ref isTranscodingFlvToMp4, value);
         }
 
         private bool isUseDefaultDirectory;
         public bool IsUseDefaultDirectory
         {
-            get { return isUseDefaultDirectory; }
-            set { SetProperty(ref isUseDefaultDirectory, value); }
+            get => isUseDefaultDirectory;
+            set => SetProperty(ref isUseDefaultDirectory, value);
         }
 
         private string saveVideoDirectory;
         public string SaveVideoDirectory
         {
-            get { return saveVideoDirectory; }
-            set { SetProperty(ref saveVideoDirectory, value); }
+            get => saveVideoDirectory;
+            set => SetProperty(ref saveVideoDirectory, value);
         }
 
-        private bool isCreateFolderForMedia;
-        public bool IsCreateFolderForMedia
+        private ObservableCollection<DisplayFileNamePart> selectedFileName;
+        public ObservableCollection<DisplayFileNamePart> SelectedFileName
         {
-            get { return isCreateFolderForMedia; }
-            set { SetProperty(ref isCreateFolderForMedia, value); }
+            get => selectedFileName;
+            set => SetProperty(ref selectedFileName, value);
         }
 
-        private bool isDownloadDanmaku;
-        public bool IsDownloadDanmaku
+        private ObservableCollection<DisplayFileNamePart> optionalFields;
+        public ObservableCollection<DisplayFileNamePart> OptionalFields
         {
-            get { return isDownloadDanmaku; }
-            set { SetProperty(ref isDownloadDanmaku, value); }
+            get => optionalFields;
+            set => SetProperty(ref optionalFields, value);
         }
 
-        private bool isDownloadCover;
-        public bool IsDownloadCover
+        private int selectedOptionalField;
+        public int SelectedOptionalField
         {
-            get { return isDownloadCover; }
-            set { SetProperty(ref isDownloadCover, value); }
+            get => selectedOptionalField;
+            set => SetProperty(ref selectedOptionalField, value);
         }
 
         #endregion
+
 
         public ViewVideoViewModel(IEventAggregator eventAggregator) : base(eventAggregator)
         {
@@ -112,6 +109,17 @@ namespace DownKyi.ViewModels.Settings
 
             // 优先下载画质
             VideoQualityList = new ResolutionService().GetResolution();
+
+            // 文件命名格式
+            SelectedFileName = new ObservableCollection<DisplayFileNamePart>();
+            OptionalFields = new ObservableCollection<DisplayFileNamePart>();
+            foreach (FileNamePart item in Enum.GetValues(typeof(FileNamePart)))
+            {
+                string display = DisplayFileNamePart(item);
+                OptionalFields.Add(new DisplayFileNamePart { Id = item, Title = display });
+            }
+
+            SelectedOptionalField = -1;
 
             #endregion
 
@@ -135,10 +143,6 @@ namespace DownKyi.ViewModels.Settings
             int quality = SettingsManager.GetInstance().GetQuality();
             SelectedVideoQuality = VideoQualityList.FirstOrDefault(t => { return t.Id == quality; });
 
-            // 是否在下载的视频前增加序号
-            AllowStatus isAddOrder = SettingsManager.GetInstance().IsAddOrder();
-            IsAddVideoOrder = isAddOrder == AllowStatus.YES;
-
             // 是否下载flv视频后转码为mp4
             AllowStatus isTranscodingFlvToMp4 = SettingsManager.GetInstance().IsTranscodingFlvToMp4();
             IsTranscodingFlvToMp4 = isTranscodingFlvToMp4 == AllowStatus.YES;
@@ -150,17 +154,14 @@ namespace DownKyi.ViewModels.Settings
             // 默认下载目录
             SaveVideoDirectory = SettingsManager.GetInstance().GetSaveVideoRootPath();
 
-            // 是否为不同视频分别创建文件夹
-            AllowStatus isCreateFolderForMedia = SettingsManager.GetInstance().IsCreateFolderForMedia();
-            IsCreateFolderForMedia = isCreateFolderForMedia == AllowStatus.YES;
-
-            // 是否在下载视频的同时下载弹幕
-            AllowStatus isDownloadDanmaku = SettingsManager.GetInstance().IsDownloadDanmaku();
-            IsDownloadDanmaku = isDownloadDanmaku == AllowStatus.YES;
-
-            // 是否在下载视频的同时下载封面
-            AllowStatus isDownloadCover = SettingsManager.GetInstance().IsDownloadCover();
-            IsDownloadCover = isDownloadCover == AllowStatus.YES;
+            // 文件命名格式
+            List<FileNamePart> fileNameParts = SettingsManager.GetInstance().GetFileNameParts();
+            SelectedFileName.Clear();
+            foreach (FileNamePart item in fileNameParts)
+            {
+                string display = DisplayFileNamePart(item);
+                SelectedFileName.Add(new DisplayFileNamePart { Id = item, Title = display });
+            }
 
             isOnNavigatedTo = false;
         }
@@ -196,21 +197,6 @@ namespace DownKyi.ViewModels.Settings
             if (!(parameter is Resolution resolution)) { return; }
 
             bool isSucceed = SettingsManager.GetInstance().SetQuality(resolution.Id);
-            PublishTip(isSucceed);
-        }
-
-        // 是否在下载的视频前增加序号事件
-        private DelegateCommand IisAddVideoOrderCommand;
-        public DelegateCommand IsAddVideoOrderCommand => IisAddVideoOrderCommand ?? (IisAddVideoOrderCommand = new DelegateCommand(ExecuteIsAddVideoOrderCommand));
-
-        /// <summary>
-        /// 是否在下载的视频前增加序号事件
-        /// </summary>
-        private void ExecuteIsAddVideoOrderCommand()
-        {
-            AllowStatus isAddOrder = IsAddVideoOrder ? AllowStatus.YES : AllowStatus.NO;
-
-            bool isSucceed = SettingsManager.GetInstance().IsAddOrder(isAddOrder);
             PublishTip(isSucceed);
         }
 
@@ -265,50 +251,62 @@ namespace DownKyi.ViewModels.Settings
             }
         }
 
-        // 是否为不同视频分别创建文件夹事件
-        private DelegateCommand isCreateFolderForMediaCommand;
-        public DelegateCommand IsCreateFolderForMediaCommand => isCreateFolderForMediaCommand ?? (isCreateFolderForMediaCommand = new DelegateCommand(ExecuteIsCreateFolderForMediaCommand));
+        // 选中文件名字段点击事件
+        private DelegateCommand<object> selectedFileNameCommand;
+        public DelegateCommand<object> SelectedFileNameCommand => selectedFileNameCommand ?? (selectedFileNameCommand = new DelegateCommand<object>(ExecuteSelectedFileNameCommand));
 
         /// <summary>
-        /// 是否为不同视频分别创建文件夹事件
+        /// 选中文件名字段点击事件
         /// </summary>
-        private void ExecuteIsCreateFolderForMediaCommand()
+        /// <param name="parameter"></param>
+        private void ExecuteSelectedFileNameCommand(object parameter)
         {
-            AllowStatus isCreateFolderForMedia = IsCreateFolderForMedia ? AllowStatus.YES : AllowStatus.NO;
+            bool isSucceed = SelectedFileName.Remove((DisplayFileNamePart)parameter);
+            if (!isSucceed)
+            {
+                PublishTip(isSucceed);
+                return;
+            }
 
-            bool isSucceed = SettingsManager.GetInstance().IsCreateFolderForMedia(isCreateFolderForMedia);
+            List<FileNamePart> fileName = new List<FileNamePart>();
+            foreach (DisplayFileNamePart item in SelectedFileName)
+            {
+                fileName.Add(item.Id);
+            }
+
+            isSucceed = SettingsManager.GetInstance().SetFileNameParts(fileName);
             PublishTip(isSucceed);
         }
 
-        // 是否在下载视频的同时下载弹幕事件
-        private DelegateCommand isDownloadDanmakuCommand;
-        public DelegateCommand IsDownloadDanmakuCommand => isDownloadDanmakuCommand ?? (isDownloadDanmakuCommand = new DelegateCommand(ExecuteIsDownloadDanmakuCommand));
+        // 可选文件名字段点击事件
+        private DelegateCommand<object> optionalFieldsCommand;
+        public DelegateCommand<object> OptionalFieldsCommand => optionalFieldsCommand ?? (optionalFieldsCommand = new DelegateCommand<object>(ExecuteOptionalFieldsCommand));
 
         /// <summary>
-        /// 是否在下载视频的同时下载弹幕事件
+        /// 可选文件名字段点击事件
         /// </summary>
-        private void ExecuteIsDownloadDanmakuCommand()
+        /// <param name="parameter"></param>
+        private void ExecuteOptionalFieldsCommand(object parameter)
         {
-            AllowStatus isDownloadDanmaku = IsDownloadDanmaku ? AllowStatus.YES : AllowStatus.NO;
+            if (SelectedOptionalField == -1)
+            {
+                return;
+            }
 
-            bool isSucceed = SettingsManager.GetInstance().IsDownloadDanmaku(isDownloadDanmaku);
+            SelectedFileName.Add((DisplayFileNamePart)parameter);
+
+            List<FileNamePart> fileName = new List<FileNamePart>();
+            foreach (DisplayFileNamePart item in SelectedFileName)
+            {
+                fileName.Add(item.Id);
+            }
+
+            bool isSucceed = SettingsManager.GetInstance().SetFileNameParts(fileName);
             PublishTip(isSucceed);
+
+            SelectedOptionalField = -1;
         }
 
-        // 是否在下载视频的同时下载封面事件
-        private DelegateCommand isDownloadCoverCommand;
-        public DelegateCommand IsDownloadCoverCommand => isDownloadCoverCommand ?? (isDownloadCoverCommand = new DelegateCommand(ExecuteIsDownloadCoverCommand));
-
-        /// <summary>
-        /// 是否在下载视频的同时下载封面事件
-        /// </summary>
-        private void ExecuteIsDownloadCoverCommand()
-        {
-            AllowStatus isDownloadCover = IsDownloadCover ? AllowStatus.YES : AllowStatus.NO;
-
-            bool isSucceed = SettingsManager.GetInstance().IsDownloadCover(isDownloadCover);
-            PublishTip(isSucceed);
-        }
 
         #endregion
 
@@ -377,6 +375,55 @@ namespace DownKyi.ViewModels.Settings
             {
                 eventAggregator.GetEvent<MessageEvent>().Publish(DictionaryResource.GetString("TipSettingFailed"));
             }
+        }
+
+        /// <summary>
+        /// 文件名字段显示
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        private string DisplayFileNamePart(FileNamePart item)
+        {
+            string display = string.Empty;
+            switch (item)
+            {
+                case FileNamePart.ORDER:
+                    display = DictionaryResource.GetString("DisplayOrder");
+                    break;
+                case FileNamePart.SECTION:
+                    display = DictionaryResource.GetString("DisplaySection");
+                    break;
+                case FileNamePart.MAIN_TITLE:
+                    display = DictionaryResource.GetString("DisplayMainTitle");
+                    break;
+                case FileNamePart.PAGE_TITLE:
+                    display = DictionaryResource.GetString("DisplayPageTitle");
+                    break;
+                case FileNamePart.VIDEO_ZONE:
+                    display = DictionaryResource.GetString("DisplayVideoZone");
+                    break;
+                case FileNamePart.AUDIO_QUALITY:
+                    display = DictionaryResource.GetString("DisplayAudioQuality");
+                    break;
+                case FileNamePart.VIDEO_QUALITY:
+                    display = DictionaryResource.GetString("DisplayVideoQuality");
+                    break;
+                case FileNamePart.VIDEO_CODEC:
+                    display = DictionaryResource.GetString("DisplayVideoCodec");
+                    break;
+            }
+
+            if (((int)item) >= 100)
+            {
+                display = HyphenSeparated.Hyphen[(int)item];
+            }
+
+            if (display == " ")
+            {
+                display = DictionaryResource.GetString("DisplaySpace");
+            }
+
+            return display;
         }
 
     }

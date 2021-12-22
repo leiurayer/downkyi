@@ -2,9 +2,309 @@
     x:Class="DownKyi.Views.DownloadManager.ViewDownloading"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:prism="http://prismlibrary.com/"
     prism:ViewModelLocator.AutoWireViewModel="True">
+    <UserControl.Resources>
+        <Style x:Key="DownloadingStyle" TargetType="{x:Type ListBoxItem}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                        <Grid Height="70">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="70" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="320" />
+                                    <ColumnDefinition Width="80" />
+                                    <ColumnDefinition Width="20" />
+                                </Grid.ColumnDefinitions>
+
+                                <Image
+                                    Grid.Column="0"
+                                    Width="48"
+                                    Height="48"
+                                    Source="{Binding ZoneImage}" />
+
+                                <!--  标题等视频信息  -->
+                                <Grid Grid.Column="1" HorizontalAlignment="Left">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+
+                                    <TextBlock
+                                        Grid.Row="0"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        FontSize="14"
+                                        Foreground="{DynamicResource BrushTextDark}"
+                                        TextTrimming="CharacterEllipsis"
+                                        ToolTip="{Binding MainTitle}">
+                                        <TextBlock.Text>
+                                            <MultiBinding StringFormat="{}{0}-{1}">
+                                                <Binding Path="Order" />
+                                                <Binding Path="Name" />
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+
+                                    <TextBlock
+                                        Grid.Row="1"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        FontSize="12"
+                                        Foreground="{DynamicResource BrushTextGrey2}">
+                                        <TextBlock.Text>
+                                            <MultiBinding StringFormat="{}{0} · {1} · {2} · {3}">
+                                                <Binding Path="Duration" />
+                                                <Binding Path="Resolution.Name" />
+                                                <Binding Path="VideoCodecName" />
+                                                <Binding Path="AudioCodecName" />
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+
+                                    <Grid.Style>
+                                        <Style TargetType="{x:Type Grid}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType=Window}}" Value="Maximized">
+                                                    <Setter Property="Width" Value="auto" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType=Window}}" Value="Normal">
+                                                    <Setter Property="Width" Value="400" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Grid.Style>
+                                </Grid>
+
+                                <!--  进度条  -->
+                                <Grid Grid.Column="2">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+
+                                    <Grid Grid.Row="0" VerticalAlignment="Bottom">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="100" />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock
+                                            Grid.Column="0"
+                                            HorizontalAlignment="Left"
+                                            FontSize="12"
+                                            Foreground="{DynamicResource BrushTextDark}">
+                                            <TextBlock.Text>
+                                                <MultiBinding StringFormat="{}{0} {1}">
+                                                    <Binding Path="DownloadContent" />
+                                                    <Binding Path="DownloadStatusTitle" />
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
+
+                                        <TextBlock
+                                            Grid.Column="1"
+                                            HorizontalAlignment="Right"
+                                            FontSize="12"
+                                            Foreground="{DynamicResource BrushTextGrey2}">
+                                            <TextBlock.Text>
+                                                <MultiBinding StringFormat="{}{0} {1}">
+                                                    <Binding Path="DownloadingFileSize" />
+                                                    <Binding Path="SpeedDisplay" />
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
+                                    </Grid>
+
+                                    <ProgressBar
+                                        Grid.Row="1"
+                                        Height="20"
+                                        VerticalAlignment="Top"
+                                        BorderBrush="{x:Null}"
+                                        BorderThickness="0"
+                                        Value="{Binding Progress}">
+                                        <ProgressBar.Style>
+                                            <Style TargetType="{x:Type ProgressBar}">
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate>
+                                                            <Grid>
+                                                                <Border
+                                                                    Name="PART_Track"
+                                                                    Background="{DynamicResource BrushForegroundGrey2}"
+                                                                    BorderThickness="0" />
+                                                                <Border
+                                                                    Name="PART_Indicator"
+                                                                    HorizontalAlignment="Left"
+                                                                    Background="{DynamicResource BrushPrimary}"
+                                                                    BorderThickness="0" />
+                                                            </Grid>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </ProgressBar.Style>
+                                    </ProgressBar>
+                                </Grid>
+
+                                <!--  控制面板，暂停继续删除  -->
+                                <Grid Grid.Column="3">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Border
+                                        Grid.Column="0"
+                                        HorizontalAlignment="Right"
+                                        VerticalAlignment="Center"
+                                        Background="{DynamicResource BrushBackground}"
+                                        Cursor="Hand">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="MouseLeftButtonUp">
+                                                <i:InvokeCommandAction Command="{Binding StartOrPauseCommand}" />
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                        <ContentControl>
+                                            <Path
+                                                Width="{Binding StartOrPause.Width}"
+                                                Height="{Binding StartOrPause.Height}"
+                                                Data="{Binding StartOrPause.Data}"
+                                                Fill="{Binding StartOrPause.Fill}"
+                                                Stretch="UniformToFill" />
+                                        </ContentControl>
+                                    </Border>
+
+                                    <Border
+                                        Grid.Column="1"
+                                        HorizontalAlignment="Right"
+                                        VerticalAlignment="Center"
+                                        Background="{DynamicResource BrushBackground}"
+                                        Cursor="Hand">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="MouseLeftButtonUp">
+                                                <i:InvokeCommandAction Command="{Binding DeleteCommand}" />
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                        <ContentControl>
+                                            <Path
+                                                Width="{Binding Delete.Width}"
+                                                Height="{Binding Delete.Height}"
+                                                Data="{Binding Delete.Data}"
+                                                Fill="{Binding Delete.Fill}"
+                                                Stretch="UniformToFill" />
+                                        </ContentControl>
+                                    </Border>
+                                </Grid>
+                            </Grid>
+
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
     <Grid>
-        <TextBlock>正在下载</TextBlock>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="1" />
+                <RowDefinition Height="50" />
+            </Grid.RowDefinitions>
+
+            <ListBox
+                Grid.Row="0"
+                BorderThickness="0"
+                ItemContainerStyle="{StaticResource DownloadingStyle}"
+                ItemsSource="{Binding DownloadingList}">
+                <ListBox.Style>
+                    <Style TargetType="ListBox">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ListBox">
+                                    <Border
+                                        x:Name="Bd"
+                                        Padding="0"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}">
+                                        <ScrollViewer CanContentScroll="False" Focusable="False">
+                                            <ItemsPresenter />
+                                        </ScrollViewer>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListBox.Style>
+            </ListBox>
+
+            <TextBlock Grid.Row="1" Background="{DynamicResource BrushBorderTranslucent}" />
+
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="85" />
+                    <ColumnDefinition Width="85" />
+                    <ColumnDefinition Width="85" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel
+                    Grid.Column="0"
+                    Margin="10,0,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Orientation="Horizontal">
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        FontSize="14"
+                        Text="{DynamicResource TotalDownloading1}" />
+                    <TextBlock
+                        Margin="3,0"
+                        VerticalAlignment="Center"
+                        FontSize="14"
+                        Foreground="{DynamicResource BrushPrimary}"
+                        Text="{Binding DownloadingList.Count}" />
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        FontSize="14"
+                        Text="{DynamicResource TotalDownloading2}" />
+                </StackPanel>
+
+                <Button
+                    Grid.Column="1"
+                    Width="75"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Command="{Binding PauseAllDownloadingCommand}"
+                    Content="{DynamicResource PauseAllDownloading}"
+                    FontSize="12"
+                    Style="{StaticResource BtnBorderStyle}" />
+                <Button
+                    Grid.Column="2"
+                    Width="75"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Command="{Binding ContinueAllDownloadingCommand}"
+                    Content="{DynamicResource ContinueAllDownloading}"
+                    FontSize="12"
+                    Style="{StaticResource BtnBorderStyle}" />
+                <Button
+                    Grid.Column="3"
+                    Width="75"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Command="{Binding DeleteAllDownloadingCommand}"
+                    Content="{DynamicResource DeleteAllDownloading}"
+                    FontSize="12"
+                    Style="{StaticResource BtnBorderStyle}" />
+
+            </Grid>
+        </Grid>
+
+        <!--  TODO 没有数据时显示图片或文字  -->
     </Grid>
 </UserControl>

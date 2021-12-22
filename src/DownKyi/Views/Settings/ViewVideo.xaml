@@ -54,31 +54,6 @@
                 </ComboBox>
             </StackPanel>
 
-            <TextBlock
-                Height="1"
-                Margin="0,20,0,0"
-                Background="{DynamicResource BrushBorder}" />
-
-            <StackPanel Margin="0,20,0,0" Orientation="Horizontal">
-                <CheckBox
-                    Name="nameIsAddVideoOrder"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Center"
-                    Command="{Binding IsAddVideoOrderCommand}"
-                    Content="{DynamicResource IsAddVideoOrder}"
-                    FontSize="12"
-                    Foreground="{DynamicResource BrushTextDark}"
-                    IsChecked="{Binding IsAddVideoOrder, Mode=TwoWay}"
-                    Style="{StaticResource CheckBoxStyle}" />
-
-                <TextBlock
-                    Margin="10,0,0,0"
-                    VerticalAlignment="Center"
-                    FontSize="12"
-                    Foreground="{DynamicResource BrushTextGrey}"
-                    Text="{DynamicResource IsAddVideoOrderTip}" />
-            </StackPanel>
-
             <CheckBox
                 Margin="0,20,0,0"
                 HorizontalAlignment="Left"
@@ -154,43 +129,73 @@
                 </StackPanel>
             </StackPanel>
 
-            <CheckBox
+            <GroupBox
                 Margin="0,20,0,0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Center"
-                Command="{Binding IsCreateFolderForMediaCommand}"
-                Content="{DynamicResource IsCreateFolderForMedia}"
-                FontSize="12"
-                Foreground="{DynamicResource BrushTextDark}"
-                IsChecked="{Binding IsCreateFolderForMedia, Mode=TwoWay}"
-                Style="{StaticResource CheckBoxStyle}" />
+                Padding="10,10"
+                HorizontalAlignment="Stretch">
+                <GroupBox.Header>
+                    <TextBlock
+                        FontSize="12"
+                        Foreground="{DynamicResource BrushTextDark}"
+                        Text="{DynamicResource FileNameParts}" />
+                </GroupBox.Header>
 
-            <TextBlock
-                Height="1"
-                Margin="0,20,0,0"
-                Background="{DynamicResource BrushBorder}" />
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
 
-            <CheckBox
-                Margin="0,20,0,0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Center"
-                Command="{Binding IsDownloadDanmakuCommand}"
-                Content="{DynamicResource IsDownloadDanmaku}"
-                FontSize="12"
-                Foreground="{DynamicResource BrushTextDark}"
-                IsChecked="{Binding IsDownloadDanmaku, Mode=TwoWay}"
-                Style="{StaticResource CheckBoxStyle}" />
+                    <TextBlock
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        FontSize="12"
+                        Foreground="{DynamicResource BrushTextDark}"
+                        Text="{DynamicResource FileName}" />
+                    <ListBox
+                        x:Name="nameSelectedFileName"
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        MinHeight="30"
+                        Margin="0,0,0,20"
+                        ItemContainerStyle="{StaticResource TagItem2Style}"
+                        ItemsSource="{Binding SelectedFileName, Mode=TwoWay}"
+                        SelectionMode="Single"
+                        Style="{StaticResource Tag2Style}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding SelectedFileNameCommand}" CommandParameter="{Binding ElementName=nameSelectedFileName, Path=SelectedItem}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ListBox>
 
-            <CheckBox
-                Margin="0,20,0,0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Center"
-                Command="{Binding IsDownloadCoverCommand}"
-                Content="{DynamicResource IsDownloadCover}"
-                FontSize="12"
-                Foreground="{DynamicResource BrushTextDark}"
-                IsChecked="{Binding IsDownloadCover, Mode=TwoWay}"
-                Style="{StaticResource CheckBoxStyle}" />
+                    <TextBlock
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        FontSize="12"
+                        Foreground="{DynamicResource BrushTextDark}"
+                        Text="{DynamicResource OptionalFields}" />
+                    <ListBox
+                        Name="nameOptionalFields"
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        ItemContainerStyle="{StaticResource TagItem2Style}"
+                        ItemsSource="{Binding OptionalFields, Mode=TwoWay}"
+                        SelectedIndex="{Binding SelectedOptionalField}"
+                        SelectionMode="Single"
+                        Style="{StaticResource Tag2Style}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding OptionalFieldsCommand}" CommandParameter="{Binding ElementName=nameOptionalFields, Path=SelectedItem}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ListBox>
+                </Grid>
+            </GroupBox>
 
         </StackPanel>
     </ScrollViewer>

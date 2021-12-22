@@ -7,13 +7,13 @@ namespace DownKyi.Core.FFmpeg
 {
     public static class FFmpegHelper
     {
-        private const string Tag = "PageToolboxDelogo";
+        private const string Tag = "FFmpegHelper";
 
         /// <summary>
         /// 合并音频和视频
         /// </summary>
-        /// <param name="video1"></param>
-        /// <param name="video2"></param>
+        /// <param name="video1">音频</param>
+        /// <param name="video2">视频</param>
         /// <param name="destVideo"></param>
         public static bool MergeVideo(string video1, string video2, string destVideo)
         {
@@ -24,7 +24,7 @@ namespace DownKyi.Core.FFmpeg
             }
             if (video2 == null || !File.Exists(video2))
             {
-                param = $"-i \"{video1}\" -acodec copy -vcodec copy -f mp4 \"{destVideo}\"";
+                param = $"-i \"{video1}\" -acodec copy -f aac \"{destVideo}\"";
             }
             if (!File.Exists(video1) && !File.Exists(video2)) { return false; }
 

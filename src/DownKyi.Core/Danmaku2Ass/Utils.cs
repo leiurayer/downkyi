@@ -62,6 +62,7 @@ namespace DownKyi.Core.Danmaku2Ass
             int second = (int)(i % 60.0f);
 
             int hour = (int)Math.Floor(min / 60.0);
+            min = (int)Math.Floor(min % 60.0f);
 
             return $"{hour:D}:{min:D2}:{second:D2}.{dec:D2}";
         }

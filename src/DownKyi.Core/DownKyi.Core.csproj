@@ -111,7 +111,7 @@
     <Compile Include="Aria2cNet\Client\Entity\SystemMulticall.cs" />
     <Compile Include="Aria2cNet\Client\Entity\SystemMulticallMathod.cs" />
     <Compile Include="Aria2cNet\Client\HowChangePosition.cs" />
-    <Compile Include="Aria2cNet\DownloadStatus.cs" />
+    <Compile Include="Aria2cNet\DownloadResult.cs" />
     <Compile Include="Aria2cNet\Server\AriaConfig.cs" />
     <Compile Include="Aria2cNet\Server\AriaConfigFileAllocation.cs" />
     <Compile Include="Aria2cNet\Server\AriaConfigLogLevel.cs" />
@@ -160,13 +160,19 @@
     <Compile Include="BiliApi\Login\Models\LoginUrl.cs" />
     <Compile Include="BiliApi\Login\Models\UserInfoForNavigation.cs" />
     <Compile Include="BiliApi\Models\Dimension.cs" />
+    <Compile Include="BiliApi\Models\Json\SubRipText.cs" />
+    <Compile Include="BiliApi\Models\Json\Subtitle.cs" />
+    <Compile Include="BiliApi\Models\Json\SubtitleJson.cs" />
     <Compile Include="BiliApi\Models\VideoOwner.cs" />
     <Compile Include="BiliApi\protobuf\bilibili\community\service\dm\v1\Dm.cs" />
+    <Compile Include="BiliApi\VideoStream\Models\PlayerV2.cs" />
     <Compile Include="BiliApi\VideoStream\Models\PlayUrl.cs" />
     <Compile Include="BiliApi\VideoStream\Models\PlayUrlDash.cs" />
     <Compile Include="BiliApi\VideoStream\Models\PlayUrlDashVideo.cs" />
     <Compile Include="BiliApi\VideoStream\Models\PlayUrlDurl.cs" />
     <Compile Include="BiliApi\VideoStream\Models\PlayUrlSupportFormat.cs" />
+    <Compile Include="BiliApi\VideoStream\Models\Subtitle.cs" />
+    <Compile Include="BiliApi\VideoStream\Models\SubtitleInfo.cs" />
     <Compile Include="BiliApi\VideoStream\VideoStream.cs" />
     <Compile Include="BiliApi\Video\Dynamic.cs" />
     <Compile Include="BiliApi\Video\Models\RankingVideoView.cs" />
@@ -188,6 +194,7 @@
     <Compile Include="BiliApi\Video\VideoInfo.cs" />
     <Compile Include="BiliApi\WebClient.cs" />
     <Compile Include="BiliApi\Zone\VideoZone.cs" />
+    <Compile Include="BiliApi\Zone\VideoZoneIcon.cs" />
     <Compile Include="BiliApi\Zone\ZoneAttr.cs" />
     <Compile Include="Danmaku2Ass\Bilibili.cs" />
     <Compile Include="Danmaku2Ass\Collision.cs" />
@@ -203,6 +210,9 @@
     <Compile Include="Downloader\MultiThreadDownloader.cs" />
     <Compile Include="Downloader\PartialDownloader.cs" />
     <Compile Include="FFmpeg\FFmpegHelper.cs" />
+    <Compile Include="FileName\FileName.cs" />
+    <Compile Include="FileName\FileNamePart.cs" />
+    <Compile Include="FileName\HyphenSeparated.cs" />
     <Compile Include="Logging\LogInfo.cs" />
     <Compile Include="Logging\LogLevel.cs" />
     <Compile Include="Logging\LogManager.cs" />
@@ -255,7 +265,12 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Page Include="BiliApi\Zone\ZoneImage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Brotli.NET.2.1.1\build\Brotli.NET.targets" Condition="Exists('..\packages\Brotli.NET.2.1.1\build\Brotli.NET.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

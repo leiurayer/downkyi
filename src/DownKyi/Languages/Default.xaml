@@ -64,9 +64,32 @@
     <system:String x:Key="DownloadSelected">下载选中项</system:String>
     <system:String x:Key="AddAllToDownload">下载全部</system:String>
 
+    <system:String x:Key="TipAlreadyToAddDownloading">已经添加到下载列表~</system:String>
+    <system:String x:Key="TipAlreadyToAddDownloaded">已经下载完成~</system:String>
+    <system:String x:Key="TipAddDownloadingZero">没有选中项符合下载要求！</system:String>
+    <system:String x:Key="TipAddDownloadingFinished1">成功添加了</system:String>
+    <system:String x:Key="TipAddDownloadingFinished2">项~</system:String>
+
     <!--  DownloadManager  -->
     <system:String x:Key="Downloading">正在下载</system:String>
     <system:String x:Key="DownloadFinished">已下载</system:String>
+
+    <system:String x:Key="DownloadingAudio">音频</system:String>
+    <system:String x:Key="DownloadingVideo">视频</system:String>
+    <system:String x:Key="DownloadingDanmaku">弹幕</system:String>
+    <system:String x:Key="DownloadingSubtitle">字幕</system:String>
+    <system:String x:Key="DownloadingCover">封面</system:String>
+    <system:String x:Key="Parsing">正在解析……</system:String>
+    <system:String x:Key="WhileDownloading">下载中……</system:String>
+    <system:String x:Key="MixedFlow">混流中……</system:String>
+    <system:String x:Key="Pausing">暂停中……</system:String>
+    <system:String x:Key="Waiting">等待中……</system:String>
+
+    <system:String x:Key="TotalDownloading1">正在下载</system:String>
+    <system:String x:Key="TotalDownloading2">个视频！</system:String>
+    <system:String x:Key="PauseAllDownloading">全部暂停</system:String>
+    <system:String x:Key="ContinueAllDownloading">全部开始</system:String>
+    <system:String x:Key="DeleteAllDownloading">全部删除</system:String>
 
     <!--  Settings  -->
     <system:String x:Key="PressEnterToApplySettingTip">按回车键应用设置</system:String>
@@ -96,16 +119,23 @@
     <system:String x:Key="Video">视频</system:String>
     <system:String x:Key="FirstVideoCodecs">优先下载的视频编码：</system:String>
     <system:String x:Key="FirstVideoQuality">优先下载的视频画质：</system:String>
-    <system:String x:Key="IsAddVideoOrder">启用视频编号</system:String>
-    <system:String x:Key="IsAddVideoOrderTip">勾选后，将为下载完成的视频的文件名添加上序号</system:String>
     <system:String x:Key="IsTranscodingFlvToMp4">下载FLV视频后转码为mp4</system:String>
     <system:String x:Key="IsUseDefaultDirectory">使用默认下载目录</system:String>
     <system:String x:Key="DefaultDirectory">默认下载目录：</system:String>
     <system:String x:Key="DefaultDirectoryTip">默认将文件下载到该文件夹中</system:String>
     <system:String x:Key="ChangeDirectory">更改目录</system:String>
-    <system:String x:Key="IsCreateFolderForMedia">为不同视频分别创建文件夹</system:String>
-    <system:String x:Key="IsDownloadDanmaku">在下载视频的同时下载弹幕</system:String>
-    <system:String x:Key="IsDownloadCover">在下载视频的同时下载封面</system:String>
+    <system:String x:Key="FileNameParts">文件命名格式</system:String>
+    <system:String x:Key="FileName">文件名：</system:String>
+    <system:String x:Key="OptionalFields">可选字段：</system:String>
+    <system:String x:Key="DisplayOrder">序号</system:String>
+    <system:String x:Key="DisplaySection">视频章节</system:String>
+    <system:String x:Key="DisplayMainTitle">视频标题</system:String>
+    <system:String x:Key="DisplayPageTitle">分P标题</system:String>
+    <system:String x:Key="DisplayVideoZone">视频分区</system:String>
+    <system:String x:Key="DisplayAudioQuality">音质</system:String>
+    <system:String x:Key="DisplayVideoQuality">画质</system:String>
+    <system:String x:Key="DisplayVideoCodec">视频编码</system:String>
+    <system:String x:Key="DisplaySpace">空格</system:String>
 
     <system:String x:Key="SettingDanmaku">弹幕</system:String>
     <system:String x:Key="FilterType">按类型屏蔽</system:String>

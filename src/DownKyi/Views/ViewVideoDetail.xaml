@@ -558,6 +558,7 @@
                 <ListBox
                     x:Name="nameVideoSections"
                     Grid.Row="0"
+                    ItemContainerStyle="{StaticResource TagItemStyle}"
                     ItemsSource="{Binding VideoSections, Mode=TwoWay}"
                     SelectionMode="Single">
                     <i:Interaction.Triggers>
@@ -566,7 +567,7 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                     <ListBox.Style>
-                        <Style TargetType="{x:Type ListBox}">
+                        <Style BasedOn="{StaticResource TagStyle}" TargetType="{x:Type ListBox}">
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding VideoSections.Count}" Value="0">
                                     <Setter Property="Height" Value="0" />
@@ -577,56 +578,6 @@
                             </Style.Triggers>
                         </Style>
                     </ListBox.Style>
-                    <ListBox.Template>
-                        <ControlTemplate TargetType="{x:Type ListBox}">
-                            <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled">
-                                <WrapPanel
-                                    IsItemsHost="True"
-                                    Orientation="Horizontal"
-                                    ScrollViewer.CanContentScroll="True" />
-                            </ScrollViewer>
-                        </ControlTemplate>
-                    </ListBox.Template>
-                    <ListBox.ItemContainerStyle>
-                        <Style TargetType="{x:Type ListBoxItem}">
-                            <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                                        <Border
-                                            Name="Border"
-                                            Margin="5,3"
-                                            Padding="8,2"
-                                            Background="{DynamicResource BrushPrimary}"
-                                            CornerRadius="10"
-                                            Cursor="Hand">
-                                            <ContentPresenter
-                                                Name="content"
-                                                HorizontalAlignment="Center"
-                                                VerticalAlignment="Center"
-                                                Content="{Binding Title}" />
-                                        </Border>
-
-                                        <ControlTemplate.Triggers>
-                                            <!--  顺序很重要，不能修改  -->
-                                            <Trigger Property="IsSelected" Value="False">
-                                                <Setter TargetName="Border" Property="Background" Value="{DynamicResource BrushBackgroundGrey}" />
-                                                <Setter Property="Foreground" Value="{DynamicResource BrushText}" />
-                                            </Trigger>
-                                            <Trigger Property="IsMouseOver" Value="True">
-                                                <Setter TargetName="Border" Property="Background" Value="{DynamicResource BrushPrimaryTranslucent}" />
-                                                <Setter Property="Foreground" Value="{DynamicResource BrushText}" />
-                                            </Trigger>
-                                            <Trigger Property="IsSelected" Value="True">
-                                                <Setter TargetName="Border" Property="Background" Value="{DynamicResource BrushPrimary}" />
-                                                <Setter Property="Foreground" Value="{DynamicResource BrushText}" />
-                                            </Trigger>
-                                        </ControlTemplate.Triggers>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </ListBox.ItemContainerStyle>
                 </ListBox>
 
                 <!--  视频分P  -->

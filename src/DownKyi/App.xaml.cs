@@ -1,4 +1,6 @@
-﻿using DownKyi.Utils;
+﻿using DownKyi.Models;
+using DownKyi.Services.Download;
+using DownKyi.Utils;
 using DownKyi.ViewModels;
 using DownKyi.ViewModels.Dialogs;
 using DownKyi.ViewModels.DownloadManager;
@@ -11,6 +13,7 @@ using DownKyi.Views.Settings;
 using DownKyi.Views.Toolbox;
 using Prism.Ioc;
 using System;
+using System.Collections.ObjectModel;
 using System.Windows;
 
 namespace DownKyi
@@ -20,6 +23,12 @@ namespace DownKyi
     /// </summary>
     public partial class App
     {
+        public static ObservableCollection<DownloadingItem> DownloadingList { get; set; }
+        public static ObservableCollection<DownloadedItem> DownloadedList { get; set; }
+
+        // 下载服务
+        private IDownloadService downloadService;
+
         protected override Window CreateShell()
         {
             // 设置主题
@@ -30,7 +39,25 @@ namespace DownKyi
             DictionaryResource.LoadLanguage("Default");
             //DictionaryResource.LoadLanguage("en_US");
 
+            // 初始化数据
+            DownloadingList = new ObservableCollection<DownloadingItem>();
+            DownloadedList = new ObservableCollection<DownloadedItem>();
+
+            // TODO 从数据库读取
+
+            // 启动下载服务
+            downloadService = new AriaDownloadService(DownloadingList, DownloadedList);
+            downloadService.Start();
+
             return Container.Resolve<MainWindow>();
+        }
+
+        protected override void OnExit(ExitEventArgs e)
+        {
+            // 关闭下载服务
+            downloadService.End();
+
+            base.OnExit(e);
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
