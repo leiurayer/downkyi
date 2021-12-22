@@ -54,6 +54,27 @@
                 </ComboBox>
             </StackPanel>
 
+
+            <StackPanel Margin="0,20,0,0" Orientation="Horizontal">
+                <TextBlock
+                    VerticalAlignment="Center"
+                    FontSize="12"
+                    Foreground="{DynamicResource BrushTextDark}"
+                    Text="{DynamicResource FirstAudioQuality}" />
+                <ComboBox
+                    Name="nameAudioQualityList"
+                    Width="120"
+                    VerticalContentAlignment="Center"
+                    ItemsSource="{Binding AudioQualityList}"
+                    SelectedItem="{Binding SelectedAudioQuality}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding AudioQualityCommand}" CommandParameter="{Binding ElementName=nameAudioQualityList, Path=SelectedItem}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
+            </StackPanel>
+
             <CheckBox
                 Margin="0,20,0,0"
                 HorizontalAlignment="Left"

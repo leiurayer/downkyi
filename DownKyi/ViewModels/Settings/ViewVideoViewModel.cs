@@ -1,4 +1,5 @@
-﻿using DownKyi.Core.FileName;
+﻿using DownKyi.Core.BiliApi.BiliUtils;
+using DownKyi.Core.FileName;
 using DownKyi.Core.Settings;
 using DownKyi.Events;
 using DownKyi.Models;
@@ -48,6 +49,20 @@ namespace DownKyi.ViewModels.Settings
         {
             get => selectedVideoQuality;
             set => SetProperty(ref selectedVideoQuality, value);
+        }
+
+        private List<string> audioQualityList;
+        public List<string> AudioQualityList
+        {
+            get => audioQualityList;
+            set => SetProperty(ref audioQualityList, value);
+        }
+
+        private string selectedAudioQuality;
+        public string SelectedAudioQuality
+        {
+            get => selectedAudioQuality;
+            set => SetProperty(ref selectedAudioQuality, value);
         }
 
         private bool isTranscodingFlvToMp4;
@@ -104,11 +119,19 @@ namespace DownKyi.ViewModels.Settings
             VideoCodecs = new List<string>
             {
                 "H.264/AVC",
-                "H.265/HEVC"
+                "H.265/HEVC",
             };
 
             // 优先下载画质
             VideoQualityList = new ResolutionService().GetResolution();
+
+            // 优先下载音质
+            AudioQualityList = new List<string>
+            {
+                "64K",
+                "132K",
+                "192K",
+            };
 
             // 文件命名格式
             SelectedFileName = new ObservableCollection<DisplayFileNamePart>();
@@ -142,6 +165,10 @@ namespace DownKyi.ViewModels.Settings
             // 优先下载画质
             int quality = SettingsManager.GetInstance().GetQuality();
             SelectedVideoQuality = VideoQualityList.FirstOrDefault(t => { return t.Id == quality; });
+
+            // 优先下载音质
+            int audioQuality = SettingsManager.GetInstance().GetAudioQuality();
+            SelectedAudioQuality = Constant.AudioQuality[audioQuality];
 
             // 是否下载flv视频后转码为mp4
             AllowStatus isTranscodingFlvToMp4 = SettingsManager.GetInstance().IsTranscodingFlvToMp4();
@@ -197,6 +224,20 @@ namespace DownKyi.ViewModels.Settings
             if (!(parameter is Resolution resolution)) { return; }
 
             bool isSucceed = SettingsManager.GetInstance().SetQuality(resolution.Id);
+            PublishTip(isSucceed);
+        }
+
+        // 优先下载音质事件
+        private DelegateCommand<string> audioQualityCommand;
+        public DelegateCommand<string> AudioQualityCommand => audioQualityCommand ?? (audioQualityCommand = new DelegateCommand<string>(ExecuteAudioQualityCommand));
+
+        /// <summary>
+        /// 优先下载音质事件
+        /// </summary>
+        /// <param name="parameter"></param>
+        private void ExecuteAudioQualityCommand(string parameter)
+        {
+            bool isSucceed = SettingsManager.GetInstance().SetAudioQuality(Constant.AudioQualityId[parameter]);
             PublishTip(isSucceed);
         }
 
