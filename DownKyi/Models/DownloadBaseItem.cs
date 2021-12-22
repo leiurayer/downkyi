@@ -39,6 +39,9 @@ namespace DownKyi.Models
         // 视频封面的url
         public string CoverUrl { get; set; }
 
+        // 视频page的封面的url
+        public string PageCoverUrl { get; set; }
+
         private DrawingImage zoneImage;
         public DrawingImage ZoneImage
         {
