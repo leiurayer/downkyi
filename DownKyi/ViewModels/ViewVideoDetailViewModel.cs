@@ -663,7 +663,8 @@ namespace DownKyi.ViewModels
                         Cid = page.Cid,
                         EpisodeId = page.EpisodeId,
 
-                        CoverUrl = page.FirstFrame,
+                        CoverUrl = VideoInfoView.CoverUrl,
+                        PageCoverUrl = page.FirstFrame,
                         ZoneImage = (DrawingImage)Application.Current.Resources[VideoZoneIcon.Instance().GetZoneImageKey(zoneId)],
 
                         Order = page.Order,

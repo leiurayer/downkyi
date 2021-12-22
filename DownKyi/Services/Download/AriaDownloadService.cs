@@ -148,7 +148,7 @@ namespace DownKyi.Services.Download
         /// 下载封面
         /// </summary>
         /// <param name="downloading"></param>
-        public string DownloadCover(DownloadingItem downloading)
+        public string DownloadCover(DownloadingItem downloading, string coverUrl, string fileName)
         {
             // 更新状态显示
             downloading.DownloadStatusTitle = DictionaryResource.GetString("WhileDownloading");
@@ -160,24 +160,16 @@ namespace DownKyi.Services.Download
 
             // 查询、保存封面
             StorageCover storageCover = new StorageCover();
-            string cover = storageCover.GetCover(downloading.Avid, downloading.Bvid, downloading.Cid, downloading.CoverUrl);
+            string cover = storageCover.GetCover(downloading.Avid, downloading.Bvid, downloading.Cid, coverUrl);
             if (cover == null)
             {
                 return null;
             }
 
-            // 图片的扩展名
-            string[] temp = downloading.CoverUrl.Split('.');
-            string fileExtension = temp[temp.Length - 1];
-
-            // 图片的地址
-            string coverPath = $"{StorageManager.GetCover()}/{cover}";
-
             // 复制图片到指定位置
             try
             {
-                string fileName = $"{downloading.FilePath}.{fileExtension}";
-                File.Copy(coverPath, fileName);
+                File.Copy(cover, fileName, true);
 
                 // 记录本次下载的文件
                 downloading.DownloadFiles.Add(fileName);
@@ -448,6 +440,15 @@ namespace DownKyi.Services.Download
         /// <returns></returns>
         private async void SingleDownload(DownloadingItem downloading)
         {
+            // 路径
+            string[] temp = downloading.FilePath.Split('/');
+            string path = downloading.FilePath.Replace(temp[temp.Length - 1], "");
+            // 路径不存在则创建
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+
             await Task.Run(new Action(() =>
             {
                 downloading.DownloadStatus = DownloadStatus.DOWNLOADING;
@@ -507,14 +508,24 @@ namespace DownKyi.Services.Download
                 // 如果需要下载封面
                 if (downloading.NeedDownloadContent["downloadCover"])
                 {
-                    outputCover = DownloadCover(downloading);
+
+                    string fileName = $"{downloading.FilePath}.{GetImageExtension(downloading.PageCoverUrl)}";
+
+                    // page的封面
+                    outputCover = DownloadCover(downloading, downloading.PageCoverUrl, fileName);
+                    // 封面
+                    DownloadCover(downloading, downloading.CoverUrl, $"{path}/Cover.{GetImageExtension(downloading.CoverUrl)}");
                 }
 
                 // 暂停
                 Pause(downloading);
 
                 // 混流
-                string outputMedia = MixedFlow(downloading, audioUid, videoUid);
+                string outputMedia = string.Empty;
+                if (downloading.NeedDownloadContent["downloadAudio"] || downloading.NeedDownloadContent["downloadVideo"])
+                {
+                    outputMedia = MixedFlow(downloading, audioUid, videoUid);
+                }
 
                 // 暂停
                 Pause(downloading);
@@ -568,6 +579,24 @@ namespace DownKyi.Services.Download
                 // 对是否成功的判断：只要outputMedia存在则成功，否则失败
 
             }));
+        }
+
+        /// <summary>
+        /// 获取图片的扩展名
+        /// </summary>
+        /// <param name="coverUrl"></param>
+        /// <returns></returns>
+        private string GetImageExtension(string coverUrl)
+        {
+            if (coverUrl == null)
+            {
+                return string.Empty;
+            }
+
+            // 图片的扩展名
+            string[] temp = coverUrl.Split('.');
+            string fileExtension = temp[temp.Length - 1];
+            return fileExtension;
         }
 
         /// <summary>

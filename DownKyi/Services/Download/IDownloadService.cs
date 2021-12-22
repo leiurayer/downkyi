@@ -10,7 +10,7 @@ namespace DownKyi.Services.Download
         string DownloadVideo(DownloadingItem downloading);
         string DownloadDanmaku(DownloadingItem downloading);
         List<string> DownloadSubtitle(DownloadingItem downloading);
-        string DownloadCover(DownloadingItem downloading);
+        string DownloadCover(DownloadingItem downloading, string coverUrl, string fileName);
         string MixedFlow(DownloadingItem downloading, string audioUid, string videoUid);
 
         void Start();
