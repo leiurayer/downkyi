@@ -39,8 +39,7 @@
                                         VerticalAlignment="Center"
                                         FontSize="14"
                                         Foreground="{DynamicResource BrushTextDark}"
-                                        TextTrimming="CharacterEllipsis"
-                                        ToolTip="{Binding MainTitle}">
+                                        TextTrimming="CharacterEllipsis">
                                         <TextBlock.Text>
                                             <MultiBinding StringFormat="{}{0}-{1}-{2}">
                                                 <Binding Path="Order" />
@@ -48,6 +47,16 @@
                                                 <Binding Path="Name" />
                                             </MultiBinding>
                                         </TextBlock.Text>
+                                        <TextBlock.ToolTip>
+                                            <TextBlock>
+                                                <TextBlock.Text>
+                                                    <MultiBinding StringFormat="{}{0}-{1}">
+                                                        <Binding Path="MainTitle" />
+                                                        <Binding Path="Name" />
+                                                    </MultiBinding>
+                                                </TextBlock.Text>
+                                            </TextBlock>
+                                        </TextBlock.ToolTip>
                                     </TextBlock>
 
                                     <TextBlock
