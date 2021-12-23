@@ -54,6 +54,28 @@
                 </ComboBox>
             </StackPanel>
 
+
+            <StackPanel Margin="0,20,0,0" Orientation="Horizontal">
+                <TextBlock
+                    VerticalAlignment="Center"
+                    FontSize="12"
+                    Foreground="{DynamicResource BrushTextDark}"
+                    Text="{DynamicResource FirstAudioQuality}" />
+                <ComboBox
+                    Name="nameAudioQualityList"
+                    Width="120"
+                    VerticalContentAlignment="Center"
+                    DisplayMemberPath="Name"
+                    ItemsSource="{Binding AudioQualityList}"
+                    SelectedItem="{Binding SelectedAudioQuality}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding AudioQualityCommand}" CommandParameter="{Binding ElementName=nameAudioQualityList, Path=SelectedItem}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
+            </StackPanel>
+
             <CheckBox
                 Margin="0,20,0,0"
                 HorizontalAlignment="Left"
@@ -144,6 +166,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition />
                         <RowDefinition />
+                        <RowDefinition />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="100" />
@@ -194,6 +217,18 @@
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </ListBox>
+
+                    <Button
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        Width="75"
+                        Margin="0,20,0,0"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        Command="{Binding ResetCommand}"
+                        Content="{DynamicResource Reset}"
+                        FontSize="12"
+                        Style="{StaticResource BtnBorderStyle}" />
                 </Grid>
             </GroupBox>
 

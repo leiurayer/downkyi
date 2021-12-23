@@ -1,4 +1,5 @@
-﻿using DownKyi.Core.BiliApi.VideoStream.Models;
+﻿using DownKyi.Core.BiliApi.BiliUtils;
+using DownKyi.Core.BiliApi.VideoStream.Models;
 using DownKyi.Core.Settings;
 using DownKyi.Core.Settings.Models;
 using DownKyi.Core.Utils;
@@ -101,9 +102,10 @@ namespace DownKyi.Services
                 // 音质id大于设置画质时，跳过
                 if (audio.Id > defaultAudioQuality) { continue; }
 
-                if (Core.BiliApi.BiliUtils.Constant.AudioQuality.ContainsKey(audio.Id))
+                Quality audioQuality = Constant.GetAudioQualities().FirstOrDefault(t => { return t.Id == audio.Id; });
+                if (audioQuality != null)
                 {
-                    ListHelper.AddUnique(audioQualityFormatList, Core.BiliApi.BiliUtils.Constant.AudioQuality[audio.Id]);
+                    ListHelper.AddUnique(audioQualityFormatList, audioQuality.Name);
                 }
             }
 

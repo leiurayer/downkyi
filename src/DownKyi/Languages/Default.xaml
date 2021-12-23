@@ -119,6 +119,7 @@
     <system:String x:Key="Video">视频</system:String>
     <system:String x:Key="FirstVideoCodecs">优先下载的视频编码：</system:String>
     <system:String x:Key="FirstVideoQuality">优先下载的视频画质：</system:String>
+    <system:String x:Key="FirstAudioQuality">优先下载的视频音质：</system:String>
     <system:String x:Key="IsTranscodingFlvToMp4">下载FLV视频后转码为mp4</system:String>
     <system:String x:Key="IsUseDefaultDirectory">使用默认下载目录</system:String>
     <system:String x:Key="DefaultDirectory">默认下载目录：</system:String>
@@ -136,6 +137,7 @@
     <system:String x:Key="DisplayVideoQuality">画质</system:String>
     <system:String x:Key="DisplayVideoCodec">视频编码</system:String>
     <system:String x:Key="DisplaySpace">空格</system:String>
+    <system:String x:Key="Reset">恢复默认</system:String>
 
     <system:String x:Key="SettingDanmaku">弹幕</system:String>
     <system:String x:Key="FilterType">按类型屏蔽</system:String>

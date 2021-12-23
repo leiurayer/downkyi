@@ -96,7 +96,6 @@
     <Compile Include="Models\DisplayFileNamePart.cs" />
     <Compile Include="Models\ParseScopeDisplay.cs" />
     <Compile Include="Models\PlayStreamType.cs" />
-    <Compile Include="Models\Resolution.cs" />
     <Compile Include="Models\TabHeader.cs" />
     <Compile Include="Models\VideoQuality.cs" />
     <Compile Include="Models\VideoInfoView.cs" />
@@ -110,8 +109,6 @@
     <Compile Include="Services\Download\IDownloadService.cs" />
     <Compile Include="Services\IFavoritesService.cs" />
     <Compile Include="Services\IInfoService.cs" />
-    <Compile Include="Services\IResolutionService.cs" />
-    <Compile Include="Services\ResolutionService.cs" />
     <Compile Include="Services\Utils.cs" />
     <Compile Include="Services\VideoInfoService.cs" />
     <Compile Include="Utils\ClipboardHooker.cs" />

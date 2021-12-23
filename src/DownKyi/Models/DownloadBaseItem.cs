@@ -1,4 +1,5 @@
-﻿using Prism.Mvvm;
+﻿using DownKyi.Core.BiliApi.BiliUtils;
+using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
 using System.Windows.Media;
@@ -37,6 +38,9 @@ namespace DownKyi.Models
 
         // 视频封面的url
         public string CoverUrl { get; set; }
+
+        // 视频page的封面的url
+        public string PageCoverUrl { get; set; }
 
         private DrawingImage zoneImage;
         public DrawingImage ZoneImage
@@ -77,15 +81,6 @@ namespace DownKyi.Models
             set => SetProperty(ref duration, value);
         }
 
-        // 音频编码
-        public int AudioCodecId { get; set; }
-        private string audioCodecName;
-        public string AudioCodecName
-        {
-            get => audioCodecName;
-            set => SetProperty(ref audioCodecName, value);
-        }
-
         // 视频编码
         // "hev1.2.4.L156.90"
         // "avc1.640034"
@@ -100,11 +95,19 @@ namespace DownKyi.Models
         }
 
         // 视频画质
-        private Resolution resolution;
-        public Resolution Resolution
+        private Quality resolution;
+        public Quality Resolution
         {
             get => resolution;
             set => SetProperty(ref resolution, value);
+        }
+
+        // 音频编码
+        private Quality audioCodec;
+        public Quality AudioCodec
+        {
+            get => audioCodec;
+            set => SetProperty(ref audioCodec, value);
         }
 
         // 文件路径，不包含扩展名，所有内容均以此路径下载

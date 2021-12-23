@@ -1,8 +1,8 @@
-﻿using DownKyi.Core.FileName;
+﻿using DownKyi.Core.BiliApi.BiliUtils;
+using DownKyi.Core.FileName;
 using DownKyi.Core.Settings;
 using DownKyi.Events;
 using DownKyi.Models;
-using DownKyi.Services;
 using DownKyi.Utils;
 using Prism.Commands;
 using Prism.Events;
@@ -36,18 +36,32 @@ namespace DownKyi.ViewModels.Settings
             set => SetProperty(ref selectedVideoCodec, value);
         }
 
-        private List<Resolution> videoQualityList;
-        public List<Resolution> VideoQualityList
+        private List<Quality> videoQualityList;
+        public List<Quality> VideoQualityList
         {
             get => videoQualityList;
             set => SetProperty(ref videoQualityList, value);
         }
 
-        private Resolution selectedVideoQuality;
-        public Resolution SelectedVideoQuality
+        private Quality selectedVideoQuality;
+        public Quality SelectedVideoQuality
         {
             get => selectedVideoQuality;
             set => SetProperty(ref selectedVideoQuality, value);
+        }
+
+        private List<Quality> audioQualityList;
+        public List<Quality> AudioQualityList
+        {
+            get => audioQualityList;
+            set => SetProperty(ref audioQualityList, value);
+        }
+
+        private Quality selectedAudioQuality;
+        public Quality SelectedAudioQuality
+        {
+            get => selectedAudioQuality;
+            set => SetProperty(ref selectedAudioQuality, value);
         }
 
         private bool isTranscodingFlvToMp4;
@@ -104,11 +118,14 @@ namespace DownKyi.ViewModels.Settings
             VideoCodecs = new List<string>
             {
                 "H.264/AVC",
-                "H.265/HEVC"
+                "H.265/HEVC",
             };
 
             // 优先下载画质
-            VideoQualityList = new ResolutionService().GetResolution();
+            VideoQualityList = Constant.GetResolutions();
+
+            // 优先下载音质
+            AudioQualityList = Constant.GetAudioQualities();
 
             // 文件命名格式
             SelectedFileName = new ObservableCollection<DisplayFileNamePart>();
@@ -142,6 +159,10 @@ namespace DownKyi.ViewModels.Settings
             // 优先下载画质
             int quality = SettingsManager.GetInstance().GetQuality();
             SelectedVideoQuality = VideoQualityList.FirstOrDefault(t => { return t.Id == quality; });
+
+            // 优先下载音质
+            int audioQuality = SettingsManager.GetInstance().GetAudioQuality();
+            SelectedAudioQuality = AudioQualityList.FirstOrDefault(t => { return t.Id == audioQuality; });
 
             // 是否下载flv视频后转码为mp4
             AllowStatus isTranscodingFlvToMp4 = SettingsManager.GetInstance().IsTranscodingFlvToMp4();
@@ -194,9 +215,25 @@ namespace DownKyi.ViewModels.Settings
         /// <param name="parameter"></param>
         private void ExecuteVideoQualityCommand(object parameter)
         {
-            if (!(parameter is Resolution resolution)) { return; }
+            if (!(parameter is Quality resolution)) { return; }
 
             bool isSucceed = SettingsManager.GetInstance().SetQuality(resolution.Id);
+            PublishTip(isSucceed);
+        }
+
+        // 优先下载音质事件
+        private DelegateCommand<object> audioQualityCommand;
+        public DelegateCommand<object> AudioQualityCommand => audioQualityCommand ?? (audioQualityCommand = new DelegateCommand<object>(ExecuteAudioQualityCommand));
+
+        /// <summary>
+        /// 优先下载音质事件
+        /// </summary>
+        /// <param name="parameter"></param>
+        private void ExecuteAudioQualityCommand(object parameter)
+        {
+            if (!(parameter is Quality quality)) { return; }
+
+            bool isSucceed = SettingsManager.GetInstance().SetAudioQuality(quality.Id);
             PublishTip(isSucceed);
         }
 
@@ -305,6 +342,27 @@ namespace DownKyi.ViewModels.Settings
             PublishTip(isSucceed);
 
             SelectedOptionalField = -1;
+        }
+
+        // 重置选中文件名字段
+        private DelegateCommand resetCommand;
+        public DelegateCommand ResetCommand => resetCommand ?? (resetCommand = new DelegateCommand(ExecuteResetCommand));
+
+        /// <summary>
+        /// 重置选中文件名字段
+        /// </summary>
+        private void ExecuteResetCommand()
+        {
+            bool isSucceed = SettingsManager.GetInstance().SetFileNameParts(null);
+            PublishTip(isSucceed);
+
+            List<FileNamePart> fileNameParts = SettingsManager.GetInstance().GetFileNameParts();
+            SelectedFileName.Clear();
+            foreach (FileNamePart item in fileNameParts)
+            {
+                string display = DisplayFileNamePart(item);
+                SelectedFileName.Add(new DisplayFileNamePart { Id = item, Title = display });
+            }
         }
 
 

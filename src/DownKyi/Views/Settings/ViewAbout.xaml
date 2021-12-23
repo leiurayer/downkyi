@@ -188,7 +188,7 @@
                             Grid.Column="2"
                             FontSize="12"
                             Foreground="{DynamicResource BrushTextDark}"
-                            Text="3.17.3" />
+                            Text="3.19.1" />
                         <TextBlock
                             Grid.Row="2"
                             Grid.Column="3"
@@ -269,7 +269,7 @@
                             Grid.Column="2"
                             FontSize="12"
                             Foreground="{DynamicResource BrushTextDark}"
-                            Text="1.4.1" />
+                            Text="1.4.3" />
                         <TextBlock
                             Grid.Row="5"
                             Grid.Column="3"
