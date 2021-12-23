@@ -79,6 +79,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converter\CountConverter.cs" />
     <Compile Include="CustomControl\GifImage.cs" />
     <Compile Include="Events\MessageEvent.cs" />
     <Compile Include="Events\NavigationEvent.cs" />
@@ -447,6 +448,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Resource Include="Resources\checked.png" />
+    <Resource Include="Resources\nodata02.png" />
     <Content Include="打不开DownKyi请点我.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
