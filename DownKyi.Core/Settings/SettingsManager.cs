@@ -63,7 +63,7 @@ namespace DownKyi.Core.Settings
         /// <returns></returns>
         private bool SetSettings()
         {
-            string json = JsonConvert.SerializeObject(appSettings, Formatting.Indented);
+            string json = JsonConvert.SerializeObject(appSettings);
 
             try
             {
