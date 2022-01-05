@@ -1,4 +1,4 @@
-﻿namespace DownKyi.Models
+﻿namespace DownKyi.Core.BiliApi.VideoStream
 {
     public enum PlayStreamType
     {

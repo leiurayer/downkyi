@@ -4,7 +4,7 @@ using DownKyi.Core.BiliApi.Video.Models;
 using DownKyi.Core.BiliApi.VideoStream;
 using DownKyi.Core.Storage;
 using DownKyi.Core.Utils;
-using DownKyi.Models;
+using DownKyi.ViewModels.PageViewModels;
 using System;
 using System.Collections.Generic;
 using System.Windows.Media.Imaging;
@@ -39,13 +39,13 @@ namespace DownKyi.Services
         /// 获取视频剧集
         /// </summary>
         /// <returns></returns>
-        public List<Models.VideoPage> GetVideoPages()
+        public List<ViewModels.PageViewModels.VideoPage> GetVideoPages()
         {
             if (videoView == null) { return null; }
             if (videoView.Pages == null) { return null; }
             if (videoView.Pages.Count == 0) { return null; }
 
-            List<Models.VideoPage> videoPages = new List<Models.VideoPage>();
+            List<ViewModels.PageViewModels.VideoPage> videoPages = new List<ViewModels.PageViewModels.VideoPage>();
 
             int order = 0;
             foreach (var page in videoView.Pages)
@@ -72,7 +72,7 @@ namespace DownKyi.Services
                     }
                 }
 
-                Models.VideoPage videoPage = new Models.VideoPage
+                ViewModels.PageViewModels.VideoPage videoPage = new ViewModels.PageViewModels.VideoPage
                 {
                     Avid = videoView.Aid,
                     Bvid = videoView.Bvid,
@@ -104,12 +104,12 @@ namespace DownKyi.Services
 
             foreach (var section in videoView.UgcSeason.Sections)
             {
-                List<Models.VideoPage> pages = new List<Models.VideoPage>();
+                List<ViewModels.PageViewModels.VideoPage> pages = new List<ViewModels.PageViewModels.VideoPage>();
                 int order = 0;
                 foreach (var episode in section.Episodes)
                 {
                     order++;
-                    Models.VideoPage page = new Models.VideoPage
+                    ViewModels.PageViewModels.VideoPage page = new ViewModels.PageViewModels.VideoPage
                     {
                         Avid = episode.Aid,
                         Bvid = episode.Bvid,
@@ -141,7 +141,7 @@ namespace DownKyi.Services
         /// 获取视频流的信息，从VideoPage返回
         /// </summary>
         /// <param name="page"></param>
-        public void GetVideoStream(Models.VideoPage page)
+        public void GetVideoStream(ViewModels.PageViewModels.VideoPage page)
         {
             var playUrl = VideoStream.GetVideoPlayUrl(page.Avid, page.Bvid, page.Cid);
             Utils.VideoPageInfo(playUrl, page);

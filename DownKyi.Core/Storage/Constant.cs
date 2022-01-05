@@ -10,6 +10,9 @@ namespace DownKyi.Core.Storage
         // 根目录
         private static string Root { get; } = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/Downkyi";
 
+        // Aria
+        public static string Aria { get; } = $"{Root}/Aria";
+
         // 日志
         public static string Logs { get; } = $"{Root}/Logs";
 
@@ -17,6 +20,7 @@ namespace DownKyi.Core.Storage
         public static string Database { get; } = $"{Root}/Storage";
 
         // 历史(搜索、下载) (加密)
+        public static string Download { get; } = $"{Database}/Download.db";
         public static string History { get; } = $"{Database}/History.db";
 
         // 配置

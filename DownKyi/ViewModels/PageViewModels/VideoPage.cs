@@ -2,7 +2,7 @@
 using Prism.Mvvm;
 using System.Collections.Generic;
 
-namespace DownKyi.Models
+namespace DownKyi.ViewModels.PageViewModels
 {
     public class VideoPage : BindableBase
     {

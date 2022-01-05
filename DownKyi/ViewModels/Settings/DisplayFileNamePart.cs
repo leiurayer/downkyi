@@ -1,7 +1,7 @@
 ﻿using DownKyi.Core.FileName;
 using Prism.Mvvm;
 
-namespace DownKyi.Models
+namespace DownKyi.ViewModels.Settings
 {
     public class DisplayFileNamePart : BindableBase
     {

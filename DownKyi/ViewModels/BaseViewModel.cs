@@ -41,6 +41,8 @@ namespace DownKyi.ViewModels
         /// <param name="callback"></param>
         protected void PropertyChangeAsync(Action callback)
         {
+            if (Application.Current == null) { return; }
+
             Application.Current.Dispatcher.Invoke(callback);
         }
 

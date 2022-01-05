@@ -8,6 +8,7 @@ namespace DownKyi.Core.Storage.Database
     {
         private const string key = "b5018ecc-09d1-4da2-aa49-4625e41e623e";
         private readonly DbHelper dbHelper = new DbHelper(StorageManager.GetCoverIndex(), key);
+        private readonly string tableName = "cover";
 
         public CoverDb()
         {
@@ -30,7 +31,7 @@ namespace DownKyi.Core.Storage.Database
         {
             try
             {
-                string sql = $"insert into cover values ({cover.Avid}, '{cover.Bvid}', {cover.Cid}, '{cover.Url}', '{cover.Md5}')";
+                string sql = $"insert into {tableName} values ({cover.Avid}, '{cover.Bvid}', {cover.Cid}, '{cover.Url}', '{cover.Md5}')";
                 dbHelper.ExecuteNonQuery(sql);
             }
             catch (Exception e)
@@ -48,7 +49,7 @@ namespace DownKyi.Core.Storage.Database
         {
             try
             {
-                string sql = $"update cover set avid={cover.Avid}, bvid='{cover.Bvid}', cid={cover.Cid}, md5='{cover.Md5}' where url glob '{cover.Url}'";
+                string sql = $"update {tableName} set avid={cover.Avid}, bvid='{cover.Bvid}', cid={cover.Cid}, md5='{cover.Md5}' where url glob '{cover.Url}'";
                 dbHelper.ExecuteNonQuery(sql);
             }
             catch (Exception e)
@@ -65,7 +66,7 @@ namespace DownKyi.Core.Storage.Database
         /// <returns></returns>
         public List<Cover> QueryAll()
         {
-            string sql = $"select * from cover";
+            string sql = $"select * from {tableName}";
             return Query(sql);
         }
 
@@ -76,17 +77,10 @@ namespace DownKyi.Core.Storage.Database
         /// <returns></returns>
         public Cover QueryByUrl(string url)
         {
-            string sql = $"select * from cover where url glob '{url}'";
-            var query = Query(sql);
+            string sql = $"select * from {tableName} where url glob '{url}'";
+            List<Cover> query = Query(sql);
 
-            if (query.Count > 0)
-            {
-                return query[0];
-            }
-            else
-            {
-                return null;
-            }
+            return query.Count > 0 ? query[0] : null;
         }
 
         /// <summary>
@@ -96,7 +90,7 @@ namespace DownKyi.Core.Storage.Database
         /// <returns></returns>
         public Cover QueryByMd5(string md5)
         {
-            string sql = $"select * from cover where md5 glob '{md5}'";
+            string sql = $"select * from {tableName} where md5 glob '{md5}'";
             var query = Query(sql);
 
             if (query.Count > 0)
@@ -141,7 +135,7 @@ namespace DownKyi.Core.Storage.Database
         /// </summary>
         private void CreateTable()
         {
-            string sql = "create table if not exists cover (avid unsigned big int, bvid varchar(20), cid unsigned big int, url varchar(255) unique, md5 varchar(32) unique)";
+            string sql = $"create table if not exists {tableName} (avid unsigned big int, bvid varchar(20), cid unsigned big int, url varchar(255) unique, md5 varchar(32) unique)";
             dbHelper.ExecuteNonQuery(sql);
         }
 

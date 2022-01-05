@@ -1,9 +1,9 @@
 ﻿using DownKyi.Core.Logging;
 using DownKyi.Events;
 using DownKyi.Images;
-using DownKyi.Models;
 using DownKyi.Services;
 using DownKyi.Utils;
+using DownKyi.ViewModels.PageViewModels;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Regions;
@@ -23,71 +23,71 @@ namespace DownKyi.ViewModels
         private string pageName = Tag;
         public string PageName
         {
-            get { return pageName; }
-            set { SetProperty(ref pageName, value); }
+            get => pageName;
+            set => SetProperty(ref pageName, value);
         }
 
         private VectorImage arrowBack;
         public VectorImage ArrowBack
         {
-            get { return arrowBack; }
-            set { SetProperty(ref arrowBack, value); }
+            get => arrowBack;
+            set => SetProperty(ref arrowBack, value);
         }
 
         private VectorImage play;
         public VectorImage Play
         {
-            get { return play; }
-            set { SetProperty(ref play, value); }
+            get => play;
+            set => SetProperty(ref play, value);
         }
 
         private VectorImage like;
         public VectorImage Like
         {
-            get { return like; }
-            set { SetProperty(ref like, value); }
+            get => like;
+            set => SetProperty(ref like, value);
         }
 
         private VectorImage favorite;
         public VectorImage Favorite
         {
-            get { return favorite; }
-            set { SetProperty(ref favorite, value); }
+            get => favorite;
+            set => SetProperty(ref favorite, value);
         }
 
         private VectorImage share;
         public VectorImage Share
         {
-            get { return share; }
-            set { SetProperty(ref share, value); }
+            get => share;
+            set => SetProperty(ref share, value);
         }
 
         private Favorites favorites;
         public Favorites Favorites
         {
-            get { return favorites; }
-            set { SetProperty(ref favorites, value); }
+            get => favorites;
+            set => SetProperty(ref favorites, value);
         }
 
         private ObservableCollection<FavoritesMedia> favoritesMedias;
         public ObservableCollection<FavoritesMedia> FavoritesMedias
         {
-            get { return favoritesMedias; }
-            set { SetProperty(ref favoritesMedias, value); }
+            get => favoritesMedias;
+            set => SetProperty(ref favoritesMedias, value);
         }
 
         private Visibility contentVisibility;
         public Visibility ContentVisibility
         {
-            get { return contentVisibility; }
-            set { SetProperty(ref contentVisibility, value); }
+            get => contentVisibility;
+            set => SetProperty(ref contentVisibility, value);
         }
 
         private Visibility noDataVisibility;
         public Visibility NoDataVisibility
         {
-            get { return noDataVisibility; }
-            set { SetProperty(ref noDataVisibility, value); }
+            get => noDataVisibility;
+            set => SetProperty(ref noDataVisibility, value);
         }
 
         #endregion

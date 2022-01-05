@@ -15,8 +15,10 @@ namespace DownKyi.Utils
         /// <returns></returns>
         public static string GetColor(string resourceKey)
         {
-            Color color = (Color)Application.Current.Resources[resourceKey];
-            return color.ToString();
+            //Color color = (Color)Application.Current.Resources[resourceKey];
+            //return color.ToString();
+
+            return Application.Current == null ? "#00000000" : ((Color)Application.Current.Resources[resourceKey]).ToString();
         }
 
         /// <summary>

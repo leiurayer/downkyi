@@ -1,7 +1,7 @@
 ﻿using DownKyi.Core.BiliApi.Favorites;
 using DownKyi.Core.Storage;
 using DownKyi.Core.Utils;
-using DownKyi.Models;
+using DownKyi.ViewModels.PageViewModels;
 using Prism.Events;
 using System;
 using System.Collections.ObjectModel;

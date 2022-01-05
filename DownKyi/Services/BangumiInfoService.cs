@@ -2,10 +2,11 @@
 using DownKyi.Core.BiliApi.Bangumi.Models;
 using DownKyi.Core.BiliApi.BiliUtils;
 using DownKyi.Core.BiliApi.VideoStream;
+using DownKyi.Core.BiliApi.VideoStream.Models;
 using DownKyi.Core.Storage;
 using DownKyi.Core.Utils;
-using DownKyi.Models;
 using DownKyi.Utils;
+using DownKyi.ViewModels.PageViewModels;
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
@@ -39,7 +40,7 @@ namespace DownKyi.Services
             if (ParseEntrance.IsBangumiMediaId(input) || ParseEntrance.IsBangumiMediaUrl(input))
             {
                 long mediaId = ParseEntrance.GetBangumiMediaId(input);
-                var bangumiMedia = BangumiInfo.BangumiMediaInfo(mediaId);
+                BangumiMedia bangumiMedia = BangumiInfo.BangumiMediaInfo(mediaId);
                 bangumiSeason = BangumiInfo.BangumiSeasonInfo(bangumiMedia.SeasonId);
             }
         }
@@ -56,7 +57,7 @@ namespace DownKyi.Services
             if (bangumiSeason.Episodes.Count == 0) { return pages; }
 
             int order = 0;
-            foreach (var episode in bangumiSeason.Episodes)
+            foreach (BangumiEpisode episode in bangumiSeason.Episodes)
             {
                 order++;
 
@@ -125,25 +126,16 @@ namespace DownKyi.Services
                 }
             };
 
-            foreach (var section in bangumiSeason.Section)
+            foreach (BangumiSection section in bangumiSeason.Section)
             {
                 List<VideoPage> pages = new List<VideoPage>();
                 int order = 0;
-                foreach (var episode in section.Episodes)
+                foreach (BangumiEpisode episode in section.Episodes)
                 {
                     order++;
 
                     // 标题
-                    string name;
-                    if (episode.LongTitle != null && episode.LongTitle != "")
-                    {
-                        name = $"{episode.Title} {episode.LongTitle}";
-                    }
-                    else
-                    {
-                        name = episode.Title;
-                    }
-
+                    string name = episode.LongTitle != null && episode.LongTitle != "" ? $"{episode.Title} {episode.LongTitle}" : episode.Title;
                     VideoPage page = new VideoPage
                     {
                         Avid = episode.Aid,
@@ -176,7 +168,7 @@ namespace DownKyi.Services
         /// <param name="page"></param>
         public void GetVideoStream(VideoPage page)
         {
-            var playUrl = VideoStream.GetBangumiPlayUrl(page.Avid, page.Bvid, page.Cid);
+            PlayUrl playUrl = VideoStream.GetBangumiPlayUrl(page.Avid, page.Bvid, page.Cid);
             Utils.VideoPageInfo(playUrl, page);
         }
 

@@ -1,4 +1,5 @@
-﻿using DownKyi.Models;
+﻿using DownKyi.Core.Settings;
+using DownKyi.Models;
 using DownKyi.Services.Download;
 using DownKyi.Utils;
 using DownKyi.ViewModels;
@@ -13,7 +14,9 @@ using DownKyi.Views.Settings;
 using DownKyi.Views.Toolbox;
 using Prism.Ioc;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
 
 namespace DownKyi
@@ -102,6 +105,40 @@ namespace DownKyi
         public static void PropertyChangeAsync(Action callback)
         {
             Current.Dispatcher.Invoke(callback);
+        }
+
+        /// <summary>
+        /// 下载完成列表排序
+        /// </summary>
+        /// <param name="finishedSort"></param>
+        public static void SortDownloadedList(DownloadFinishedSort finishedSort)
+        {
+            List<DownloadedItem> list = DownloadedList.ToList();
+            switch (finishedSort)
+            {
+                case DownloadFinishedSort.DOWNLOAD:
+                    // 按下载先后排序
+                    list.Sort((x, y) => { return x.Downloaded.FinishedTimestamp.CompareTo(y.Downloaded.FinishedTimestamp); });
+                    break;
+                case DownloadFinishedSort.NUMBER:
+                    // 按序号排序
+                    list.Sort((x, y) =>
+                    {
+                        int compare = x.MainTitle.CompareTo(y.MainTitle);
+                        return compare == 0 ? x.Order.CompareTo(y.Order) : compare;
+                    });
+                    break;
+                default:
+                    break;
+            }
+
+            // 更新下载完成列表
+            // 如果有更好的方法再重写
+            DownloadedList.Clear();
+            foreach (DownloadedItem item in list)
+            {
+                DownloadedList.Add(item);
+            }
         }
 
     }

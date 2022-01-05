@@ -2,7 +2,6 @@
 using DownKyi.Core.FileName;
 using DownKyi.Core.Settings;
 using DownKyi.Events;
-using DownKyi.Models;
 using DownKyi.Utils;
 using Prism.Commands;
 using Prism.Events;

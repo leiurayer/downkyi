@@ -174,6 +174,7 @@
     <Compile Include="BiliApi\VideoStream\Models\PlayUrlSupportFormat.cs" />
     <Compile Include="BiliApi\VideoStream\Models\Subtitle.cs" />
     <Compile Include="BiliApi\VideoStream\Models\SubtitleInfo.cs" />
+    <Compile Include="BiliApi\VideoStream\PlayStreamType.cs" />
     <Compile Include="BiliApi\VideoStream\VideoStream.cs" />
     <Compile Include="BiliApi\Video\Dynamic.cs" />
     <Compile Include="BiliApi\Video\Models\RankingVideoView.cs" />
@@ -239,6 +240,10 @@
     <Compile Include="Settings\Models\VideoSettings.cs" />
     <Compile Include="Settings\SettingsManager.cs" />
     <Compile Include="Storage\Constant.cs" />
+    <Compile Include="Storage\Database\Download\DownloadBaseDb.cs" />
+    <Compile Include="Storage\Database\Download\DownloadDb.cs" />
+    <Compile Include="Storage\Database\Download\DownloadedDb.cs" />
+    <Compile Include="Storage\Database\Download\DownloadingDb.cs" />
     <Compile Include="Storage\Database\Header.cs" />
     <Compile Include="Storage\Database\HeaderDb.cs" />
     <Compile Include="Storage\StorageCover.cs" />
