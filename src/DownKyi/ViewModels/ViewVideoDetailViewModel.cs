@@ -1,4 +1,5 @@
 ﻿using DownKyi.Core.BiliApi.BiliUtils;
+using DownKyi.Core.BiliApi.VideoStream;
 using DownKyi.Core.BiliApi.Zone;
 using DownKyi.Core.FileName;
 using DownKyi.Core.Logging;
@@ -11,6 +12,8 @@ using DownKyi.Models;
 using DownKyi.Services;
 using DownKyi.Utils;
 using DownKyi.ViewModels.Dialogs;
+using DownKyi.ViewModels.DownloadManager;
+using DownKyi.ViewModels.PageViewModels;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Regions;
@@ -22,7 +25,6 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Media;
 
 namespace DownKyi.ViewModels
 {
@@ -568,7 +570,7 @@ namespace DownKyi.ViewModels
                     // 如果存在正在下载列表，则跳过，并提示
                     foreach (DownloadingItem item in App.DownloadingList)
                     {
-                        if (item.Cid == page.Cid && item.Resolution.Id == page.VideoQuality.Quality && item.AudioCodec.Name == page.AudioQualityFormat && item.VideoCodecName == page.VideoQuality.SelectedVideoCodec)
+                        if (item.DownloadBase.Cid == page.Cid && item.Resolution.Id == page.VideoQuality.Quality && item.AudioCodec.Name == page.AudioQualityFormat && item.VideoCodecName == page.VideoQuality.SelectedVideoCodec)
                         {
                             eventAggregator.GetEvent<MessageEvent>().Publish($"{page.Name}{DictionaryResource.GetString("TipAlreadyToAddDownloading")}");
                             continue;
@@ -578,7 +580,7 @@ namespace DownKyi.ViewModels
                     // 如果存在下载完成列表，弹出选择框是否再次下载
                     foreach (DownloadedItem item in App.DownloadedList)
                     {
-                        if (item.Cid == page.Cid && item.Resolution.Id == page.VideoQuality.Quality && item.AudioCodec.Name == page.AudioQualityFormat && item.VideoCodecName == page.VideoQuality.SelectedVideoCodec)
+                        if (item.DownloadBase.Cid == page.Cid && item.Resolution.Id == page.VideoQuality.Quality && item.AudioCodec.Name == page.AudioQualityFormat && item.VideoCodecName == page.VideoQuality.SelectedVideoCodec)
                         {
                             eventAggregator.GetEvent<MessageEvent>().Publish($"{page.Name}{DictionaryResource.GetString("TipAlreadyToAddDownloaded")}");
                             continue;
@@ -661,18 +663,16 @@ namespace DownKyi.ViewModels
                     }
 
                     // 如果不存在，直接添加到下载列表
-                    DownloadingItem downloading = new DownloadingItem
+                    DownloadBase downloadBase = new DownloadBase
                     {
-                        PlayUrl = page.PlayUrl,
-
                         Bvid = page.Bvid,
                         Avid = page.Avid,
                         Cid = page.Cid,
                         EpisodeId = page.EpisodeId,
-
                         CoverUrl = VideoInfoView.CoverUrl,
                         PageCoverUrl = page.FirstFrame,
-                        ZoneImage = (DrawingImage)Application.Current.Resources[VideoZoneIcon.Instance().GetZoneImageKey(zoneId)],
+                        ZoneId = zoneId,
+                        FilePath = filePath,
 
                         Order = page.Order,
                         MainTitle = VideoInfoView.Title,
@@ -681,21 +681,30 @@ namespace DownKyi.ViewModels
                         VideoCodecName = page.VideoQuality.SelectedVideoCodec,
                         Resolution = new Quality { Name = page.VideoQuality.QualityFormat, Id = page.VideoQuality.Quality },
                         AudioCodec = Constant.GetAudioQualities().FirstOrDefault(t => { return t.Name == page.AudioQualityFormat; }),
-                        FilePath = filePath,
-
+                    };
+                    Downloading downloading = new Downloading
+                    {
                         PlayStreamType = playStreamType,
                         DownloadStatus = DownloadStatus.NOT_STARTED,
                     };
 
                     // 需要下载的内容
-                    downloading.NeedDownloadContent["downloadAudio"] = downloadAudio;
-                    downloading.NeedDownloadContent["downloadVideo"] = downloadVideo;
-                    downloading.NeedDownloadContent["downloadDanmaku"] = downloadDanmaku;
-                    downloading.NeedDownloadContent["downloadSubtitle"] = downloadSubtitle;
-                    downloading.NeedDownloadContent["downloadCover"] = downloadCover;
+                    downloadBase.NeedDownloadContent["downloadAudio"] = downloadAudio;
+                    downloadBase.NeedDownloadContent["downloadVideo"] = downloadVideo;
+                    downloadBase.NeedDownloadContent["downloadDanmaku"] = downloadDanmaku;
+                    downloadBase.NeedDownloadContent["downloadSubtitle"] = downloadSubtitle;
+                    downloadBase.NeedDownloadContent["downloadCover"] = downloadCover;
+
+                    DownloadingItem downloadingItem = new DownloadingItem
+                    {
+                        DownloadBase = downloadBase,
+                        Downloading = downloading,
+                        PlayUrl = page.PlayUrl,
+                        //ZoneImage = (DrawingImage)Application.Current.Resources[VideoZoneIcon.Instance().GetZoneImageKey(zoneId)],
+                    };
 
                     // 添加到下载列表
-                    App.DownloadingList.Add(downloading);
+                    App.DownloadingList.Add(downloadingItem);
                     i++;
                 }
             }

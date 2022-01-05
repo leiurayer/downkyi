@@ -2,10 +2,11 @@
 using DownKyi.Core.BiliApi.Cheese;
 using DownKyi.Core.BiliApi.Cheese.Models;
 using DownKyi.Core.BiliApi.VideoStream;
+using DownKyi.Core.BiliApi.VideoStream.Models;
 using DownKyi.Core.Storage;
 using DownKyi.Core.Utils;
-using DownKyi.Models;
 using DownKyi.Utils;
+using DownKyi.ViewModels.PageViewModels;
 using System;
 using System.Collections.Generic;
 using System.Windows.Media.Imaging;
@@ -48,7 +49,7 @@ namespace DownKyi.Services
             if (cheeseView.Episodes.Count == 0) { return pages; }
 
             int order = 0;
-            foreach (var episode in cheeseView.Episodes)
+            foreach (CheeseEpisode episode in cheeseView.Episodes)
             {
                 order++;
                 string name = episode.Title;
@@ -87,7 +88,7 @@ namespace DownKyi.Services
         /// <param name="page"></param>
         public void GetVideoStream(VideoPage page)
         {
-            var playUrl = VideoStream.GetCheesePlayUrl(page.Avid, page.Bvid, page.Cid, page.EpisodeId);
+            PlayUrl playUrl = VideoStream.GetCheesePlayUrl(page.Avid, page.Bvid, page.Cid, page.EpisodeId);
             Utils.VideoPageInfo(playUrl, page);
         }
 

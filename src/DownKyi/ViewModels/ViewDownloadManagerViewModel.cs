@@ -1,8 +1,8 @@
 ﻿using DownKyi.Events;
 using DownKyi.Images;
-using DownKyi.Models;
 using DownKyi.Utils;
 using DownKyi.ViewModels.DownloadManager;
+using DownKyi.ViewModels.PageViewModels;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Regions;
@@ -21,22 +21,22 @@ namespace DownKyi.ViewModels
         private VectorImage arrowBack;
         public VectorImage ArrowBack
         {
-            get { return arrowBack; }
-            set { SetProperty(ref arrowBack, value); }
+            get => arrowBack;
+            set => SetProperty(ref arrowBack, value);
         }
 
         private List<TabHeader> tabHeaders;
         public List<TabHeader> TabHeaders
         {
-            get { return tabHeaders; }
-            set { SetProperty(ref tabHeaders, value); }
+            get => tabHeaders;
+            set => SetProperty(ref tabHeaders, value);
         }
 
         private int selectTabId;
         public int SelectTabId
         {
-            get { return selectTabId; }
-            set { SetProperty(ref selectTabId, value); }
+            get => selectTabId;
+            set => SetProperty(ref selectTabId, value);
         }
 
         #endregion

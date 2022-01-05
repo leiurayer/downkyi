@@ -41,18 +41,18 @@ namespace DownKyi.ViewModels.DownloadManager
         {
             foreach (DownloadingItem downloading in downloadingList)
             {
-                switch (downloading.DownloadStatus)
+                switch (downloading.Downloading.DownloadStatus)
                 {
                     case DownloadStatus.NOT_STARTED:
                     case DownloadStatus.WAIT_FOR_DOWNLOAD:
-                        downloading.DownloadStatus = DownloadStatus.PAUSE_STARTED;
+                        downloading.Downloading.DownloadStatus = DownloadStatus.PAUSE_STARTED;
                         break;
                     case DownloadStatus.PAUSE_STARTED:
                         break;
                     case DownloadStatus.PAUSE:
                         break;
                     case DownloadStatus.DOWNLOADING:
-                        downloading.DownloadStatus = DownloadStatus.PAUSE;
+                        downloading.Downloading.DownloadStatus = DownloadStatus.PAUSE;
                         break;
                     case DownloadStatus.DOWNLOAD_SUCCEED:
                         // 下载成功后会从下载列表中删除
@@ -80,16 +80,16 @@ namespace DownKyi.ViewModels.DownloadManager
         {
             foreach (DownloadingItem downloading in downloadingList)
             {
-                switch (downloading.DownloadStatus)
+                switch (downloading.Downloading.DownloadStatus)
                 {
                     case DownloadStatus.NOT_STARTED:
                     case DownloadStatus.WAIT_FOR_DOWNLOAD:
                         break;
                     case DownloadStatus.PAUSE_STARTED:
-                        downloading.DownloadStatus = DownloadStatus.WAIT_FOR_DOWNLOAD;
+                        downloading.Downloading.DownloadStatus = DownloadStatus.WAIT_FOR_DOWNLOAD;
                         break;
                     case DownloadStatus.PAUSE:
-                        downloading.DownloadStatus = DownloadStatus.DOWNLOADING;
+                        downloading.Downloading.DownloadStatus = DownloadStatus.DOWNLOADING;
                         break;
                     case DownloadStatus.DOWNLOADING:
                         break;
@@ -98,7 +98,7 @@ namespace DownKyi.ViewModels.DownloadManager
                         // 不会出现此分支
                         break;
                     case DownloadStatus.DOWNLOAD_FAILED:
-                        downloading.DownloadStatus = DownloadStatus.WAIT_FOR_DOWNLOAD;
+                        downloading.Downloading.DownloadStatus = DownloadStatus.WAIT_FOR_DOWNLOAD;
                         break;
                     default:
                         break;

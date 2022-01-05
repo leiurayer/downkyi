@@ -2,9 +2,303 @@
     x:Class="DownKyi.Views.DownloadManager.ViewDownloadFinished"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converter="clr-namespace:DownKyi.Converter"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:prism="http://prismlibrary.com/"
     prism:ViewModelLocator.AutoWireViewModel="True">
+    <UserControl.Resources>
+        <converter:CountConverter x:Key="CountConverter" Count="0" />
+
+        <Style x:Key="DownloadedStyle" TargetType="{x:Type ListBoxItem}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                        <Grid Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}, Path=ActualWidth}" Height="70">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="70" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="auto" />
+                                    <ColumnDefinition Width="120" />
+                                    <ColumnDefinition Width="20" />
+                                </Grid.ColumnDefinitions>
+
+                                <Image
+                                    Grid.Column="0"
+                                    Width="48"
+                                    Height="48"
+                                    Source="{Binding ZoneImage}" />
+
+                                <!--  标题等视频信息  -->
+                                <Grid
+                                    Grid.Column="1"
+                                    Margin="0,0,10,0"
+                                    HorizontalAlignment="Left">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+
+                                    <TextBlock
+                                        Grid.Row="0"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        FontSize="14"
+                                        Foreground="{DynamicResource BrushTextDark}"
+                                        TextTrimming="CharacterEllipsis">
+                                        <TextBlock.Text>
+                                            <MultiBinding StringFormat="{}{0}-{1}-{2}">
+                                                <Binding Path="Order" />
+                                                <Binding Path="MainTitle" />
+                                                <Binding Path="Name" />
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                        <TextBlock.ToolTip>
+                                            <TextBlock>
+                                                <TextBlock.Text>
+                                                    <MultiBinding StringFormat="{}{0}-{1}">
+                                                        <Binding Path="MainTitle" />
+                                                        <Binding Path="Name" />
+                                                    </MultiBinding>
+                                                </TextBlock.Text>
+                                            </TextBlock>
+                                        </TextBlock.ToolTip>
+                                    </TextBlock>
+
+                                    <TextBlock
+                                        Grid.Row="1"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        FontSize="12"
+                                        Foreground="{DynamicResource BrushTextGrey2}">
+                                        <TextBlock.Text>
+                                            <MultiBinding StringFormat="{}{0} · {1} · {2} · {3} · {4} · {5}">
+                                                <Binding Path="Duration" />
+                                                <Binding Path="Resolution.Name" />
+                                                <Binding Path="VideoCodecName" />
+                                                <Binding Path="AudioCodec.Name" />
+                                                <Binding Path="FileSize" />
+                                                <Binding Path="MaxSpeedDisplay" />
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                </Grid>
+
+                                <TextBlock
+                                    Grid.Column="2"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Center"
+                                    FontSize="12"
+                                    Foreground="{DynamicResource BrushTextDark}"
+                                    Text="{Binding FinishedTime}" />
+
+                                <!--  控制面板，暂停继续删除  -->
+                                <Grid Grid.Column="3">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Border
+                                        Grid.Column="0"
+                                        HorizontalAlignment="Right"
+                                        VerticalAlignment="Center"
+                                        Background="{DynamicResource BrushBackground}"
+                                        Cursor="Hand">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="MouseLeftButtonUp">
+                                                <i:InvokeCommandAction Command="{Binding OpenFolderCommand}" />
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                        <ContentControl>
+                                            <Path
+                                                Width="{Binding OpenFolder.Width}"
+                                                Height="{Binding OpenFolder.Height}"
+                                                Data="{Binding OpenFolder.Data}"
+                                                Fill="{Binding OpenFolder.Fill}"
+                                                Stretch="UniformToFill" />
+                                        </ContentControl>
+                                    </Border>
+
+                                    <Border
+                                        Grid.Column="1"
+                                        HorizontalAlignment="Right"
+                                        VerticalAlignment="Center"
+                                        Background="{DynamicResource BrushBackground}"
+                                        Cursor="Hand">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="MouseLeftButtonUp">
+                                                <i:InvokeCommandAction Command="{Binding OpenVideoCommand}" />
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                        <ContentControl>
+                                            <Path
+                                                Width="{Binding OpenVideo.Width}"
+                                                Height="{Binding OpenVideo.Height}"
+                                                Data="{Binding OpenVideo.Data}"
+                                                Fill="{Binding OpenVideo.Fill}"
+                                                Stretch="UniformToFill" />
+                                        </ContentControl>
+                                    </Border>
+
+                                    <Border
+                                        Grid.Column="2"
+                                        HorizontalAlignment="Right"
+                                        VerticalAlignment="Center"
+                                        Background="{DynamicResource BrushBackground}"
+                                        Cursor="Hand">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="MouseLeftButtonUp">
+                                                <i:InvokeCommandAction Command="{Binding RemoveVideoCommand}" />
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                        <ContentControl>
+                                            <Path
+                                                Width="{Binding RemoveVideo.Width}"
+                                                Height="{Binding RemoveVideo.Height}"
+                                                Data="{Binding RemoveVideo.Data}"
+                                                Fill="{Binding RemoveVideo.Fill}"
+                                                Stretch="UniformToFill" />
+                                        </ContentControl>
+                                    </Border>
+                                </Grid>
+
+                            </Grid>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
     <Grid>
-        <TextBlock>已下载</TextBlock>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="1" />
+                <RowDefinition Height="50" />
+            </Grid.RowDefinitions>
+            <Grid.Style>
+                <Style TargetType="{x:Type Grid}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding DownloadedList}" Value="{x:Null}">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding DownloadedList.Count}" Value="0">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding DownloadedList.Count, Converter={StaticResource CountConverter}}" Value="true">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
+
+            <ListBox
+                Grid.Row="0"
+                BorderThickness="0"
+                ItemContainerStyle="{StaticResource DownloadedStyle}"
+                ItemsSource="{Binding DownloadedList}">
+                <ListBox.Style>
+                    <Style TargetType="ListBox">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ListBox">
+                                    <Border
+                                        x:Name="Bd"
+                                        Padding="0"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}">
+                                        <ScrollViewer CanContentScroll="False" Focusable="False">
+                                            <ItemsPresenter />
+                                        </ScrollViewer>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListBox.Style>
+            </ListBox>
+
+            <TextBlock Grid.Row="1" Background="{DynamicResource BrushBorderTranslucent}" />
+
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="130" />
+                    <ColumnDefinition Width="110" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel
+                    Grid.Column="0"
+                    Margin="10,0,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Orientation="Horizontal">
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        FontSize="14"
+                        Text="{DynamicResource TotalDownloaded1}" />
+                    <TextBlock
+                        Margin="3,0"
+                        VerticalAlignment="Center"
+                        FontSize="14"
+                        Foreground="{DynamicResource BrushPrimary}"
+                        Text="{Binding DownloadedList.Count}" />
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        FontSize="14"
+                        Text="{DynamicResource TotalDownloaded2}" />
+                </StackPanel>
+
+                <ComboBox
+                    Name="nameFinishedSort"
+                    Grid.Column="1"
+                    Width="120"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding FinishedSortCommand}" CommandParameter="{Binding ElementName=nameFinishedSort, Path=SelectedIndex}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <ComboBoxItem Content="{DynamicResource DownloadedSortByTime}" TabIndex="1" />
+                    <ComboBoxItem Content="{DynamicResource DownloadedSortByOrder}" TabIndex="2" />
+                </ComboBox>
+
+                <Button
+                    Grid.Column="2"
+                    Width="100"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Command="{Binding ClearAllDownloadedCommand}"
+                    Content="{DynamicResource ClearAllDownloaded}"
+                    FontSize="12"
+                    Style="{StaticResource BtnBorderStyle}" />
+            </Grid>
+        </Grid>
+
+        <!--  TODO 没有数据时显示图片或文字  -->
+        <Image
+            Width="256"
+            Height="256"
+            Source="/DownKyi;component/Resources/nodata02.png">
+            <Image.Style>
+                <Style TargetType="{x:Type Image}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding DownloadedList}" Value="{x:Null}">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding DownloadedList.Count}" Value="0">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding DownloadedList.Count, Converter={StaticResource CountConverter}}" Value="true">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Image.Style>
+        </Image>
     </Grid>
 </UserControl>

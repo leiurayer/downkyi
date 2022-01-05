@@ -3,7 +3,7 @@ using DownKyi.Core.BiliApi.VideoStream.Models;
 using DownKyi.Core.Settings;
 using DownKyi.Core.Settings.Models;
 using DownKyi.Core.Utils;
-using DownKyi.Models;
+using DownKyi.ViewModels.PageViewModels;
 using System.Collections.Generic;
 using System.Linq;
 

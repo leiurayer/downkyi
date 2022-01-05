@@ -8,6 +8,7 @@ namespace DownKyi.Core.Storage.Database
     {
         private const string key = "7c1f1f40-7cdf-4d11-ad28-f0137a3c5308";
         private readonly DbHelper dbHelper = new DbHelper(StorageManager.GetHeaderIndex(), key);
+        private readonly string tableName = "header";
 
         public HeaderDb()
         {
@@ -30,7 +31,7 @@ namespace DownKyi.Core.Storage.Database
         {
             try
             {
-                string sql = $"insert into header values ({header.Mid}, '{header.Name}', '{header.Url}', '{header.Md5}')";
+                string sql = $"insert into {tableName} values ({header.Mid}, '{header.Name}', '{header.Url}', '{header.Md5}')";
                 dbHelper.ExecuteNonQuery(sql);
             }
             catch (Exception e)
@@ -48,7 +49,7 @@ namespace DownKyi.Core.Storage.Database
         {
             try
             {
-                string sql = $"update header set name='{header.Name}', url='{header.Url}', md5='{header.Md5}' where mid={header.Mid}";
+                string sql = $"update {tableName} set name='{header.Name}', url='{header.Url}', md5='{header.Md5}' where mid={header.Mid}";
                 dbHelper.ExecuteNonQuery(sql);
             }
             catch (Exception e)
@@ -64,7 +65,7 @@ namespace DownKyi.Core.Storage.Database
         /// <returns></returns>
         public List<Header> QueryAll()
         {
-            string sql = $"select * from header";
+            string sql = $"select * from {tableName}";
             return Query(sql);
         }
 
@@ -75,17 +76,10 @@ namespace DownKyi.Core.Storage.Database
         /// <returns></returns>
         public Header QueryByMid(long mid)
         {
-            string sql = $"select * from header where mid={mid}";
-            var query = Query(sql);
+            string sql = $"select * from {tableName} where mid={mid}";
+            List<Header> query = Query(sql);
 
-            if (query.Count > 0)
-            {
-                return query[0];
-            }
-            else
-            {
-                return null;
-            }
+            return query.Count > 0 ? query[0] : null;
         }
 
 
@@ -120,7 +114,7 @@ namespace DownKyi.Core.Storage.Database
         /// </summary>
         private void CreateTable()
         {
-            string sql = "create table if not exists header (mid unsigned big int unique, name varchar(255), url varchar(255), md5 varchar(32))";
+            string sql = $"create table if not exists {tableName} (mid unsigned big int unique, name varchar(255), url varchar(255), md5 varchar(32))";
             dbHelper.ExecuteNonQuery(sql);
         }
 

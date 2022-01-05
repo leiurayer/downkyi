@@ -28,14 +28,16 @@ namespace DownKyi.Core.Aria2cNet.Server
             ListenPort = config.ListenPort;
             // aria目录
             string ariaDir = Environment.CurrentDirectory + "\\aria\\";
+            //string ariaDir = StorageManager.GetAriaDir();
             // 会话文件
 #if DEBUG
-            string sessionFile = ariaDir + "aira.session";
+            string sessionFile = Path.Combine(ariaDir, "aira.session");
+
 #else
-            string sessionFile = ariaDir + "aira.session.gz";
+            string sessionFile =Path.Combine(ariaDir, "aira.session.gz");
 #endif
             // 日志文件
-            string logFile = ariaDir + "aira.log";
+            string logFile = Path.Combine(ariaDir, "aira.log");
             // 自动保存会话文件的时间间隔
             int saveSessionInterval = 30;
 

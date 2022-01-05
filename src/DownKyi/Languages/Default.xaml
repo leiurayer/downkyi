@@ -91,6 +91,12 @@
     <system:String x:Key="ContinueAllDownloading">全部开始</system:String>
     <system:String x:Key="DeleteAllDownloading">全部删除</system:String>
 
+    <system:String x:Key="TotalDownloaded1">已下载</system:String>
+    <system:String x:Key="TotalDownloaded2">个视频！</system:String>
+    <system:String x:Key="DownloadedSortByTime">按下载先后排序</system:String>
+    <system:String x:Key="DownloadedSortByOrder">按序号排序</system:String>
+    <system:String x:Key="ClearAllDownloaded">清空所有记录</system:String>
+
     <!--  Settings  -->
     <system:String x:Key="PressEnterToApplySettingTip">按回车键应用设置</system:String>
 

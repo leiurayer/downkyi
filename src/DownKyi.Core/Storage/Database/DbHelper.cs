@@ -64,7 +64,7 @@ namespace DownKyi.Core.Storage.Database
         /// 执行一条SQL语句
         /// </summary>
         /// <param name="sql"></param>
-        public void ExecuteNonQuery(string sql)
+        public void ExecuteNonQuery(string sql, Action<SQLiteParameterCollection> action = null)
         {
             lock (conn)
             {
@@ -74,6 +74,8 @@ namespace DownKyi.Core.Storage.Database
                     using (var command = conn.CreateCommand())
                     {
                         command.CommandText = sql;
+                        // 添加参数
+                        action?.Invoke(command.Parameters);
                         command.ExecuteNonQuery();
                     }
                     tr.Commit();

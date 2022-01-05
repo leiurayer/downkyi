@@ -8,6 +8,26 @@ namespace DownKyi.Core.Storage
         /// 获取历史记录的文件路径
         /// </summary>
         /// <returns></returns>
+        public static string GetAriaDir()
+        {
+            CreateDirectory(Constant.Aria);
+            return Constant.Aria;
+        }
+
+        /// <summary>
+        /// 获取历史记录的文件路径
+        /// </summary>
+        /// <returns></returns>
+        public static string GetDownload()
+        {
+            CreateDirectory(Constant.Database);
+            return Constant.Download;
+        }
+
+        /// <summary>
+        /// 获取历史记录的文件路径
+        /// </summary>
+        /// <returns></returns>
         public static string GetHistory()
         {
             CreateDirectory(Constant.Database);
