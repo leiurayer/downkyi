@@ -57,7 +57,7 @@ namespace DownKyi.Core.Storage.Database
                 Utils.Debugging.Console.PrintLine("Update()发生异常: {0}", e);
                 LogManager.Error("CoverDb", e);
             }
-           
+
         }
 
         /// <summary>

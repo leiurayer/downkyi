@@ -11,14 +11,8 @@ namespace DownKyi.Core.Storage.Database.Download
     public class DownloadDb
     {
         private const string key = "bdb8eb69-3698-4af9-b722-9312d0fba623";
-        private readonly DbHelper dbHelper = new DbHelper(StorageManager.GetDownload());
-        //private readonly DbHelper dbHelper = new DbHelper(StorageManager.GetDownload(), key);
+        private readonly DbHelper dbHelper = new DbHelper(StorageManager.GetDownload(), key);
         protected string tableName = "download";
-
-        //public DownloadDb()
-        //{
-        //    CreateTable();
-        //}
 
         /// <summary>
         /// 关闭数据库连接
@@ -72,7 +66,18 @@ namespace DownKyi.Core.Storage.Database.Download
         /// </summary>
         /// <param name="sql"></param>
         /// <returns></returns>
-        public Dictionary<string, object> QueryAll(string sql)
+        public Dictionary<string, object> QueryAll()
+        {
+            string sql = $"select * from {tableName}";
+            return Query(sql);
+        }
+
+        /// <summary>
+        /// 查询数据
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <returns></returns>
+        private Dictionary<string, object> Query(string sql)
         {
             Dictionary<string, object> objects = new Dictionary<string, object>();
 
@@ -80,7 +85,16 @@ namespace DownKyi.Core.Storage.Database.Download
             {
                 while (reader.Read())
                 {
-                    objects.Add((string)reader["id"], reader["data"]);
+                    // 读取字节数组
+                    byte[] array = (byte[])reader["data"];
+                    // 定义一个流
+                    MemoryStream stream = new MemoryStream(null);
+                    //定义一个格式化器
+                    BinaryFormatter formatter = new BinaryFormatter();
+                    // 反序列化
+                    object obj = formatter.Deserialize(stream);
+
+                    objects.Add((string)reader["id"], obj);
                 }
             });
             return objects;
@@ -92,7 +106,7 @@ namespace DownKyi.Core.Storage.Database.Download
         /// </summary>
         protected void CreateTable()
         {
-            string sql = $"create table if not exists {tableName} (id varchar(255), data blob)";
+            string sql = $"create table if not exists {tableName} (id varchar(255) unique, data blob)";
             dbHelper.ExecuteNonQuery(sql);
         }
     }
