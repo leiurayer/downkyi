@@ -92,6 +92,7 @@
     <Compile Include="Models\Downloaded.cs" />
     <Compile Include="Models\Downloading.cs" />
     <Compile Include="Models\DownloadStatus.cs" />
+    <Compile Include="Services\Download\DownloadStorageService.cs" />
     <Compile Include="ViewModels\PageViewModels\Favorites.cs" />
     <Compile Include="ViewModels\PageViewModels\FavoritesMedia.cs" />
     <Compile Include="ViewModels\Settings\DisplayFileNamePart.cs" />
@@ -167,6 +168,9 @@
     </Compile>
     <Compile Include="Views\Settings\ViewVideo.xaml.cs">
       <DependentUpon>ViewVideo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SplashWindow.xaml.cs">
+      <DependentUpon>SplashWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Toolbox\ViewBiliHelper.xaml.cs">
       <DependentUpon>ViewBiliHelper.xaml</DependentUpon>
@@ -317,6 +321,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Settings\ViewVideo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SplashWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

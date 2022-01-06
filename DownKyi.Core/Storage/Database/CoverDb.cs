@@ -79,7 +79,6 @@ namespace DownKyi.Core.Storage.Database
         {
             string sql = $"select * from {tableName} where url glob '{url}'";
             List<Cover> query = Query(sql);
-
             return query.Count > 0 ? query[0] : null;
         }
 
@@ -91,16 +90,8 @@ namespace DownKyi.Core.Storage.Database
         public Cover QueryByMd5(string md5)
         {
             string sql = $"select * from {tableName} where md5 glob '{md5}'";
-            var query = Query(sql);
-
-            if (query.Count > 0)
-            {
-                return query[0];
-            }
-            else
-            {
-                return null;
-            }
+            List<Cover> query = Query(sql);
+            return query.Count > 0 ? query[0] : null;
         }
 
         /// <summary>

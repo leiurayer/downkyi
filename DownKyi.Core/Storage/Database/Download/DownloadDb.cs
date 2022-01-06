@@ -57,7 +57,60 @@ namespace DownKyi.Core.Storage.Database.Download
             catch (Exception e)
             {
                 Utils.Debugging.Console.PrintLine("Insert()发生异常: {0}", e);
-                LogManager.Error("DownloadingDb", e);
+                LogManager.Error($"{tableName}", e);
+            }
+        }
+
+        /// <summary>
+        /// 删除uuid对应的数据
+        /// </summary>
+        /// <param name="uuid"></param>
+        public void Delete(string uuid)
+        {
+            try
+            {
+                string sql = $"delete from {tableName} where id glob '{uuid}'";
+                dbHelper.ExecuteNonQuery(sql);
+            }
+            catch (Exception e)
+            {
+                Utils.Debugging.Console.PrintLine("Delete()发生异常: {0}", e);
+                LogManager.Error($"{tableName}", e);
+            }
+        }
+
+        public void Update(string uuid, object obj)
+        {
+            // 定义一个流
+            Stream stream = new MemoryStream();
+            // 定义一个格式化器
+            BinaryFormatter formatter = new BinaryFormatter();
+            // 序列化
+            formatter.Serialize(stream, obj);
+
+            byte[] array = null;
+            array = new byte[stream.Length];
+
+            //将二进制流写入数组
+            stream.Position = 0;
+            stream.Read(array, 0, (int)stream.Length);
+
+            //关闭流
+            stream.Close();
+
+            try
+            {
+                string sql = $"update {tableName} set data=@data where id glob @id";
+                dbHelper.ExecuteNonQuery(sql, new Action<SQLiteParameterCollection>((para) =>
+                {
+                    para.Add("@id", DbType.String).Value = uuid;
+                    para.Add("@data", DbType.Binary).Value = array;
+                }));
+            }
+            catch (Exception e)
+            {
+                Utils.Debugging.Console.PrintLine("Insert()发生异常: {0}", e);
+                LogManager.Error($"{tableName}", e);
             }
         }
 
@@ -70,6 +123,27 @@ namespace DownKyi.Core.Storage.Database.Download
         {
             string sql = $"select * from {tableName}";
             return Query(sql);
+        }
+
+        /// <summary>
+        /// 查询uuid对应的数据
+        /// </summary>
+        /// <param name="uuid"></param>
+        /// <returns></returns>
+        public object QueryById(string uuid)
+        {
+            string sql = $"select * from {tableName} where id glob '{uuid}'";
+            Dictionary<string, object> query = Query(sql);
+
+            if (query.ContainsKey(uuid))
+            {
+                query.TryGetValue(uuid, out object obj);
+                return obj;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         /// <summary>
@@ -88,7 +162,7 @@ namespace DownKyi.Core.Storage.Database.Download
                     // 读取字节数组
                     byte[] array = (byte[])reader["data"];
                     // 定义一个流
-                    MemoryStream stream = new MemoryStream(null);
+                    MemoryStream stream = new MemoryStream(array);
                     //定义一个格式化器
                     BinaryFormatter formatter = new BinaryFormatter();
                     // 反序列化

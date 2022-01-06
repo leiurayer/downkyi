@@ -10,14 +10,14 @@ namespace DownKyi.Models
         public Downloading() : base()
         {
             // 初始化下载的文件列表
-            DownloadFiles = new List<string>();
+            DownloadFiles = new Dictionary<string, string>();
         }
 
         // Aria相关
         public string Gid { get; set; }
 
         // 下载的文件
-        public List<string> DownloadFiles { get; private set; }
+        public Dictionary<string, string> DownloadFiles { get; set; }
 
         // 视频类别
         public PlayStreamType PlayStreamType { get; set; }
