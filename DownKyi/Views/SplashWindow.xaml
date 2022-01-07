@@ -5,7 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:DownKyi.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Title="SplashWindow"
+    Title=""
     Width="500"
     Height="300"
     ResizeMode="NoResize"
@@ -14,7 +14,7 @@
     <WindowChrome.WindowChrome>
         <WindowChrome
             CaptionHeight="0"
-            CornerRadius="0"
+            CornerRadius="20"
             GlassFrameThickness="0"
             NonClientFrameEdges="None"
             ResizeBorderThickness="4"
@@ -24,7 +24,7 @@
         <TextBlock
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
-            FontSize="28"
+            FontSize="30"
             Foreground="White"
             Text="Welcome to DownKyi!" />
     </Grid>
