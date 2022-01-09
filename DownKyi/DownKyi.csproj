@@ -459,6 +459,19 @@
     </Content>
     <Resource Include="Resources\checked.png" />
     <Resource Include="Resources\nodata02.png" />
+    <Resource Include="Resources\backgound\9-绿荫秘境.png" />
+    <Resource Include="Resources\sex\female.png" />
+    <Resource Include="Resources\sex\male.png" />
+    <Resource Include="Resources\level\lv0.png" />
+    <Resource Include="Resources\level\lv1.png" />
+    <Resource Include="Resources\level\lv2.png" />
+    <Resource Include="Resources\level\lv3.png" />
+    <Resource Include="Resources\level\lv4.png" />
+    <Resource Include="Resources\level\lv5.png" />
+    <Resource Include="Resources\level\lv6.png" />
+    <Resource Include="Resources\level\lv7.png" />
+    <Resource Include="Resources\level\lv8.png" />
+    <Resource Include="Resources\level\lv9.png" />
     <Content Include="打不开DownKyi请点我.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
