@@ -2,9 +2,422 @@
     x:Class="DownKyi.Views.ViewMySpace"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:prism="http://prismlibrary.com/"
     prism:ViewModelLocator.AutoWireViewModel="True">
+    <UserControl.Resources>
+        <Style x:Key="SpaceStyle" TargetType="{x:Type ListBox}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ListBox}">
+                        <Border
+                            Padding="50,0"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                            <UniformGrid Columns="6" IsItemsHost="True" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
     <Grid>
-        <TextBlock>我的用户空间</TextBlock>
+        <Grid Visibility="{Binding ViewVisibility}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="300" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Image
+                Grid.Row="0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Source="{Binding Background}"
+                Stretch="UniformToFill" />
+
+            <Grid Grid.Row="0" VerticalAlignment="Bottom">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="20" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Image
+                    Grid.Column="0"
+                    Width="64"
+                    Height="64"
+                    Source="{Binding Header}">
+                    <Image.Clip>
+                        <!--  设置图像如何显示  -->
+                        <EllipseGeometry
+                            Center="32,32"
+                            RadiusX="32"
+                            RadiusY="32" />
+                    </Image.Clip>
+                </Image>
+                <!--  添加一个圆框在头像上，做边框  -->
+                <Ellipse
+                    Grid.Column="0"
+                    Width="66"
+                    Height="66"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Stroke="{DynamicResource BrushImageBorder2}"
+                    StrokeThickness="2" />
+
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <StackPanel
+                        Grid.Row="0"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal">
+                        <TextBlock
+                            FontSize="20"
+                            FontWeight="Bold"
+                            Foreground="{DynamicResource BrushText}"
+                            Text="{Binding UserName}" />
+                        <Image
+                            Width="18"
+                            Height="18"
+                            Margin="5,0,0,0"
+                            Source="{Binding Sex}" />
+                        <Image
+                            Width="28"
+                            Height="16"
+                            Margin="5,0,0,0"
+                            Source="{Binding Level}" />
+                        <Border
+                            Height="17"
+                            Margin="5,0,0,0"
+                            Padding="5,0"
+                            Background="{DynamicResource BrushSecond}"
+                            CornerRadius="3"
+                            Visibility="{Binding VipTypeVisibility}">
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                FontSize="10"
+                                Foreground="{DynamicResource BrushText}"
+                                Text="{Binding VipType}" />
+                        </Border>
+                    </StackPanel>
+
+                    <TextBlock
+                        Grid.Row="1"
+                        VerticalAlignment="Center"
+                        FontSize="14"
+                        Foreground="{DynamicResource BrushText}"
+                        Text="{Binding Sign}" />
+                </Grid>
+            </Grid>
+
+            <!--  内容  -->
+            <Grid Grid.Row="1" Visibility="{Binding ContentVisibility}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*" />
+                    <RowDefinition Height="3*" />
+                    <RowDefinition Height="3*" />
+                    <RowDefinition Height="1*" />
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel
+                        Grid.Row="0"
+                        Margin="20,20,0,0"
+                        VerticalAlignment="Top"
+                        Orientation="Horizontal">
+                        <!--  硬币&B币  -->
+                        <ContentControl Width="20" Height="20">
+                            <Path
+                                Width="{Binding CoinIcon.Width}"
+                                Height="{Binding CoinIcon.Height}"
+                                Data="{Binding CoinIcon.Data}"
+                                Fill="{Binding CoinIcon.Fill}"
+                                Stretch="Uniform" />
+                        </ContentControl>
+                        <TextBlock
+                            Margin="5,0,0,0"
+                            VerticalAlignment="Center"
+                            Text="{Binding Coin}" />
+
+                        <ContentControl
+                            Width="20"
+                            Height="20"
+                            Margin="20,0,0,0">
+                            <Path
+                                Width="{Binding MoneyIcon.Width}"
+                                Height="{Binding MoneyIcon.Height}"
+                                Data="{Binding MoneyIcon.Data}"
+                                Fill="{Binding MoneyIcon.Fill}"
+                                Stretch="Uniform" />
+                        </ContentControl>
+                        <TextBlock
+                            Margin="5,0,0,0"
+                            VerticalAlignment="Center"
+                            Text="{Binding Money}" />
+
+                        <!--  绑定邮箱&手机  -->
+                        <ContentControl
+                            Width="20"
+                            Height="20"
+                            Margin="20,0,0,0"
+                            ToolTip="已绑定邮箱">
+                            <Path
+                                Width="{Binding BindingEmail.Width}"
+                                Height="{Binding BindingEmail.Height}"
+                                Data="{Binding BindingEmail.Data}"
+                                Fill="{Binding BindingEmail.Fill}"
+                                Stretch="Uniform" />
+                        </ContentControl>
+                        <ContentControl
+                            Width="20"
+                            Height="20"
+                            Margin="5,0,0,0"
+                            ToolTip="已绑定手机">
+                            <Path
+                                Width="{Binding BindingPhone.Width}"
+                                Height="{Binding BindingPhone.Height}"
+                                Data="{Binding BindingPhone.Data}"
+                                Fill="{Binding BindingPhone.Fill}"
+                                Stretch="Uniform" />
+                        </ContentControl>
+                    </StackPanel>
+
+                    <!--  等级  -->
+                    <StackPanel
+                        Grid.Column="2"
+                        Margin="20,20,20,0"
+                        Orientation="Vertical">
+                        <Grid>
+                            <TextBlock
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                FontSize="16"
+                                Foreground="{DynamicResource BrushTextDark}"
+                                Text="{Binding LevelText}" />
+                            <TextBlock
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
+                                FontSize="12"
+                                Foreground="{DynamicResource BrushTextGrey}"
+                                Text="{Binding CurrentExp}" />
+                        </Grid>
+
+                        <ProgressBar
+                            Name="nameExpProgress"
+                            Height="2"
+                            Margin="0,5,0,0"
+                            BorderBrush="{x:Null}"
+                            BorderThickness="0"
+                            Maximum="{Binding MaxExp}"
+                            Minimum="0"
+                            Value="{Binding ExpProgress}">
+                            <ProgressBar.Style>
+                                <Style TargetType="{x:Type ProgressBar}">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate>
+                                                <Grid>
+                                                    <Border
+                                                        Name="PART_Track"
+                                                        Background="{DynamicResource BrushProgressTrack}"
+                                                        BorderThickness="0" />
+                                                    <Border
+                                                        Name="PART_Indicator"
+                                                        HorizontalAlignment="Left"
+                                                        Background="{DynamicResource BrushProgressIndicator}"
+                                                        BorderThickness="0" />
+                                                </Grid>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </ProgressBar.Style>
+                        </ProgressBar>
+                    </StackPanel>
+                </Grid>
+
+                <ListBox
+                    Grid.Row="1"
+                    BorderBrush="{x:Null}"
+                    BorderThickness="0"
+                    ItemsSource="{Binding StatusList}"
+                    SelectionMode="Single"
+                    Style="{StaticResource SpaceStyle}">
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListBoxItem}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                        <StackPanel
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Orientation="Vertical">
+                                            <TextBlock
+                                                HorizontalAlignment="Center"
+                                                FontSize="16"
+                                                Foreground="{DynamicResource BrushTextDark}"
+                                                Text="{Binding Subtitle}" />
+                                            <TextBlock
+                                                Margin="0,15,0,0"
+                                                HorizontalAlignment="Center"
+                                                FontSize="14"
+                                                Foreground="{DynamicResource BrushTextGrey}"
+                                                Text="{Binding Title}" />
+                                        </StackPanel>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                </ListBox>
+
+                <ListBox
+                    x:Name="namePackageList"
+                    Grid.Row="2"
+                    BorderBrush="{x:Null}"
+                    BorderThickness="0"
+                    ItemsSource="{Binding PackageList}"
+                    SelectedIndex="{Binding SelectedPackage}"
+                    SelectionMode="Single"
+                    Style="{StaticResource SpaceStyle}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding PackageListCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListBoxItem}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                        <StackPanel
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Cursor="Hand"
+                                            Orientation="Vertical">
+                                            <Border
+                                                Width="24"
+                                                Height="24"
+                                                Background="{DynamicResource BrushBackground}">
+                                                <Path
+                                                    Width="{Binding Image.Width}"
+                                                    Height="{Binding Image.Height}"
+                                                    Data="{Binding Image.Data}"
+                                                    Fill="{Binding Image.Fill}"
+                                                    Stretch="Uniform" />
+                                            </Border>
+                                            <TextBlock
+                                                Margin="0,15,0,0"
+                                                VerticalAlignment="Center"
+                                                FontSize="14"
+                                                Foreground="{DynamicResource BrushTextGrey}"
+                                                Text="{Binding Title}" />
+                                        </StackPanel>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                </ListBox>
+
+            </Grid>
+        </Grid>
+
+        <!--  加载gif  -->
+        <StackPanel
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Orientation="Vertical"
+            Visibility="{Binding LoadingVisibility}">
+            <ContentControl
+                Width="40"
+                Height="40"
+                Content="{Binding Loading}" />
+            <TextBlock
+                Margin="0,10,0,0"
+                FontSize="14"
+                Foreground="{DynamicResource BrushTextDark}"
+                Text="{DynamicResource MySpaceWait}" />
+        </StackPanel>
+
+        <!--  没有数据提示  -->
+        <Image
+            Width="256"
+            Height="256"
+            Source="/DownKyi;component/Resources/no-data.png"
+            Visibility="{Binding NoDataVisibility}" />
+
+        <!--  顶部导航  -->
+        <Grid VerticalAlignment="Top" Background="{Binding TopNavigationBg}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="150" />
+            </Grid.ColumnDefinitions>
+
+            <Button
+                Grid.Column="0"
+                Margin="10,5,0,5"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Command="{Binding BackSpaceCommand}"
+                Style="{StaticResource ImageBtnStyle}">
+                <StackPanel Orientation="Horizontal">
+                    <ContentControl Width="24" Height="24">
+                        <Path
+                            Width="{Binding ArrowBack.Width}"
+                            Height="{Binding ArrowBack.Height}"
+                            Data="{Binding ArrowBack.Data}"
+                            Fill="{Binding ArrowBack.Fill}"
+                            Stretch="None" />
+                    </ContentControl>
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        FontSize="16"
+                        Foreground="{Binding ArrowBack.Fill}"
+                        Text="{DynamicResource MySpace}" />
+                </StackPanel>
+            </Button>
+
+            <Button
+                Grid.Column="2"
+                Margin="0,5,10,5"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Command="{Binding LogoutCommand}"
+                Style="{StaticResource ImageBtnStyle}">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock
+                        Margin="10,0"
+                        VerticalAlignment="Center"
+                        FontSize="16"
+                        Foreground="{Binding Logout.Fill}"
+                        Text="{DynamicResource Logout}" />
+                    <ContentControl Width="24" Height="24">
+                        <Path
+                            Width="{Binding Logout.Width}"
+                            Height="{Binding Logout.Height}"
+                            Data="{Binding Logout.Data}"
+                            Fill="{Binding Logout.Fill}"
+                            Stretch="Uniform" />
+                    </ContentControl>
+                </StackPanel>
+            </Button>
+        </Grid>
     </Grid>
 </UserControl>

@@ -1,7 +1,7 @@
 ﻿using DownKyi.Core.BiliApi.Models;
 using Newtonsoft.Json;
 
-namespace DownKyi.Core.BiliApi.Login.Models
+namespace DownKyi.Core.BiliApi.Users.Models
 {
     // https://api.bilibili.com/x/web-interface/nav
     [JsonObject]

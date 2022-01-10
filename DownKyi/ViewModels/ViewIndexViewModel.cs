@@ -1,5 +1,5 @@
 ﻿using DownKyi.Core.BiliApi.BiliUtils;
-using DownKyi.Core.BiliApi.Login;
+using DownKyi.Core.BiliApi.Users;
 using DownKyi.Core.Logging;
 using DownKyi.Core.Settings;
 using DownKyi.Core.Settings.Models;
@@ -26,68 +26,67 @@ namespace DownKyi.ViewModels
         private Visibility loginPanelVisibility;
         public Visibility LoginPanelVisibility
         {
-            get { return loginPanelVisibility; }
-            set { SetProperty(ref loginPanelVisibility, value); }
+            get => loginPanelVisibility;
+            set => SetProperty(ref loginPanelVisibility, value);
         }
 
         private string userName;
         public string UserName
         {
-            get { return userName; }
-            set { SetProperty(ref userName, value); }
+            get => userName;
+            set => SetProperty(ref userName, value);
         }
 
         private BitmapImage header;
         public BitmapImage Header
         {
-            get { return header; }
-            set { SetProperty(ref header, value); }
+            get => header;
+            set => SetProperty(ref header, value);
         }
 
         private VectorImage textLogo;
         public VectorImage TextLogo
         {
-            get { return textLogo; }
-            set { SetProperty(ref textLogo, value); }
+            get => textLogo;
+            set => SetProperty(ref textLogo, value);
         }
 
         private string inputText;
         public string InputText
         {
-            get { return inputText; }
-            set { SetProperty(ref inputText, value); }
+            get => inputText;
+            set => SetProperty(ref inputText, value);
         }
 
         private VectorImage generalSearch;
         public VectorImage GeneralSearch
         {
-            get { return generalSearch; }
-            set { SetProperty(ref generalSearch, value); }
+            get => generalSearch;
+            set => SetProperty(ref generalSearch, value);
         }
 
         private VectorImage settings;
         public VectorImage Settings
         {
-            get { return settings; }
-            set { SetProperty(ref settings, value); }
+            get => settings;
+            set => SetProperty(ref settings, value);
         }
 
         private VectorImage downloadManager;
         public VectorImage DownloadManager
         {
-            get { return downloadManager; }
-            set { SetProperty(ref downloadManager, value); }
+            get => downloadManager;
+            set => SetProperty(ref downloadManager, value);
         }
 
         private VectorImage toolbox;
         public VectorImage Toolbox
         {
-            get { return toolbox; }
-            set { SetProperty(ref toolbox, value); }
+            get => toolbox;
+            set => SetProperty(ref toolbox, value);
         }
 
         #endregion
-
 
         public ViewIndexViewModel(IEventAggregator eventAggregator) : base(eventAggregator)
         {
@@ -315,7 +314,7 @@ namespace DownKyi.ViewModels
             await Task.Run(new Action(() =>
             {
                 // 获取用户信息
-                var userInfo = LoginInfo.GetUserInfoForNavigation();
+                var userInfo = UserInfo.GetUserInfoForNavigation();
                 if (userInfo != null)
                 {
                     SettingsManager.GetInstance().SetUserInfo(new UserInfoSettings

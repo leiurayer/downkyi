@@ -32,6 +32,12 @@
     <system:String x:Key="LoginSuccessful">登录成功！(3秒后自动回到主页)</system:String>
     <system:String x:Key="LoginFailed">未保存登录信息！(3秒后自动回到主页)</system:String>
 
+    <!--  MySpace  -->
+    <system:String x:Key="MySpace">我的个人空间</system:String>
+    <system:String x:Key="Logout">退出登录</system:String>
+    <system:String x:Key="MySpaceWait">请稍等，马上就好~</system:String>
+    <system:String x:Key="Level">等级</system:String>
+
     <!--  VideoDetail  -->
     <system:String x:Key="CopyCover">复制封面图片</system:String>
     <system:String x:Key="CopyCoverUrl">复制封面URL</system:String>

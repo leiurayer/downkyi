@@ -114,6 +114,7 @@ namespace DownKyi.ViewModels
 
             #region 属性初始化
 
+            // 初始化loading gif
             Loading = new GifImage(Properties.Resources.loading);
             Loading.StartAnimate();
             LoadingVisibility = Visibility.Collapsed;

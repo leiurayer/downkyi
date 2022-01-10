@@ -18,6 +18,9 @@
     <Color x:Key="ColorPrimaryTranslucent">#C800A1D6</Color>
     <Color x:Key="ColorPrimaryTranslucent2">#7F00A1D6</Color>
     <Color x:Key="ColorPrimaryTranslucent3">#3300A1D6</Color>
+
+    <Color x:Key="ColorSecond">#FFFB7299</Color>
+
     <Color x:Key="ColorForeground">#FF00A1D6</Color>
     <Color x:Key="ColorBackground">#FFFFFFFF</Color>
     <Color x:Key="ColorForegroundDark">#FFFFFFFF</Color>
@@ -30,19 +33,27 @@
     <Color x:Key="ColorBackgroundGreyTranslucent3">#33BDBDBD</Color>
 
     <Color x:Key="ColorMask">#7F000000</Color>
+    <Color x:Key="ColorMask100">#33999999</Color>
 
     <Color x:Key="ColorTabHeaderGrey">#FFF4F4F4</Color>
 
     <Color x:Key="ColorHeaderGrey">#FFF4F4F4</Color>
+
     <Color x:Key="ColorBorder">#FF999999</Color>
     <Color x:Key="ColorBorderTranslucent">#7F999999</Color>
 
+    <Color x:Key="ColorProgressTrack">#FFE4E4E4</Color>
+    <Color x:Key="ColorProgressIndicator">#FFF3CB85</Color>
+
     <Color x:Key="ColorImageBorder">#7FD0D0D0</Color>
+    <Color x:Key="ColorImageBorder2">#7FFFFFFF</Color>
     <Color x:Key="ColorImageBackground">#7FD0D0D0</Color>
 
     <Color x:Key="ColorText">white</Color>
     <Color x:Key="ColorTextDark">black</Color>
     <Color x:Key="ColorTextGrey">#FF999999</Color>
     <Color x:Key="ColorTextGrey2">#FF757575</Color>
+
+    <Color x:Key="ColorMoney">#FFFFAE00</Color>
 
 </ResourceDictionary>

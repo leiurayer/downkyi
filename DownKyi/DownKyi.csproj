@@ -95,6 +95,7 @@
     <Compile Include="Services\Download\DownloadStorageService.cs" />
     <Compile Include="ViewModels\PageViewModels\Favorites.cs" />
     <Compile Include="ViewModels\PageViewModels\FavoritesMedia.cs" />
+    <Compile Include="ViewModels\PageViewModels\SpaceItem.cs" />
     <Compile Include="ViewModels\Settings\DisplayFileNamePart.cs" />
     <Compile Include="Models\ParseScopeDisplay.cs" />
     <Compile Include="ViewModels\PageViewModels\TabHeader.cs" />

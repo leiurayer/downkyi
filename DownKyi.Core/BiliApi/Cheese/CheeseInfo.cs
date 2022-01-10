@@ -27,7 +27,7 @@ namespace DownKyi.Core.BiliApi.Cheese
 
             try
             {
-                var cheese = JsonConvert.DeserializeObject<CheeseViewOrigin>(response);
+                CheeseViewOrigin cheese = JsonConvert.DeserializeObject<CheeseViewOrigin>(response);
                 if (cheese != null) { return cheese.Data; }
                 else { return null; }
             }
@@ -54,7 +54,7 @@ namespace DownKyi.Core.BiliApi.Cheese
 
             try
             {
-                var cheese = JsonConvert.DeserializeObject<CheeseEpisodeListOrigin>(response);
+                CheeseEpisodeListOrigin cheese = JsonConvert.DeserializeObject<CheeseEpisodeListOrigin>(response);
                 if (cheese != null) { return cheese.Data; }
                 else { return null; }
             }
