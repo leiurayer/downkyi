@@ -40,7 +40,7 @@
                         VerticalAlignment="Center"
                         FontSize="16"
                         Foreground="{DynamicResource BrushTextDark}"
-                        Text="{DynamicResource Favorites}" />
+                        Text="{DynamicResource PublicFavorites}" />
                 </StackPanel>
             </Button>
         </Grid>

@@ -385,21 +385,21 @@ namespace DownKyi.ViewModels
             CurrentExp = "--/--";
 
             StatusList.Clear();
-            StatusList.Add(new SpaceItem { Title = "关注数", Subtitle = "--" });
-            StatusList.Add(new SpaceItem { Title = "悄悄关注数", Subtitle = "--" });
-            StatusList.Add(new SpaceItem { Title = "粉丝数", Subtitle = "--" });
-            StatusList.Add(new SpaceItem { Title = "黑名单数", Subtitle = "--" });
-            StatusList.Add(new SpaceItem { Title = "节操值", Subtitle = "--" });
-            StatusList.Add(new SpaceItem { Title = "封禁状态", Subtitle = "N/A" });
+            StatusList.Add(new SpaceItem { Title = DictionaryResource.GetString("Following"), Subtitle = "--" });
+            StatusList.Add(new SpaceItem { Title = DictionaryResource.GetString("Whisper"), Subtitle = "--" });
+            StatusList.Add(new SpaceItem { Title = DictionaryResource.GetString("Follower"), Subtitle = "--" });
+            StatusList.Add(new SpaceItem { Title = DictionaryResource.GetString("Black"), Subtitle = "--" });
+            StatusList.Add(new SpaceItem { Title = DictionaryResource.GetString("Moral"), Subtitle = "--" });
+            StatusList.Add(new SpaceItem { Title = DictionaryResource.GetString("Silence"), Subtitle = "N/A" });
 
             PackageList.Clear();
-            PackageList.Add(new SpaceItem { Image = NormalIcon.Instance().FavoriteOutline, Title = "收藏夹" });
-            PackageList.Add(new SpaceItem { Image = NormalIcon.Instance().BangumiFollow, Title = "我的订阅" });
-            PackageList.Add(new SpaceItem { Image = NormalIcon.Instance().Toview, Title = "稍后再看" });
-            PackageList.Add(new SpaceItem { Image = NormalIcon.Instance().History, Title = "历史记录" });
+            PackageList.Add(new SpaceItem { Image = NormalIcon.Instance().FavoriteOutline, Title = DictionaryResource.GetString("Favorites") });
+            PackageList.Add(new SpaceItem { Image = NormalIcon.Instance().Subscription, Title = DictionaryResource.GetString("Subscription") });
+            PackageList.Add(new SpaceItem { Image = NormalIcon.Instance().ToView, Title = DictionaryResource.GetString("ToView") });
+            PackageList.Add(new SpaceItem { Image = NormalIcon.Instance().History, Title = DictionaryResource.GetString("History") });
             NormalIcon.Instance().FavoriteOutline.Fill = DictionaryResource.GetColor("ColorPrimary");
-            NormalIcon.Instance().BangumiFollow.Fill = DictionaryResource.GetColor("ColorPrimary");
-            NormalIcon.Instance().Toview.Fill = DictionaryResource.GetColor("ColorPrimary");
+            NormalIcon.Instance().Subscription.Fill = DictionaryResource.GetColor("ColorPrimary");
+            NormalIcon.Instance().ToView.Fill = DictionaryResource.GetColor("ColorPrimary");
             NormalIcon.Instance().History.Fill = DictionaryResource.GetColor("ColorPrimary");
 
             SelectedPackage = -1;
@@ -493,9 +493,13 @@ namespace DownKyi.ViewModels
                     StatusList[4].Subtitle = myInfo.Moral.ToString();
                     // 封禁状态                   
                     if (myInfo.Silence == 0)
-                    { StatusList[5].Subtitle = "正常"; }
+                    {
+                        StatusList[5].Subtitle = DictionaryResource.GetString("Normal");
+                    }
                     else if (myInfo.Silence == 1)
-                    { StatusList[5].Subtitle = "封停"; }
+                    {
+                        StatusList[5].Subtitle = DictionaryResource.GetString("Ban");
+                    }
                 }
                 else
                 {

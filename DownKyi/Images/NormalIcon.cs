@@ -196,7 +196,7 @@
                 Fill = "#FF000000"
             };
 
-            BangumiFollow = new VectorImage
+            Subscription = new VectorImage
             {
                 Height = 24,
                 Width = 24,
@@ -213,7 +213,7 @@
                 Fill = "#FF000000"
             };
 
-            Toview = new VectorImage
+            ToView = new VectorImage
             {
                 Height = 24,
                 Width = 24,
@@ -257,8 +257,8 @@
         public VectorImage BindingPhone { get; private set; }
 
         public VectorImage FavoriteOutline { get; private set; }
-        public VectorImage BangumiFollow { get; private set; }
-        public VectorImage Toview { get; private set; }
+        public VectorImage Subscription { get; private set; }
+        public VectorImage ToView { get; private set; }
         public VectorImage History { get; private set; }
     }
 }
