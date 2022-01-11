@@ -93,6 +93,7 @@
     <Compile Include="Models\Downloading.cs" />
     <Compile Include="Models\DownloadStatus.cs" />
     <Compile Include="Services\Download\DownloadStorageService.cs" />
+    <Compile Include="Services\SearchService.cs" />
     <Compile Include="ViewModels\PageViewModels\Favorites.cs" />
     <Compile Include="ViewModels\PageViewModels\FavoritesMedia.cs" />
     <Compile Include="ViewModels\PageViewModels\SpaceItem.cs" />
