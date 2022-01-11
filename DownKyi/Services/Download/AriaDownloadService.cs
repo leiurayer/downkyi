@@ -394,7 +394,28 @@ namespace DownKyi.Services.Download
             // 保存数据
             foreach (DownloadingItem item in downloadingList)
             {
-                item.Downloading.DownloadStatus = DownloadStatus.WAIT_FOR_DOWNLOAD;
+                switch (item.Downloading.DownloadStatus)
+                {
+                    case DownloadStatus.NOT_STARTED:
+                        break;
+                    case DownloadStatus.WAIT_FOR_DOWNLOAD:
+                        break;
+                    case DownloadStatus.PAUSE_STARTED:
+                        break;
+                    case DownloadStatus.PAUSE:
+                        break;
+                    case DownloadStatus.DOWNLOADING:
+                        // TODO 添加设置让用户选择重启后是否自动开始下载
+                        item.Downloading.DownloadStatus = DownloadStatus.WAIT_FOR_DOWNLOAD;
+                        item.Downloading.DownloadStatus = DownloadStatus.PAUSE;
+                        break;
+                    case DownloadStatus.DOWNLOAD_SUCCEED:
+                    case DownloadStatus.DOWNLOAD_FAILED:
+                        break;
+                    default:
+                        break;
+                }
+
                 item.Progress = 0;
 
                 downloadStorageService.UpdateDownloading(item);
@@ -677,6 +698,11 @@ namespace DownKyi.Services.Download
 
                 if (!isMediaSuccess || !isDanmakuSuccess || !isSubtitleSuccess || !isCover)
                 {
+                    downloading.DownloadStatusTitle = DictionaryResource.GetString("DownloadFailed");
+                    downloading.DownloadContent = string.Empty;
+                    downloading.DownloadingFileSize = string.Empty;
+                    downloading.SpeedDisplay = string.Empty;
+
                     downloading.Downloading.DownloadStatus = DownloadStatus.DOWNLOAD_FAILED;
                     downloading.StartOrPause = ButtonIcon.Instance().Retry;
                     downloading.StartOrPause.Fill = DictionaryResource.GetColor("ColorPrimary");

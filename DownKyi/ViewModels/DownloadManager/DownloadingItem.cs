@@ -20,7 +20,42 @@ namespace DownKyi.ViewModels.DownloadManager
         }
 
         // model数据
-        public Downloading Downloading { get; set; }
+        private Downloading downloading;
+        public Downloading Downloading
+        {
+            get { return downloading; }
+            set
+            {
+                downloading = value;
+
+                switch (value.DownloadStatus)
+                {
+                    case DownloadStatus.NOT_STARTED:
+                    case DownloadStatus.WAIT_FOR_DOWNLOAD:
+                        StartOrPause = ButtonIcon.Instance().Pause;
+                        break;
+                    case DownloadStatus.PAUSE_STARTED:
+                        StartOrPause = ButtonIcon.Instance().Start;
+                        break;
+                    case DownloadStatus.PAUSE:
+                        StartOrPause = ButtonIcon.Instance().Start;
+                        break;
+                    case DownloadStatus.DOWNLOADING:
+                        StartOrPause = ButtonIcon.Instance().Pause;
+                        break;
+                    case DownloadStatus.DOWNLOAD_SUCCEED:
+                        // 下载成功后会从下载列表中删除
+                        // 不会出现此分支
+                        break;
+                    case DownloadStatus.DOWNLOAD_FAILED:
+                        StartOrPause = ButtonIcon.Instance().Retry;
+                        break;
+                    default:
+                        break;
+                }
+                StartOrPause.Fill = DictionaryResource.GetColor("ColorPrimary");
+            }
+        }
 
         // 视频流链接
         public PlayUrl PlayUrl { get; set; }
