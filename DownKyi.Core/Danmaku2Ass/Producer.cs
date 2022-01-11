@@ -49,16 +49,16 @@ namespace DownKyi.Core.Danmaku2Ass
         public void ApplyFilter()
         {
             Dictionary<string, int> filterDetail = new Dictionary<string, int>() {
-                { "top_filter",0},
-                { "bottom_filter",0},
-                { "scroll_filter",0},
+                { "top_filter", 0},
+                { "bottom_filter", 0},
+                { "scroll_filter", 0},
                 //{ "custom_filter",0}
             };
 
             List<Danmaku> danmakus = Danmakus;
             //string[] orders = { "top_filter", "bottom_filter", "scroll_filter", "custom_filter" };
             string[] orders = { "top_filter", "bottom_filter", "scroll_filter" };
-            foreach (var name in orders)
+            foreach (string name in orders)
             {
                 Filter filter;
                 try

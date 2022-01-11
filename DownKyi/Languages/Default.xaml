@@ -116,6 +116,13 @@
     <system:String x:Key="DownloadedSortByOrder">按序号排序</system:String>
     <system:String x:Key="ClearAllDownloaded">清空所有记录</system:String>
 
+    <system:String x:Key="StartDownload">开始</system:String>
+    <system:String x:Key="PauseDownload">暂停</system:String>
+    <system:String x:Key="RetryDownload">重试</system:String>
+    <system:String x:Key="DeleteDownload">移除</system:String>
+    <system:String x:Key="OpenFolder">打开文件夹</system:String>
+    <system:String x:Key="OpenVideo">播放</system:String>
+
     <!--  Settings  -->
     <system:String x:Key="PressEnterToApplySettingTip">按回车键应用设置</system:String>
 

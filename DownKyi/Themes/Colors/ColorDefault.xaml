@@ -14,6 +14,8 @@
     <Color x:Key="ColorCloseBtnHover">#FFE81123</Color>
     <Color x:Key="ColorCloseBtnPressed">#FFF1707A</Color>
 
+    <Color x:Key="ColorWarning">#FFFF4D3C</Color>
+
     <Color x:Key="ColorPrimary">#FF00A1D6</Color>
     <Color x:Key="ColorPrimaryTranslucent">#C800A1D6</Color>
     <Color x:Key="ColorPrimaryTranslucent2">#7F00A1D6</Color>

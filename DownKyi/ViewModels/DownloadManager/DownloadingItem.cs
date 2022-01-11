@@ -80,6 +80,13 @@ namespace DownKyi.ViewModels.DownloadManager
             }
         }
 
+        // 操作提示
+        private string operationTip;
+        public string OperationTip
+        {
+            get => operationTip;
+            set => SetProperty(ref operationTip, value);
+        }
 
         #region 控制按钮
 
@@ -87,7 +94,14 @@ namespace DownKyi.ViewModels.DownloadManager
         public VectorImage StartOrPause
         {
             get => startOrPause;
-            set => SetProperty(ref startOrPause, value);
+            set
+            {
+                SetProperty(ref startOrPause, value);
+
+                OperationTip = value.Equals(ButtonIcon.Instance().Start) ? DictionaryResource.GetString("StartDownload")
+                    : value.Equals(ButtonIcon.Instance().Pause) ? DictionaryResource.GetString("PauseDownload")
+                    : value.Equals(ButtonIcon.Instance().Retry) ? DictionaryResource.GetString("RetryDownload") : null;
+            }
         }
 
         private VectorImage delete;

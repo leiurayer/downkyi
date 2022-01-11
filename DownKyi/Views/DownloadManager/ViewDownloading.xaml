@@ -160,47 +160,39 @@
                                         <ColumnDefinition />
                                     </Grid.ColumnDefinitions>
 
-                                    <Border
+                                    <Button
                                         Grid.Column="0"
                                         HorizontalAlignment="Right"
                                         VerticalAlignment="Center"
-                                        Background="{DynamicResource BrushBackground}"
-                                        Cursor="Hand">
-                                        <i:Interaction.Triggers>
-                                            <i:EventTrigger EventName="MouseLeftButtonUp">
-                                                <i:InvokeCommandAction Command="{Binding StartOrPauseCommand}" />
-                                            </i:EventTrigger>
-                                        </i:Interaction.Triggers>
-                                        <ContentControl>
+                                        Command="{Binding StartOrPauseCommand}"
+                                        Style="{StaticResource ImageBtnStyle}"
+                                        ToolTip="{Binding OperationTip}">
+                                        <ContentControl Width="20" Height="20">
                                             <Path
                                                 Width="{Binding StartOrPause.Width}"
                                                 Height="{Binding StartOrPause.Height}"
                                                 Data="{Binding StartOrPause.Data}"
                                                 Fill="{Binding StartOrPause.Fill}"
-                                                Stretch="UniformToFill" />
+                                                Stretch="Uniform" />
                                         </ContentControl>
-                                    </Border>
+                                    </Button>
 
-                                    <Border
+                                    <Button
                                         Grid.Column="1"
                                         HorizontalAlignment="Right"
                                         VerticalAlignment="Center"
-                                        Background="{DynamicResource BrushBackground}"
-                                        Cursor="Hand">
-                                        <i:Interaction.Triggers>
-                                            <i:EventTrigger EventName="MouseLeftButtonUp">
-                                                <i:InvokeCommandAction Command="{Binding DeleteCommand}" />
-                                            </i:EventTrigger>
-                                        </i:Interaction.Triggers>
-                                        <ContentControl>
+                                        Command="{Binding DeleteCommand}"
+                                        Style="{StaticResource ImageBtnStyle}"
+                                        ToolTip="{DynamicResource DeleteDownload}">
+                                        <ContentControl Width="20" Height="20">
                                             <Path
                                                 Width="{Binding Delete.Width}"
                                                 Height="{Binding Delete.Height}"
                                                 Data="{Binding Delete.Data}"
                                                 Fill="{Binding Delete.Fill}"
-                                                Stretch="UniformToFill" />
+                                                Stretch="Uniform" />
                                         </ContentControl>
-                                    </Border>
+                                    </Button>
                                 </Grid>
                             </Grid>
 

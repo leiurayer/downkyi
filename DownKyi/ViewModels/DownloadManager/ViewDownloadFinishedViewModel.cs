@@ -48,6 +48,9 @@ namespace DownKyi.ViewModels.DownloadManager
                 case 2:
                     App.SortDownloadedList(DownloadFinishedSort.NUMBER);
                     break;
+                default:
+                    App.SortDownloadedList(DownloadFinishedSort.DOWNLOAD);
+                    break;
             }
         }
 
@@ -60,6 +63,7 @@ namespace DownKyi.ViewModels.DownloadManager
         /// </summary>
         private void ExecuteClearAllDownloadedCommand()
         {
+            DownloadedList.Clear();
         }
 
         #endregion
