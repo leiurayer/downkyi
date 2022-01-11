@@ -27,7 +27,7 @@ namespace DownKyi.Models
         public string Uuid { get; }
 
         // 需要下载的内容
-        public Dictionary<string, bool> NeedDownloadContent { get; private set; }
+        public Dictionary<string, bool> NeedDownloadContent { get; set; }
 
         // 视频的id
         public string Bvid { get; set; }

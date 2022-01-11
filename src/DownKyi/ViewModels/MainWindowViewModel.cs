@@ -156,6 +156,17 @@ namespace DownKyi.ViewModels
                     { "Parameter", "start" }
                 };
                 regionManager.RequestNavigate("ContentRegion", ViewIndexViewModel.Tag, param);
+
+                // 关闭欢迎页
+                if (App.Dictionary.ContainsKey("SplashWindow"))
+                {
+                    Views.SplashWindow sw = App.Dictionary["SplashWindow"] as Views.SplashWindow;
+                    // 在sw的线程上关闭SplashWindow
+                    sw.Dispatcher.Invoke(() => sw.Close());
+                }
+
+                // 设置焦点
+                Application.Current.MainWindow.Activate();
             });
 
             // 顶部caption栏的点击事件，包括双击和拖动

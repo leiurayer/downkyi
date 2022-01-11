@@ -15,7 +15,9 @@ using Prism.Ioc;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
+using System.Threading;
 using System.Windows;
 
 namespace DownKyi
@@ -25,6 +27,7 @@ namespace DownKyi
     /// </summary>
     public partial class App
     {
+        public static Dictionary<string, object> Dictionary = new Dictionary<string, object>();
         public static ObservableCollection<DownloadingItem> DownloadingList { get; set; }
         public static ObservableCollection<DownloadedItem> DownloadedList { get; set; }
 
@@ -45,13 +48,91 @@ namespace DownKyi
             DownloadingList = new ObservableCollection<DownloadingItem>();
             DownloadedList = new ObservableCollection<DownloadedItem>();
 
-            // TODO 从数据库读取
+            // 下载数据存储服务
+            DownloadStorageService downloadStorageService = new DownloadStorageService();
+
+            // 从数据库读取
+            List<DownloadingItem> downloadingItems = downloadStorageService.GetDownloading();
+            List<DownloadedItem> downloadedItems = downloadStorageService.GetDownloaded();
+            DownloadingList.AddRange(downloadingItems);
+            DownloadedList.AddRange(downloadedItems);
+
+            // 下载列表发生变化时执行的任务
+            DownloadingList.CollectionChanged += new NotifyCollectionChangedEventHandler((object sender, NotifyCollectionChangedEventArgs e) =>
+            {
+                if (e.Action == NotifyCollectionChangedAction.Add)
+                {
+                    foreach (object item in e.NewItems)
+                    {
+                        if (item is DownloadingItem downloading)
+                        {
+                            //Console.WriteLine("DownloadingList添加");
+                            downloadStorageService.AddDownloading(downloading);
+                        }
+                    }
+                }
+                if (e.Action == NotifyCollectionChangedAction.Remove)
+                {
+                    foreach (object item in e.OldItems)
+                    {
+                        if (item is DownloadingItem downloading)
+                        {
+                            //Console.WriteLine("DownloadingList移除");
+                            downloadStorageService.RemoveDownloading(downloading);
+                        }
+                    }
+                }
+            });
+
+            // 下载完成列表发生变化时执行的任务
+            DownloadedList.CollectionChanged += new NotifyCollectionChangedEventHandler((object sender, NotifyCollectionChangedEventArgs e) =>
+            {
+                if (e.Action == NotifyCollectionChangedAction.Add)
+                {
+                    foreach (object item in e.NewItems)
+                    {
+                        if (item is DownloadedItem downloaded)
+                        {
+                            //Console.WriteLine("DownloadedList添加");
+                            downloadStorageService.AddDownloaded(downloaded);
+                        }
+                    }
+                }
+                if (e.Action == NotifyCollectionChangedAction.Remove)
+                {
+                    foreach (object item in e.OldItems)
+                    {
+                        if (item is DownloadedItem downloaded)
+                        {
+                            //Console.WriteLine("DownloadedList移除");
+                            downloadStorageService.RemoveDownloaded(downloaded);
+                        }
+                    }
+                }
+            });
 
             // 启动下载服务
             downloadService = new AriaDownloadService(DownloadingList, DownloadedList);
             downloadService.Start();
 
             return Container.Resolve<MainWindow>();
+        }
+
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            Thread thread = new Thread(() =>
+            {
+                SplashWindow sw = new SplashWindow();
+                // 储存
+                Dictionary["SplashWindow"] = sw;
+                // 不能用Show
+                sw.ShowDialog();
+            });
+            // 设置单线程
+            thread.SetApartmentState(ApartmentState.STA);
+            thread.Start();
+
+            base.OnStartup(e);
         }
 
         protected override void OnExit(ExitEventArgs e)

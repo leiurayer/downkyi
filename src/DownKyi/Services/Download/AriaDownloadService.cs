@@ -125,8 +125,18 @@ namespace DownKyi.Services.Download
             // 下载文件名
             string fileName = Guid.NewGuid().ToString("N");
 
-            // 记录本次下载的文件
-            downloading.Downloading.DownloadFiles.Add(fileName);
+            string key = $"{downloadVideo.Id}_{downloadVideo.Codecs}";
+            if (downloading.Downloading.DownloadFiles.ContainsKey(key))
+            {
+                // 如果存在，表示下载过，
+                // 则继续使用上次下载的文件名
+                fileName = downloading.Downloading.DownloadFiles[key];
+            }
+            else
+            {
+                // 记录本次下载的文件
+                downloading.Downloading.DownloadFiles.Add(key, fileName);
+            }
 
             // 开始下载
             DownloadResult downloadStatus = DownloadByAria(downloading, urls, path, fileName);
@@ -173,7 +183,10 @@ namespace DownKyi.Services.Download
                 File.Copy(cover, fileName, true);
 
                 // 记录本次下载的文件
-                downloading.Downloading.DownloadFiles.Add(fileName);
+                if (!downloading.Downloading.DownloadFiles.ContainsKey(coverUrl))
+                {
+                    downloading.Downloading.DownloadFiles.Add(coverUrl, fileName);
+                }
 
                 return fileName;
             }
@@ -204,7 +217,10 @@ namespace DownKyi.Services.Download
             string assFile = $"{downloading.DownloadBase.FilePath}.ass";
 
             // 记录本次下载的文件
-            downloading.Downloading.DownloadFiles.Add(assFile);
+            if (!downloading.Downloading.DownloadFiles.ContainsKey("danmaku"))
+            {
+                downloading.Downloading.DownloadFiles.Add("danmaku", assFile);
+            }
 
             int screenWidth = SettingsManager.GetInstance().GetDanmakuScreenWidth();
             int screenHeight = SettingsManager.GetInstance().GetDanmakuScreenHeight();
@@ -272,7 +288,10 @@ namespace DownKyi.Services.Download
                     File.WriteAllText(srtFile, subRip.SrtString);
 
                     // 记录本次下载的文件
-                    downloading.Downloading.DownloadFiles.Add(srtFile);
+                    if (!downloading.Downloading.DownloadFiles.ContainsKey("subtitle"))
+                    {
+                        downloading.Downloading.DownloadFiles.Add("subtitle", srtFile);
+                    }
 
                     srtFiles.Add(srtFile);
                 }
@@ -345,6 +364,9 @@ namespace DownKyi.Services.Download
                 return;
             }
 
+            // 设置下载状态
+            downloading.Downloading.DownloadStatus = DownloadStatus.DOWNLOADING;
+
             // 解析
             switch (downloading.Downloading.PlayStreamType)
             {
@@ -367,8 +389,18 @@ namespace DownKyi.Services.Download
         /// </summary>
         public void End()
         {
-            // TODO
+            // 下载数据存储服务
+            DownloadStorageService downloadStorageService = new DownloadStorageService();
             // 保存数据
+            foreach (DownloadingItem item in downloadingList)
+            {
+                item.Downloading.DownloadStatus = DownloadStatus.WAIT_FOR_DOWNLOAD;
+                downloadStorageService.UpdateDownloading(item);
+            }
+            foreach (DownloadedItem item in downloadedList)
+            {
+                downloadStorageService.UpdateDownloaded(item);
+            }
 
             // 关闭Aria服务器
             CloseAriaServer();
@@ -430,7 +462,7 @@ namespace DownKyi.Services.Download
                 }
 
                 // 降低CPU占用
-                Thread.Sleep(100);
+                Thread.Sleep(200);
             }
         }
 
@@ -452,18 +484,19 @@ namespace DownKyi.Services.Download
 
             await Task.Run(new Action(() =>
             {
-                downloading.Downloading.DownloadStatus = DownloadStatus.DOWNLOADING;
-
                 // 初始化
                 downloading.DownloadStatusTitle = string.Empty;
                 downloading.DownloadContent = string.Empty;
-                downloading.Downloading.DownloadFiles.Clear();
+                //downloading.Downloading.DownloadFiles.Clear();
 
                 // 解析并依次下载音频、视频、弹幕、字幕、封面等内容
                 Parse(downloading);
 
                 // 暂停
                 Pause(downloading);
+
+                // 设置下载状态
+                downloading.Downloading.DownloadStatus = DownloadStatus.DOWNLOADING;
 
                 string audioUid = null;
                 // 如果需要下载音频
@@ -509,7 +542,6 @@ namespace DownKyi.Services.Download
                 // 如果需要下载封面
                 if (downloading.DownloadBase.NeedDownloadContent["downloadCover"])
                 {
-
                     string fileName = $"{downloading.DownloadBase.FilePath}.{GetImageExtension(downloading.DownloadBase.PageCoverUrl)}";
 
                     // page的封面
@@ -595,8 +627,8 @@ namespace DownKyi.Services.Download
                 App.PropertyChangeAsync(new Action(() =>
                 {
                     // 加入到下载完成list中，并从下载中list去除
-                    App.DownloadedList.Add(downloadedItem);
-                    App.DownloadingList.Remove(downloading);
+                    downloadedList.Add(downloadedItem);
+                    downloadingList.Remove(downloading);
 
                     // 下载完成列表排序
                     DownloadFinishedSort finishedSort = SettingsManager.GetInstance().GetDownloadFinishedSort();

@@ -26,11 +26,11 @@
                 Grid.Row="0"
                 Background="{DynamicResource BrushCaptionBackground}"
                 KeyboardNavigation.TabNavigation="None">
-                <i:Interaction.Triggers>
+                <!--<i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseLeftButtonDown">
                         <i:InvokeCommandAction Command="{Binding DragMoveCommand}" />
                     </i:EventTrigger>
-                </i:Interaction.Triggers>
+                </i:Interaction.Triggers>-->
 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />

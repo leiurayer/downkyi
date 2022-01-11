@@ -78,10 +78,8 @@ namespace DownKyi.Core.Storage.Database
         {
             string sql = $"select * from {tableName} where mid={mid}";
             List<Header> query = Query(sql);
-
             return query.Count > 0 ? query[0] : null;
         }
-
 
         /// <summary>
         /// 查询数据
