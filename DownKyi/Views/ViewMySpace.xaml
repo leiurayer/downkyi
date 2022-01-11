@@ -26,7 +26,7 @@
     <Grid>
         <Grid Visibility="{Binding ViewVisibility}">
             <Grid.RowDefinitions>
-                <RowDefinition Height="300" />
+                <RowDefinition Height="350" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
