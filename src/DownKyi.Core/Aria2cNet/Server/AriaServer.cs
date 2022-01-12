@@ -65,7 +65,7 @@ namespace DownKyi.Core.Aria2cNet.Server
                     try
                     {
                         var stream = File.Open(logFile, FileMode.Open);
-                        if (stream.Length >= 512 * 1024 * 1024L)
+                        if (stream.Length >= 10 * 1024 * 1024L)
                         {
                             stream.SetLength(0);
                         }

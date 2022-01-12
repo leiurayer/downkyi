@@ -1,8 +1,8 @@
-﻿using DownKyi.Core.BiliApi.BiliUtils;
-using DownKyi.Core.Logging;
+﻿using DownKyi.Core.Logging;
 using DownKyi.Core.Settings;
 using DownKyi.Events;
 using DownKyi.Images;
+using DownKyi.Services;
 using DownKyi.Utils;
 using Prism.Commands;
 using Prism.Events;
@@ -353,71 +353,8 @@ namespace DownKyi.ViewModels
                 return;
             }
 
-            // 视频
-            if (ParseEntrance.IsAvId(input))
-            {
-                NavigateToView.NavigationView(eventAggregator, ViewVideoDetailViewModel.Tag, ViewIndexViewModel.Tag, $"{ParseEntrance.VideoUrl}{input.ToLower()}");
-            }
-            else if (ParseEntrance.IsAvUrl(input))
-            {
-                NavigateToView.NavigationView(eventAggregator, ViewVideoDetailViewModel.Tag, ViewIndexViewModel.Tag, input);
-            }
-            else if (ParseEntrance.IsBvId(input))
-            {
-                NavigateToView.NavigationView(eventAggregator, ViewVideoDetailViewModel.Tag, ViewIndexViewModel.Tag, $"{ParseEntrance.VideoUrl}{input}");
-            }
-            else if (ParseEntrance.IsBvUrl(input))
-            {
-                NavigateToView.NavigationView(eventAggregator, ViewVideoDetailViewModel.Tag, ViewIndexViewModel.Tag, input);
-            }
-            // 番剧（电影、电视剧）
-            else if (ParseEntrance.IsBangumiSeasonId(input))
-            {
-                NavigateToView.NavigationView(eventAggregator, ViewVideoDetailViewModel.Tag, ViewIndexViewModel.Tag, $"{ParseEntrance.BangumiUrl}{input.ToLower()}");
-            }
-            else if (ParseEntrance.IsBangumiSeasonUrl(input))
-            {
-                NavigateToView.NavigationView(eventAggregator, ViewVideoDetailViewModel.Tag, ViewIndexViewModel.Tag, input);
-            }
-            else if (ParseEntrance.IsBangumiEpisodeId(input))
-            {
-                NavigateToView.NavigationView(eventAggregator, ViewVideoDetailViewModel.Tag, ViewIndexViewModel.Tag, $"{ParseEntrance.BangumiUrl}{input.ToLower()}");
-            }
-            else if (ParseEntrance.IsBangumiEpisodeUrl(input))
-            {
-                NavigateToView.NavigationView(eventAggregator, ViewVideoDetailViewModel.Tag, ViewIndexViewModel.Tag, input);
-            }
-            else if (ParseEntrance.IsBangumiMediaId(input))
-            {
-                NavigateToView.NavigationView(eventAggregator, ViewVideoDetailViewModel.Tag, ViewIndexViewModel.Tag, $"{ParseEntrance.BangumiMediaUrl}{input.ToLower()}");
-            }
-            else if (ParseEntrance.IsBangumiMediaUrl(input))
-            {
-                NavigateToView.NavigationView(eventAggregator, ViewVideoDetailViewModel.Tag, ViewIndexViewModel.Tag, input);
-            }
-            // 课程
-            else if (ParseEntrance.IsCheeseSeasonUrl(input) || ParseEntrance.IsCheeseEpisodeUrl(input))
-            {
-                NavigateToView.NavigationView(eventAggregator, ViewVideoDetailViewModel.Tag, ViewIndexViewModel.Tag, input);
-            }
-            // 用户（参数传入mid）
-            else if (ParseEntrance.IsUserId(input))
-            {
-                NavigateToView.NavigateToViewUserSpace(eventAggregator, ViewIndexViewModel.Tag, ParseEntrance.GetUserId(input));
-            }
-            else if (ParseEntrance.IsUserUrl(input))
-            {
-                NavigateToView.NavigateToViewUserSpace(eventAggregator, ViewIndexViewModel.Tag, ParseEntrance.GetUserId(input));
-            }
-            // 收藏夹
-            else if (ParseEntrance.IsFavoritesId(input))
-            {
-                NavigateToView.NavigationView(eventAggregator, ViewPublicFavoritesViewModel.Tag, ViewIndexViewModel.Tag, ParseEntrance.GetFavoritesId(input));
-            }
-            else if (ParseEntrance.IsFavoritesUrl(input))
-            {
-                NavigateToView.NavigationView(eventAggregator, ViewPublicFavoritesViewModel.Tag, ViewIndexViewModel.Tag, ParseEntrance.GetFavoritesId(input));
-            }
+            SearchService searchService = new SearchService();
+            searchService.BiliInput(input, ViewIndexViewModel.Tag, eventAggregator);
         }
 
         #endregion

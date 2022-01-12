@@ -46,6 +46,8 @@ namespace DownKyi.ViewModels.DownloadManager
                     case DownloadStatus.NOT_STARTED:
                     case DownloadStatus.WAIT_FOR_DOWNLOAD:
                         downloading.Downloading.DownloadStatus = DownloadStatus.PAUSE_STARTED;
+                        downloading.StartOrPause = ButtonIcon.Instance().Start;
+                        downloading.StartOrPause.Fill = DictionaryResource.GetColor("ColorPrimary");
                         break;
                     case DownloadStatus.PAUSE_STARTED:
                         break;
@@ -53,6 +55,8 @@ namespace DownKyi.ViewModels.DownloadManager
                         break;
                     case DownloadStatus.DOWNLOADING:
                         downloading.Downloading.DownloadStatus = DownloadStatus.PAUSE;
+                        downloading.StartOrPause = ButtonIcon.Instance().Start;
+                        downloading.StartOrPause.Fill = DictionaryResource.GetColor("ColorPrimary");
                         break;
                     case DownloadStatus.DOWNLOAD_SUCCEED:
                         // 下载成功后会从下载列表中删除
@@ -63,9 +67,6 @@ namespace DownKyi.ViewModels.DownloadManager
                     default:
                         break;
                 }
-
-                downloading.StartOrPause = ButtonIcon.Instance().Start;
-                downloading.StartOrPause.Fill = DictionaryResource.GetColor("ColorPrimary");
             }
         }
 

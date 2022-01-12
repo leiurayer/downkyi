@@ -32,6 +32,25 @@
     <system:String x:Key="LoginSuccessful">登录成功！(3秒后自动回到主页)</system:String>
     <system:String x:Key="LoginFailed">未保存登录信息！(3秒后自动回到主页)</system:String>
 
+    <!--  MySpace  -->
+    <system:String x:Key="MySpace">我的个人空间</system:String>
+    <system:String x:Key="Logout">退出登录</system:String>
+    <system:String x:Key="MySpaceWait">请稍等，马上就好~</system:String>
+    <system:String x:Key="Level">等级</system:String>
+    <system:String x:Key="Following">关注数</system:String>
+    <system:String x:Key="Whisper">悄悄关注数</system:String>
+    <system:String x:Key="Follower">粉丝数</system:String>
+    <system:String x:Key="Black">黑名单数</system:String>
+    <system:String x:Key="Moral">节操值</system:String>
+    <system:String x:Key="Silence">封禁状态</system:String>
+    <system:String x:Key="Favorites">收藏夹</system:String>
+    <system:String x:Key="Subscription">我的订阅</system:String>
+    <system:String x:Key="ToView">稍后再看</system:String>
+    <system:String x:Key="History">历史记录</system:String>
+
+    <system:String x:Key="Normal">正常</system:String>
+    <system:String x:Key="Ban">封停</system:String>
+
     <!--  VideoDetail  -->
     <system:String x:Key="CopyCover">复制封面图片</system:String>
     <system:String x:Key="CopyCoverUrl">复制封面URL</system:String>
@@ -84,6 +103,7 @@
     <system:String x:Key="MixedFlow">混流中……</system:String>
     <system:String x:Key="Pausing">暂停中……</system:String>
     <system:String x:Key="Waiting">等待中……</system:String>
+    <system:String x:Key="DownloadFailed">下载失败</system:String>
 
     <system:String x:Key="TotalDownloading1">正在下载</system:String>
     <system:String x:Key="TotalDownloading2">个视频！</system:String>
@@ -96,6 +116,13 @@
     <system:String x:Key="DownloadedSortByTime">按下载先后排序</system:String>
     <system:String x:Key="DownloadedSortByOrder">按序号排序</system:String>
     <system:String x:Key="ClearAllDownloaded">清空所有记录</system:String>
+
+    <system:String x:Key="StartDownload">开始</system:String>
+    <system:String x:Key="PauseDownload">暂停</system:String>
+    <system:String x:Key="RetryDownload">重试</system:String>
+    <system:String x:Key="DeleteDownload">移除</system:String>
+    <system:String x:Key="OpenFolder">打开文件夹</system:String>
+    <system:String x:Key="OpenVideo">播放</system:String>
 
     <!--  Settings  -->
     <system:String x:Key="PressEnterToApplySettingTip">按回车键应用设置</system:String>
@@ -213,7 +240,7 @@
     <system:String x:Key="ExtractVideo">提取视频</system:String>
 
     <!--  PublicFavorites  -->
-    <system:String x:Key="Favorites">收藏夹</system:String>
+    <system:String x:Key="PublicFavorites">收藏夹</system:String>
     <system:String x:Key="FavoritesMediaCount">个内容</system:String>
 
     <!--  Dialog  -->

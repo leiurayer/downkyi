@@ -100,68 +100,56 @@
                                         <ColumnDefinition />
                                     </Grid.ColumnDefinitions>
 
-                                    <Border
+                                    <Button
                                         Grid.Column="0"
                                         HorizontalAlignment="Right"
                                         VerticalAlignment="Center"
-                                        Background="{DynamicResource BrushBackground}"
-                                        Cursor="Hand">
-                                        <i:Interaction.Triggers>
-                                            <i:EventTrigger EventName="MouseLeftButtonUp">
-                                                <i:InvokeCommandAction Command="{Binding OpenFolderCommand}" />
-                                            </i:EventTrigger>
-                                        </i:Interaction.Triggers>
-                                        <ContentControl>
+                                        Command="{Binding OpenFolderCommand}"
+                                        Style="{StaticResource ImageBtnStyle}"
+                                        ToolTip="{DynamicResource OpenFolder}">
+                                        <ContentControl Width="20" Height="20">
                                             <Path
                                                 Width="{Binding OpenFolder.Width}"
                                                 Height="{Binding OpenFolder.Height}"
                                                 Data="{Binding OpenFolder.Data}"
                                                 Fill="{Binding OpenFolder.Fill}"
-                                                Stretch="UniformToFill" />
+                                                Stretch="Uniform" />
                                         </ContentControl>
-                                    </Border>
+                                    </Button>
 
-                                    <Border
+                                    <Button
                                         Grid.Column="1"
                                         HorizontalAlignment="Right"
                                         VerticalAlignment="Center"
-                                        Background="{DynamicResource BrushBackground}"
-                                        Cursor="Hand">
-                                        <i:Interaction.Triggers>
-                                            <i:EventTrigger EventName="MouseLeftButtonUp">
-                                                <i:InvokeCommandAction Command="{Binding OpenVideoCommand}" />
-                                            </i:EventTrigger>
-                                        </i:Interaction.Triggers>
-                                        <ContentControl>
+                                        Command="{Binding OpenVideoCommand}"
+                                        Style="{StaticResource ImageBtnStyle}"
+                                        ToolTip="{DynamicResource OpenVideo}">
+                                        <ContentControl Width="20" Height="20">
                                             <Path
                                                 Width="{Binding OpenVideo.Width}"
                                                 Height="{Binding OpenVideo.Height}"
                                                 Data="{Binding OpenVideo.Data}"
                                                 Fill="{Binding OpenVideo.Fill}"
-                                                Stretch="UniformToFill" />
+                                                Stretch="Uniform" />
                                         </ContentControl>
-                                    </Border>
+                                    </Button>
 
-                                    <Border
+                                    <Button
                                         Grid.Column="2"
                                         HorizontalAlignment="Right"
                                         VerticalAlignment="Center"
-                                        Background="{DynamicResource BrushBackground}"
-                                        Cursor="Hand">
-                                        <i:Interaction.Triggers>
-                                            <i:EventTrigger EventName="MouseLeftButtonUp">
-                                                <i:InvokeCommandAction Command="{Binding RemoveVideoCommand}" />
-                                            </i:EventTrigger>
-                                        </i:Interaction.Triggers>
-                                        <ContentControl>
+                                        Command="{Binding RemoveVideoCommand}"
+                                        Style="{StaticResource ImageBtnStyle}"
+                                        ToolTip="{DynamicResource DeleteDownload}">
+                                        <ContentControl Width="20" Height="20">
                                             <Path
                                                 Width="{Binding RemoveVideo.Width}"
                                                 Height="{Binding RemoveVideo.Height}"
                                                 Data="{Binding RemoveVideo.Data}"
                                                 Fill="{Binding RemoveVideo.Fill}"
-                                                Stretch="UniformToFill" />
+                                                Stretch="Uniform" />
                                         </ContentControl>
-                                    </Border>
+                                    </Button>
                                 </Grid>
 
                             </Grid>
@@ -257,14 +245,15 @@
                     Grid.Column="1"
                     Width="120"
                     HorizontalAlignment="Left"
-                    VerticalAlignment="Center">
+                    VerticalAlignment="Center"
+                    SelectedIndex="{Binding FinishedSortBy}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="SelectionChanged">
                             <i:InvokeCommandAction Command="{Binding FinishedSortCommand}" CommandParameter="{Binding ElementName=nameFinishedSort, Path=SelectedIndex}" />
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
-                    <ComboBoxItem Content="{DynamicResource DownloadedSortByTime}" TabIndex="1" />
-                    <ComboBoxItem Content="{DynamicResource DownloadedSortByOrder}" TabIndex="2" />
+                    <ComboBoxItem Content="{DynamicResource DownloadedSortByTime}" />
+                    <ComboBoxItem Content="{DynamicResource DownloadedSortByOrder}" />
                 </ComboBox>
 
                 <Button

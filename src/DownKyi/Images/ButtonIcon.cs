@@ -69,6 +69,17 @@
                 Fill = "#FF000000"
             };
 
+            Trash = new VectorImage
+            {
+                Height = 20,
+                Width = 20,
+                Data = @"M683 85 q0 -27 -20.5 -55 q-20.5 -28 -65.5 -30 l-170 0 q-39 1 -62 23.5 q-23 22.5 -24 61.5 l-341 0 l0 86 l1024 0 l0 -86
+                         l-341 0 ZM341 256 l86 0 l0 597 l-86 0 l0 -597 ZM597 256 l86 0 l0 597 l-86 0 l0 -597 ZM853 853 q0 39 -23 62
+                         q-23 23 -62 24 l-512 0 q-39 -1 -62 -24 q-23 -23 -23 -62 l0 -597 l-86 0 l0 597 q2 73 50.5 121 q48.5 48 120.5 50 l512 0
+                         q72 -2 120.5 -50 q48.5 -48 50.5 -121 l0 -597 l-86 0 l0 597 Z",
+                Fill = "#FF000000"
+            };
+
             Delete = new VectorImage
             {
                 Height = 18,
@@ -103,6 +114,30 @@
                 Fill = "#FF000000"
             };
 
+            Retry = new VectorImage
+            {
+                Height = 20,
+                Width = 20,
+                Data = @"M536.69 128.65 q-161.14 5.2 -270.3 113.71 q-109.15 108.5 -113.05 269.64 q3.9 161.14 113.05 269.64
+                         q109.16 108.5 270.3 113.71 q101.36 -1.3 185.82 -47.43 q84.47 -46.13 140.35 -129.3 q6.5 -14.3 22.09 -24.7
+                         q15.6 -10.39 31.19 -10.39 q28.59 0 47.44 18.85 q18.84 18.85 20.14 48.74 q0 11.69 -5.2 20.79 q0 3.9 0 7.8 l-3.9 5.19
+                         q-72.77 111.76 -185.82 174.78 q-113.06 63.03 -246.91 64.33 q-102.66 0 -196.22 -38.34 q-93.57 -38.33 -166.34 -111.11
+                         q-72.77 -72.77 -111.1 -166.34 q-38.33 -93.56 -38.33 -196.22 q0 -102.66 38.33 -196.23 q38.34 -93.56 111.1 -166.33
+                         q72.77 -72.77 166.34 -111.1 q93.56 -38.34 196.22 -38.34 q92.26 0 176.73 31.19 q84.47 31.19 152.04 89.66 l0 -25.99
+                         q1.3 -27.29 18.2 -44.83 q16.89 -17.54 42.88 -17.54 q25.99 0 44.18 18.19 q18.19 18.19 18.19 44.18 l0 189.73
+                         q0 24.69 -18.19 42.88 q-18.19 18.19 -42.88 18.19 l-191.03 0 q-24.69 0 -42.88 -18.19 q-18.2 -18.19 -18.2 -42.88
+                         q0 -28.59 16.25 -47.43 q16.25 -18.84 44.84 -20.13 l37.69 0 q-51.98 -42.89 -114.36 -65.63 q-62.38 -22.74 -128.65 -22.74 Z",
+                Fill = "#FF000000"
+            };
+
+            Folder = new VectorImage
+            {
+                Height = 16,
+                Width = 20,
+                Data = @"M18,2H10L8,0H2A2,2,0,0,0,0,2V14a2,2,0,0,0,2,2H18a2,2,0,0,0,2-2V4A2,2,0,0,0,18,2Zm0,12H2V4H18Z",
+                Fill = "#FF000000"
+            };
+
         }
 
         public VectorImage GeneralSearch { get; private set; }
@@ -110,9 +145,12 @@
         public VectorImage DownloadManage { get; private set; }
         public VectorImage Toolbox { get; private set; }
 
+        public VectorImage Trash { get; private set; }
         public VectorImage Delete { get; private set; }
         public VectorImage Start { get; private set; }
         public VectorImage Pause { get; private set; }
+        public VectorImage Retry { get; private set; }
+        public VectorImage Folder { get; private set; }
 
     }
 }

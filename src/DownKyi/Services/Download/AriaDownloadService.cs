@@ -11,6 +11,7 @@ using DownKyi.Core.Logging;
 using DownKyi.Core.Settings;
 using DownKyi.Core.Storage;
 using DownKyi.Core.Utils;
+using DownKyi.Images;
 using DownKyi.Models;
 using DownKyi.Utils;
 using DownKyi.ViewModels.DownloadManager;
@@ -145,7 +146,6 @@ namespace DownKyi.Services.Download
                 case DownloadResult.SUCCESS:
                     return Path.Combine(path, fileName);
                 case DownloadResult.FAILED:
-                    return null;
                 case DownloadResult.ABORT:
                     return null;
                 default:
@@ -394,7 +394,30 @@ namespace DownKyi.Services.Download
             // 保存数据
             foreach (DownloadingItem item in downloadingList)
             {
-                item.Downloading.DownloadStatus = DownloadStatus.WAIT_FOR_DOWNLOAD;
+                switch (item.Downloading.DownloadStatus)
+                {
+                    case DownloadStatus.NOT_STARTED:
+                        break;
+                    case DownloadStatus.WAIT_FOR_DOWNLOAD:
+                        break;
+                    case DownloadStatus.PAUSE_STARTED:
+                        break;
+                    case DownloadStatus.PAUSE:
+                        break;
+                    case DownloadStatus.DOWNLOADING:
+                        // TODO 添加设置让用户选择重启后是否自动开始下载
+                        item.Downloading.DownloadStatus = DownloadStatus.WAIT_FOR_DOWNLOAD;
+                        item.Downloading.DownloadStatus = DownloadStatus.PAUSE;
+                        break;
+                    case DownloadStatus.DOWNLOAD_SUCCEED:
+                    case DownloadStatus.DOWNLOAD_FAILED:
+                        break;
+                    default:
+                        break;
+                }
+
+                item.Progress = 0;
+
                 downloadStorageService.UpdateDownloading(item);
             }
             foreach (DownloadedItem item in downloadedList)
@@ -494,6 +517,12 @@ namespace DownKyi.Services.Download
 
                 // 暂停
                 Pause(downloading);
+                // 是否存在
+                var isExist = IsExist(downloading);
+                if (!isExist.Result)
+                {
+                    return;
+                }
 
                 // 设置下载状态
                 downloading.Downloading.DownloadStatus = DownloadStatus.DOWNLOADING;
@@ -507,6 +536,12 @@ namespace DownKyi.Services.Download
 
                 // 暂停
                 Pause(downloading);
+                // 是否存在
+                isExist = IsExist(downloading);
+                if (!isExist.Result)
+                {
+                    return;
+                }
 
                 string videoUid = null;
                 // 如果需要下载视频
@@ -517,6 +552,12 @@ namespace DownKyi.Services.Download
 
                 // 暂停
                 Pause(downloading);
+                // 是否存在
+                isExist = IsExist(downloading);
+                if (!isExist.Result)
+                {
+                    return;
+                }
 
                 string outputDanmaku = null;
                 // 如果需要下载弹幕
@@ -527,6 +568,12 @@ namespace DownKyi.Services.Download
 
                 // 暂停
                 Pause(downloading);
+                // 是否存在
+                isExist = IsExist(downloading);
+                if (!isExist.Result)
+                {
+                    return;
+                }
 
                 List<string> outputSubtitles = null;
                 // 如果需要下载字幕
@@ -537,6 +584,12 @@ namespace DownKyi.Services.Download
 
                 // 暂停
                 Pause(downloading);
+                // 是否存在
+                isExist = IsExist(downloading);
+                if (!isExist.Result)
+                {
+                    return;
+                }
 
                 string outputCover = null;
                 // 如果需要下载封面
@@ -552,6 +605,12 @@ namespace DownKyi.Services.Download
 
                 // 暂停
                 Pause(downloading);
+                // 是否存在
+                isExist = IsExist(downloading);
+                if (!isExist.Result)
+                {
+                    return;
+                }
 
                 // 混流
                 string outputMedia = string.Empty;
@@ -561,9 +620,16 @@ namespace DownKyi.Services.Download
                 }
 
                 // 暂停
-                Pause(downloading);
+                //Pause(downloading);
+                // 是否存在
+                isExist = IsExist(downloading);
+                if (!isExist.Result)
+                {
+                    return;
+                }
 
                 // 检测音频、视频是否下载成功
+                bool isMediaSuccess = true;
                 if (downloading.DownloadBase.NeedDownloadContent["downloadAudio"] || downloading.DownloadBase.NeedDownloadContent["downloadVideo"])
                 {
                     // 只有下载音频不下载视频时才输出aac
@@ -571,16 +637,31 @@ namespace DownKyi.Services.Download
                     if (File.Exists(outputMedia))
                     {
                         // 成功
+                        isMediaSuccess = true;
+                    }
+                    else
+                    {
+                        isMediaSuccess = false;
                     }
                 }
 
                 // 检测弹幕是否下载成功
-                if (downloading.DownloadBase.NeedDownloadContent["downloadDanmaku"] && File.Exists(outputDanmaku))
+                bool isDanmakuSuccess = true;
+                if (downloading.DownloadBase.NeedDownloadContent["downloadDanmaku"])
                 {
-                    // 成功
+                    if (File.Exists(outputDanmaku))
+                    {
+                        // 成功
+                        isDanmakuSuccess = true;
+                    }
+                    else
+                    {
+                        isDanmakuSuccess = false;
+                    }
                 }
 
                 // 检测字幕是否下载成功
+                bool isSubtitleSuccess = true;
                 if (downloading.DownloadBase.NeedDownloadContent["downloadSubtitle"])
                 {
                     if (outputSubtitles == null)
@@ -591,25 +672,44 @@ namespace DownKyi.Services.Download
                     {
                         foreach (string subtitle in outputSubtitles)
                         {
-                            if (File.Exists(subtitle))
+                            if (!File.Exists(subtitle))
                             {
-                                // 成功
+                                // 如果有一个不存在则失败
+                                isSubtitleSuccess = false;
                             }
                         }
                     }
                 }
 
                 // 检测封面是否下载成功
-                if (downloading.DownloadBase.NeedDownloadContent["downloadCover"] && File.Exists(outputCover))
+                bool isCover = true;
+                if (downloading.DownloadBase.NeedDownloadContent["downloadCover"])
                 {
-                    // 成功
+                    if (File.Exists(outputCover))
+                    {
+                        // 成功
+                        isCover = true;
+                    }
+                    else
+                    {
+                        isCover = false;
+                    }
                 }
 
-                // TODO
-                // 将下载结果写入数据库
-                // 包括下载请求的DownloadingItem对象，
-                // 下载结果是否成功等
-                // 对是否成功的判断：只要outputMedia存在则成功，否则失败
+                if (!isMediaSuccess || !isDanmakuSuccess || !isSubtitleSuccess || !isCover)
+                {
+                    downloading.DownloadStatusTitle = DictionaryResource.GetString("DownloadFailed");
+                    downloading.DownloadContent = string.Empty;
+                    downloading.DownloadingFileSize = string.Empty;
+                    downloading.SpeedDisplay = string.Empty;
+
+                    downloading.Downloading.DownloadStatus = DownloadStatus.DOWNLOAD_FAILED;
+                    downloading.StartOrPause = ButtonIcon.Instance().Retry;
+                    downloading.StartOrPause.Fill = DictionaryResource.GetColor("ColorPrimary");
+                    return;
+                }
+
+                // 下载完成后处理
 
                 Downloaded downloaded = new Downloaded
                 {
@@ -691,6 +791,34 @@ namespace DownKyi.Services.Download
         }
 
         /// <summary>
+        /// 是否存在于下载列表中
+        /// </summary>
+        /// <param name="downloading"></param>
+        /// <returns></returns>
+        private async Task<bool> IsExist(DownloadingItem downloading)
+        {
+            bool isExist = downloadingList.Contains(downloading);
+            if (isExist)
+            {
+                return true;
+            }
+            else
+            {
+                // 先恢复为waiting状态，暂停状态下Remove会导致文件重新下载，原因暂不清楚
+                await AriaClient.UnpauseAsync(downloading.Downloading.Gid);
+                // 移除下载项
+                var ariaRemove = await AriaClient.RemoveAsync(downloading.Downloading.Gid);
+                if (ariaRemove == null || ariaRemove.Result == downloading.Downloading.Gid)
+                {
+                    // 从内存中删除下载项
+                    await AriaClient.RemoveDownloadResultAsync(downloading.Downloading.Gid);
+                }
+
+                return false;
+            }
+        }
+
+        /// <summary>
         /// 启动Aria服务器
         /// </summary>
         private async void StartAriaServer()
@@ -724,13 +852,6 @@ namespace DownKyi.Services.Download
             var task = await AriaServer.StartServerAsync(config);
             if (task) { Console.WriteLine("Start ServerAsync Completed"); }
             Console.WriteLine("Start ServerAsync end");
-
-            // 恢复所有下载
-            //var ariaPause = await AriaClient.UnpauseAllAsync();
-            //if (ariaPause != null)
-            //{
-            //    Core.Utils.Debugging.Console.PrintLine(ariaPause.ToString());
-            //}
         }
 
         /// <summary>

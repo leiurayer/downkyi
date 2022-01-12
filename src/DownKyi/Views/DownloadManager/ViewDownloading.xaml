@@ -95,18 +95,29 @@
                                             <ColumnDefinition />
                                         </Grid.ColumnDefinitions>
 
-                                        <TextBlock
-                                            Grid.Column="0"
-                                            HorizontalAlignment="Left"
-                                            FontSize="12"
-                                            Foreground="{DynamicResource BrushTextDark}">
-                                            <TextBlock.Text>
-                                                <MultiBinding StringFormat="{}{0} {1}">
-                                                    <Binding Path="DownloadContent" />
-                                                    <Binding Path="DownloadStatusTitle" />
-                                                </MultiBinding>
-                                            </TextBlock.Text>
-                                        </TextBlock>
+                                        <StackPanel Grid.Column="0" Orientation="Horizontal">
+                                            <TextBlock
+                                                HorizontalAlignment="Left"
+                                                FontSize="12"
+                                                Foreground="{DynamicResource BrushTextDark}"
+                                                Text="{Binding DownloadContent}" />
+                                            <TextBlock
+                                                HorizontalAlignment="Left"
+                                                FontSize="12"
+                                                Foreground="{DynamicResource BrushTextDark}">
+
+                                                <TextBlock.Style>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="Text" Value="{Binding StringFormat={} {0}, Path=DownloadStatusTitle}" />
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding DownloadContent}" Value="">
+                                                                <Setter Property="Text" Value="{Binding DownloadStatusTitle}" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                        </StackPanel>
 
                                         <TextBlock
                                             Grid.Column="1"
@@ -160,47 +171,39 @@
                                         <ColumnDefinition />
                                     </Grid.ColumnDefinitions>
 
-                                    <Border
+                                    <Button
                                         Grid.Column="0"
                                         HorizontalAlignment="Right"
                                         VerticalAlignment="Center"
-                                        Background="{DynamicResource BrushBackground}"
-                                        Cursor="Hand">
-                                        <i:Interaction.Triggers>
-                                            <i:EventTrigger EventName="MouseLeftButtonUp">
-                                                <i:InvokeCommandAction Command="{Binding StartOrPauseCommand}" />
-                                            </i:EventTrigger>
-                                        </i:Interaction.Triggers>
-                                        <ContentControl>
+                                        Command="{Binding StartOrPauseCommand}"
+                                        Style="{StaticResource ImageBtnStyle}"
+                                        ToolTip="{Binding OperationTip}">
+                                        <ContentControl Width="20" Height="20">
                                             <Path
                                                 Width="{Binding StartOrPause.Width}"
                                                 Height="{Binding StartOrPause.Height}"
                                                 Data="{Binding StartOrPause.Data}"
                                                 Fill="{Binding StartOrPause.Fill}"
-                                                Stretch="UniformToFill" />
+                                                Stretch="Uniform" />
                                         </ContentControl>
-                                    </Border>
+                                    </Button>
 
-                                    <Border
+                                    <Button
                                         Grid.Column="1"
                                         HorizontalAlignment="Right"
                                         VerticalAlignment="Center"
-                                        Background="{DynamicResource BrushBackground}"
-                                        Cursor="Hand">
-                                        <i:Interaction.Triggers>
-                                            <i:EventTrigger EventName="MouseLeftButtonUp">
-                                                <i:InvokeCommandAction Command="{Binding DeleteCommand}" />
-                                            </i:EventTrigger>
-                                        </i:Interaction.Triggers>
-                                        <ContentControl>
+                                        Command="{Binding DeleteCommand}"
+                                        Style="{StaticResource ImageBtnStyle}"
+                                        ToolTip="{DynamicResource DeleteDownload}">
+                                        <ContentControl Width="20" Height="20">
                                             <Path
                                                 Width="{Binding Delete.Width}"
                                                 Height="{Binding Delete.Height}"
                                                 Data="{Binding Delete.Data}"
                                                 Fill="{Binding Delete.Fill}"
-                                                Stretch="UniformToFill" />
+                                                Stretch="Uniform" />
                                         </ContentControl>
-                                    </Border>
+                                    </Button>
                                 </Grid>
                             </Grid>
 

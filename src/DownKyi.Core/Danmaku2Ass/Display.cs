@@ -204,7 +204,7 @@ namespace DownKyi.Core.Danmaku2Ass
     {
         public TopDisplay(Config config, Danmaku danmaku) : base(config, danmaku)
         {
-            Console.WriteLine("TopDisplay constructor.");
+            //Console.WriteLine("TopDisplay constructor.");
         }
 
         /// <summary>
@@ -226,7 +226,7 @@ namespace DownKyi.Core.Danmaku2Ass
     {
         public BottomDisplay(Config config, Danmaku danmaku) : base(config, danmaku)
         {
-            Console.WriteLine("BottomDisplay constructor.");
+            //Console.WriteLine("BottomDisplay constructor.");
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace DownKyi.Core.Danmaku2Ass
 
         public ScrollDisplay(Config config, Danmaku danmaku) : base()
         {
-            Console.WriteLine("ScrollDisplay constructor.");
+            //Console.WriteLine("ScrollDisplay constructor.");
 
             Config = config;
             Danmaku = danmaku;

@@ -1,10 +1,10 @@
-﻿using DownKyi.Core.BiliApi.BiliUtils;
-using DownKyi.Core.BiliApi.Login;
+﻿using DownKyi.Core.BiliApi.Users;
 using DownKyi.Core.Logging;
 using DownKyi.Core.Settings;
 using DownKyi.Core.Settings.Models;
 using DownKyi.Core.Storage;
 using DownKyi.Images;
+using DownKyi.Services;
 using DownKyi.Utils;
 using Prism.Commands;
 using Prism.Events;
@@ -26,68 +26,67 @@ namespace DownKyi.ViewModels
         private Visibility loginPanelVisibility;
         public Visibility LoginPanelVisibility
         {
-            get { return loginPanelVisibility; }
-            set { SetProperty(ref loginPanelVisibility, value); }
+            get => loginPanelVisibility;
+            set => SetProperty(ref loginPanelVisibility, value);
         }
 
         private string userName;
         public string UserName
         {
-            get { return userName; }
-            set { SetProperty(ref userName, value); }
+            get => userName;
+            set => SetProperty(ref userName, value);
         }
 
         private BitmapImage header;
         public BitmapImage Header
         {
-            get { return header; }
-            set { SetProperty(ref header, value); }
+            get => header;
+            set => SetProperty(ref header, value);
         }
 
         private VectorImage textLogo;
         public VectorImage TextLogo
         {
-            get { return textLogo; }
-            set { SetProperty(ref textLogo, value); }
+            get => textLogo;
+            set => SetProperty(ref textLogo, value);
         }
 
         private string inputText;
         public string InputText
         {
-            get { return inputText; }
-            set { SetProperty(ref inputText, value); }
+            get => inputText;
+            set => SetProperty(ref inputText, value);
         }
 
         private VectorImage generalSearch;
         public VectorImage GeneralSearch
         {
-            get { return generalSearch; }
-            set { SetProperty(ref generalSearch, value); }
+            get => generalSearch;
+            set => SetProperty(ref generalSearch, value);
         }
 
         private VectorImage settings;
         public VectorImage Settings
         {
-            get { return settings; }
-            set { SetProperty(ref settings, value); }
+            get => settings;
+            set => SetProperty(ref settings, value);
         }
 
         private VectorImage downloadManager;
         public VectorImage DownloadManager
         {
-            get { return downloadManager; }
-            set { SetProperty(ref downloadManager, value); }
+            get => downloadManager;
+            set => SetProperty(ref downloadManager, value);
         }
 
         private VectorImage toolbox;
         public VectorImage Toolbox
         {
-            get { return toolbox; }
-            set { SetProperty(ref toolbox, value); }
+            get => toolbox;
+            set => SetProperty(ref toolbox, value);
         }
 
         #endregion
-
 
         public ViewIndexViewModel(IEventAggregator eventAggregator) : base(eventAggregator)
         {
@@ -223,74 +222,12 @@ namespace DownKyi.ViewModels
 
             LogManager.Debug(Tag, $"InputText: {InputText}");
 
-            // 视频
-            if (ParseEntrance.IsAvId(InputText))
+            SearchService searchService = new SearchService();
+            bool isSupport = searchService.BiliInput(InputText, Tag, eventAggregator);
+            if (!isSupport)
             {
-                NavigateToView.NavigationView(eventAggregator, ViewVideoDetailViewModel.Tag, Tag, $"{ParseEntrance.VideoUrl}{InputText.ToLower()}");
-            }
-            else if (ParseEntrance.IsAvUrl(InputText))
-            {
-                NavigateToView.NavigationView(eventAggregator, ViewVideoDetailViewModel.Tag, Tag, InputText);
-            }
-            else if (ParseEntrance.IsBvId(InputText))
-            {
-                NavigateToView.NavigationView(eventAggregator, ViewVideoDetailViewModel.Tag, Tag, $"{ParseEntrance.VideoUrl}{InputText}");
-            }
-            else if (ParseEntrance.IsBvUrl(InputText))
-            {
-                NavigateToView.NavigationView(eventAggregator, ViewVideoDetailViewModel.Tag, Tag, InputText);
-            }
-            // 番剧（电影、电视剧）
-            else if (ParseEntrance.IsBangumiSeasonId(InputText))
-            {
-                NavigateToView.NavigationView(eventAggregator, ViewVideoDetailViewModel.Tag, Tag, $"{ParseEntrance.BangumiUrl}{InputText.ToLower()}");
-            }
-            else if (ParseEntrance.IsBangumiSeasonUrl(InputText))
-            {
-                NavigateToView.NavigationView(eventAggregator, ViewVideoDetailViewModel.Tag, Tag, InputText);
-            }
-            else if (ParseEntrance.IsBangumiEpisodeId(InputText))
-            {
-                NavigateToView.NavigationView(eventAggregator, ViewVideoDetailViewModel.Tag, Tag, $"{ParseEntrance.BangumiUrl}{InputText.ToLower()}");
-            }
-            else if (ParseEntrance.IsBangumiEpisodeUrl(InputText))
-            {
-                NavigateToView.NavigationView(eventAggregator, ViewVideoDetailViewModel.Tag, Tag, InputText);
-            }
-            else if (ParseEntrance.IsBangumiMediaId(InputText))
-            {
-                NavigateToView.NavigationView(eventAggregator, ViewVideoDetailViewModel.Tag, Tag, $"{ParseEntrance.BangumiMediaUrl}{InputText.ToLower()}");
-            }
-            else if (ParseEntrance.IsBangumiMediaUrl(InputText))
-            {
-                NavigateToView.NavigationView(eventAggregator, ViewVideoDetailViewModel.Tag, Tag, InputText);
-            }
-            // 课程
-            else if (ParseEntrance.IsCheeseSeasonUrl(InputText) || ParseEntrance.IsCheeseEpisodeUrl(InputText))
-            {
-                NavigateToView.NavigationView(eventAggregator, ViewVideoDetailViewModel.Tag, Tag, InputText);
-            }
-            // 用户（参数传入mid）
-            else if (ParseEntrance.IsUserId(InputText))
-            {
-                NavigateToView.NavigateToViewUserSpace(eventAggregator, Tag, ParseEntrance.GetUserId(InputText));
-            }
-            else if (ParseEntrance.IsUserUrl(InputText))
-            {
-                NavigateToView.NavigateToViewUserSpace(eventAggregator, Tag, ParseEntrance.GetUserId(InputText));
-            }
-            // 收藏夹
-            else if (ParseEntrance.IsFavoritesId(InputText))
-            {
-                NavigateToView.NavigationView(eventAggregator, ViewPublicFavoritesViewModel.Tag, Tag, ParseEntrance.GetFavoritesId(InputText));
-            }
-            else if (ParseEntrance.IsFavoritesUrl(InputText))
-            {
-                NavigateToView.NavigationView(eventAggregator, ViewPublicFavoritesViewModel.Tag, Tag, ParseEntrance.GetFavoritesId(InputText));
-            }
-            // TODO 关键词搜索
-            else
-            {
+                // 关键词搜索
+                searchService.SearchKey(InputText, Tag, eventAggregator);
             }
 
             InputText = string.Empty;
@@ -315,7 +252,7 @@ namespace DownKyi.ViewModels
             await Task.Run(new Action(() =>
             {
                 // 获取用户信息
-                var userInfo = LoginInfo.GetUserInfoForNavigation();
+                var userInfo = UserInfo.GetUserInfoForNavigation();
                 if (userInfo != null)
                 {
                     SettingsManager.GetInstance().SetUserInfo(new UserInfoSettings

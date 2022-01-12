@@ -18,12 +18,34 @@ namespace DownKyi.ViewModels.DownloadManager
             set => SetProperty(ref downloadedList, value);
         }
 
+        private int finishedSortBy;
+        public int FinishedSortBy
+        {
+            get => finishedSortBy;
+            set => SetProperty(ref finishedSortBy, value);
+        }
+
         #endregion
 
         public ViewDownloadFinishedViewModel(IEventAggregator eventAggregator) : base(eventAggregator)
         {
             // 初始化DownloadedList
             DownloadedList = App.DownloadedList;
+
+            DownloadFinishedSort finishedSort = SettingsManager.GetInstance().GetDownloadFinishedSort();
+            switch (finishedSort)
+            {
+                case DownloadFinishedSort.DOWNLOAD:
+                    FinishedSortBy = 0;
+                    break;
+                case DownloadFinishedSort.NUMBER:
+                    FinishedSortBy = 1;
+                    break;
+                default:
+                    FinishedSortBy = 0;
+                    break;
+            }
+            App.SortDownloadedList(finishedSort);
         }
 
         #region 命令申明
@@ -42,11 +64,20 @@ namespace DownKyi.ViewModels.DownloadManager
 
             switch (index)
             {
-                case 1:
+                case 0:
                     App.SortDownloadedList(DownloadFinishedSort.DOWNLOAD);
+                    // 更新设置
+                    SettingsManager.GetInstance().SetDownloadFinishedSort(DownloadFinishedSort.DOWNLOAD);
                     break;
-                case 2:
+                case 1:
                     App.SortDownloadedList(DownloadFinishedSort.NUMBER);
+                    // 更新设置
+                    SettingsManager.GetInstance().SetDownloadFinishedSort(DownloadFinishedSort.NUMBER);
+                    break;
+                default:
+                    App.SortDownloadedList(DownloadFinishedSort.DOWNLOAD);
+                    // 更新设置
+                    SettingsManager.GetInstance().SetDownloadFinishedSort(DownloadFinishedSort.DOWNLOAD);
                     break;
             }
         }
@@ -60,6 +91,7 @@ namespace DownKyi.ViewModels.DownloadManager
         /// </summary>
         private void ExecuteClearAllDownloadedCommand()
         {
+            DownloadedList.Clear();
         }
 
         #endregion

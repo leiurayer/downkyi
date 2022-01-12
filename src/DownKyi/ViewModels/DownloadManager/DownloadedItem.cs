@@ -1,5 +1,6 @@
 ﻿using DownKyi.Images;
 using DownKyi.Models;
+using DownKyi.Utils;
 using Prism.Commands;
 using System.IO;
 
@@ -9,6 +10,17 @@ namespace DownKyi.ViewModels.DownloadManager
     {
         public DownloadedItem() : base()
         {
+            // 打开文件夹按钮
+            OpenFolder = ButtonIcon.Instance().Folder;
+            OpenFolder.Fill = DictionaryResource.GetColor("ColorPrimary");
+
+            // 打开视频按钮
+            OpenVideo = ButtonIcon.Instance().Start;
+            OpenVideo.Fill = DictionaryResource.GetColor("ColorPrimary");
+
+            // 删除按钮
+            RemoveVideo = ButtonIcon.Instance().Trash;
+            RemoveVideo.Fill = DictionaryResource.GetColor("ColorWarning");
         }
 
         // model数据
@@ -73,9 +85,10 @@ namespace DownKyi.ViewModels.DownloadManager
         private void ExecuteOpenFolderCommand()
         {
             string videoPath = $"{DownloadBase.FilePath}.mp4";
-            if (File.Exists(videoPath))
+            FileInfo fileInfo = new FileInfo(videoPath);
+            if (File.Exists(fileInfo.FullName))
             {
-                System.Diagnostics.Process.Start("Explorer", "/select," + videoPath);
+                System.Diagnostics.Process.Start("Explorer", "/select," + fileInfo.FullName);
             }
             else
             {
@@ -93,9 +106,10 @@ namespace DownKyi.ViewModels.DownloadManager
         private void ExecuteOpenVideoCommand()
         {
             string videoPath = $"{DownloadBase.FilePath}.mp4";
-            if (File.Exists(videoPath))
+            var fileInfo = new FileInfo(videoPath);
+            if (File.Exists(fileInfo.FullName))
             {
-                System.Diagnostics.Process.Start(videoPath);
+                System.Diagnostics.Process.Start(fileInfo.FullName);
             }
             else
             {
