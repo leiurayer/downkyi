@@ -245,14 +245,15 @@
                     Grid.Column="1"
                     Width="120"
                     HorizontalAlignment="Left"
-                    VerticalAlignment="Center">
+                    VerticalAlignment="Center"
+                    SelectedIndex="{Binding FinishedSortBy}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="SelectionChanged">
                             <i:InvokeCommandAction Command="{Binding FinishedSortCommand}" CommandParameter="{Binding ElementName=nameFinishedSort, Path=SelectedIndex}" />
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
-                    <ComboBoxItem Content="{DynamicResource DownloadedSortByTime}" TabIndex="1" />
-                    <ComboBoxItem Content="{DynamicResource DownloadedSortByOrder}" TabIndex="2" />
+                    <ComboBoxItem Content="{DynamicResource DownloadedSortByTime}" />
+                    <ComboBoxItem Content="{DynamicResource DownloadedSortByOrder}" />
                 </ComboBox>
 
                 <Button
