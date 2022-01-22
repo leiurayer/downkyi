@@ -30,7 +30,7 @@ namespace DownKyi.Core.Storage
         {
             string header = GetCover(avid, bvid, cid, url);
 
-            return GetGetCoverThumbnail(header, width, height);
+            return GetCoverThumbnail(header, width, height);
         }
 
         /// <summary>
@@ -40,10 +40,10 @@ namespace DownKyi.Core.Storage
         /// <param name="width"></param>
         /// <param name="height"></param>
         /// <returns></returns>
-        public BitmapImage GetGetCoverThumbnail(string cover, int width, int height)
+        public BitmapImage GetCoverThumbnail(string cover, int width, int height)
         {
-            var bitmap = new Bitmap(cover);
-            var thumbnail = bitmap.GetThumbnailImage(width, height, null, IntPtr.Zero);
+            Bitmap bitmap = new Bitmap(cover);
+            Image thumbnail = bitmap.GetThumbnailImage(width, height, null, IntPtr.Zero);
 
             return StorageUtils.BitmapToBitmapImage(new Bitmap(thumbnail));
         }
@@ -69,7 +69,7 @@ namespace DownKyi.Core.Storage
         public string GetCover(long avid, string bvid, long cid, string url)
         {
             CoverDb coverDb = new CoverDb();
-            var cover = coverDb.QueryByUrl(url);
+            Cover cover = coverDb.QueryByUrl(url);
 
             // 如果存在，直接返回
             // 如果不存在，则先下载
@@ -195,7 +195,7 @@ namespace DownKyi.Core.Storage
         /// <returns></returns>
         public bool IsLocal(CoverDb coverDb, string url)
         {
-            var cover = coverDb.QueryByUrl(url);
+            Cover cover = coverDb.QueryByUrl(url);
             return cover != null;
         }
 
@@ -207,7 +207,7 @@ namespace DownKyi.Core.Storage
         /// <returns></returns>
         public string LocalCover(CoverDb coverDb, string url)
         {
-            var cover = coverDb.QueryByUrl(url);
+            Cover cover = coverDb.QueryByUrl(url);
             return cover.Md5;
         }
 
