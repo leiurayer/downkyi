@@ -71,6 +71,17 @@ namespace DownKyi.Services.Download
                 }
             }
 
+            // 避免Dolby==null及其它未知情况，直接使用异常捕获
+            try
+            {
+                // Dolby Atmos
+                if (downloading.AudioCodec.Id == 30250)
+                {
+                    downloadAudio = downloading.PlayUrl.Dash.Dolby.Audio[0];
+                }
+            }
+            catch (Exception) { }
+
             return DownloadVideo(downloading, downloadAudio);
         }
 
@@ -892,7 +903,7 @@ namespace DownKyi.Services.Download
                 $"Cookie: {LoginHelper.GetLoginInfoCookiesString()}",
                 $"Origin: https://www.bilibili.com",
                 $"Referer: https://www.bilibili.com",
-                $"User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit / 537.36(KHTML, like Gecko) Chrome / 91.0.4472.77 Safari / 537.36"
+                $"User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.99 Safari/537.36"
             };
 
             AriaConfig config = new AriaConfig()

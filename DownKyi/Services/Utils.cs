@@ -5,6 +5,7 @@ using DownKyi.Core.Settings.Models;
 using DownKyi.Core.Utils;
 using DownKyi.ViewModels.PageViewModels;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace DownKyi.Services
@@ -94,13 +95,13 @@ namespace DownKyi.Services
         /// <param name="playUrl"></param>
         /// <param name="defaultAudioQuality"></param>
         /// <returns></returns>
-        private static List<string> GetAudioQualityFormatList(PlayUrl playUrl, int defaultAudioQuality)
+        private static ObservableCollection<string> GetAudioQualityFormatList(PlayUrl playUrl, int defaultAudioQuality)
         {
             List<string> audioQualityFormatList = new List<string>();
 
             if (playUrl.Dash.Audio == null)
             {
-                return audioQualityFormatList;
+                return new ObservableCollection<string>();
             }
 
             foreach (PlayUrlDashVideo audio in playUrl.Dash.Audio)
@@ -118,7 +119,7 @@ namespace DownKyi.Services
             audioQualityFormatList.Sort(new StringLogicalComparer<string>());
             audioQualityFormatList.Reverse();
 
-            return audioQualityFormatList;
+            return new ObservableCollection<string>(audioQualityFormatList);
         }
 
         /// <summary>
@@ -221,7 +222,7 @@ namespace DownKyi.Services
         /// <returns></returns>
         internal static string GetVideoCodecName(string origin)
         {
-            return origin.Contains("avc") ? "H.264/AVC" : origin.Contains("hev") ? "H.265/HEVC" : origin.Contains("dvh") ? "dolby" : "";
+            return origin.Contains("avc") ? "H.264/AVC" : origin.Contains("hev") ? "H.265/HEVC" : origin.Contains("dvh") || origin.Contains("hvc") ? "Dolby Vision" : "";
         }
 
     }

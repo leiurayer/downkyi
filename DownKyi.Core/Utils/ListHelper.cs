@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace DownKyi.Core.Utils
 {
@@ -6,10 +7,25 @@ namespace DownKyi.Core.Utils
     {
 
         /// <summary>
+        /// 判断ObservableCollection中是否存在，不存在则添加
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="list"></param>
+        /// <param name="item"></param>
+        public static void AddUnique<T>(ObservableCollection<T> list, T item)
+        {
+            if (!list.Contains(item))
+            {
+                list.Add(item);
+            }
+        }
+
+        /// <summary>
         /// 判断List中是否存在，不存在则添加
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="list"></param>
+        /// <param name="item"></param>
         public static void AddUnique<T>(List<T> list, T item)
         {
             if (!list.Exists(t => t.Equals(item)))

@@ -211,6 +211,7 @@
     <Compile Include="BiliApi\VideoStream\Models\PlayerV2.cs" />
     <Compile Include="BiliApi\VideoStream\Models\PlayUrl.cs" />
     <Compile Include="BiliApi\VideoStream\Models\PlayUrlDash.cs" />
+    <Compile Include="BiliApi\VideoStream\Models\PlayUrlDashDolby.cs" />
     <Compile Include="BiliApi\VideoStream\Models\PlayUrlDashVideo.cs" />
     <Compile Include="BiliApi\VideoStream\Models\PlayUrlDurl.cs" />
     <Compile Include="BiliApi\VideoStream\Models\PlayUrlSupportFormat.cs" />

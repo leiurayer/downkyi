@@ -619,14 +619,14 @@
                                 DisplayMemberBinding="{Binding Order}"
                                 Header="{DynamicResource Order}" />
                             <GridViewColumn
-                                Width="550"
+                                Width="540"
                                 DisplayMemberBinding="{Binding Name}"
                                 Header="{DynamicResource Name}" />
                             <GridViewColumn
                                 Width="100"
                                 DisplayMemberBinding="{Binding Duration}"
                                 Header="{DynamicResource Duration}" />
-                            <GridViewColumn Width="100" Header="{DynamicResource AudioQuality}">
+                            <GridViewColumn Width="120" Header="{DynamicResource AudioQuality}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <Grid>
@@ -644,7 +644,13 @@
                                                 IsSynchronizedWithCurrentItem="True"
                                                 ItemsSource="{Binding VideoQualityList, Mode=TwoWay, IsAsync=True}"
                                                 SelectedItem="{Binding VideoQuality, Mode=TwoWay}"
-                                                SelectedValuePath="Quality" />
+                                                SelectedValuePath="Quality">
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="SelectionChanged">
+                                                        <i:InvokeCommandAction Command="{Binding VideoQualitySelectedCommand}" />
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                            </ComboBox>
                                         </Grid>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>

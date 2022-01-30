@@ -119,6 +119,15 @@ namespace DownKyi.Services.Download
                     }
                 };
             }
+
+            // 将所有视频设置为选中
+            foreach (VideoSection section in videoSections)
+            {
+                foreach (var item in section.VideoPages)
+                {
+                    item.IsSelected = true;
+                }
+            }
         }
 
         /// <summary>
@@ -200,6 +209,9 @@ namespace DownKyi.Services.Download
             {
                 foreach (VideoPage page in section.VideoPages)
                 {
+                    // 只下载选中项，跳过未选中项
+                    if (!page.IsSelected) { continue; }
+
                     // 没有解析的也跳过
                     if (page.PlayUrl == null) { continue; }
 
@@ -282,7 +294,7 @@ namespace DownKyi.Services.Download
                         .SetVideoZone(videoInfoView.VideoZone.Split('>')[0])
                         .SetAudioQuality(page.AudioQualityFormat)
                         .SetVideoQuality(page.VideoQuality == null ? "" : page.VideoQuality.QualityFormat)
-                        .SetVideoCodec(page.VideoQuality == null ? "" : page.VideoQuality.SelectedVideoCodec.Contains("AVC") ? "AVC" : page.VideoQuality.SelectedVideoCodec.Contains("HEVC") ? "HEVC" : "");
+                        .SetVideoCodec(page.VideoQuality == null ? "" : page.VideoQuality.SelectedVideoCodec.Contains("AVC") ? "AVC" : page.VideoQuality.SelectedVideoCodec.Contains("HEVC") ? "HEVC" : page.VideoQuality.SelectedVideoCodec.Contains("Dolby") ? "Dolby Vision" : "");
                     string filePath = Path.Combine(directory, fileName.RelativePath());
 
                     // 视频类别

@@ -93,7 +93,7 @@ namespace DownKyi.Core.BiliApi.VideoStream
         /// <returns></returns>
         public static PlayUrl GetVideoPlayUrl(long avid, string bvid, long cid, int quality = 125)
         {
-            string baseUrl = $"https://api.bilibili.com/x/player/playurl?cid={cid}&qn={quality}&fourk=1&fnver=0&fnval=80";
+            string baseUrl = $"https://api.bilibili.com/x/player/playurl?cid={cid}&qn={quality}&fourk=1&fnver=0&fnval=4048";
             string url;
             if (bvid != null) { url = $"{baseUrl}&bvid={bvid}"; }
             else if (avid > -1) { url = $"{baseUrl}&aid={avid}"; }
@@ -112,7 +112,7 @@ namespace DownKyi.Core.BiliApi.VideoStream
         /// <returns></returns>
         public static PlayUrl GetBangumiPlayUrl(long avid, string bvid, long cid, int quality = 125)
         {
-            string baseUrl = $"https://api.bilibili.com/pgc/player/web/playurl?cid={cid}&qn={quality}&fourk=1&fnver=0&fnval=80";
+            string baseUrl = $"https://api.bilibili.com/pgc/player/web/playurl?cid={cid}&qn={quality}&fourk=1&fnver=0&fnval=4048";
             string url;
             if (bvid != null) { url = $"{baseUrl}&bvid={bvid}"; }
             else if (avid > -1) { url = $"{baseUrl}&aid={avid}"; }
@@ -131,7 +131,7 @@ namespace DownKyi.Core.BiliApi.VideoStream
         /// <returns></returns>
         public static PlayUrl GetCheesePlayUrl(long avid, string bvid, long cid, long episodeId, int quality = 125)
         {
-            string baseUrl = $"https://api.bilibili.com/pugv/player/web/playurl?cid={cid}&qn={quality}&fourk=1&fnver=0&fnval=80";
+            string baseUrl = $"https://api.bilibili.com/pugv/player/web/playurl?cid={cid}&qn={quality}&fourk=1&fnver=0&fnval=4048";
             string url;
             if (bvid != null) { url = $"{baseUrl}&bvid={bvid}"; }
             else if (avid > -1) { url = $"{baseUrl}&aid={avid}"; }

@@ -125,6 +125,7 @@ namespace DownKyi.ViewModels.Settings
 
             // 优先下载音质
             AudioQualityList = Constant.GetAudioQualities();
+            AudioQualityList.RemoveAt(3);
 
             // 文件命名格式
             SelectedFileName = new ObservableCollection<DisplayFileNamePart>();
