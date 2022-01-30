@@ -18,7 +18,10 @@ namespace DownKyi.ViewModels.DownloadManager
             {
                 downloadBase = value;
 
-                ZoneImage = (DrawingImage)Application.Current.Resources[VideoZoneIcon.Instance().GetZoneImageKey(DownloadBase.ZoneId)];
+                if (value != null)
+                {
+                    ZoneImage = (DrawingImage)Application.Current.Resources[VideoZoneIcon.Instance().GetZoneImageKey(DownloadBase.ZoneId)];
+                }
             }
         }
 
@@ -33,7 +36,7 @@ namespace DownKyi.ViewModels.DownloadManager
         // 视频序号
         public int Order
         {
-            get => DownloadBase.Order;
+            get => DownloadBase == null ? 0 : DownloadBase.Order;
             set
             {
                 DownloadBase.Order = value;
@@ -44,7 +47,7 @@ namespace DownKyi.ViewModels.DownloadManager
         // 视频主标题
         public string MainTitle
         {
-            get => DownloadBase.MainTitle;
+            get => DownloadBase == null ? "" : DownloadBase.MainTitle;
             set
             {
                 DownloadBase.MainTitle = value;
@@ -55,7 +58,7 @@ namespace DownKyi.ViewModels.DownloadManager
         // 视频标题
         public string Name
         {
-            get => DownloadBase.Name;
+            get => DownloadBase == null ? "" : DownloadBase.Name;
             set
             {
                 DownloadBase.Name = value;
@@ -66,7 +69,7 @@ namespace DownKyi.ViewModels.DownloadManager
         // 时长
         public string Duration
         {
-            get => DownloadBase.Duration;
+            get => DownloadBase == null ? "" : DownloadBase.Duration;
             set
             {
                 DownloadBase.Duration = value;
@@ -77,7 +80,7 @@ namespace DownKyi.ViewModels.DownloadManager
         // 视频编码名称，AVC、HEVC
         public string VideoCodecName
         {
-            get => DownloadBase.VideoCodecName;
+            get => DownloadBase == null ? "" : DownloadBase.VideoCodecName;
             set
             {
                 DownloadBase.VideoCodecName = value;
@@ -88,7 +91,7 @@ namespace DownKyi.ViewModels.DownloadManager
         // 视频画质
         public Quality Resolution
         {
-            get => DownloadBase.Resolution;
+            get => DownloadBase == null ? null : DownloadBase.Resolution;
             set
             {
                 DownloadBase.Resolution = value;
@@ -99,7 +102,7 @@ namespace DownKyi.ViewModels.DownloadManager
         // 音频编码
         public Quality AudioCodec
         {
-            get => DownloadBase.AudioCodec;
+            get => DownloadBase == null ? null : DownloadBase.AudioCodec;
             set
             {
                 DownloadBase.AudioCodec = value;
@@ -110,7 +113,7 @@ namespace DownKyi.ViewModels.DownloadManager
         // 文件大小
         public string FileSize
         {
-            get => DownloadBase.FileSize;
+            get => DownloadBase == null ? "" : DownloadBase.FileSize;
             set
             {
                 DownloadBase.FileSize = value;

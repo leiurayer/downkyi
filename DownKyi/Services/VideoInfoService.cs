@@ -102,7 +102,7 @@ namespace DownKyi.Services
 
             List<VideoSection> videoSections = new List<VideoSection>();
 
-            foreach (var section in videoView.UgcSeason.Sections)
+            foreach (UgcSection section in videoView.UgcSeason.Sections)
             {
                 List<ViewModels.PageViewModels.VideoPage> pages = new List<ViewModels.PageViewModels.VideoPage>();
                 int order = 0;

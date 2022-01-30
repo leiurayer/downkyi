@@ -198,23 +198,12 @@ namespace DownKyi.ViewModels
 
         #endregion
 
-
         #region 业务逻辑
 
         /// <summary>
         /// 进入B站链接的处理逻辑，
         /// 只负责处理输入，并跳转到视频详情页。<para/>
         /// 不是支持的格式，则进入搜索页面。
-        /// 支持的格式有：<para/>
-        /// av号：av170001, AV170001, https://www.bilibili.com/video/av170001 <para/>
-        /// BV号：BV17x411w7KC, https://www.bilibili.com/video/BV17x411w7KC <para/>
-        /// 番剧（电影、电视剧）ss号：ss32982, SS32982, https://www.bilibili.com/bangumi/play/ss32982 <para/>
-        /// 番剧（电影、电视剧）ep号：ep317925, EP317925, https://www.bilibili.com/bangumi/play/ep317925 <para/>
-        /// 番剧（电影、电视剧）md号：md28228367, MD28228367, https://www.bilibili.com/bangumi/media/md28228367 <para/>
-        /// 课程ss号：https://www.bilibili.com/cheese/play/ss205 <para/>
-        /// 课程ep号：https://www.bilibili.com/cheese/play/ep3489 <para/>
-        /// 收藏夹：ml1329019876, ML1329019876, https://www.bilibili.com/medialist/detail/ml1329019876 <para/>
-        /// 用户空间：uid928123, UID928123, uid:928123, UID:928123, https://space.bilibili.com/928123
         /// </summary>
         private void EnterBili()
         {

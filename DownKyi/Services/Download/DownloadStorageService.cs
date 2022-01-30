@@ -15,6 +15,8 @@ namespace DownKyi.Services.Download
         /// <param name="downloadingItem"></param>
         public void AddDownloading(DownloadingItem downloadingItem)
         {
+            if (downloadingItem == null || downloadingItem.DownloadBase == null) { return; }
+
             AddDownloadBase(downloadingItem.DownloadBase);
 
             DownloadingDb downloadingDb = new DownloadingDb();
@@ -32,6 +34,8 @@ namespace DownKyi.Services.Download
         /// <param name="downloadingItem"></param>
         public void RemoveDownloading(DownloadingItem downloadingItem)
         {
+            if (downloadingItem == null || downloadingItem.DownloadBase == null) { return; }
+
             RemoveDownloadBase(downloadingItem.DownloadBase.Uuid);
 
             DownloadingDb downloadingDb = new DownloadingDb();
@@ -75,6 +79,8 @@ namespace DownKyi.Services.Download
         /// <param name="downloadingItem"></param>
         public void UpdateDownloading(DownloadingItem downloadingItem)
         {
+            if (downloadingItem == null || downloadingItem.DownloadBase == null) { return; }
+
             UpdateDownloadBase(downloadingItem.DownloadBase);
 
             DownloadingDb downloadingDb = new DownloadingDb();
@@ -92,6 +98,8 @@ namespace DownKyi.Services.Download
         /// <param name="downloadedItem"></param>
         public void AddDownloaded(DownloadedItem downloadedItem)
         {
+            if (downloadedItem == null || downloadedItem.DownloadBase == null) { return; }
+
             AddDownloadBase(downloadedItem.DownloadBase);
 
             DownloadedDb downloadedDb = new DownloadedDb();
@@ -109,6 +117,8 @@ namespace DownKyi.Services.Download
         /// <param name="downloadedItem"></param>
         public void RemoveDownloaded(DownloadedItem downloadedItem)
         {
+            if (downloadedItem == null || downloadedItem.DownloadBase == null) { return; }
+
             RemoveDownloadBase(downloadedItem.DownloadBase.Uuid);
 
             DownloadedDb downloadedDb = new DownloadedDb();
@@ -152,6 +162,8 @@ namespace DownKyi.Services.Download
         /// <param name="downloadedItem"></param>
         public void UpdateDownloaded(DownloadedItem downloadedItem)
         {
+            if (downloadedItem == null || downloadedItem.DownloadBase == null) { return; }
+
             UpdateDownloadBase(downloadedItem.DownloadBase);
 
             DownloadedDb downloadedDb = new DownloadedDb();
@@ -169,6 +181,8 @@ namespace DownKyi.Services.Download
         /// <param name="downloadBase"></param>
         private void AddDownloadBase(DownloadBase downloadBase)
         {
+            if (downloadBase == null) { return; }
+
             DownloadBaseDb downloadBaseDb = new DownloadBaseDb();
             object obj = downloadBaseDb.QueryById(downloadBase.Uuid);
             if (obj == null)
@@ -208,6 +222,8 @@ namespace DownKyi.Services.Download
         /// <param name="downloadBase"></param>
         private void UpdateDownloadBase(DownloadBase downloadBase)
         {
+            if (downloadBase == null) { return; }
+
             DownloadBaseDb downloadBaseDb = new DownloadBaseDb();
             downloadBaseDb.Update(downloadBase.Uuid, downloadBase);
             downloadBaseDb.Close();

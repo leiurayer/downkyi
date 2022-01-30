@@ -148,10 +148,10 @@
                         Orientation="Vertical">
                         <ContentControl Width="16" Height="16">
                             <Path
-                                Width="{Binding Play.Width}"
-                                Height="{Binding Play.Height}"
-                                Data="{Binding Play.Data}"
-                                Fill="{Binding Play.Fill}"
+                                Width="{Binding Favorites.Play.Width}"
+                                Height="{Binding Favorites.Play.Height}"
+                                Data="{Binding Favorites.Play.Data}"
+                                Fill="{Binding Favorites.Play.Fill}"
                                 Stretch="UniformToFill" />
                         </ContentControl>
                         <TextBlock
@@ -168,10 +168,10 @@
                         Orientation="Vertical">
                         <ContentControl Width="16" Height="16">
                             <Path
-                                Width="{Binding Like.Width}"
-                                Height="{Binding Like.Height}"
-                                Data="{Binding Like.Data}"
-                                Fill="{Binding Like.Fill}"
+                                Width="{Binding Favorites.Like.Width}"
+                                Height="{Binding Favorites.Like.Height}"
+                                Data="{Binding Favorites.Like.Data}"
+                                Fill="{Binding Favorites.Like.Fill}"
                                 Stretch="UniformToFill" />
                         </ContentControl>
                         <TextBlock
@@ -188,10 +188,10 @@
                         Orientation="Vertical">
                         <ContentControl Width="16" Height="16">
                             <Path
-                                Width="{Binding Favorite.Width}"
-                                Height="{Binding Favorite.Height}"
-                                Data="{Binding Favorite.Data}"
-                                Fill="{Binding Favorite.Fill}"
+                                Width="{Binding Favorites.Favorite.Width}"
+                                Height="{Binding Favorites.Favorite.Height}"
+                                Data="{Binding Favorites.Favorite.Data}"
+                                Fill="{Binding Favorites.Favorite.Fill}"
                                 Stretch="UniformToFill" />
                         </ContentControl>
                         <TextBlock
@@ -208,10 +208,10 @@
                         Orientation="Vertical">
                         <ContentControl Width="16" Height="16">
                             <Path
-                                Width="{Binding Share.Width}"
-                                Height="{Binding Share.Height}"
-                                Data="{Binding Share.Data}"
-                                Fill="{Binding Share.Fill}"
+                                Width="{Binding Favorites.Share.Width}"
+                                Height="{Binding Favorites.Share.Height}"
+                                Data="{Binding Favorites.Share.Data}"
+                                Fill="{Binding Favorites.Share.Fill}"
                                 Stretch="UniformToFill" />
                         </ContentControl>
                         <TextBlock
@@ -448,7 +448,6 @@
                                                 </TextBlock.Style>
                                             </TextBlock>
                                         </Grid>
-
 
                                     </Grid>
 

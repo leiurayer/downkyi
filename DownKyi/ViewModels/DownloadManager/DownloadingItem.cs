@@ -23,7 +23,7 @@ namespace DownKyi.ViewModels.DownloadManager
         private Downloading downloading;
         public Downloading Downloading
         {
-            get { return downloading; }
+            get => downloading;
             set
             {
                 downloading = value;
@@ -164,21 +164,26 @@ namespace DownKyi.ViewModels.DownloadManager
                 case DownloadStatus.NOT_STARTED:
                 case DownloadStatus.WAIT_FOR_DOWNLOAD:
                     Downloading.DownloadStatus = DownloadStatus.PAUSE_STARTED;
+                    DownloadStatusTitle = DictionaryResource.GetString("Pausing");
                     StartOrPause = ButtonIcon.Instance().Start;
                     StartOrPause.Fill = DictionaryResource.GetColor("ColorPrimary");
                     break;
                 case DownloadStatus.PAUSE_STARTED:
                     Downloading.DownloadStatus = DownloadStatus.WAIT_FOR_DOWNLOAD;
+                    DownloadStatusTitle = DictionaryResource.GetString("Waiting");
                     StartOrPause = ButtonIcon.Instance().Pause;
                     StartOrPause.Fill = DictionaryResource.GetColor("ColorPrimary");
                     break;
                 case DownloadStatus.PAUSE:
-                    Downloading.DownloadStatus = DownloadStatus.DOWNLOADING;
+                    Downloading.DownloadStatus = DownloadStatus.WAIT_FOR_DOWNLOAD;
+                    DownloadStatusTitle = DictionaryResource.GetString("Waiting");
                     StartOrPause = ButtonIcon.Instance().Pause;
                     StartOrPause.Fill = DictionaryResource.GetColor("ColorPrimary");
                     break;
+                //case DownloadStatus.PAUSE_TO_WAIT:
                 case DownloadStatus.DOWNLOADING:
                     Downloading.DownloadStatus = DownloadStatus.PAUSE;
+                    DownloadStatusTitle = DictionaryResource.GetString("Pausing");
                     StartOrPause = ButtonIcon.Instance().Start;
                     StartOrPause.Fill = DictionaryResource.GetColor("ColorPrimary");
                     break;
@@ -188,6 +193,7 @@ namespace DownKyi.ViewModels.DownloadManager
                     break;
                 case DownloadStatus.DOWNLOAD_FAILED:
                     Downloading.DownloadStatus = DownloadStatus.WAIT_FOR_DOWNLOAD;
+                    DownloadStatusTitle = DictionaryResource.GetString("Waiting");
                     StartOrPause = ButtonIcon.Instance().Pause;
                     StartOrPause.Fill = DictionaryResource.GetColor("ColorPrimary");
                     break;
