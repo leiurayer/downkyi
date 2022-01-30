@@ -1093,8 +1093,9 @@ namespace DownKyi.Core.Aria2cNet.Client
             }
             catch (WebException e)
             {
-                Utils.Debugging.Console.PrintLine("Request()发生Web异常: {0}", e);
-                LogManager.Error("AriaClient", e);
+                //Utils.Debugging.Console.PrintLine("Request()发生Web异常: {0}", e);
+                //LogManager.Error("AriaClient", e);
+
                 //return Request(url, parameters, retry - 1);
 
                 string html = string.Empty;
@@ -1108,8 +1109,8 @@ namespace DownKyi.Core.Aria2cNet.Client
                     }
                 }
 
-                Console.WriteLine($"本次请求使用的参数：{parameters}");
-                Console.WriteLine($"返回的web数据：{html}");
+                //Console.WriteLine($"本次请求使用的参数：{parameters}");
+                //Console.WriteLine($"返回的web数据：{html}");
                 return html;
             }
             catch (IOException e)

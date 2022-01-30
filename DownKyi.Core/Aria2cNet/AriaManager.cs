@@ -1,7 +1,9 @@
 ﻿using DownKyi.Core.Aria2cNet.Client;
+using DownKyi.Core.Aria2cNet.Client.Entity;
 using DownKyi.Core.Logging;
 using System;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace DownKyi.Core.Aria2cNet
 {
@@ -45,7 +47,7 @@ namespace DownKyi.Core.Aria2cNet
             string filePath = "";
             while (true)
             {
-                var status = AriaClient.TellStatus(gid);
+                Task<AriaTellStatus> status = AriaClient.TellStatus(gid);
                 if (status == null || status.Result == null) { continue; }
 
                 if (status.Result.Result == null && status.Result.Error != null)
@@ -81,8 +83,11 @@ namespace DownKyi.Core.Aria2cNet
                 }
                 if (status.Result.Result.ErrorCode != null && status.Result.Result.ErrorCode != "0")
                 {
-                    Utils.Debugging.Console.PrintLine("ErrorMessage: " + status.Result.Result.ErrorMessage);
-                    LogManager.Error("AriaManager", status.Result.Result.ErrorMessage);
+                    if (status.Result != null)
+                    {
+                        Utils.Debugging.Console.PrintLine("ErrorMessage: " + status.Result.Result.ErrorMessage);
+                        LogManager.Error("AriaManager", status.Result.Result.ErrorMessage);
+                    }
 
                     //// 如果返回状态码不是200，则继续
                     //if (status.Result.Result.ErrorMessage.Contains("The response status is not successful"))
@@ -92,9 +97,12 @@ namespace DownKyi.Core.Aria2cNet
                     //}
 
                     // aira中删除记录
-                    var ariaRemove1 = AriaClient.RemoveDownloadResultAsync(gid);
+                    Task<AriaRemove> ariaRemove1 = AriaClient.RemoveDownloadResultAsync(gid);
                     Utils.Debugging.Console.PrintLine(ariaRemove1);
-                    LogManager.Debug("AriaManager", ariaRemove1.Result.Result);
+                    if (ariaRemove1.Result != null)
+                    {
+                        LogManager.Debug("AriaManager", ariaRemove1.Result.Result);
+                    }
 
                     // 返回回调信息，退出函数
                     OnDownloadFinish(false, null, gid, status.Result.Result.ErrorMessage);
@@ -116,7 +124,7 @@ namespace DownKyi.Core.Aria2cNet
             while (true)
             {
                 // 查询全局status
-                var globalStatus = await AriaClient.GetGlobalStatAsync();
+                AriaGetGlobalStat globalStatus = await AriaClient.GetGlobalStatAsync();
                 if (globalStatus == null || globalStatus.Result == null) { continue; }
 
                 long globalSpeed = long.Parse(globalStatus.Result.DownloadSpeed);
