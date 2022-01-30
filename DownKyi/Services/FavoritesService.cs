@@ -93,6 +93,8 @@ namespace DownKyi.Services
             int order = 0;
             foreach (var media in medias)
             {
+                if (media.Title == "已失效视频") { continue; }
+
                 order++;
 
                 // 查询、保存封面
