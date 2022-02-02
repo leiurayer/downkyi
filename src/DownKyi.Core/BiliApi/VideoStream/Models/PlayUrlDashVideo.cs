@@ -8,9 +8,9 @@ namespace DownKyi.Core.BiliApi.VideoStream.Models
     {
         [JsonProperty("id")]
         public int Id { get; set; }
-        [JsonProperty("baseUrl")]
+        [JsonProperty("base_url")]
         public string BaseUrl { get; set; }
-        [JsonProperty("backupUrl")]
+        [JsonProperty("backup_url")]
         public List<string> BackupUrl { get; set; }
         // bandwidth
         [JsonProperty("mimeType")]

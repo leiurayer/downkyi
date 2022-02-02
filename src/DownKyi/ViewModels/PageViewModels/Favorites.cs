@@ -1,4 +1,6 @@
-﻿using Prism.Mvvm;
+﻿using DownKyi.Images;
+using DownKyi.Utils;
+using Prism.Mvvm;
 using System.Windows.Media.Imaging;
 
 namespace DownKyi.ViewModels.PageViewModels
@@ -57,6 +59,34 @@ namespace DownKyi.ViewModels.PageViewModels
             set => SetProperty(ref shareNumber, value);
         }
 
+        private VectorImage play;
+        public VectorImage Play
+        {
+            get => play;
+            set => SetProperty(ref play, value);
+        }
+
+        private VectorImage like;
+        public VectorImage Like
+        {
+            get => like;
+            set => SetProperty(ref like, value);
+        }
+
+        private VectorImage favorite;
+        public VectorImage Favorite
+        {
+            get => favorite;
+            set => SetProperty(ref favorite, value);
+        }
+
+        private VectorImage share;
+        public VectorImage Share
+        {
+            get => share;
+            set => SetProperty(ref share, value);
+        }
+
         private string description;
         public string Description
         {
@@ -84,5 +114,25 @@ namespace DownKyi.ViewModels.PageViewModels
             get => upHeader;
             set => SetProperty(ref upHeader, value);
         }
+
+        public Favorites()
+        {
+            #region 属性初始化
+
+            Play = NormalIcon.Instance().Play;
+            Play.Fill = DictionaryResource.GetColor("ColorTextGrey2");
+
+            Like = NormalIcon.Instance().Like;
+            Like.Fill = DictionaryResource.GetColor("ColorTextGrey2");
+
+            Favorite = NormalIcon.Instance().Favorite;
+            Favorite.Fill = DictionaryResource.GetColor("ColorTextGrey2");
+
+            Share = NormalIcon.Instance().Share;
+            Share.Fill = DictionaryResource.GetColor("ColorTextGrey2");
+
+            #endregion
+        }
+
     }
 }

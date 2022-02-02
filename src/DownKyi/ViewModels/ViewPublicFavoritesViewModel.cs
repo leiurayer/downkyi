@@ -1,12 +1,15 @@
-﻿using DownKyi.Core.Logging;
+﻿using DownKyi.Core.BiliApi.VideoStream;
+using DownKyi.Core.Logging;
 using DownKyi.Events;
 using DownKyi.Images;
 using DownKyi.Services;
+using DownKyi.Services.Download;
 using DownKyi.Utils;
 using DownKyi.ViewModels.PageViewModels;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Regions;
+using Prism.Services.Dialogs;
 using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
@@ -17,6 +20,8 @@ namespace DownKyi.ViewModels
     public class ViewPublicFavoritesViewModel : BaseViewModel
     {
         public const string Tag = "PagePublicFavorites";
+
+        private readonly IDialogService dialogService;
 
         #region 页面属性申明
 
@@ -32,34 +37,6 @@ namespace DownKyi.ViewModels
         {
             get => arrowBack;
             set => SetProperty(ref arrowBack, value);
-        }
-
-        private VectorImage play;
-        public VectorImage Play
-        {
-            get => play;
-            set => SetProperty(ref play, value);
-        }
-
-        private VectorImage like;
-        public VectorImage Like
-        {
-            get => like;
-            set => SetProperty(ref like, value);
-        }
-
-        private VectorImage favorite;
-        public VectorImage Favorite
-        {
-            get => favorite;
-            set => SetProperty(ref favorite, value);
-        }
-
-        private VectorImage share;
-        public VectorImage Share
-        {
-            get => share;
-            set => SetProperty(ref share, value);
         }
 
         private Favorites favorites;
@@ -92,24 +69,14 @@ namespace DownKyi.ViewModels
 
         #endregion
 
-        public ViewPublicFavoritesViewModel(IEventAggregator eventAggregator) : base(eventAggregator)
+        public ViewPublicFavoritesViewModel(IEventAggregator eventAggregator, IDialogService dialogService) : base(eventAggregator)
         {
+            this.dialogService = dialogService;
+
             #region 属性初始化
 
             ArrowBack = NavigationIcon.Instance().ArrowBack;
             ArrowBack.Fill = DictionaryResource.GetColor("ColorTextDark");
-
-            Play = NormalIcon.Instance().Play;
-            Play.Fill = DictionaryResource.GetColor("ColorTextGrey2");
-
-            Like = NormalIcon.Instance().Like;
-            Like.Fill = DictionaryResource.GetColor("ColorTextGrey2");
-
-            Favorite = NormalIcon.Instance().Favorite;
-            Favorite.Fill = DictionaryResource.GetColor("ColorTextGrey2");
-
-            Share = NormalIcon.Instance().Share;
-            Share.Fill = DictionaryResource.GetColor("ColorTextGrey2");
 
             FavoritesMedias = new ObservableCollection<FavoritesMedia>();
 
@@ -185,6 +152,7 @@ namespace DownKyi.ViewModels
         /// </summary>
         private void ExecuteAddToDownloadCommand()
         {
+            AddToDownload(true);
         }
 
         // 添加所有视频到下载列表事件
@@ -196,6 +164,7 @@ namespace DownKyi.ViewModels
         /// </summary>
         private void ExecuteAddAllToDownloadCommand()
         {
+            AddToDownload(false);
         }
 
         // 列表选择事件
@@ -211,6 +180,48 @@ namespace DownKyi.ViewModels
         }
 
         #endregion
+
+        private async void AddToDownload(bool isOnlySelected)
+        {
+            // 收藏夹里只有视频
+            AddToDownloadService addToDownloadService = new AddToDownloadService(PlayStreamType.VIDEO);
+
+            // 选择文件夹
+            string directory = addToDownloadService.SetDirectory(dialogService);
+
+            // 视频计数
+            int i = 0;
+            await Task.Run(() =>
+            {
+                // 添加到下载
+                foreach (FavoritesMedia media in FavoritesMedias)
+                {
+                    // 只下载选中项，跳过未选中项
+                    if (isOnlySelected && !media.IsSelected) { continue; }
+
+                    /// 有分P的就下载全部
+
+                    // 开启服务
+                    VideoInfoService videoInfoService = new VideoInfoService(media.Bvid);
+
+                    addToDownloadService.SetVideoInfoService(videoInfoService);
+                    addToDownloadService.GetVideo();
+                    addToDownloadService.ParseVideo(videoInfoService);
+                    // 下载
+                    i += addToDownloadService.AddToDownload(eventAggregator, directory);
+                }
+            });
+
+            // 通知用户添加到下载列表的结果
+            if (i == 0)
+            {
+                eventAggregator.GetEvent<MessageEvent>().Publish(DictionaryResource.GetString("TipAddDownloadingZero"));
+            }
+            else
+            {
+                eventAggregator.GetEvent<MessageEvent>().Publish($"{DictionaryResource.GetString("TipAddDownloadingFinished1")}{i}{DictionaryResource.GetString("TipAddDownloadingFinished2")}");
+            }
+        }
 
         /// <summary>
         /// 初始化页面元素

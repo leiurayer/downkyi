@@ -16,6 +16,7 @@ namespace DownKyi.Core.BiliApi.Video
         /// <returns></returns>
         public static VideoView VideoViewInfo(string bvid = null, long aid = -1)
         {
+            // https://api.bilibili.com/x/web-interface/view/detail?bvid=BV1Sg411F7cb&aid=969147110&need_operation_card=1&web_rm_repeat=1&need_elec=1&out_referer=https%3A%2F%2Fspace.bilibili.com%2F42018135%2Ffavlist%3Ffid%3D94341835
             string baseUrl = "https://api.bilibili.com/x/web-interface/view";
             string referer = "https://www.bilibili.com";
             string url;

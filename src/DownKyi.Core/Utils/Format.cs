@@ -174,6 +174,7 @@ namespace DownKyi.Core.Utils
         public static string FormatFileName(string originName)
         {
             string destName = originName;
+
             // Windows中不能作为文件名的字符
             destName = destName.Replace("\\", " ");
             destName = destName.Replace("/", " ");
@@ -197,7 +198,8 @@ namespace DownKyi.Core.Utils
             // 控制字符
             destName = Regex.Replace(destName, @"\p{C}+", string.Empty);
 
-            return destName.Trim();
+            // 移除前导和尾部的空白字符、dot符
+            return destName.Trim().TrimStart('.').TrimEnd('.');
         }
 
     }

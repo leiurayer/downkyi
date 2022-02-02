@@ -6,6 +6,8 @@ namespace DownKyi.Core.BiliApi.BiliUtils
     {
         private static readonly List<Quality> resolutions = new List<Quality>
         {
+            new Quality { Name = "超高清 8K", Id = 127 },
+            new Quality { Name = "杜比视界", Id = 126 },
             new Quality { Name = "HDR 真彩", Id = 125 },
             new Quality { Name = "4K 超清", Id = 120 },
             new Quality { Name = "1080P 60帧", Id = 116 },
@@ -22,6 +24,7 @@ namespace DownKyi.Core.BiliApi.BiliUtils
             new Quality { Name = "64K", Id = 30216 },
             new Quality { Name = "132K", Id = 30232 },
             new Quality { Name = "192K", Id = 30280 },
+            new Quality { Name = "Dolby Atmos", Id = 30250 },
         };
 
         /// <summary>

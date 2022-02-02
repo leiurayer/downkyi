@@ -3,7 +3,11 @@ using DownKyi.Models;
 using DownKyi.Utils;
 using Prism.Commands;
 using Prism.Events;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace DownKyi.ViewModels.DownloadManager
 {
@@ -45,7 +49,8 @@ namespace DownKyi.ViewModels.DownloadManager
                 {
                     case DownloadStatus.NOT_STARTED:
                     case DownloadStatus.WAIT_FOR_DOWNLOAD:
-                        downloading.Downloading.DownloadStatus = DownloadStatus.PAUSE_STARTED;
+                        downloading.Downloading.DownloadStatus = DownloadStatus.PAUSE;
+                        downloading.DownloadStatusTitle = DictionaryResource.GetString("Pausing");
                         downloading.StartOrPause = ButtonIcon.Instance().Start;
                         downloading.StartOrPause.Fill = DictionaryResource.GetColor("ColorPrimary");
                         break;
@@ -53,8 +58,10 @@ namespace DownKyi.ViewModels.DownloadManager
                         break;
                     case DownloadStatus.PAUSE:
                         break;
+                    //case DownloadStatus.PAUSE_TO_WAIT:
                     case DownloadStatus.DOWNLOADING:
                         downloading.Downloading.DownloadStatus = DownloadStatus.PAUSE;
+                        downloading.DownloadStatusTitle = DictionaryResource.GetString("Pausing");
                         downloading.StartOrPause = ButtonIcon.Instance().Start;
                         downloading.StartOrPause.Fill = DictionaryResource.GetColor("ColorPrimary");
                         break;
@@ -85,13 +92,19 @@ namespace DownKyi.ViewModels.DownloadManager
                 {
                     case DownloadStatus.NOT_STARTED:
                     case DownloadStatus.WAIT_FOR_DOWNLOAD:
+                        downloading.Downloading.DownloadStatus = DownloadStatus.WAIT_FOR_DOWNLOAD;
+                        downloading.DownloadStatusTitle = DictionaryResource.GetString("Waiting");
                         break;
                     case DownloadStatus.PAUSE_STARTED:
                         downloading.Downloading.DownloadStatus = DownloadStatus.WAIT_FOR_DOWNLOAD;
+                        downloading.DownloadStatusTitle = DictionaryResource.GetString("Waiting");
                         break;
                     case DownloadStatus.PAUSE:
-                        downloading.Downloading.DownloadStatus = DownloadStatus.DOWNLOADING;
+                        downloading.Downloading.DownloadStatus = DownloadStatus.WAIT_FOR_DOWNLOAD;
+                        downloading.DownloadStatusTitle = DictionaryResource.GetString("Waiting");
                         break;
+                    //case DownloadStatus.PAUSE_TO_WAIT:
+                    //    break;
                     case DownloadStatus.DOWNLOADING:
                         break;
                     case DownloadStatus.DOWNLOAD_SUCCEED:
@@ -100,6 +113,7 @@ namespace DownKyi.ViewModels.DownloadManager
                         break;
                     case DownloadStatus.DOWNLOAD_FAILED:
                         downloading.Downloading.DownloadStatus = DownloadStatus.WAIT_FOR_DOWNLOAD;
+                        downloading.DownloadStatusTitle = DictionaryResource.GetString("Waiting");
                         break;
                     default:
                         break;
@@ -117,9 +131,22 @@ namespace DownKyi.ViewModels.DownloadManager
         /// <summary>
         /// 删除所有下载事件
         /// </summary>
-        private void ExecuteDeleteAllDownloadingCommand()
+        private async void ExecuteDeleteAllDownloadingCommand()
         {
-            DownloadingList.Clear();
+            // 使用Clear()不能触发NotifyCollectionChangedAction.Remove事件
+            // 因此遍历删除
+            // DownloadingList中元素被删除后不能继续遍历
+            await Task.Run(() =>
+            {
+                List<DownloadingItem> list = DownloadingList.ToList();
+                foreach (DownloadingItem item in list)
+                {
+                    App.PropertyChangeAsync(new Action(() =>
+                    {
+                        App.DownloadingList.Remove(item);
+                    }));
+                }
+            });
         }
 
         #endregion

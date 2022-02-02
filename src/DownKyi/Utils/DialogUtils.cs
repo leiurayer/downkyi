@@ -34,11 +34,7 @@ namespace DownKyi.Utils
                 Filter = "mp4 (*.mp4)|*.mp4"
             };
             var showDialog = dialog.ShowDialog();
-            if (showDialog == true)
-            {
-                return dialog.FileName;
-            }
-            else { return ""; }
+            return showDialog == true ? dialog.FileName : "";
         }
 
     }

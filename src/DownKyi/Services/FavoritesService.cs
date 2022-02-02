@@ -26,7 +26,7 @@ namespace DownKyi.Services
             // 查询、保存封面
             StorageCover storageCover = new StorageCover();
             string coverUrl = favoritesMetaInfo.Cover;
-            string cover = storageCover.GetCover(favoritesMetaInfo.Id, "Favorites", favoritesMetaInfo.Mid, coverUrl);
+            BitmapImage cover = storageCover.GetCoverThumbnail(favoritesMetaInfo.Id, "Favorites", favoritesMetaInfo.Mid, coverUrl, 300, 188);
 
             // 获取用户头像
             string upName;
@@ -49,7 +49,7 @@ namespace DownKyi.Services
             {
                 favorites.CoverUrl = coverUrl;
 
-                favorites.Cover = cover == null ? null : new BitmapImage(new Uri(cover));
+                favorites.Cover = cover;
                 favorites.Title = favoritesMetaInfo.Title;
 
                 DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1)); // 当地时区
@@ -93,12 +93,14 @@ namespace DownKyi.Services
             int order = 0;
             foreach (var media in medias)
             {
+                if (media.Title == "已失效视频") { continue; }
+
                 order++;
 
                 // 查询、保存封面
                 StorageCover storageCover = new StorageCover();
                 string coverUrl = media.Cover;
-                string cover = storageCover.GetCover(media.Id, media.Bvid, -1, coverUrl);
+                BitmapImage cover = storageCover.GetCoverThumbnail(media.Id, media.Bvid, -1, coverUrl, 200, 125);
 
                 App.PropertyChangeAsync(new Action(() =>
                 {
@@ -107,7 +109,7 @@ namespace DownKyi.Services
                         Avid = media.Id,
                         Bvid = media.Bvid,
                         Order = order,
-                        Cover = cover == null ? null : new BitmapImage(new Uri(cover)),
+                        Cover = cover,
                         Title = media.Title,
                         PlayNumber = media.CntInfo != null ? Format.FormatNumber(media.CntInfo.Play) : "0",
                         DanmakuNumber = media.CntInfo != null ? Format.FormatNumber(media.CntInfo.Danmaku) : "0",
@@ -120,7 +122,7 @@ namespace DownKyi.Services
                     if (!result.ToList().Exists(t => t.Avid == newMedia.Avid))
                     {
                         result.Add(newMedia);
-                        Thread.Sleep(50);
+                        Thread.Sleep(10);
                     }
                 }));
             }

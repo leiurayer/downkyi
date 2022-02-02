@@ -11,8 +11,13 @@ namespace DownKyi.Core.Storage.Database.Download
     public class DownloadDb
     {
         private const string key = "bdb8eb69-3698-4af9-b722-9312d0fba623";
-        private readonly DbHelper dbHelper = new DbHelper(StorageManager.GetDownload(), key);
         protected string tableName = "download";
+
+#if DEBUG
+        private readonly DbHelper dbHelper = new DbHelper(StorageManager.GetDownload().Replace(".db","_debug.db"));
+#else
+        private readonly DbHelper dbHelper = new DbHelper(StorageManager.GetDownload(), key);
+#endif
 
         /// <summary>
         /// 关闭数据库连接

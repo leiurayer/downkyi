@@ -18,6 +18,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace DownKyi
@@ -58,57 +59,63 @@ namespace DownKyi
             DownloadedList.AddRange(downloadedItems);
 
             // 下载列表发生变化时执行的任务
-            DownloadingList.CollectionChanged += new NotifyCollectionChangedEventHandler((object sender, NotifyCollectionChangedEventArgs e) =>
+            DownloadingList.CollectionChanged += new NotifyCollectionChangedEventHandler(async (object sender, NotifyCollectionChangedEventArgs e) =>
             {
-                if (e.Action == NotifyCollectionChangedAction.Add)
+                await Task.Run(() =>
                 {
-                    foreach (object item in e.NewItems)
+                    if (e.Action == NotifyCollectionChangedAction.Add)
                     {
-                        if (item is DownloadingItem downloading)
+                        foreach (object item in e.NewItems)
                         {
-                            //Console.WriteLine("DownloadingList添加");
-                            downloadStorageService.AddDownloading(downloading);
+                            if (item is DownloadingItem downloading)
+                            {
+                                //Console.WriteLine("DownloadingList添加");
+                                downloadStorageService.AddDownloading(downloading);
+                            }
                         }
                     }
-                }
-                if (e.Action == NotifyCollectionChangedAction.Remove)
-                {
-                    foreach (object item in e.OldItems)
+                    if (e.Action == NotifyCollectionChangedAction.Remove)
                     {
-                        if (item is DownloadingItem downloading)
+                        foreach (object item in e.OldItems)
                         {
-                            //Console.WriteLine("DownloadingList移除");
-                            downloadStorageService.RemoveDownloading(downloading);
+                            if (item is DownloadingItem downloading)
+                            {
+                                //Console.WriteLine("DownloadingList移除");
+                                downloadStorageService.RemoveDownloading(downloading);
+                            }
                         }
                     }
-                }
+                });
             });
 
             // 下载完成列表发生变化时执行的任务
-            DownloadedList.CollectionChanged += new NotifyCollectionChangedEventHandler((object sender, NotifyCollectionChangedEventArgs e) =>
+            DownloadedList.CollectionChanged += new NotifyCollectionChangedEventHandler(async (object sender, NotifyCollectionChangedEventArgs e) =>
             {
-                if (e.Action == NotifyCollectionChangedAction.Add)
+                await Task.Run(() =>
                 {
-                    foreach (object item in e.NewItems)
+                    if (e.Action == NotifyCollectionChangedAction.Add)
                     {
-                        if (item is DownloadedItem downloaded)
+                        foreach (object item in e.NewItems)
                         {
-                            //Console.WriteLine("DownloadedList添加");
-                            downloadStorageService.AddDownloaded(downloaded);
+                            if (item is DownloadedItem downloaded)
+                            {
+                                //Console.WriteLine("DownloadedList添加");
+                                downloadStorageService.AddDownloaded(downloaded);
+                            }
                         }
                     }
-                }
-                if (e.Action == NotifyCollectionChangedAction.Remove)
-                {
-                    foreach (object item in e.OldItems)
+                    if (e.Action == NotifyCollectionChangedAction.Remove)
                     {
-                        if (item is DownloadedItem downloaded)
+                        foreach (object item in e.OldItems)
                         {
-                            //Console.WriteLine("DownloadedList移除");
-                            downloadStorageService.RemoveDownloaded(downloaded);
+                            if (item is DownloadedItem downloaded)
+                            {
+                                //Console.WriteLine("DownloadedList移除");
+                                downloadStorageService.RemoveDownloaded(downloaded);
+                            }
                         }
                     }
-                }
+                });
             });
 
             // 启动下载服务

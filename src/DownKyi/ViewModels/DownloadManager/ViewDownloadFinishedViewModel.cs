@@ -1,7 +1,11 @@
 ﻿using DownKyi.Core.Settings;
 using Prism.Commands;
 using Prism.Events;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace DownKyi.ViewModels.DownloadManager
 {
@@ -89,9 +93,22 @@ namespace DownKyi.ViewModels.DownloadManager
         /// <summary>
         /// 清空下载完成列表事件
         /// </summary>
-        private void ExecuteClearAllDownloadedCommand()
+        private async void ExecuteClearAllDownloadedCommand()
         {
-            DownloadedList.Clear();
+            // 使用Clear()不能触发NotifyCollectionChangedAction.Remove事件
+            // 因此遍历删除
+            // DownloadingList中元素被删除后不能继续遍历
+            await Task.Run(() =>
+            {
+                List<DownloadedItem> list = DownloadedList.ToList();
+                foreach (DownloadedItem item in list)
+                {
+                    App.PropertyChangeAsync(new Action(() =>
+                    {
+                        App.DownloadedList.Remove(item);
+                    }));
+                }
+            });
         }
 
         #endregion

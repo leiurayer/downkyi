@@ -20,7 +20,7 @@
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="auto" />
                                     <ColumnDefinition Width="120" />
-                                    <ColumnDefinition Width="20" />
+                                    <ColumnDefinition Width="30" />
                                 </Grid.ColumnDefinitions>
 
                                 <Image
@@ -187,7 +187,9 @@
                 Grid.Row="0"
                 BorderThickness="0"
                 ItemContainerStyle="{StaticResource DownloadedStyle}"
-                ItemsSource="{Binding DownloadedList}">
+                ItemsSource="{Binding DownloadedList}"
+                VirtualizingPanel.IsVirtualizing="True"
+                VirtualizingPanel.IsVirtualizingWhenGrouping="True">
                 <ListBox.Style>
                     <Style TargetType="ListBox">
                         <Setter Property="Template">
@@ -198,7 +200,11 @@
                                         Padding="0"
                                         BorderBrush="{TemplateBinding BorderBrush}"
                                         BorderThickness="{TemplateBinding BorderThickness}">
-                                        <ScrollViewer CanContentScroll="False" Focusable="False">
+                                        <ScrollViewer
+                                            CanContentScroll="False"
+                                            Focusable="False"
+                                            HorizontalScrollBarVisibility="Hidden"
+                                            VerticalScrollBarVisibility="Auto">
                                             <ItemsPresenter />
                                         </ScrollViewer>
                                     </Border>

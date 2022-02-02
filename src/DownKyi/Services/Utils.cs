@@ -5,6 +5,7 @@ using DownKyi.Core.Settings.Models;
 using DownKyi.Core.Utils;
 using DownKyi.ViewModels.PageViewModels;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace DownKyi.Services
@@ -94,10 +95,16 @@ namespace DownKyi.Services
         /// <param name="playUrl"></param>
         /// <param name="defaultAudioQuality"></param>
         /// <returns></returns>
-        private static List<string> GetAudioQualityFormatList(PlayUrl playUrl, int defaultAudioQuality)
+        private static ObservableCollection<string> GetAudioQualityFormatList(PlayUrl playUrl, int defaultAudioQuality)
         {
             List<string> audioQualityFormatList = new List<string>();
-            foreach (var audio in playUrl.Dash.Audio)
+
+            if (playUrl.Dash.Audio == null)
+            {
+                return new ObservableCollection<string>();
+            }
+
+            foreach (PlayUrlDashVideo audio in playUrl.Dash.Audio)
             {
                 // 音质id大于设置画质时，跳过
                 if (audio.Id > defaultAudioQuality) { continue; }
@@ -112,7 +119,7 @@ namespace DownKyi.Services
             audioQualityFormatList.Sort(new StringLogicalComparer<string>());
             audioQualityFormatList.Reverse();
 
-            return audioQualityFormatList;
+            return new ObservableCollection<string>(audioQualityFormatList);
         }
 
         /// <summary>
@@ -126,7 +133,13 @@ namespace DownKyi.Services
         private static List<VideoQuality> GetVideoQualityList(PlayUrl playUrl, UserInfoSettings userInfo, int defaultQuality, VideoCodecs videoCodecs)
         {
             List<VideoQuality> videoQualityList = new List<VideoQuality>();
-            foreach (var video in playUrl.Dash.Video)
+
+            if (playUrl.Dash.Video == null)
+            {
+                return videoQualityList;
+            }
+
+            foreach (PlayUrlDashVideo video in playUrl.Dash.Video)
             {
                 // 画质id大于设置画质时，跳过
                 if (video.Id > defaultQuality) { continue; }
@@ -139,7 +152,7 @@ namespace DownKyi.Services
                 }
 
                 string qualityFormat = string.Empty;
-                var selectedQuality = playUrl.SupportFormats.FirstOrDefault(t => t.Quality == video.Id);
+                PlayUrlSupportFormat selectedQuality = playUrl.SupportFormats.FirstOrDefault(t => t.Quality == video.Id);
                 if (selectedQuality != null)
                 {
                     qualityFormat = selectedQuality.NewDescription;
@@ -148,13 +161,13 @@ namespace DownKyi.Services
                 // 寻找是否已存在这个画质
                 // 不存在则添加，存在则修改
                 string codecName = GetVideoCodecName(video.Codecs);
-                var videoQualityExist = videoQualityList.FirstOrDefault(t => t.Quality == video.Id);
+                VideoQuality videoQualityExist = videoQualityList.FirstOrDefault(t => t.Quality == video.Id);
                 if (videoQualityExist == null)
                 {
-                    var videoCodecList = new List<string>();
+                    List<string> videoCodecList = new List<string>();
                     ListHelper.AddUnique(videoCodecList, codecName);
 
-                    var videoQuality = new VideoQuality()
+                    VideoQuality videoQuality = new VideoQuality()
                     {
                         Quality = video.Id,
                         QualityFormat = qualityFormat,
@@ -171,7 +184,7 @@ namespace DownKyi.Services
                 }
 
                 // 设置选中的视频编码
-                var selectedVideoQuality = videoQualityList.FirstOrDefault(t => t.Quality == video.Id);
+                VideoQuality selectedVideoQuality = videoQualityList.FirstOrDefault(t => t.Quality == video.Id);
                 switch (videoCodecs)
                 {
                     case VideoCodecs.AVC:
@@ -185,6 +198,10 @@ namespace DownKyi.Services
                         {
                             videoQualityList[videoQualityList.IndexOf(selectedVideoQuality)].SelectedVideoCodec = "H.265/HEVC";
                         }
+                        break;
+                    case VideoCodecs.NONE:
+                        break;
+                    default:
                         break;
                 }
 
@@ -205,7 +222,7 @@ namespace DownKyi.Services
         /// <returns></returns>
         internal static string GetVideoCodecName(string origin)
         {
-            return origin.Contains("avc") ? "H.264/AVC" : origin.Contains("hev") ? "H.265/HEVC" : "";
+            return origin.Contains("avc") ? "H.264/AVC" : origin.Contains("hev") ? "H.265/HEVC" : origin.Contains("dvh") || origin.Contains("hvc") ? "Dolby Vision" : "";
         }
 
     }
