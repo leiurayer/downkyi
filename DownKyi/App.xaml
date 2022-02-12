@@ -9,7 +9,8 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Themes/ThemeDefault.xaml" />
                 <ResourceDictionary Source="Languages/Default.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/DownKyi.Core;component/BiliApi/Zone/ZoneImage.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/DownKyi.Core;component/BiliApi/Zone/ZoneImages.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/DownKyi.Core;component/BiliApi/BilibiliImages.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

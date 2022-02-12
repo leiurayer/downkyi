@@ -51,6 +51,19 @@
     <system:String x:Key="Normal">正常</system:String>
     <system:String x:Key="Ban">封停</system:String>
 
+    <!--  UserSpace  -->
+    <system:String x:Key="UserSpace">个人空间</system:String>
+    <system:String x:Key="Followed">已关注</system:String>
+    <system:String x:Key="NotFollowed">未关注</system:String>
+    <system:String x:Key="FollowingCount">关注数</system:String>
+    <system:String x:Key="FollowerCount">粉丝数</system:String>
+    <system:String x:Key="LikesCount">获赞数</system:String>
+    <system:String x:Key="ArchiveViewCount">播放数</system:String>
+    <system:String x:Key="ArticleViewCount">阅读数</system:String>
+    <system:String x:Key="AllPublicationZones">全部</system:String>
+    <system:String x:Key="Publication">投稿视频</system:String>
+    <system:String x:Key="Channel">频道</system:String>
+
     <!--  VideoDetail  -->
     <system:String x:Key="CopyCover">复制封面图片</system:String>
     <system:String x:Key="CopyCoverUrl">复制封面URL</system:String>

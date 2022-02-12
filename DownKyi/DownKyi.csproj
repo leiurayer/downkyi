@@ -132,6 +132,12 @@
     <Compile Include="ViewModels\DownloadManager\ViewDownloadingViewModel.cs" />
     <Compile Include="ViewModels\Toolbox\ViewBiliHelperViewModel.cs" />
     <Compile Include="ViewModels\Toolbox\ViewDelogoViewModel.cs" />
+    <Compile Include="ViewModels\UserSpace\Channel.cs" />
+    <Compile Include="ViewModels\UserSpace\PublicationZone.cs" />
+    <Compile Include="ViewModels\UserSpace\ViewChannelViewModel.cs" />
+    <Compile Include="ViewModels\UserSpace\ViewArchiveViewModel.cs" />
+    <Compile Include="ViewModels\UserSpace\TabLeftBanner.cs" />
+    <Compile Include="ViewModels\UserSpace\TabRightBanner.cs" />
     <Compile Include="ViewModels\ViewDownloadManagerViewModel.cs" />
     <Compile Include="ViewModels\Toolbox\ViewExtractMediaViewModel.cs" />
     <Compile Include="ViewModels\ViewIndexViewModel.cs" />
@@ -183,6 +189,12 @@
     </Compile>
     <Compile Include="Views\Toolbox\ViewExtractMedia.xaml.cs">
       <DependentUpon>ViewExtractMedia.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserSpace\ViewArchive.xaml.cs">
+      <DependentUpon>ViewArchive.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserSpace\ViewChannel.xaml.cs">
+      <DependentUpon>ViewChannel.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ViewDownloadManager.xaml.cs">
       <DependentUpon>ViewDownloadManager.xaml</DependentUpon>
@@ -343,6 +355,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\UserSpace\ViewArchive.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserSpace\ViewChannel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ViewDownloadManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -475,6 +495,8 @@
     <Resource Include="Resources\level\lv7.png" />
     <Resource Include="Resources\level\lv8.png" />
     <Resource Include="Resources\level\lv9.png" />
+    <Resource Include="Resources\video-placeholder.png" />
+    <Resource Include="Resources\channel.png" />
     <Content Include="打不开DownKyi请点我.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

@@ -6,11 +6,13 @@ using DownKyi.ViewModels.Dialogs;
 using DownKyi.ViewModels.DownloadManager;
 using DownKyi.ViewModels.Settings;
 using DownKyi.ViewModels.Toolbox;
+using DownKyi.ViewModels.UserSpace;
 using DownKyi.Views;
 using DownKyi.Views.Dialogs;
 using DownKyi.Views.DownloadManager;
 using DownKyi.Views.Settings;
 using DownKyi.Views.Toolbox;
+using DownKyi.Views.UserSpace;
 using Prism.Ioc;
 using System;
 using System.Collections.Generic;
@@ -178,6 +180,10 @@ namespace DownKyi
             containerRegistry.RegisterForNavigation<ViewBiliHelper>(ViewBiliHelperViewModel.Tag);
             containerRegistry.RegisterForNavigation<ViewDelogo>(ViewDelogoViewModel.Tag);
             containerRegistry.RegisterForNavigation<ViewExtractMedia>(ViewExtractMediaViewModel.Tag);
+
+            // UserSpace
+            containerRegistry.RegisterForNavigation<ViewArchive>(ViewArchiveViewModel.Tag);
+            containerRegistry.RegisterForNavigation<ViewChannel>(ViewChannelViewModel.Tag);
 
             // dialogs
             containerRegistry.RegisterDialog<ViewDownloadSetter>(ViewDownloadSetterViewModel.Tag);
