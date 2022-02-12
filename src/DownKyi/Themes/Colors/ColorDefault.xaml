@@ -43,13 +43,14 @@
 
     <Color x:Key="ColorBorder">#FF999999</Color>
     <Color x:Key="ColorBorderTranslucent">#7F999999</Color>
-
-    <Color x:Key="ColorProgressTrack">#FFE4E4E4</Color>
-    <Color x:Key="ColorProgressIndicator">#FFF3CB85</Color>
+    <Color x:Key="ColorBorderTranslucent100">#99000000</Color>
 
     <Color x:Key="ColorImageBorder">#7FD0D0D0</Color>
     <Color x:Key="ColorImageBorder2">#7FFFFFFF</Color>
     <Color x:Key="ColorImageBackground">#7FD0D0D0</Color>
+
+    <Color x:Key="ColorProgressTrack">#FFE4E4E4</Color>
+    <Color x:Key="ColorProgressIndicator">#FFF3CB85</Color>
 
     <Color x:Key="ColorText">white</Color>
     <Color x:Key="ColorTextDark">black</Color>
@@ -57,5 +58,6 @@
     <Color x:Key="ColorTextGrey2">#FF757575</Color>
 
     <Color x:Key="ColorMoney">#FFFFAE00</Color>
+    <Color x:Key="ColorPublication">#FF02B5DA</Color>
 
 </ResourceDictionary>

@@ -423,9 +423,8 @@ namespace DownKyi.ViewModels
 
             await Task.Run(() =>
             {
-
                 // 背景图片
-                SpaceSettings spaceSettings = UserSpace.GetSpaceSettings(mid);
+                SpaceSettings spaceSettings = Core.BiliApi.Users.UserSpace.GetSpaceSettings(mid);
                 if (spaceSettings != null)
                 {
                     StorageCover storageCover = new StorageCover();
@@ -506,9 +505,9 @@ namespace DownKyi.ViewModels
                     // 没有数据
                     isNoData = true;
                 }
-
             });
 
+            // 是否获取到数据
             if (isNoData)
             {
                 TopNavigationBg = "#00FFFFFF"; // 透明

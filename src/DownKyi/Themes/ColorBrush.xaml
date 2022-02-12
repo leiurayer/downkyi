@@ -43,13 +43,14 @@
 
     <SolidColorBrush x:Key="BrushBorder" Color="{DynamicResource ColorBorder}" />
     <SolidColorBrush x:Key="BrushBorderTranslucent" Color="{DynamicResource ColorBorderTranslucent}" />
-
-    <SolidColorBrush x:Key="BrushProgressTrack" Color="{DynamicResource ColorProgressTrack}" />
-    <SolidColorBrush x:Key="BrushProgressIndicator" Color="{DynamicResource ColorProgressIndicator}" />
+    <SolidColorBrush x:Key="BrushBorderTranslucent100" Color="{DynamicResource ColorBorderTranslucent100}" />
 
     <SolidColorBrush x:Key="BrushImageBorder" Color="{DynamicResource ColorImageBorder}" />
     <SolidColorBrush x:Key="BrushImageBorder2" Color="{DynamicResource ColorImageBorder2}" />
     <SolidColorBrush x:Key="BrushImageBackground" Color="{DynamicResource ColorImageBackground}" />
+
+    <SolidColorBrush x:Key="BrushProgressTrack" Color="{DynamicResource ColorProgressTrack}" />
+    <SolidColorBrush x:Key="BrushProgressIndicator" Color="{DynamicResource ColorProgressIndicator}" />
 
     <SolidColorBrush x:Key="BrushText" Color="{DynamicResource ColorText}" />
     <SolidColorBrush x:Key="BrushTextDark" Color="{DynamicResource ColorTextDark}" />
@@ -57,5 +58,6 @@
     <SolidColorBrush x:Key="BrushTextGrey2" Color="{DynamicResource ColorTextGrey2}" />
 
     <SolidColorBrush x:Key="BrushMoney" Color="{DynamicResource ColorMoney}" />
+    <SolidColorBrush x:Key="BrushPublication" Color="{DynamicResource ColorPublication}" />
 
 </ResourceDictionary>

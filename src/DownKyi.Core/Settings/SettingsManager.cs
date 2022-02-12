@@ -3,11 +3,30 @@ using Newtonsoft.Json;
 using System;
 using System.IO;
 
+#if DEBUG
+#else
+using DownKyi.Core.Utils.Encryptor;
+#endif
+
 namespace DownKyi.Core.Settings
 {
     public partial class SettingsManager
     {
         private static SettingsManager instance;
+
+        // 内存中保存一份配置
+        private AppSettings appSettings;
+
+#if DEBUG
+        // 设置的配置文件
+        private readonly string settingsName = Storage.StorageManager.GetSettings() + "_debug.json";
+#else
+        // 设置的配置文件
+        private readonly string settingsName = Storage.StorageManager.GetSettings();
+
+        // 密钥
+        private readonly string password = "YO1J$4#p";
+#endif
 
         /// <summary>
         /// 获取SettingsManager实例
@@ -30,12 +49,6 @@ namespace DownKyi.Core.Settings
             appSettings = GetSettings();
         }
 
-        // 内存中保存一份配置
-        private AppSettings appSettings;
-
-        // 设置的配置文件
-        private readonly string settingsName = Storage.StorageManager.GetSettings();
-
         /// <summary>
         /// 获取AppSettingsModel
         /// </summary>
@@ -47,6 +60,12 @@ namespace DownKyi.Core.Settings
                 StreamReader streamReader = File.OpenText(settingsName);
                 string jsonWordTemplate = streamReader.ReadToEnd();
                 streamReader.Close();
+
+#if DEBUG
+#else
+                // 解密字符串
+                jsonWordTemplate = Encryptor.DecryptString(jsonWordTemplate, password);
+#endif
 
                 return JsonConvert.DeserializeObject<AppSettings>(jsonWordTemplate);
             }
@@ -64,6 +83,12 @@ namespace DownKyi.Core.Settings
         private bool SetSettings()
         {
             string json = JsonConvert.SerializeObject(appSettings);
+
+#if DEBUG
+#else
+            // 加密字符串
+            json = Encryptor.EncryptString(json, password);
+#endif
 
             try
             {

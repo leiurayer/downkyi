@@ -42,6 +42,8 @@ namespace DownKyi.Core.Storage
         /// <returns></returns>
         public BitmapImage GetCoverThumbnail(string cover, int width, int height)
         {
+            if (cover == null) { return null; }
+
             Bitmap bitmap = new Bitmap(cover);
             Image thumbnail = bitmap.GetThumbnailImage(width, height, null, IntPtr.Zero);
 

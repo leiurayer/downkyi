@@ -27,7 +27,7 @@ namespace DownKyi.Core.Storage
         public static string Config { get; } = $"{Root}/Config";
 
         // 设置
-        public static string Settings { get; } = $"{Config}/Settings.json";
+        public static string Settings { get; } = $"{Config}/Settings";
 
         // 登录cookies
         public static string Login { get; } = $"{Config}/Login";

@@ -7,7 +7,7 @@
 
 ## 更新日志
 
-[全部更新日志](https://github.com/leiurayer/downkyi/blob/main/CHANGELOG.md)
+[全部更新日志](CHANGELOG.md)
 
 * `2021/06/12` v1.4.0
     1. [修复] 视频无封面时崩溃的问题。
