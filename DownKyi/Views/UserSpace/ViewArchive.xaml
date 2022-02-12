@@ -9,7 +9,10 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <ListBox ItemsSource="{Binding PublicationZones}">
+        <ListBox
+            Margin="30,0,0,0"
+            ItemsSource="{Binding PublicationZones}"
+            ScrollViewer.HorizontalScrollBarVisibility="Disabled">
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel IsItemsHost="True" />
@@ -42,7 +45,7 @@
                             <ControlTemplate TargetType="{x:Type ListBoxItem}">
                                 <StackPanel
                                     Grid.Row="0"
-                                    Margin="0,0,30,0"
+                                    Margin="0,20,30,0"
                                     HorizontalAlignment="Left"
                                     Cursor="Hand"
                                     Orientation="Vertical">

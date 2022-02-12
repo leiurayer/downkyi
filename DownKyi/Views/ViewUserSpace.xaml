@@ -243,7 +243,7 @@
             <!--  内容  -->
             <Grid Grid.Row="1" Visibility="{Binding ContentVisibility}">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="70" />
+                    <RowDefinition Height="65" />
                     <RowDefinition />
                 </Grid.RowDefinitions>
 
@@ -294,10 +294,7 @@
                 </Grid>
 
                 <!--  内容区content  -->
-                <ContentControl
-                    Grid.Row="1"
-                    Margin="20,20,20,0"
-                    prism:RegionManager.RegionName="UserSpaceContentRegion" />
+                <ContentControl Grid.Row="1" prism:RegionManager.RegionName="UserSpaceContentRegion" />
             </Grid>
 
         </Grid>
