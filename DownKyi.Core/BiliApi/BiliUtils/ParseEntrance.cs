@@ -368,9 +368,16 @@ namespace DownKyi.Core.BiliApi.BiliUtils
         /// <returns></returns>
         public static bool IsUserUrl(string input)
         {
-            string baseUrl = $"{SpaceUrl}/";
-            string id = GetId(input, baseUrl);
-            return Number.IsInt(id);
+            if (!IsUrl(input)) { return false; }
+
+            if (input.Contains("space.bilibili.com"))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         /// <summary>
@@ -390,9 +397,17 @@ namespace DownKyi.Core.BiliApi.BiliUtils
             }
             else if (IsUserUrl(input))
             {
-                string baseUrl = $"{SpaceUrl}/";
-                string id = GetId(input, baseUrl);
-                return Number.GetInt(id);
+                string url = EnableHttps(input);
+                url = DeleteUrlParam(url);
+                var match = Regex.Match(url, @"\d+");
+                if (match.Success)
+                {
+                    return long.Parse(match.Value);
+                }
+                else
+                {
+                    return -1;
+                }
             }
             else
             {
