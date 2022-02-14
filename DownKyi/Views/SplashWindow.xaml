@@ -27,5 +27,30 @@
             FontSize="30"
             Foreground="White"
             Text="Welcome to DownKyi!" />
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock
+                x:Name="nameVersion"
+                Grid.Column="0"
+                Margin="10"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Bottom"
+                FontSize="12"
+                Foreground="White" />
+
+            <TextBlock
+                Grid.Column="1"
+                Margin="10"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom"
+                FontSize="12"
+                Foreground="White"
+                Text="open source" />
+        </Grid>
     </Grid>
 </Window>
