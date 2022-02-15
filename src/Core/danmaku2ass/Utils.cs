@@ -62,6 +62,7 @@ namespace Core.danmaku2ass
             int second = (int)(i % 60.0f);
 
             int hour = (int)Math.Floor(min / 60.0);
+            min %= 60;
 
             return $"{hour:D}:{min:D2}:{second:D2}.{dec:D2}";
         }
