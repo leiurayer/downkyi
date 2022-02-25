@@ -64,6 +64,14 @@
     <system:String x:Key="Publication">投稿视频</system:String>
     <system:String x:Key="Channel">频道</system:String>
 
+    <!--  PublicFavorites  -->
+    <system:String x:Key="PublicFavorites">收藏夹</system:String>
+    <system:String x:Key="FavoritesMediaCount">个内容</system:String>
+
+    <!--  Publication  -->
+    <system:String x:Key="DownloadSelectedPublication">下载选中项</system:String>
+    <system:String x:Key="DownloadAllPublication">下载全部</system:String>
+
     <!--  VideoDetail  -->
     <system:String x:Key="CopyCover">复制封面图片</system:String>
     <system:String x:Key="CopyCoverUrl">复制封面URL</system:String>
@@ -251,10 +259,6 @@
     <system:String x:Key="ExtractMedia">音视频分离</system:String>
     <system:String x:Key="ExtractAudio">提取音频</system:String>
     <system:String x:Key="ExtractVideo">提取视频</system:String>
-
-    <!--  PublicFavorites  -->
-    <system:String x:Key="PublicFavorites">收藏夹</system:String>
-    <system:String x:Key="FavoritesMediaCount">个内容</system:String>
 
     <!--  Dialog  -->
     <system:String x:Key="Cancel">取消</system:String>

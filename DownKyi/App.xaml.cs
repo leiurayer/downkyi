@@ -164,6 +164,7 @@ namespace DownKyi
             containerRegistry.RegisterForNavigation<ViewUserSpace>(ViewUserSpaceViewModel.Tag);
             containerRegistry.RegisterForNavigation<ViewMySpace>(ViewMySpaceViewModel.Tag);
             containerRegistry.RegisterForNavigation<ViewPublicFavorites>(ViewPublicFavoritesViewModel.Tag);
+            containerRegistry.RegisterForNavigation<ViewPublication>(ViewPublicationViewModel.Tag);
 
             // downloadManager pages
             containerRegistry.RegisterForNavigation<ViewDownloading>(ViewDownloadingViewModel.Tag);

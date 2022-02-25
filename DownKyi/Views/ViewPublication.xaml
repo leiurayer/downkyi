@@ -1,0 +1,156 @@
+﻿<UserControl
+    x:Class="DownKyi.Views.ViewPublication"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:custom="clr-namespace:DownKyi.ui.CustomControl"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:prism="http://prismlibrary.com/"
+    prism:ViewModelLocator.AutoWireViewModel="True">
+    <UserControl.Resources />
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition Height="1" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="100" />
+            </Grid.ColumnDefinitions>
+
+            <Button
+                Grid.Column="0"
+                Margin="10,5,0,5"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Command="{Binding BackSpaceCommand}"
+                Style="{StaticResource ImageBtnStyle}">
+                <StackPanel Orientation="Horizontal">
+                    <ContentControl Width="24" Height="24">
+                        <Path
+                            Width="{Binding ArrowBack.Width}"
+                            Height="{Binding ArrowBack.Height}"
+                            Data="{Binding ArrowBack.Data}"
+                            Fill="{Binding ArrowBack.Fill}"
+                            Stretch="None" />
+                    </ContentControl>
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        FontSize="16"
+                        Foreground="{DynamicResource BrushTextDark}"
+                        Text="{DynamicResource Publication}" />
+                </StackPanel>
+            </Button>
+        </Grid>
+
+        <TextBlock Grid.Row="1" Background="{DynamicResource BrushBorder}" />
+
+        <Grid Grid.Row="2" Visibility="{Binding ContentVisibility}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <!--  左侧tab header  -->
+            <ListBox
+                Name="nameLeftTabHeaders"
+                Grid.Column="0"
+                BorderThickness="0"
+                ItemContainerStyle="{StaticResource LeftTabHeaderItemStyle}"
+                ItemsSource="{Binding TabHeaders}"
+                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                SelectedIndex="{Binding SelectTabId, Mode=TwoWay}"
+                Style="{StaticResource LeftTabHeaderStyle}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction Command="{Binding LeftTabHeadersCommand}" CommandParameter="{Binding ElementName=nameLeftTabHeaders, Path=SelectedItem}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </ListBox>
+
+            <Grid Name="nameMediaPanel" Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition Height="1" />
+                    <RowDefinition Height="49" />
+                </Grid.RowDefinitions>
+
+                <ListBox Grid.Row="0" SelectionMode="Extended">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel IsItemsHost="True" />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                </ListBox>
+
+                <TextBlock Grid.Row="1" Background="{DynamicResource BrushBorder}" />
+
+                <Grid Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="80" />
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="80" />
+                    </Grid.ColumnDefinitions>
+
+                    <CheckBox
+                        Grid.Column="0"
+                        Margin="10,0,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Command="{Binding SelectAllCommand}"
+                        CommandParameter="{Binding ElementName=nameVideoSections, Path=SelectedItem}"
+                        Content="{DynamicResource SelectAll}"
+                        Foreground="{DynamicResource BrushTextDark}"
+                        IsChecked="{Binding IsSelectAll, Mode=TwoWay}"
+                        Style="{StaticResource CheckBoxStyle}" />
+
+                    <custom:CustomPager
+                        x:Name="namePager"
+                        Grid.Column="1"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Count="{Binding CountPage, Mode=TwoWay}"
+                        Current="{Binding CurrentPage, Mode=TwoWay}"
+                        DataContext="{Binding}" />
+
+                    <Button
+                        Grid.Column="2"
+                        Margin="0,0,10,0"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        Command="{Binding AddToDownloadCommand}"
+                        Content="{DynamicResource DownloadSelectedPublication}"
+                        FontSize="12"
+                        Foreground="{DynamicResource BrushText}"
+                        Style="{StaticResource BtnStyle}" />
+
+                    <Button
+                        Grid.Column="3"
+                        Margin="0,0,10,0"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        Command="{Binding AddAllCommand}"
+                        Content="{DynamicResource DownloadAllPublication}"
+                        FontSize="12"
+                        Foreground="{DynamicResource BrushText}"
+                        Style="{StaticResource BtnStyle}" />
+                </Grid>
+            </Grid>
+        </Grid>
+
+        <!--  没有数据提示  -->
+        <Image
+            Grid.Row="2"
+            Width="256"
+            Height="256"
+            Source="/DownKyi;component/Resources/no-data.png"
+            Visibility="{Binding NoDataVisibility}" />
+
+    </Grid>
+</UserControl>

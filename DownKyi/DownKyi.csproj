@@ -80,6 +80,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converter\CountConverter.cs" />
+    <Compile Include="CustomControl\CustomPager.xaml.cs">
+      <DependentUpon>CustomPager.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CustomControl\GifImage.cs" />
     <Compile Include="Events\MessageEvent.cs" />
     <Compile Include="Events\NavigationEvent.cs" />
@@ -145,6 +148,7 @@
     <Compile Include="ViewModels\Settings\ViewNetworkViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\ViewParsingSelectorViewModel.cs" />
     <Compile Include="ViewModels\ViewMySpaceViewModel.cs" />
+    <Compile Include="ViewModels\ViewPublicationViewModel.cs" />
     <Compile Include="ViewModels\ViewPublicFavoritesViewModel.cs" />
     <Compile Include="ViewModels\ViewSettingsViewModel.cs" />
     <Compile Include="ViewModels\ViewToolboxViewModel.cs" />
@@ -208,6 +212,9 @@
     <Compile Include="Views\ViewMySpace.xaml.cs">
       <DependentUpon>ViewMySpace.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ViewPublication.xaml.cs">
+      <DependentUpon>ViewPublication.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ViewPublicFavorites.xaml.cs">
       <DependentUpon>ViewPublicFavorites.xaml</DependentUpon>
     </Compile>
@@ -223,6 +230,10 @@
     <Compile Include="Views\ViewVideoDetail.xaml.cs">
       <DependentUpon>ViewVideoDetail.xaml</DependentUpon>
     </Compile>
+    <Page Include="CustomControl\CustomPager.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Languages\en_US.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -376,6 +387,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ViewMySpace.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewPublication.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

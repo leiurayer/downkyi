@@ -1,10 +1,13 @@
 ﻿using DownKyi.Core.BiliApi.Users.Models;
 using DownKyi.Core.BiliApi.Zone;
+using DownKyi.Events;
 using DownKyi.Utils;
+using Prism.Commands;
 using Prism.Events;
 using Prism.Regions;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Media;
 
@@ -12,7 +15,9 @@ namespace DownKyi.ViewModels.UserSpace
 {
     public class ViewArchiveViewModel : BaseViewModel
     {
-        public const string Tag = "ArchiveView";
+        public const string Tag = "PageUserSpaceArchiveView";
+
+        private long mid = -1;
 
         #region 页面属性申明
 
@@ -21,6 +26,13 @@ namespace DownKyi.ViewModels.UserSpace
         {
             get => publicationZones;
             set => SetProperty(ref publicationZones, value);
+        }
+
+        private int selectedItem;
+        public int SelectedItem
+        {
+            get => selectedItem;
+            set => SetProperty(ref selectedItem, value);
         }
 
         #endregion
@@ -35,6 +47,38 @@ namespace DownKyi.ViewModels.UserSpace
         }
 
         #region 命令申明
+
+        // 视频选择事件
+        private DelegateCommand<object> publicationZonesCommand;
+        public DelegateCommand<object> PublicationZonesCommand => publicationZonesCommand ?? (publicationZonesCommand = new DelegateCommand<object>(ExecutePublicationZonesCommand));
+
+        /// <summary>
+        /// 视频选择事件
+        /// </summary>
+        /// <param name="parameter"></param>
+        private void ExecutePublicationZonesCommand(object parameter)
+        {
+            if (!(parameter is PublicationZone zone)) { return; }
+
+            Dictionary<string, object> data = new Dictionary<string, object>
+            {
+                { "mid", mid },
+                { "tid", zone.Tid },
+                { "list", PublicationZones.ToList() }
+            };
+
+            // 进入视频页面
+            NavigationParam param = new NavigationParam
+            {
+                ViewName = ViewPublicationViewModel.Tag,
+                ParentViewName = ViewUserSpaceViewModel.Tag,
+                Parameter = data
+            };
+            eventAggregator.GetEvent<NavigationEvent>().Publish(param);
+
+            SelectedItem = -1;
+        }
+
         #endregion
 
         public override void OnNavigatedFrom(NavigationContext navigationContext)
@@ -42,6 +86,7 @@ namespace DownKyi.ViewModels.UserSpace
             base.OnNavigatedFrom(navigationContext);
 
             PublicationZones.Clear();
+            SelectedItem = -1;
         }
 
         /// <summary>
@@ -53,6 +98,7 @@ namespace DownKyi.ViewModels.UserSpace
             base.OnNavigatedTo(navigationContext);
 
             PublicationZones.Clear();
+            SelectedItem = -1;
 
             // 根据传入参数不同执行不同任务
             var parameter = navigationContext.Parameters.GetValue<List<SpacePublicationListTypeVideoZone>>("object");
@@ -60,6 +106,9 @@ namespace DownKyi.ViewModels.UserSpace
             {
                 return;
             }
+
+            // 传入mid
+            mid = navigationContext.Parameters.GetValue<long>("mid");
 
             int VideoCount = 0;
             foreach (var zone in parameter)

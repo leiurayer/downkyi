@@ -6,7 +6,13 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListBoxItem}">
                     <Grid x:Name="panel" Height="60">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
                         <StackPanel
+                            Grid.Column="0"
                             Margin="20,0,0,0"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
@@ -34,12 +40,26 @@
                                     Fill="{Binding Image.Fill}"
                                     Stretch="UniformToFill" />
                             </ContentControl>
+
                             <TextBlock
                                 x:Name="text"
+                                HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
                                 FontSize="12"
-                                Text="{Binding Title}" />
+                                Foreground="{DynamicResource BrushTextDark}"
+                                Text="{Binding Title}"
+                                TextTrimming="CharacterEllipsis" />
                         </StackPanel>
+
+                        <TextBlock
+                            x:Name="sub"
+                            Grid.Column="1"
+                            Margin="10,0,20,0"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            FontSize="12"
+                            Foreground="{DynamicResource BrushTextGrey2}"
+                            Text="{Binding SubTitle}" />
                     </Grid>
 
                     <ControlTemplate.Triggers>
