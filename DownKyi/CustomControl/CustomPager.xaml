@@ -1,9 +1,10 @@
 ﻿<UserControl
-    x:Class="DownKyi.ui.CustomControl.CustomPager"
+    x:Class="DownKyi.CustomControl.CustomPager"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:DownKyi.ui.CustomControl"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:local="clr-namespace:DownKyi.CustomControl"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
     <UserControl.Resources>
@@ -49,7 +50,7 @@
             </DrawingImage.Drawing>
         </DrawingImage>
 
-        <Style x:Key="pagerBorder" TargetType="Border">
+        <Style x:Key="pagerBorder" TargetType="{x:Type Border}">
             <Setter Property="Background" Value="#FFFFFFFF" />
             <Setter Property="BorderBrush" Value="#FFD7DDE4" />
             <Setter Property="BorderThickness" Value="1" />
@@ -66,14 +67,48 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+
+        <Style x:Key="pagerButton" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="#FFFFFFFF" />
+            <Setter Property="BorderBrush" Value="#FFD7DDE4" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Width" Value="30" />
+            <Setter Property="Height" Value="30" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="4">
+                            <ContentPresenter
+                                Name="content"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="true">
+                    <Setter Property="BorderBrush" Value="#FF00A1D6" />
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="false">
+                    <Setter Property="BorderBrush" Value="#FFD7DDE4" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </UserControl.Resources>
 
-    <StackPanel Orientation="Horizontal">
-        <Border
-            Name="namePrevious"
+    <StackPanel Orientation="Horizontal" Visibility="{Binding Visibility}">
+        <Button
+            x:Name="namePrevious"
             Margin="0,0,8,0"
-            MouseLeftButtonUp="Previous_MouseLeftButtonUp"
-            Style="{StaticResource pagerBorder}">
+            Command="{Binding PreviousCommand}"
+            Style="{StaticResource pagerButton}"
+            Visibility="{Binding PreviousVisibility}">
             <Image
                 Width="16"
                 Height="16"
@@ -83,27 +118,28 @@
                     <Style TargetType="Image">
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding Path=IsMouseOver, ElementName=namePrevious}" Value="True">
-                                <Setter Property="Source" Value="{DynamicResource ToLeftHoverDrawingImage}" />
+                                <Setter Property="Source" Value="{StaticResource ToLeftHoverDrawingImage}" />
                             </DataTrigger>
                             <DataTrigger Binding="{Binding Path=IsMouseOver, ElementName=namePrevious}" Value="False">
-                                <Setter Property="Source" Value="{DynamicResource ToLeftDrawingImage}" />
+                                <Setter Property="Source" Value="{StaticResource ToLeftDrawingImage}" />
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
                 </Image.Style>
             </Image>
-        </Border>
+        </Button>
 
-        <Border
-            Name="nameFirst"
+        <Button
+            x:Name="nameFirst"
             Margin="0,0,4,0"
-            MouseLeftButtonUp="First_MouseLeftButtonUp"
-            Style="{StaticResource pagerBorder}">
+            Command="{Binding FirstCommand}"
+            Style="{StaticResource pagerButton}"
+            Visibility="{Binding FirstVisibility}">
             <TextBlock
-                Name="nameFirstText"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                FontSize="14">
+                FontSize="14"
+                Text="{Binding First, Mode=TwoWay}">
                 <TextBlock.Style>
                     <Style TargetType="TextBlock">
                         <Style.Triggers>
@@ -117,13 +153,13 @@
                     </Style>
                 </TextBlock.Style>
             </TextBlock>
-        </Border>
+        </Button>
 
         <Border
-            Name="nameLeftJump"
             Width="20"
             Height="40"
-            Margin="0,0,4,0">
+            Margin="0,0,4,0"
+            Visibility="{Binding LeftJumpVisibility}">
             <TextBlock
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
@@ -131,16 +167,17 @@
                 Text="&#x2022;&#x2022;&#x2022;" />
         </Border>
 
-        <Border
-            Name="namePreviousSecond"
+        <Button
+            x:Name="namePreviousSecond"
             Margin="0,0,4,0"
-            MouseLeftButtonUp="PreviousSecond_MouseLeftButtonUp"
-            Style="{StaticResource pagerBorder}">
+            Command="{Binding PreviousSecondCommand}"
+            Style="{StaticResource pagerButton}"
+            Visibility="{Binding PreviousSecondVisibility}">
             <TextBlock
-                Name="namePreviousSecondText"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                FontSize="14">
+                FontSize="14"
+                Text="{Binding PreviousSecond, Mode=TwoWay}">
                 <TextBlock.Style>
                     <Style TargetType="TextBlock">
                         <Style.Triggers>
@@ -154,18 +191,19 @@
                     </Style>
                 </TextBlock.Style>
             </TextBlock>
-        </Border>
+        </Button>
 
-        <Border
-            Name="namePreviousFirst"
+        <Button
+            x:Name="namePreviousFirst"
             Margin="0,0,4,0"
-            MouseLeftButtonUp="PreviousFirst_MouseLeftButtonUp"
-            Style="{StaticResource pagerBorder}">
+            Command="{Binding PreviousFirstCommand}"
+            Style="{StaticResource pagerButton}"
+            Visibility="{Binding PreviousFirstVisibility}">
             <TextBlock
-                Name="namePreviousFirstText"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                FontSize="14">
+                FontSize="14"
+                Text="{Binding PreviousFirst, Mode=TwoWay}">
                 <TextBlock.Style>
                     <Style TargetType="TextBlock">
                         <Style.Triggers>
@@ -179,46 +217,32 @@
                     </Style>
                 </TextBlock.Style>
             </TextBlock>
-        </Border>
+        </Button>
 
         <Border
-            Name="nameCurrent"
             Margin="0,0,4,0"
             Background="#FF00A1D6"
             BorderThickness="0"
-            MouseLeftButtonUp="Current_MouseLeftButtonUp"
             Style="{StaticResource pagerBorder}">
             <TextBlock
-                Name="nameCurrentText"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 FontSize="14"
-                Foreground="#FFFFFFFF">
-                <!--<TextBlock.Style>
-                    <Style TargetType="TextBlock">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding Path=IsMouseOver, ElementName=nameCurrent}" Value="True">
-                                <Setter Property="Foreground" Value="#FF00A1D6"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding Path=IsMouseOver, ElementName=nameCurrent}" Value="False">
-                                <Setter Property="Foreground" Value="#FF657180"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </TextBlock.Style>-->
-            </TextBlock>
+                Foreground="#FFFFFFFF"
+                Text="{Binding Current, Mode=TwoWay}" />
         </Border>
 
-        <Border
-            Name="nameNextFirst"
+        <Button
+            x:Name="nameNextFirst"
             Margin="0,0,4,0"
-            MouseLeftButtonUp="NextFirst_MouseLeftButtonUp"
-            Style="{StaticResource pagerBorder}">
+            Command="{Binding NextFirstCommand}"
+            Style="{StaticResource pagerButton}"
+            Visibility="{Binding NextFirstVisibility}">
             <TextBlock
-                Name="nameNextFirstText"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                FontSize="14">
+                FontSize="14"
+                Text="{Binding NextFirst, Mode=TwoWay}">
                 <TextBlock.Style>
                     <Style TargetType="TextBlock">
                         <Style.Triggers>
@@ -232,18 +256,19 @@
                     </Style>
                 </TextBlock.Style>
             </TextBlock>
-        </Border>
+        </Button>
 
-        <Border
-            Name="nameNextSecond"
+        <Button
+            x:Name="nameNextSecond"
             Margin="0,0,4,0"
-            MouseLeftButtonUp="NextSecond_MouseLeftButtonUp"
-            Style="{StaticResource pagerBorder}">
+            Command="{Binding NextSecondCommand}"
+            Style="{StaticResource pagerButton}"
+            Visibility="{Binding NextSecondVisibility}">
             <TextBlock
-                Name="nameNextSecondText"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                FontSize="14">
+                FontSize="14"
+                Text="{Binding NextSecond, Mode=TwoWay}">
                 <TextBlock.Style>
                     <Style TargetType="TextBlock">
                         <Style.Triggers>
@@ -257,13 +282,13 @@
                     </Style>
                 </TextBlock.Style>
             </TextBlock>
-        </Border>
+        </Button>
 
         <Border
-            Name="nameRightJump"
             Width="20"
             Height="40"
-            Margin="0,0,4,0">
+            Margin="0,0,4,0"
+            Visibility="{Binding RightJumpVisibility}">
             <TextBlock
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
@@ -271,16 +296,17 @@
                 Text="&#x2022;&#x2022;&#x2022;" />
         </Border>
 
-        <Border
-            Name="nameLast"
+        <Button
+            x:Name="nameLast"
             Margin="0,0,4,0"
-            MouseLeftButtonUp="Last_MouseLeftButtonUp"
-            Style="{StaticResource pagerBorder}">
+            Command="{Binding LastCommand}"
+            Style="{StaticResource pagerButton}"
+            Visibility="{Binding LastVisibility}">
             <TextBlock
-                Name="nameLastText"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                FontSize="14">
+                FontSize="14"
+                Text="{Binding Count}">
                 <TextBlock.Style>
                     <Style TargetType="TextBlock">
                         <Style.Triggers>
@@ -294,13 +320,14 @@
                     </Style>
                 </TextBlock.Style>
             </TextBlock>
-        </Border>
+        </Button>
 
-        <Border
-            Name="nameNext"
+        <Button
+            x:Name="nameNext"
             Margin="4,0,4,0"
-            MouseLeftButtonUp="Next_MouseLeftButtonUp"
-            Style="{StaticResource pagerBorder}">
+            Command="{Binding NextCommand}"
+            Style="{StaticResource pagerButton}"
+            Visibility="{Binding NextVisibility}">
             <Image
                 Width="16"
                 Height="16"
@@ -310,16 +337,16 @@
                     <Style TargetType="Image">
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding Path=IsMouseOver, ElementName=nameNext}" Value="True">
-                                <Setter Property="Source" Value="{DynamicResource ToRightHoverDrawingImage}" />
+                                <Setter Property="Source" Value="{StaticResource ToRightHoverDrawingImage}" />
                             </DataTrigger>
                             <DataTrigger Binding="{Binding Path=IsMouseOver, ElementName=nameNext}" Value="False">
-                                <Setter Property="Source" Value="{DynamicResource ToRightDrawingImage}" />
+                                <Setter Property="Source" Value="{StaticResource ToRightDrawingImage}" />
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
                 </Image.Style>
             </Image>
-        </Border>
+        </Button>
 
     </StackPanel>
 </UserControl>

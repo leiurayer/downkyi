@@ -1,5 +1,6 @@
 ﻿using DownKyi.Events;
 using DownKyi.Images;
+using DownKyi.CustomControl;
 using DownKyi.Utils;
 using DownKyi.ViewModels.PageViewModels;
 using DownKyi.ViewModels.UserSpace;
@@ -61,6 +62,13 @@ namespace DownKyi.ViewModels
             set => SetProperty(ref currentPage, value);
         }
 
+        private CustomPagerViewModel pager;
+        public CustomPagerViewModel Pager
+        {
+            get => pager;
+            set => SetProperty(ref pager, value);
+        }
+
         #endregion
 
         public ViewPublicationViewModel(IEventAggregator eventAggregator) : base(eventAggregator)
@@ -110,11 +118,19 @@ namespace DownKyi.ViewModels
             if (!(parameter is TabHeader tabHeader)) { return; }
 
             // 页面选择
-            CountPage = (int)Math.Ceiling(double.Parse(tabHeader.SubTitle) / VideoNumberInPage);
-            CurrentPage = 1;
+            Pager = new CustomPagerViewModel(1, (int)Math.Ceiling(double.Parse(tabHeader.SubTitle) / VideoNumberInPage));
+            Pager.CurrentChanged += OnCurrentChanged_Pager;
+            Pager.CountChanged += OnCountChanged_Pager;
         }
 
         #endregion
+
+        private void OnCountChanged_Pager(int count) { }
+
+        private void OnCurrentChanged_Pager(int current)
+        {
+            Console.WriteLine(current);
+        }
 
         /// <summary>
         /// 初始化页面数据
@@ -163,8 +179,9 @@ namespace DownKyi.ViewModels
             SelectTabId = TabHeaders.IndexOf(selectTab);
 
             // 页面选择
-            CountPage = (int)Math.Ceiling(double.Parse(selectTab.SubTitle) / VideoNumberInPage);
-            CurrentPage = 1;
+            Pager = new CustomPagerViewModel(1, (int)Math.Ceiling(double.Parse(selectTab.SubTitle) / VideoNumberInPage));
+            Pager.CurrentChanged += OnCurrentChanged_Pager;
+            Pager.CountChanged += OnCountChanged_Pager;
         }
 
     }

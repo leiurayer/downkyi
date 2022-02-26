@@ -83,6 +83,8 @@
     <Compile Include="CustomControl\CustomPager.xaml.cs">
       <DependentUpon>CustomPager.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CustomControl\CustomPagerViewModel.cs" />
+    <Compile Include="CustomControl\MyDelegateCommand.cs" />
     <Compile Include="CustomControl\GifImage.cs" />
     <Compile Include="Events\MessageEvent.cs" />
     <Compile Include="Events\NavigationEvent.cs" />
@@ -231,8 +233,8 @@
       <DependentUpon>ViewVideoDetail.xaml</DependentUpon>
     </Compile>
     <Page Include="CustomControl\CustomPager.xaml">
-      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Languages\en_US.xaml">
       <Generator>MSBuild:Compile</Generator>
