@@ -29,7 +29,8 @@ namespace DownKyi.Core.BiliApi.BiliUtils
         public static readonly string BangumiUrl = $"{WwwUrl}/bangumi/play/";
         public static readonly string BangumiMediaUrl = $"{WwwUrl}/bangumi/media/";
         public static readonly string CheeseUrl = $"{WwwUrl}/cheese/play/";
-        public static readonly string FavoritesUrl = $"{WwwUrl}/medialist/detail/";
+        public static readonly string FavoritesUrl1 = $"{WwwUrl}/medialist/detail/";
+        public static readonly string FavoritesUrl2 = $"{WwwUrl}/medialist/play/";
 
         #region 视频
 
@@ -314,8 +315,29 @@ namespace DownKyi.Core.BiliApi.BiliUtils
         /// <returns></returns>
         public static bool IsFavoritesUrl(string input)
         {
-            string favoritesId = GetId(input, FavoritesUrl);
+            return IsFavoritesUrl1(input) || IsFavoritesUrl2(input);
+        }
+
+        /// <summary>
+        /// 是否为收藏夹url1
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        private static bool IsFavoritesUrl1(string input)
+        {
+            string favoritesId = GetId(input, FavoritesUrl1);
             return IsFavoritesId(favoritesId);
+        }
+
+        /// <summary>
+        /// 是否为收藏夹ur2
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        private static bool IsFavoritesUrl2(string input)
+        {
+            string favoritesId = GetId(input, FavoritesUrl2);
+            return IsFavoritesId(favoritesId.Split('/')[0]);
         }
 
         /// <summary>
@@ -329,9 +351,13 @@ namespace DownKyi.Core.BiliApi.BiliUtils
             {
                 return Number.GetInt(input.Remove(0, 2));
             }
-            else if (IsFavoritesUrl(input))
+            else if (IsFavoritesUrl1(input))
             {
-                return Number.GetInt(GetId(input, FavoritesUrl).Remove(0, 2));
+                return Number.GetInt(GetId(input, FavoritesUrl1).Remove(0, 2));
+            }
+            else if (IsFavoritesUrl2(input))
+            {
+                return Number.GetInt(GetId(input, FavoritesUrl2).Remove(0, 2).Split('/')[0]);
             }
             else
             {
