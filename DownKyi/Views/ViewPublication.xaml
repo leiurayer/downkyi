@@ -41,12 +41,12 @@
                                     <Border
                                         HorizontalAlignment="Right"
                                         VerticalAlignment="Bottom"
-                                        Background="#7F000000"
+                                        Background="{DynamicResource BrushMask}"
                                         CornerRadius="5 0 5 0">
                                         <TextBlock
                                             Name="nameDuration"
                                             Padding="6,0"
-                                            Foreground="White"
+                                            Foreground="{DynamicResource BrushText}"
                                             Text="{Binding Duration}" />
                                     </Border>
                                 </Grid>
@@ -57,7 +57,7 @@
                                 Height="35"
                                 MaxWidth="190"
                                 Margin="0,10,0,0"
-                                Foreground="Black"
+                                Foreground="{DynamicResource BrushTextDark}"
                                 Tag="{Binding Bvid}"
                                 Text="{Binding Title}"
                                 TextTrimming="CharacterEllipsis"
@@ -83,7 +83,7 @@
                                         Source="/DownKyi;component/Resources/play.png" />
                                     <TextBlock
                                         Margin="5,0,0,0"
-                                        Foreground="#FF999999"
+                                        Foreground="{DynamicResource BrushTextGrey}"
                                         Text="{Binding PlayNumber}" />
                                 </StackPanel>
                                 <StackPanel Grid.Column="1" Orientation="Horizontal">
@@ -93,7 +93,7 @@
                                         Source="/DownKyi;component/Resources/time.png" />
                                     <TextBlock
                                         Margin="5,0,0,0"
-                                        Foreground="#FF999999"
+                                        Foreground="{DynamicResource BrushTextGrey}"
                                         Text="{Binding CreateTime}" />
                                 </StackPanel>
                             </Grid>

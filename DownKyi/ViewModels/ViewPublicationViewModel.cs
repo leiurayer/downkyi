@@ -261,6 +261,10 @@ namespace DownKyi.ViewModels
 
         #endregion
 
+        /// <summary>
+        /// 添加到下载
+        /// </summary>
+        /// <param name="isOnlySelected"></param>
         private async void AddToDownload(bool isOnlySelected)
         {
             // 收藏夹里只有视频
@@ -364,7 +368,7 @@ namespace DownKyi.ViewModels
                     BitmapImage cover;
                     if (coverUrl == null || coverUrl == "")
                     {
-                        cover = new BitmapImage(new Uri($"pack://application:,,,/Resources/video-placeholder.png"));
+                        cover = null; // new BitmapImage(new Uri($"pack://application:,,,/Resources/video-placeholder.png"));
                     }
                     else
                     {
@@ -398,7 +402,7 @@ namespace DownKyi.ViewModels
                         {
                             Avid = video.Aid,
                             Bvid = video.Bvid,
-                            Cover = cover,
+                            Cover = cover ?? new BitmapImage(new Uri($"pack://application:,,,/Resources/video-placeholder.png")),
                             Duration = video.Length,
                             Title = video.Title,
                             PlayNumber = play,
