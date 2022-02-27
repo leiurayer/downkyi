@@ -1,4 +1,7 @@
-﻿using Prism.Commands;
+﻿using DownKyi.Core.BiliApi.BiliUtils;
+using DownKyi.Utils;
+using Prism.Commands;
+using Prism.Events;
 using Prism.Mvvm;
 using System.Windows.Media.Imaging;
 
@@ -6,6 +9,13 @@ namespace DownKyi.ViewModels.PageViewModels
 {
     public class ChannelMedia : BindableBase
     {
+        protected readonly IEventAggregator eventAggregator;
+
+        public ChannelMedia(IEventAggregator eventAggregator)
+        {
+            this.eventAggregator = eventAggregator;
+        }
+
         public long Avid { get; set; }
         public string Bvid { get; set; }
 
@@ -63,8 +73,9 @@ namespace DownKyi.ViewModels.PageViewModels
         {
             if (!(parameter is string tag)) { return; }
 
-            string url = "https://www.bilibili.com/video/" + tag;
-            System.Diagnostics.Process.Start(url);
+            NavigateToView.NavigationView(eventAggregator, ViewVideoDetailViewModel.Tag, tag, $"{ParseEntrance.VideoUrl}{Bvid}");
+            //string url = "https://www.bilibili.com/video/" + tag;
+            //System.Diagnostics.Process.Start(url);
         }
 
     }
