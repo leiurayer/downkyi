@@ -216,6 +216,7 @@ namespace DownKyi.ViewModels
             NavigationParameters param = new NavigationParameters()
             {
                { "object", banner.Object },
+               { "mid", mid },
             };
 
             switch (banner.Id)

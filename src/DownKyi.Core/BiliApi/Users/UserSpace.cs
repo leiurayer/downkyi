@@ -230,6 +230,20 @@ namespace DownKyi.Core.BiliApi.Users
 
         #endregion
 
+        #region 合集和列表
+
+        // TODO
+        // https://api.bilibili.com/x/polymer/space/seasons_series_list?mid=27899754&page_num=1&page_size=18
+        // page_size最大值为20
+
+        // https://api.bilibili.com/x/polymer/space/seasons_archives_list?mid=23947287&season_id=665&sort_reverse=false&page_num=1&page_size=30
+
+        // https://api.bilibili.com/x/series/archives?mid=27899754&series_id=1253087&only_normal=true&sort=desc&pn=1&ps=30
+        // https://api.bilibili.com/x/series/archives?mid=27899754&series_id=1253087&only_normal=true&sort=asc&pn=1&ps=30
+        // https://api.bilibili.com/x/series/series?series_id=1253087
+
+        #endregion
+
         #region 课程
 
         /// <summary>

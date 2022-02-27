@@ -131,6 +131,8 @@ namespace DownKyi.ViewModels
             // 进入设置页面时显示的设置项
             SelectTabId = 0;
             regionManager.RequestNavigate("SettingsContentRegion", ViewBasicViewModel.Tag, new NavigationParameters());
+
+            ArrowBack.Fill = DictionaryResource.GetColor("ColorTextDark");
         }
 
     }

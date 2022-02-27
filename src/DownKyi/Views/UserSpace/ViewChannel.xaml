@@ -9,7 +9,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <ListBox ItemsSource="{Binding Channels}">
+        <ListBox ItemsSource="{Binding Channels}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel IsItemsHost="True" />
@@ -42,7 +42,7 @@
                             <ControlTemplate TargetType="{x:Type ListBoxItem}">
                                 <StackPanel
                                     Grid.Row="0"
-                                    Margin="40,0,0,10"
+                                    Margin="30,0,30,10"
                                     HorizontalAlignment="Left"
                                     Orientation="Vertical">
                                     <Border

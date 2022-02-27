@@ -2,6 +2,7 @@
     x:Class="DownKyi.Views.UserSpace.ViewArchive"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:prism="http://prismlibrary.com/"
     prism:ViewModelLocator.AutoWireViewModel="True">
     <Grid>
@@ -9,7 +10,17 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <ListBox ItemsSource="{Binding PublicationZones}">
+        <ListBox
+            Name="namePublicationZones"
+            Margin="30,0,0,0"
+            ItemsSource="{Binding PublicationZones}"
+            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+            SelectedIndex="{Binding SelectedItem}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <i:InvokeCommandAction Command="{Binding PublicationZonesCommand}" CommandParameter="{Binding ElementName=namePublicationZones, Path=SelectedItem}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel IsItemsHost="True" />
@@ -42,7 +53,7 @@
                             <ControlTemplate TargetType="{x:Type ListBoxItem}">
                                 <StackPanel
                                     Grid.Row="0"
-                                    Margin="0,0,30,0"
+                                    Margin="0,20,30,0"
                                     HorizontalAlignment="Left"
                                     Cursor="Hand"
                                     Orientation="Vertical">

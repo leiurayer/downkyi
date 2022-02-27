@@ -212,6 +212,11 @@ namespace DownKyi.ViewModels
                 }
             });
 
+            if (directory == null)
+            {
+                return;
+            }
+
             // 通知用户添加到下载列表的结果
             if (i == 0)
             {
@@ -229,6 +234,8 @@ namespace DownKyi.ViewModels
         private void InitView()
         {
             LogManager.Debug(Tag, "初始化页面元素");
+
+            ArrowBack.Fill = DictionaryResource.GetColor("ColorTextDark");
 
             ContentVisibility = Visibility.Collapsed;
             NoDataVisibility = Visibility.Collapsed;

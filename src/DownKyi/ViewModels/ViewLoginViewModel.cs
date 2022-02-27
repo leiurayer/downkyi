@@ -63,7 +63,6 @@ namespace DownKyi.ViewModels
             #endregion
         }
 
-
         #region 命令申明
 
         // 返回
@@ -91,7 +90,6 @@ namespace DownKyi.ViewModels
         }
 
         #endregion
-
 
         #region 业务逻辑
 
@@ -224,6 +222,8 @@ namespace DownKyi.ViewModels
         /// </summary>
         private void InitStatus()
         {
+            ArrowBack.Fill = DictionaryResource.GetColor("ColorTextDark");
+
             LoginQRCode = null;
             LoginQRCodeOpacity = 1;
             LoginQRCodeStatus = Visibility.Hidden;

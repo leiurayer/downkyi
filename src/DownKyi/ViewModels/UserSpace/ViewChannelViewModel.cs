@@ -12,7 +12,7 @@ namespace DownKyi.ViewModels.UserSpace
 {
     public class ViewChannelViewModel : BaseViewModel
     {
-        public const string Tag = "Channel";
+        public const string Tag = "PageUserSpaceChannel";
 
         #region 页面属性申明
 

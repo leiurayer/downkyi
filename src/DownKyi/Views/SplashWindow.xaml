@@ -27,5 +27,15 @@
             FontSize="30"
             Foreground="White"
             Text="Welcome to DownKyi!" />
+
+        <TextBlock
+            x:Name="nameVersion"
+            Grid.Row="0"
+            Margin="10"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom"
+            FontSize="12"
+            Foreground="White" />
+
     </Grid>
 </Window>
