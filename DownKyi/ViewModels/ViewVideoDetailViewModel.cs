@@ -665,6 +665,8 @@ namespace DownKyi.ViewModels
         {
             base.OnNavigatedTo(navigationContext);
 
+            ArrowBack.Fill = DictionaryResource.GetColor("ColorTextDark");
+
             DownloadManage = ButtonIcon.Instance().DownloadManage;
             DownloadManage.Height = 24;
             DownloadManage.Width = 24;

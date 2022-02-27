@@ -102,6 +102,7 @@
     <Compile Include="Services\SearchService.cs" />
     <Compile Include="ViewModels\PageViewModels\Favorites.cs" />
     <Compile Include="ViewModels\PageViewModels\FavoritesMedia.cs" />
+    <Compile Include="ViewModels\PageViewModels\PublicationMedia.cs" />
     <Compile Include="ViewModels\PageViewModels\SpaceItem.cs" />
     <Compile Include="ViewModels\Settings\DisplayFileNamePart.cs" />
     <Compile Include="Models\ParseScopeDisplay.cs" />
@@ -514,6 +515,8 @@
     <Resource Include="Resources\level\lv9.png" />
     <Resource Include="Resources\video-placeholder.png" />
     <Resource Include="Resources\channel.png" />
+    <Resource Include="Resources\play.png" />
+    <Resource Include="Resources\time.png" />
     <Content Include="打不开DownKyi请点我.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

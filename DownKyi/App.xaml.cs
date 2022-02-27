@@ -198,6 +198,8 @@ namespace DownKyi
         /// <param name="callback"></param>
         public static void PropertyChangeAsync(Action callback)
         {
+            if (Current == null) { return; }
+
             Current.Dispatcher.Invoke(callback);
         }
 

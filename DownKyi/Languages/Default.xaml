@@ -63,6 +63,7 @@
     <system:String x:Key="AllPublicationZones">全部</system:String>
     <system:String x:Key="Publication">投稿视频</system:String>
     <system:String x:Key="Channel">频道</system:String>
+    <system:String x:Key="UserSpaceWait">请稍等，马上就好~</system:String>
 
     <!--  PublicFavorites  -->
     <system:String x:Key="PublicFavorites">收藏夹</system:String>
@@ -71,6 +72,7 @@
     <!--  Publication  -->
     <system:String x:Key="DownloadSelectedPublication">下载选中项</system:String>
     <system:String x:Key="DownloadAllPublication">下载全部</system:String>
+    <system:String x:Key="PublicationWait">请稍等，马上就好~</system:String>
 
     <!--  VideoDetail  -->
     <system:String x:Key="CopyCover">复制封面图片</system:String>

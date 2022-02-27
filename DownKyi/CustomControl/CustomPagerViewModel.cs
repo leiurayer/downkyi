@@ -16,11 +16,18 @@ namespace DownKyi.CustomControl
         public event PropertyChangedEventHandler PropertyChanged;
 
         // Current修改的回调
-        public delegate void CurrentChangedHandler(int current);
+        public delegate bool CurrentChangedHandler(int old, int current);
         public event CurrentChangedHandler CurrentChanged;
-        protected virtual void OnCurrentChanged(int current)
+        protected virtual bool OnCurrentChanged(int old, int current)
         {
-            CurrentChanged?.Invoke(current);
+            if (CurrentChanged == null)
+            {
+                return false;
+            }
+            else
+            {
+                return CurrentChanged.Invoke(old, current);
+            }
         }
 
         // Count修改的回调
@@ -65,8 +72,6 @@ namespace DownKyi.CustomControl
                     if (count == 1) { Visibility = Visibility.Hidden; }
                     else { Visibility = Visibility.Visible; }
 
-                    //SetView();
-
                     OnCountChanged(count);
 
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Count"));
@@ -90,13 +95,13 @@ namespace DownKyi.CustomControl
                 }
                 else
                 {
-                    current = value;
+                    bool isSuccess = OnCurrentChanged(current, value);
+                    if (isSuccess)
+                    {
+                        current = value;
 
-                    //SetView();
-
-                    OnCurrentChanged(current);
-
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Current"));
+                        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Current"));
+                    }
                 }
             }
         }

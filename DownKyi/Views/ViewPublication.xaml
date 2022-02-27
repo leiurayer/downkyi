@@ -6,7 +6,115 @@
     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:prism="http://prismlibrary.com/"
     prism:ViewModelLocator.AutoWireViewModel="True">
-    <UserControl.Resources />
+    <UserControl.Resources>
+        <Style x:Key="MediaListStyle" TargetType="{x:Type ListBoxItem}">
+            <Setter Property="IsSelected" Value="{Binding IsSelected}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                        <StackPanel
+                            Name="nameItemPanel"
+                            Margin="15,15,15,5"
+                            Cursor="Hand"
+                            Orientation="Vertical">
+                            <Border
+                                Name="nameCover"
+                                Width="190"
+                                Height="119"
+                                HorizontalAlignment="Center"
+                                CornerRadius="5">
+                                <Border.Background>
+                                    <!--  长宽比：1.6  -->
+                                    <ImageBrush ImageSource="{Binding Cover}" />
+                                </Border.Background>
+
+                                <Grid Width="190" Height="119">
+                                    <Image
+                                        Name="nameChecked"
+                                        Width="24"
+                                        Height="24"
+                                        Margin="0,10,10,0"
+                                        HorizontalAlignment="Right"
+                                        VerticalAlignment="Top"
+                                        Source="/DownKyi;component/Resources/checked.png" />
+
+                                    <Border
+                                        HorizontalAlignment="Right"
+                                        VerticalAlignment="Bottom"
+                                        Background="#7F000000"
+                                        CornerRadius="5 0 5 0">
+                                        <TextBlock
+                                            Name="nameDuration"
+                                            Padding="6,0"
+                                            Foreground="White"
+                                            Text="{Binding Duration}" />
+                                    </Border>
+                                </Grid>
+                            </Border>
+
+                            <TextBlock
+                                Name="nameTitle"
+                                Height="35"
+                                MaxWidth="190"
+                                Margin="0,10,0,0"
+                                Foreground="Black"
+                                Tag="{Binding Bvid}"
+                                Text="{Binding Title}"
+                                TextTrimming="CharacterEllipsis"
+                                TextWrapping="Wrap"
+                                ToolTip="{Binding Title}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="MouseLeftButtonUp">
+                                        <i:InvokeCommandAction Command="{Binding TitleCommand}" CommandParameter="{Binding Bvid}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </TextBlock>
+
+                            <Grid Margin="0,3,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Grid.Column="0" Orientation="Horizontal">
+                                    <Image
+                                        Width="11"
+                                        Height="11"
+                                        Source="/DownKyi;component/Resources/play.png" />
+                                    <TextBlock
+                                        Margin="5,0,0,0"
+                                        Foreground="#FF999999"
+                                        Text="{Binding PlayNumber}" />
+                                </StackPanel>
+                                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                    <Image
+                                        Width="12"
+                                        Height="11"
+                                        Source="/DownKyi;component/Resources/time.png" />
+                                    <TextBlock
+                                        Margin="5,0,0,0"
+                                        Foreground="#FF999999"
+                                        Text="{Binding CreateTime}" />
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="nameChecked" Property="Visibility" Value="Visible" />
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="False">
+                                <Setter TargetName="nameChecked" Property="Visibility" Value="Hidden" />
+                            </Trigger>
+                            <Trigger SourceName="nameTitle" Property="IsMouseOver" Value="True">
+                                <Setter TargetName="nameTitle" Property="Foreground" Value="{DynamicResource BrushPrimary}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </UserControl.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -49,7 +157,7 @@
 
         <TextBlock Grid.Row="1" Background="{DynamicResource BrushBorder}" />
 
-        <Grid Grid.Row="2" Visibility="{Binding ContentVisibility}">
+        <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="200" />
                 <ColumnDefinition />
@@ -60,6 +168,7 @@
                 Name="nameLeftTabHeaders"
                 Grid.Column="0"
                 BorderThickness="0"
+                IsEnabled="{Binding IsEnabled}"
                 ItemContainerStyle="{StaticResource LeftTabHeaderItemStyle}"
                 ItemsSource="{Binding TabHeaders}"
                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
@@ -80,13 +189,71 @@
                     <RowDefinition Height="49" />
                 </Grid.RowDefinitions>
 
-                <ListBox Grid.Row="0" SelectionMode="Extended">
+                <ListBox
+                    x:Name="nameMedias"
+                    Grid.Row="0"
+                    BorderThickness="0"
+                    ItemContainerStyle="{StaticResource MediaListStyle}"
+                    ItemsSource="{Binding Medias}"
+                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                    SelectionMode="Extended">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding MediasCommand}" CommandParameter="{Binding ElementName=nameMedias, Path=SelectedItems}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <WrapPanel IsItemsHost="True" />
                         </ItemsPanelTemplate>
                     </ListBox.ItemsPanel>
+                    <ListBox.Style>
+                        <Style TargetType="ListBox">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ListBox">
+                                        <Border
+                                            x:Name="Bd"
+                                            Padding="0"
+                                            Background="{TemplateBinding Background}"
+                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                            BorderThickness="{TemplateBinding BorderThickness}">
+                                            <ScrollViewer Focusable="False">
+                                                <ItemsPresenter />
+                                            </ScrollViewer>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListBox.Style>
                 </ListBox>
+
+                <!--  加载gif  -->
+                <StackPanel
+                    Grid.Row="0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Orientation="Vertical"
+                    Visibility="{Binding LoadingVisibility}">
+                    <ContentControl
+                        Width="40"
+                        Height="40"
+                        Content="{Binding Loading}" />
+                    <TextBlock
+                        Margin="0,10,0,0"
+                        FontSize="14"
+                        Foreground="{DynamicResource BrushTextDark}"
+                        Text="{DynamicResource PublicationWait}" />
+                </StackPanel>
+
+                <!--  没有数据提示  -->
+                <Image
+                    Grid.Row="0"
+                    Width="256"
+                    Height="256"
+                    Source="/DownKyi;component/Resources/no-data.png"
+                    Visibility="{Binding NoDataVisibility}" />
 
                 <TextBlock Grid.Row="1" Background="{DynamicResource BrushBorder}" />
 
@@ -104,7 +271,7 @@
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
                         Command="{Binding SelectAllCommand}"
-                        CommandParameter="{Binding ElementName=nameVideoSections, Path=SelectedItem}"
+                        CommandParameter="{Binding ElementName=nameMedias, Path=SelectedItem}"
                         Content="{DynamicResource SelectAll}"
                         Foreground="{DynamicResource BrushTextDark}"
                         IsChecked="{Binding IsSelectAll, Mode=TwoWay}"
@@ -132,7 +299,7 @@
                         Margin="0,0,10,0"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Center"
-                        Command="{Binding AddAllCommand}"
+                        Command="{Binding AddAllToDownloadCommand}"
                         Content="{DynamicResource DownloadAllPublication}"
                         FontSize="12"
                         Foreground="{DynamicResource BrushText}"
@@ -140,14 +307,6 @@
                 </Grid>
             </Grid>
         </Grid>
-
-        <!--  没有数据提示  -->
-        <Image
-            Grid.Row="2"
-            Width="256"
-            Height="256"
-            Source="/DownKyi;component/Resources/no-data.png"
-            Visibility="{Binding NoDataVisibility}" />
 
     </Grid>
 </UserControl>
