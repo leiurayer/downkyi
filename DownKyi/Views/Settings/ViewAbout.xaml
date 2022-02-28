@@ -350,7 +350,7 @@
                             Grid.Column="2"
                             FontSize="12"
                             Foreground="{DynamicResource BrushTextDark}"
-                            Text="4.3.1" />
+                            Text="5.0" />
                         <TextBlock
                             Grid.Row="8"
                             Grid.Column="3"
