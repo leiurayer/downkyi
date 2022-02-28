@@ -340,7 +340,7 @@ namespace DownKyi.ViewModels
             switch (SelectedPackage)
             {
                 case 0:
-                    Console.WriteLine(SelectedPackage);
+                    NavigateToView.NavigationView(eventAggregator, ViewMyFavoritesViewModel.Tag, Tag, mid);
                     break;
                 case 1:
                     Console.WriteLine(SelectedPackage);

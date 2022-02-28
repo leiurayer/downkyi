@@ -7,11 +7,11 @@ using System.Windows.Media.Imaging;
 
 namespace DownKyi.ViewModels.PageViewModels
 {
-    public class PublicationMedia : BindableBase
+    public class ChannelMedia : BindableBase
     {
         protected readonly IEventAggregator eventAggregator;
 
-        public PublicationMedia(IEventAggregator eventAggregator)
+        public ChannelMedia(IEventAggregator eventAggregator)
         {
             this.eventAggregator = eventAggregator;
         }

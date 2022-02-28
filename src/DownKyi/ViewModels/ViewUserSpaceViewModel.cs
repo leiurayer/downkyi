@@ -225,7 +225,7 @@ namespace DownKyi.ViewModels
                     regionManager.RequestNavigate("UserSpaceContentRegion", ViewArchiveViewModel.Tag, param);
                     break;
                 case 1:
-                    regionManager.RequestNavigate("UserSpaceContentRegion", ViewChannelViewModel.Tag, param);
+                    regionManager.RequestNavigate("UserSpaceContentRegion", UserSpace.ViewChannelViewModel.Tag, param);
                     break;
             }
         }

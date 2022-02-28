@@ -17,7 +17,7 @@ namespace DownKyi.Services
         /// 番剧（电影、电视剧）md号：md28228367, MD28228367, https://www.bilibili.com/bangumi/media/md28228367 <para/>
         /// 课程ss号：https://www.bilibili.com/cheese/play/ss205 <para/>
         /// 课程ep号：https://www.bilibili.com/cheese/play/ep3489 <para/>
-        /// 收藏夹：ml1329019876, ML1329019876, https://www.bilibili.com/medialist/detail/ml1329019876 <para/>
+        /// 收藏夹：ml1329019876, ML1329019876, https://www.bilibili.com/medialist/detail/ml1329019876, https://www.bilibili.com/medialist/play/ml1329019876/ <para/>
         /// 用户空间：uid928123, UID928123, uid:928123, UID:928123, https://space.bilibili.com/928123
         /// </summary>
         /// <param name="input"></param>

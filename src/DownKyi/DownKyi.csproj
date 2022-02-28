@@ -102,6 +102,7 @@
     <Compile Include="Services\SearchService.cs" />
     <Compile Include="ViewModels\PageViewModels\Favorites.cs" />
     <Compile Include="ViewModels\PageViewModels\FavoritesMedia.cs" />
+    <Compile Include="ViewModels\PageViewModels\ChannelMedia.cs" />
     <Compile Include="ViewModels\PageViewModels\PublicationMedia.cs" />
     <Compile Include="ViewModels\PageViewModels\SpaceItem.cs" />
     <Compile Include="ViewModels\Settings\DisplayFileNamePart.cs" />
@@ -144,12 +145,14 @@
     <Compile Include="ViewModels\UserSpace\ViewArchiveViewModel.cs" />
     <Compile Include="ViewModels\UserSpace\TabLeftBanner.cs" />
     <Compile Include="ViewModels\UserSpace\TabRightBanner.cs" />
+    <Compile Include="ViewModels\ViewChannelViewModel.cs" />
     <Compile Include="ViewModels\ViewDownloadManagerViewModel.cs" />
     <Compile Include="ViewModels\Toolbox\ViewExtractMediaViewModel.cs" />
     <Compile Include="ViewModels\ViewIndexViewModel.cs" />
     <Compile Include="ViewModels\ViewLoginViewModel.cs" />
     <Compile Include="ViewModels\Settings\ViewNetworkViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\ViewParsingSelectorViewModel.cs" />
+    <Compile Include="ViewModels\ViewMyFavoritesViewModel.cs" />
     <Compile Include="ViewModels\ViewMySpaceViewModel.cs" />
     <Compile Include="ViewModels\ViewPublicationViewModel.cs" />
     <Compile Include="ViewModels\ViewPublicFavoritesViewModel.cs" />
@@ -203,6 +206,9 @@
     <Compile Include="Views\UserSpace\ViewChannel.xaml.cs">
       <DependentUpon>ViewChannel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ViewChannel.xaml.cs">
+      <DependentUpon>ViewChannel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ViewDownloadManager.xaml.cs">
       <DependentUpon>ViewDownloadManager.xaml</DependentUpon>
     </Compile>
@@ -211,6 +217,9 @@
     </Compile>
     <Compile Include="Views\ViewLogin.xaml.cs">
       <DependentUpon>ViewLogin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewMyFavorites.xaml.cs">
+      <DependentUpon>ViewMyFavorites.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ViewMySpace.xaml.cs">
       <DependentUpon>ViewMySpace.xaml</DependentUpon>
@@ -377,6 +386,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\ViewChannel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ViewDownloadManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -386,6 +399,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ViewLogin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewMyFavorites.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

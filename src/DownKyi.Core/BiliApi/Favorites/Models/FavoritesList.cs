@@ -23,8 +23,8 @@ namespace DownKyi.Core.BiliApi.Favorites.Models
         public int Count { get; set; }
         [JsonProperty("list")]
         public List<FavoritesMetaInfo> List { get; set; }
-        [JsonProperty("has_more")]
-        public int HasMore { get; set; }
+        //[JsonProperty("has_more")]
+        //public bool HasMore { get; set; }
     }
 
 }

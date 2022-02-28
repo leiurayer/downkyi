@@ -1,5 +1,5 @@
 ﻿<UserControl
-    x:Class="DownKyi.Views.ViewPublication"
+    x:Class="DownKyi.Views.ViewMyFavorites"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:custom="clr-namespace:DownKyi.CustomControl"
@@ -12,15 +12,21 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                        <StackPanel
-                            Name="nameItemPanel"
-                            Margin="15,15,15,5"
-                            Cursor="Hand"
-                            Orientation="Vertical">
+                        <Grid
+                            Name="nameMediaPanel"
+                            Width="190"
+                            Margin="15,15,10,5">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="115" />
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+
                             <Border
                                 Name="nameCover"
-                                Width="190"
-                                Height="119"
+                                Grid.Row="0"
+                                Width="185"
+                                Height="115"
                                 HorizontalAlignment="Center"
                                 CornerRadius="5">
                                 <Border.Background>
@@ -28,40 +34,81 @@
                                     <ImageBrush ImageSource="{Binding Cover}" />
                                 </Border.Background>
 
-                                <Grid Width="190" Height="119">
-                                    <Image
-                                        Name="nameChecked"
-                                        Width="24"
-                                        Height="24"
-                                        Margin="0,10,10,0"
-                                        HorizontalAlignment="Right"
-                                        VerticalAlignment="Top"
-                                        Source="/DownKyi;component/Resources/checked.png" />
+                                <Border
+                                    Name="nameInfoPanel"
+                                    Background="{DynamicResource BrushMask}"
+                                    CornerRadius="5"
+                                    Visibility="Hidden">
+                                    <StackPanel Margin="20,0,0,0" VerticalAlignment="Center">
+                                        <StackPanel Height="20" Orientation="Horizontal">
+                                            <TextBlock
+                                                FontSize="12"
+                                                Foreground="{DynamicResource BrushText}"
+                                                Text="{DynamicResource FavoritesPlayNumber}" />
+                                            <TextBlock
+                                                FontSize="12"
+                                                Foreground="{DynamicResource BrushText}"
+                                                Text="{Binding PlayNumber}" />
+                                        </StackPanel>
 
-                                    <Border
-                                        HorizontalAlignment="Right"
-                                        VerticalAlignment="Bottom"
-                                        Background="{DynamicResource BrushMask}"
-                                        CornerRadius="5 0 5 0">
-                                        <TextBlock
-                                            Name="nameDuration"
-                                            Padding="6,0"
-                                            Foreground="{DynamicResource BrushText}"
-                                            Text="{Binding Duration}" />
-                                    </Border>
-                                </Grid>
+                                        <StackPanel Height="20" Orientation="Horizontal">
+                                            <TextBlock
+                                                FontSize="12"
+                                                Foreground="{DynamicResource BrushText}"
+                                                Text="{DynamicResource FavoritesFavoriteNumber}" />
+                                            <TextBlock
+                                                FontSize="12"
+                                                Foreground="{DynamicResource BrushText}"
+                                                Text="{Binding FavoriteNumber}" />
+                                        </StackPanel>
+
+                                        <StackPanel Height="20" Orientation="Horizontal">
+                                            <TextBlock
+                                                FontSize="12"
+                                                Foreground="{DynamicResource BrushText}"
+                                                Text="{DynamicResource FavoritesUpName}" />
+                                            <TextBlock
+                                                FontSize="12"
+                                                Foreground="{DynamicResource BrushText}"
+                                                Text="{Binding UpName}" />
+                                        </StackPanel>
+
+                                        <StackPanel Height="20" Orientation="Horizontal">
+                                            <TextBlock
+                                                FontSize="12"
+                                                Foreground="{DynamicResource BrushText}"
+                                                Text="{DynamicResource FavoritesCreateTime}" />
+                                            <TextBlock
+                                                FontSize="12"
+                                                Foreground="{DynamicResource BrushText}"
+                                                Text="{Binding CreateTime}" />
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Border>
                             </Border>
+
+                            <Image
+                                Name="nameChecked"
+                                Grid.Row="0"
+                                Width="24"
+                                Height="24"
+                                Margin="0,10,10,0"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Top"
+                                Source="/DownKyi;component/Resources/checked.png" />
 
                             <TextBlock
                                 Name="nameTitle"
+                                Grid.Row="1"
+                                Width="185"
                                 Height="35"
-                                MaxWidth="190"
-                                Margin="0,10,0,0"
+                                Margin="0,5"
+                                Cursor="Hand"
                                 Foreground="{DynamicResource BrushTextDark}"
                                 Tag="{Binding Bvid}"
                                 Text="{Binding Title}"
                                 TextTrimming="CharacterEllipsis"
-                                TextWrapping="Wrap"
+                                TextWrapping="WrapWithOverflow"
                                 ToolTip="{Binding Title}">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="MouseLeftButtonUp">
@@ -70,40 +117,34 @@
                                 </i:Interaction.Triggers>
                             </TextBlock>
 
-                            <Grid Margin="0,3,0,0">
+                            <Grid Grid.Row="2">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="120" />
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
 
                                 <StackPanel Grid.Column="0" Orientation="Horizontal">
-                                    <Image
-                                        Width="11"
-                                        Height="11"
-                                        Source="/DownKyi;component/Resources/play.png" />
                                     <TextBlock
-                                        Margin="5,0,0,0"
+                                        FontSize="12"
                                         Foreground="{DynamicResource BrushTextGrey}"
-                                        Text="{Binding PlayNumber}" />
-                                </StackPanel>
-                                <StackPanel Grid.Column="1" Orientation="Horizontal">
-                                    <Image
-                                        Width="12"
-                                        Height="11"
-                                        Source="/DownKyi;component/Resources/time.png" />
+                                        Text="{DynamicResource FavoritesFavTime}" />
                                     <TextBlock
-                                        Margin="5,0,0,0"
+                                        FontSize="12"
                                         Foreground="{DynamicResource BrushTextGrey}"
-                                        Text="{Binding CreateTime}" />
+                                        Text="{Binding FavTime}" />
                                 </StackPanel>
+
                             </Grid>
-                        </StackPanel>
+                        </Grid>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsSelected" Value="True">
                                 <Setter TargetName="nameChecked" Property="Visibility" Value="Visible" />
                             </Trigger>
                             <Trigger Property="IsSelected" Value="False">
                                 <Setter TargetName="nameChecked" Property="Visibility" Value="Hidden" />
+                            </Trigger>
+                            <Trigger SourceName="nameCover" Property="IsMouseOver" Value="True">
+                                <Setter TargetName="nameInfoPanel" Property="Visibility" Value="Visible" />
                             </Trigger>
                             <Trigger SourceName="nameTitle" Property="IsMouseOver" Value="True">
                                 <Setter TargetName="nameTitle" Property="Foreground" Value="{DynamicResource BrushPrimary}" />
@@ -113,7 +154,6 @@
                 </Setter.Value>
             </Setter>
         </Style>
-
     </UserControl.Resources>
 
     <Grid>
@@ -150,14 +190,14 @@
                         VerticalAlignment="Center"
                         FontSize="16"
                         Foreground="{DynamicResource BrushTextDark}"
-                        Text="{DynamicResource Publication}" />
+                        Text="{DynamicResource PublicFavorites}" />
                 </StackPanel>
             </Button>
         </Grid>
 
         <TextBlock Grid.Row="1" Background="{DynamicResource BrushBorder}" />
 
-        <Grid Grid.Row="2">
+        <Grid Grid.Row="2" Visibility="{Binding ContentVisibility}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="200" />
                 <ColumnDefinition />
@@ -235,16 +275,11 @@
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Orientation="Vertical"
-                    Visibility="{Binding LoadingVisibility}">
+                    Visibility="{Binding MediaLoadingVisibility}">
                     <ContentControl
                         Width="40"
                         Height="40"
-                        Content="{Binding Loading}" />
-                    <TextBlock
-                        Margin="0,10,0,0"
-                        FontSize="14"
-                        Foreground="{DynamicResource BrushTextDark}"
-                        Text="{DynamicResource PublicationWait}" />
+                        Content="{Binding MediaLoading}" />
                 </StackPanel>
 
                 <!--  没有数据提示  -->
@@ -253,7 +288,7 @@
                     Width="256"
                     Height="256"
                     Source="/DownKyi;component/Resources/no-data.png"
-                    Visibility="{Binding NoDataVisibility}" />
+                    Visibility="{Binding MediaNoDataVisibility}" />
 
                 <TextBlock Grid.Row="1" Background="{DynamicResource BrushBorder}" />
 
@@ -307,6 +342,32 @@
                 </Grid>
             </Grid>
         </Grid>
+
+        <!--  加载gif  -->
+        <StackPanel
+            Grid.Row="2"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Orientation="Vertical"
+            Visibility="{Binding LoadingVisibility}">
+            <ContentControl
+                Width="40"
+                Height="40"
+                Content="{Binding Loading}" />
+            <TextBlock
+                Margin="0,10,0,0"
+                FontSize="14"
+                Foreground="{DynamicResource BrushTextDark}"
+                Text="{DynamicResource PublicationWait}" />
+        </StackPanel>
+
+        <!--  没有数据提示  -->
+        <Image
+            Grid.Row="2"
+            Width="256"
+            Height="256"
+            Source="/DownKyi;component/Resources/no-data.png"
+            Visibility="{Binding NoDataVisibility}" />
 
     </Grid>
 </UserControl>

@@ -1,5 +1,7 @@
 ﻿using DownKyi.Core.BiliApi.Users.Models;
 using DownKyi.Core.Storage;
+using DownKyi.Events;
+using Prism.Commands;
 using Prism.Events;
 using Prism.Regions;
 using System;
@@ -14,6 +16,8 @@ namespace DownKyi.ViewModels.UserSpace
     {
         public const string Tag = "PageUserSpaceChannel";
 
+        private long mid = -1;
+
         #region 页面属性申明
 
         private ObservableCollection<Channel> channels;
@@ -21,6 +25,13 @@ namespace DownKyi.ViewModels.UserSpace
         {
             get => channels;
             set => SetProperty(ref channels, value);
+        }
+
+        private int selectedItem;
+        public int SelectedItem
+        {
+            get => selectedItem;
+            set => SetProperty(ref selectedItem, value);
         }
 
         #endregion
@@ -35,6 +46,39 @@ namespace DownKyi.ViewModels.UserSpace
         }
 
         #region 命令申明
+
+        // 视频选择事件
+        private DelegateCommand<object> channelsCommand;
+        public DelegateCommand<object> ChannelsCommand => channelsCommand ?? (channelsCommand = new DelegateCommand<object>(ExecuteChannelsCommand));
+
+        /// <summary>
+        /// 视频选择事件
+        /// </summary>
+        /// <param name="parameter"></param>
+        private void ExecuteChannelsCommand(object parameter)
+        {
+            if (!(parameter is Channel channel)) { return; }
+
+            Dictionary<string, object> data = new Dictionary<string, object>
+            {
+                { "mid", mid },
+                { "cid", channel.Cid },
+                { "name", channel.Name },
+                { "count", channel.Count }
+            };
+
+            // 进入视频页面
+            NavigationParam param = new NavigationParam
+            {
+                ViewName = ViewModels.ViewChannelViewModel.Tag,
+                ParentViewName = ViewUserSpaceViewModel.Tag,
+                Parameter = data
+            };
+            eventAggregator.GetEvent<NavigationEvent>().Publish(param);
+
+            SelectedItem = -1;
+        }
+
         #endregion
 
         public override void OnNavigatedFrom(NavigationContext navigationContext)
@@ -42,6 +86,7 @@ namespace DownKyi.ViewModels.UserSpace
             base.OnNavigatedFrom(navigationContext);
 
             Channels.Clear();
+            SelectedItem = -1;
         }
 
         /// <summary>
@@ -53,6 +98,7 @@ namespace DownKyi.ViewModels.UserSpace
             base.OnNavigatedTo(navigationContext);
 
             Channels.Clear();
+            SelectedItem = -1;
 
             // 根据传入参数不同执行不同任务
             var parameter = navigationContext.Parameters.GetValue<List<SpaceChannelList>>("object");
@@ -60,6 +106,9 @@ namespace DownKyi.ViewModels.UserSpace
             {
                 return;
             }
+
+            // 传入mid
+            mid = navigationContext.Parameters.GetValue<long>("mid");
 
             foreach (var channel in parameter)
             {

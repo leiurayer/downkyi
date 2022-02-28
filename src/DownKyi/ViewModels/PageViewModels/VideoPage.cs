@@ -75,7 +75,6 @@ namespace DownKyi.ViewModels.PageViewModels
             set => SetProperty(ref videoQuality, value);
         }
 
-
         #region
 
         // 视频画质选择事件
@@ -89,7 +88,7 @@ namespace DownKyi.ViewModels.PageViewModels
         {
             // 杜比视界
             string dolby = Constant.GetAudioQualities()[3].Name;
-            if (VideoQuality.Quality == 126)
+            if (VideoQuality != null && VideoQuality.Quality == 126)
             {
                 ListHelper.AddUnique(AudioQualityFormatList, dolby);
                 AudioQualityFormat = dolby;

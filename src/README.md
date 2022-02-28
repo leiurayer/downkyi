@@ -66,7 +66,7 @@
 - [x] 番剧（电影、电视剧）md号：https://www.bilibili.com/bangumi/media/md28228367
 - [x] 课程ss号：https://www.bilibili.com/cheese/play/ss205
 - [x] 课程ep号：https://www.bilibili.com/cheese/play/ep3489
-- [x] 收藏夹：ml1329019876，ML1329019876，https://www.bilibili.com/medialist/detail/ml1329019876
+- [x] 收藏夹：ml1329019876，ML1329019876，https://www.bilibili.com/medialist/detail/ml1329019876, https://www.bilibili.com/medialist/play/ml1329019876/
 - [x] 用户空间：uid928123，UID:928123，https://space.bilibili.com/928123
 
 `注：因为番剧和课程都有ss号和ep号，因此暂时不能直接输入ss号和ep号。`

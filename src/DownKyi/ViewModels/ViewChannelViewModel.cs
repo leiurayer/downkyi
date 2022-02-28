@@ -8,7 +8,6 @@ using DownKyi.Services;
 using DownKyi.Services.Download;
 using DownKyi.Utils;
 using DownKyi.ViewModels.PageViewModels;
-using DownKyi.ViewModels.UserSpace;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Regions;
@@ -17,7 +16,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -25,15 +23,16 @@ using System.Windows.Media.Imaging;
 
 namespace DownKyi.ViewModels
 {
-    public class ViewPublicationViewModel : BaseViewModel
+    public class ViewChannelViewModel : BaseViewModel
     {
-        public const string Tag = "PagePublication";
+        public const string Tag = "PageChannel";
 
         private readonly IDialogService dialogService;
 
         private CancellationTokenSource tokenSource;
 
         private long mid = -1;
+        private long cid = -1;
 
         // 每页视频数量，暂时在此写死，以后在设置中增加选项
         private readonly int VideoNumberInPage = 30;
@@ -75,18 +74,11 @@ namespace DownKyi.ViewModels
             set => SetProperty(ref arrowBack, value);
         }
 
-        private ObservableCollection<TabHeader> tabHeaders;
-        public ObservableCollection<TabHeader> TabHeaders
+        private string title;
+        public string Title
         {
-            get => tabHeaders;
-            set => SetProperty(ref tabHeaders, value);
-        }
-
-        private int selectTabId;
-        public int SelectTabId
-        {
-            get => selectTabId;
-            set => SetProperty(ref selectTabId, value);
+            get => title;
+            set => SetProperty(ref title, value);
         }
 
         private bool isEnabled = true;
@@ -103,8 +95,8 @@ namespace DownKyi.ViewModels
             set => SetProperty(ref pager, value);
         }
 
-        private ObservableCollection<PublicationMedia> medias;
-        public ObservableCollection<PublicationMedia> Medias
+        private ObservableCollection<ChannelMedia> medias;
+        public ObservableCollection<ChannelMedia> Medias
         {
             get => medias;
             set => SetProperty(ref medias, value);
@@ -119,7 +111,7 @@ namespace DownKyi.ViewModels
 
         #endregion
 
-        public ViewPublicationViewModel(IEventAggregator eventAggregator, IDialogService dialogService) : base(eventAggregator)
+        public ViewChannelViewModel(IEventAggregator eventAggregator, IDialogService dialogService) : base(eventAggregator)
         {
             this.dialogService = dialogService;
 
@@ -134,8 +126,7 @@ namespace DownKyi.ViewModels
             ArrowBack = NavigationIcon.Instance().ArrowBack;
             ArrowBack.Fill = DictionaryResource.GetColor("ColorTextDark");
 
-            TabHeaders = new ObservableCollection<TabHeader>();
-            Medias = new ObservableCollection<PublicationMedia>();
+            Medias = new ObservableCollection<ChannelMedia>();
 
             #endregion
         }
@@ -163,35 +154,6 @@ namespace DownKyi.ViewModels
                 Parameter = null
             };
             eventAggregator.GetEvent<NavigationEvent>().Publish(parameter);
-        }
-
-        // 左侧tab点击事件
-        private DelegateCommand<object> leftTabHeadersCommand;
-        public DelegateCommand<object> LeftTabHeadersCommand => leftTabHeadersCommand ?? (leftTabHeadersCommand = new DelegateCommand<object>(ExecuteLeftTabHeadersCommand, CanExecuteLeftTabHeadersCommand));
-
-        /// <summary>
-        /// 左侧tab点击事件
-        /// </summary>
-        /// <param name="parameter"></param>
-        private void ExecuteLeftTabHeadersCommand(object parameter)
-        {
-            if (!(parameter is TabHeader tabHeader)) { return; }
-
-            // 页面选择
-            Pager = new CustomPagerViewModel(1, (int)Math.Ceiling(double.Parse(tabHeader.SubTitle) / VideoNumberInPage));
-            Pager.CurrentChanged += OnCurrentChanged_Pager;
-            Pager.CountChanged += OnCountChanged_Pager;
-            Pager.Current = 1;
-        }
-
-        /// <summary>
-        /// 左侧tab点击事件是否允许执行
-        /// </summary>
-        /// <param name="parameter"></param>
-        /// <returns></returns>
-        private bool CanExecuteLeftTabHeadersCommand(object parameter)
-        {
-            return IsEnabled;
         }
 
         // 全选按钮点击事件
@@ -333,25 +295,23 @@ namespace DownKyi.ViewModels
             LoadingVisibility = Visibility.Visible;
             NoDataVisibility = Visibility.Collapsed;
 
-            UpdatePublication(current);
+            UpdateChannel(current);
 
             return true;
         }
 
-        private async void UpdatePublication(int current)
+        private async void UpdateChannel(int current)
         {
             // 是否正在获取数据
             // 在所有的退出分支中都需要设为true
             IsEnabled = false;
 
-            var tab = TabHeaders[SelectTabId];
-
             await Task.Run(() =>
             {
                 CancellationToken cancellationToken = tokenSource.Token;
 
-                var publications = Core.BiliApi.Users.UserSpace.GetPublication(mid, current, VideoNumberInPage, tab.Id);
-                if (publications == null)
+                var channels = Core.BiliApi.Users.UserSpace.GetChannelVideoList(mid, cid, current, VideoNumberInPage);
+                if (channels == null || channels.Count == 0)
                 {
                     // 没有数据，UI提示
                     LoadingVisibility = Visibility.Collapsed;
@@ -359,17 +319,13 @@ namespace DownKyi.ViewModels
                     return;
                 }
 
-                var videos = publications.Vlist;
-                if (videos == null)
+                foreach (var video in channels)
                 {
-                    // 没有数据，UI提示
-                    LoadingVisibility = Visibility.Collapsed;
-                    NoDataVisibility = Visibility.Visible;
-                    return;
-                }
+                    if (video.Cid == 0)
+                    {
+                        continue;
+                    }
 
-                foreach (var video in videos)
-                {
                     // 查询、保存封面
                     string coverUrl = video.Pic;
                     BitmapImage cover;
@@ -390,9 +346,16 @@ namespace DownKyi.ViewModels
 
                     // 播放数
                     string play = string.Empty;
-                    if (video.Play > 0)
+                    if (video.Stat != null)
                     {
-                        play = Format.FormatNumber(video.Play);
+                        if (video.Stat.View > 0)
+                        {
+                            play = Format.FormatNumber(video.Stat.View);
+                        }
+                        else
+                        {
+                            play = "--";
+                        }
                     }
                     else
                     {
@@ -400,22 +363,22 @@ namespace DownKyi.ViewModels
                     }
 
                     DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1)); // 当地时区
-                    DateTime dateCTime = startTime.AddSeconds(video.Created);
+                    DateTime dateCTime = startTime.AddSeconds(video.Ctime);
                     string ctime = dateCTime.ToString("yyyy-MM-dd");
 
                     App.PropertyChangeAsync(new Action(() =>
                     {
-                        PublicationMedia media = new PublicationMedia(eventAggregator)
+                        ChannelMedia media = new ChannelMedia(eventAggregator)
                         {
                             Avid = video.Aid,
                             Bvid = video.Bvid,
                             Cover = cover ?? new BitmapImage(new Uri($"pack://application:,,,/Resources/video-placeholder.png")),
-                            Duration = video.Length,
+                            Duration = Format.FormatDuration3(video.Duration),
                             Title = video.Title,
                             PlayNumber = play,
                             CreateTime = ctime
                         };
-                        medias.Add(media);
+                        Medias.Add(media);
 
                         LoadingVisibility = Visibility.Collapsed;
                         NoDataVisibility = Visibility.Collapsed;
@@ -429,19 +392,8 @@ namespace DownKyi.ViewModels
                 }
 
             }, (tokenSource = new CancellationTokenSource()).Token);
+
             IsEnabled = true;
-        }
-
-        /// <summary>
-        /// 初始化页面数据
-        /// </summary>
-        private void InitView()
-        {
-            ArrowBack.Fill = DictionaryResource.GetColor("ColorTextDark");
-
-            TabHeaders.Clear();
-            Medias.Clear();
-            SelectTabId = -1;
         }
 
         /// <summary>
@@ -452,6 +404,9 @@ namespace DownKyi.ViewModels
         {
             base.OnNavigatedTo(navigationContext);
 
+            ArrowBack.Fill = DictionaryResource.GetColor("ColorTextDark");
+            Medias.Clear();
+
             // 根据传入参数不同执行不同任务
             var parameter = navigationContext.Parameters.GetValue<Dictionary<string, object>>("Parameter");
             if (parameter == null)
@@ -459,28 +414,13 @@ namespace DownKyi.ViewModels
                 return;
             }
 
-            InitView();
-
             mid = (long)parameter["mid"];
-            int tid = (int)parameter["tid"];
-            List<PublicationZone> zones = (List<PublicationZone>)parameter["list"];
-
-            foreach (var item in zones)
-            {
-                TabHeaders.Add(new TabHeader
-                {
-                    Id = item.Tid,
-                    Title = item.Name,
-                    SubTitle = item.Count.ToString()
-                });
-            }
-
-            // 初始选中项
-            var selectTab = TabHeaders.FirstOrDefault(item => item.Id == tid);
-            SelectTabId = TabHeaders.IndexOf(selectTab);
+            cid = (long)parameter["cid"];
+            Title = (string)parameter["name"];
+            int count = (int)parameter["count"];
 
             // 页面选择
-            Pager = new CustomPagerViewModel(1, (int)Math.Ceiling(double.Parse(selectTab.SubTitle) / VideoNumberInPage));
+            Pager = new CustomPagerViewModel(1, (int)Math.Ceiling((double)count / VideoNumberInPage));
             Pager.CurrentChanged += OnCurrentChanged_Pager;
             Pager.CountChanged += OnCountChanged_Pager;
             Pager.Current = 1;

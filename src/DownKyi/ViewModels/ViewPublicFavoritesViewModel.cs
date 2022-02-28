@@ -1,5 +1,7 @@
-﻿using DownKyi.Core.BiliApi.VideoStream;
+﻿using DownKyi.Core.BiliApi.Favorites;
+using DownKyi.Core.BiliApi.VideoStream;
 using DownKyi.Core.Logging;
+using DownKyi.CustomControl;
 using DownKyi.Events;
 using DownKyi.Images;
 using DownKyi.Services;
@@ -11,7 +13,9 @@ using Prism.Events;
 using Prism.Regions;
 using Prism.Services.Dialogs;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -22,6 +26,8 @@ namespace DownKyi.ViewModels
         public const string Tag = "PagePublicFavorites";
 
         private readonly IDialogService dialogService;
+
+        private CancellationTokenSource tokenSource;
 
         #region 页面属性申明
 
@@ -60,11 +66,47 @@ namespace DownKyi.ViewModels
             set => SetProperty(ref contentVisibility, value);
         }
 
+
+        private GifImage loading;
+        public GifImage Loading
+        {
+            get => loading;
+            set => SetProperty(ref loading, value);
+        }
+
+        private Visibility loadingVisibility;
+        public Visibility LoadingVisibility
+        {
+            get => loadingVisibility;
+            set => SetProperty(ref loadingVisibility, value);
+        }
+
         private Visibility noDataVisibility;
         public Visibility NoDataVisibility
         {
             get => noDataVisibility;
             set => SetProperty(ref noDataVisibility, value);
+        }
+
+        private GifImage mediaLoading;
+        public GifImage MediaLoading
+        {
+            get => mediaLoading;
+            set => SetProperty(ref mediaLoading, value);
+        }
+
+        private Visibility mediaLoadingVisibility;
+        public Visibility MediaLoadingVisibility
+        {
+            get => mediaLoadingVisibility;
+            set => SetProperty(ref mediaLoadingVisibility, value);
+        }
+
+        private Visibility mediaNoDataVisibility;
+        public Visibility MediaNoDataVisibility
+        {
+            get => mediaNoDataVisibility;
+            set => SetProperty(ref mediaNoDataVisibility, value);
         }
 
         #endregion
@@ -74,6 +116,17 @@ namespace DownKyi.ViewModels
             this.dialogService = dialogService;
 
             #region 属性初始化
+
+            // 初始化loading gif
+            Loading = new GifImage(Properties.Resources.loading);
+            Loading.StartAnimate();
+            LoadingVisibility = Visibility.Collapsed;
+            NoDataVisibility = Visibility.Collapsed;
+
+            MediaLoading = new GifImage(Properties.Resources.loading);
+            MediaLoading.StartAnimate();
+            MediaLoadingVisibility = Visibility.Collapsed;
+            MediaNoDataVisibility = Visibility.Collapsed;
 
             ArrowBack = NavigationIcon.Instance().ArrowBack;
             ArrowBack.Fill = DictionaryResource.GetColor("ColorTextDark");
@@ -94,6 +147,9 @@ namespace DownKyi.ViewModels
         /// </summary>
         private void ExecuteBackSpace()
         {
+            // 结束任务
+            tokenSource?.Cancel();
+
             NavigationParam parameter = new NavigationParam
             {
                 ViewName = ParentView,
@@ -238,7 +294,10 @@ namespace DownKyi.ViewModels
             ArrowBack.Fill = DictionaryResource.GetColor("ColorTextDark");
 
             ContentVisibility = Visibility.Collapsed;
+            LoadingVisibility = Visibility.Collapsed;
             NoDataVisibility = Visibility.Collapsed;
+            MediaLoadingVisibility = Visibility.Collapsed;
+            MediaNoDataVisibility = Visibility.Collapsed;
 
             FavoritesMedias.Clear();
         }
@@ -246,24 +305,43 @@ namespace DownKyi.ViewModels
         /// <summary>
         /// 更新页面
         /// </summary>
-        private void UpdateView(IFavoritesService favoritesService, long favoritesId)
+        private void UpdateView(IFavoritesService favoritesService, long favoritesId, CancellationToken cancellationToken)
         {
+            LoadingVisibility = Visibility.Visible;
+
             Favorites = favoritesService.GetFavorites(favoritesId);
             if (Favorites == null)
             {
                 LogManager.Debug(Tag, "Favorites is null.");
 
                 ContentVisibility = Visibility.Collapsed;
+                LoadingVisibility = Visibility.Collapsed;
                 NoDataVisibility = Visibility.Visible;
                 return;
             }
             else
             {
                 ContentVisibility = Visibility.Visible;
+                LoadingVisibility = Visibility.Collapsed;
                 NoDataVisibility = Visibility.Collapsed;
             }
 
-            favoritesService.GetFavoritesMediaList(favoritesId, FavoritesMedias, eventAggregator);
+            MediaLoadingVisibility = Visibility.Visible;
+
+            List<Core.BiliApi.Favorites.Models.FavoritesMedia> medias = FavoritesResource.GetAllFavoritesMedia(favoritesId);
+            if (medias == null || medias.Count == 0)
+            {
+                MediaLoadingVisibility = Visibility.Collapsed;
+                MediaNoDataVisibility = Visibility.Visible;
+                return;
+            }
+            else
+            {
+                MediaLoadingVisibility = Visibility.Collapsed;
+                MediaNoDataVisibility = Visibility.Collapsed;
+            }
+
+            favoritesService.GetFavoritesMediaList(medias, FavoritesMedias, eventAggregator, cancellationToken);
         }
 
         /// <summary>
@@ -284,8 +362,10 @@ namespace DownKyi.ViewModels
             InitView();
             await Task.Run(new Action(() =>
             {
-                UpdateView(new FavoritesService(), parameter);
-            }));
+                CancellationToken cancellationToken = tokenSource.Token;
+
+                UpdateView(new FavoritesService(), parameter, cancellationToken);
+            }), (tokenSource = new CancellationTokenSource()).Token);
 
         }
     }

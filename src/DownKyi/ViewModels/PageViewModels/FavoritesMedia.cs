@@ -85,6 +85,20 @@ namespace DownKyi.ViewModels.PageViewModels
             set => SetProperty(ref upName, value);
         }
 
+        private string createTime;
+        public string CreateTime
+        {
+            get => createTime;
+            set => SetProperty(ref createTime, value);
+        }
+
+        private string favTime;
+        public string FavTime
+        {
+            get => favTime;
+            set => SetProperty(ref favTime, value);
+        }
+
         #endregion
 
         #region 命令申明
