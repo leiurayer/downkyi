@@ -65,7 +65,7 @@
                                 ToolTip="{Binding Title}">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="MouseLeftButtonUp">
-                                        <i:InvokeCommandAction Command="{Binding TitleCommand}" CommandParameter="{Binding Bvid}" />
+                                        <i:InvokeCommandAction Command="{Binding TitleCommand}" CommandParameter="{Binding DataContext.PageName, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}" />
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                             </TextBlock>

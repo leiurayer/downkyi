@@ -39,6 +39,13 @@ namespace DownKyi.ViewModels
 
         #region 页面属性申明
 
+        private string pageName = Tag;
+        public string PageName
+        {
+            get => pageName;
+            set => SetProperty(ref pageName, value);
+        }
+
         private GifImage loading;
         public GifImage Loading
         {
@@ -138,7 +145,7 @@ namespace DownKyi.ViewModels
             ArrowBack.Fill = DictionaryResource.GetColor("ColorText");
 
             // 结束任务
-            tokenSource.Cancel();
+            tokenSource?.Cancel();
 
             NavigationParam parameter = new NavigationParam
             {
@@ -288,12 +295,12 @@ namespace DownKyi.ViewModels
             LoadingVisibility = Visibility.Visible;
             NoDataVisibility = Visibility.Collapsed;
 
-            UpdatePublication(current);
+            UpdateChannel(current);
 
             return true;
         }
 
-        private async void UpdatePublication(int current)
+        private async void UpdateChannel(int current)
         {
             // 是否正在获取数据
             // 在所有的退出分支中都需要设为true
@@ -361,7 +368,7 @@ namespace DownKyi.ViewModels
 
                     App.PropertyChangeAsync(new Action(() =>
                     {
-                        ChannelMedia media = new ChannelMedia
+                        ChannelMedia media = new ChannelMedia(eventAggregator)
                         {
                             Avid = video.Aid,
                             Bvid = video.Bvid,
@@ -371,7 +378,7 @@ namespace DownKyi.ViewModels
                             PlayNumber = play,
                             CreateTime = ctime
                         };
-                        medias.Add(media);
+                        Medias.Add(media);
 
                         LoadingVisibility = Visibility.Collapsed;
                         NoDataVisibility = Visibility.Collapsed;
@@ -398,6 +405,7 @@ namespace DownKyi.ViewModels
             base.OnNavigatedTo(navigationContext);
 
             ArrowBack.Fill = DictionaryResource.GetColor("ColorTextDark");
+            Medias.Clear();
 
             // 根据传入参数不同执行不同任务
             var parameter = navigationContext.Parameters.GetValue<Dictionary<string, object>>("Parameter");

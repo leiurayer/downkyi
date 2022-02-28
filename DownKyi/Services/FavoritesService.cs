@@ -4,6 +4,7 @@ using DownKyi.Core.Utils;
 using DownKyi.ViewModels.PageViewModels;
 using Prism.Events;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
@@ -80,16 +81,44 @@ namespace DownKyi.Services
             return favorites;
         }
 
+        ///// <summary>
+        ///// 获取收藏夹所有内容明细列表
+        ///// </summary>
+        ///// <param name="mediaId"></param>
+        ///// <param name="result"></param>
+        ///// <param name="eventAggregator"></param>
+        //public void GetFavoritesMediaList(long mediaId, ObservableCollection<FavoritesMedia> result, IEventAggregator eventAggregator, CancellationToken cancellationToken)
+        //{
+        //    List<Core.BiliApi.Favorites.Models.FavoritesMedia> medias = FavoritesResource.GetAllFavoritesMedia(mediaId);
+        //    if (medias.Count == 0) { return; }
+
+        //    GetFavoritesMediaList(medias, result, eventAggregator, cancellationToken);
+        //}
+
+        ///// <summary>
+        ///// 获取收藏夹指定页的内容明细列表
+        ///// </summary>
+        ///// <param name="mediaId"></param>
+        ///// <param name="pn"></param>
+        ///// <param name="ps"></param>
+        ///// <param name="result"></param>
+        ///// <param name="eventAggregator"></param>
+        //public void GetFavoritesMediaList(long mediaId, int pn, int ps, ObservableCollection<FavoritesMedia> result, IEventAggregator eventAggregator, CancellationToken cancellationToken)
+        //{
+        //    List<Core.BiliApi.Favorites.Models.FavoritesMedia> medias = FavoritesResource.GetFavoritesMedia(mediaId, pn, ps);
+        //    if (medias.Count == 0) { return; }
+
+        //    GetFavoritesMediaList(medias, result, eventAggregator, cancellationToken);
+        //}
+
         /// <summary>
         /// 获取收藏夹内容明细列表
         /// </summary>
-        /// <param name="mediaId"></param>
-        /// <returns></returns>
-        public void GetFavoritesMediaList(long mediaId, ObservableCollection<FavoritesMedia> result, IEventAggregator eventAggregator)
+        /// <param name="medias"></param>
+        /// <param name="result"></param>
+        /// <param name="eventAggregator"></param>
+        public void GetFavoritesMediaList(List<Core.BiliApi.Favorites.Models.FavoritesMedia> medias, ObservableCollection<FavoritesMedia> result, IEventAggregator eventAggregator, CancellationToken cancellationToken)
         {
-            var medias = FavoritesResource.GetAllFavoritesMedia(mediaId);
-            if (medias.Count == 0) { return; }
-
             int order = 0;
             foreach (var media in medias)
             {
@@ -101,6 +130,17 @@ namespace DownKyi.Services
                 StorageCover storageCover = new StorageCover();
                 string coverUrl = media.Cover;
                 BitmapImage cover = storageCover.GetCoverThumbnail(media.Id, media.Bvid, -1, coverUrl, 200, 125);
+
+                // 当地时区
+                DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1));
+
+                // 创建时间
+                DateTime dateCTime = startTime.AddSeconds(media.Ctime);
+                string ctime = dateCTime.ToString("yyyy-MM-dd");
+
+                // 收藏时间
+                DateTime dateFavTime = startTime.AddSeconds(media.FavTime);
+                string favTime = dateFavTime.ToString("yyyy-MM-dd");
 
                 App.PropertyChangeAsync(new Action(() =>
                 {
@@ -116,7 +156,9 @@ namespace DownKyi.Services
                         FavoriteNumber = media.CntInfo != null ? Format.FormatNumber(media.CntInfo.Collect) : "0",
                         Duration = Format.FormatDuration2(media.Duration),
                         UpName = media.Upper != null ? media.Upper.Name : string.Empty,
-                        UpperMid = media.Upper != null ? media.Upper.Mid : -1
+                        UpperMid = media.Upper != null ? media.Upper.Mid : -1,
+                        CreateTime = ctime,
+                        FavTime = favTime
                     };
 
                     if (!result.ToList().Exists(t => t.Avid == newMedia.Avid))
@@ -125,7 +167,66 @@ namespace DownKyi.Services
                         Thread.Sleep(10);
                     }
                 }));
+
+                // 判断是否该结束线程，若为true，跳出循环
+                if (cancellationToken.IsCancellationRequested)
+                {
+                    break;
+                }
             }
         }
+
+        /// <summary>
+        /// 更新我创建的收藏夹列表
+        /// </summary>
+        /// <param name="mid"></param>
+        /// <param name="tabHeaders"></param>
+        public void GetCreatedFavorites(long mid, ObservableCollection<TabHeader> tabHeaders, CancellationToken cancellationToken)
+        {
+            var favorites = FavoritesInfo.GetAllCreatedFavorites(mid);
+            if (favorites.Count == 0) { return; }
+
+            foreach (var item in favorites)
+            {
+                //cancellationToken.ThrowIfCancellationRequested();
+
+                // 判断是否该结束线程，若为true，跳出循环
+                if (cancellationToken.IsCancellationRequested)
+                {
+                    break;
+                }
+
+                App.PropertyChangeAsync(new Action(() =>
+                {
+                    tabHeaders.Add(new TabHeader { Id = (int)item.Id, Title = item.Title, SubTitle = item.MediaCount.ToString() });
+                }));
+            }
+        }
+
+        /// <summary>
+        /// 更新我收藏的收藏夹列表
+        /// </summary>
+        /// <param name="mid"></param>
+        /// <param name="tabHeaders"></param>
+        public void GetCollectedFavorites(long mid, ObservableCollection<TabHeader> tabHeaders, CancellationToken cancellationToken)
+        {
+            var favorites = FavoritesInfo.GetAllCollectedFavorites(mid);
+            if (favorites.Count == 0) { return; }
+
+            foreach (var item in favorites)
+            {
+                // 判断是否该结束线程，若为true，跳出循环
+                if (cancellationToken.IsCancellationRequested)
+                {
+                    break;
+                }
+
+                App.PropertyChangeAsync(new Action(() =>
+                {
+                    tabHeaders.Add(new TabHeader { Id = (int)item.Id, Title = item.Title, SubTitle = item.MediaCount.ToString() });
+                }));
+            }
+        }
+
     }
 }

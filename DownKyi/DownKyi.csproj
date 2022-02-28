@@ -152,6 +152,7 @@
     <Compile Include="ViewModels\ViewLoginViewModel.cs" />
     <Compile Include="ViewModels\Settings\ViewNetworkViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\ViewParsingSelectorViewModel.cs" />
+    <Compile Include="ViewModels\ViewMyFavoritesViewModel.cs" />
     <Compile Include="ViewModels\ViewMySpaceViewModel.cs" />
     <Compile Include="ViewModels\ViewPublicationViewModel.cs" />
     <Compile Include="ViewModels\ViewPublicFavoritesViewModel.cs" />
@@ -216,6 +217,9 @@
     </Compile>
     <Compile Include="Views\ViewLogin.xaml.cs">
       <DependentUpon>ViewLogin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewMyFavorites.xaml.cs">
+      <DependentUpon>ViewMyFavorites.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ViewMySpace.xaml.cs">
       <DependentUpon>ViewMySpace.xaml</DependentUpon>
@@ -395,6 +399,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ViewLogin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewMyFavorites.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
