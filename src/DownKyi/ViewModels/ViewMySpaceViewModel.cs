@@ -343,7 +343,7 @@ namespace DownKyi.ViewModels
                     NavigateToView.NavigationView(eventAggregator, ViewMyFavoritesViewModel.Tag, Tag, mid);
                     break;
                 case 1:
-                    Console.WriteLine(SelectedPackage);
+                    NavigateToView.NavigationView(eventAggregator, ViewMyBangumiFollowViewModel.Tag, Tag, mid);
                     break;
                 case 2:
                     Console.WriteLine(SelectedPackage);

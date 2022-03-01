@@ -19,6 +19,8 @@ namespace DownKyi.ViewModels.PageViewModels
         public long Avid { get; set; }
         public string Bvid { get; set; }
 
+        #region 页面属性申明
+
         private bool isSelected;
         public bool IsSelected
         {
@@ -61,6 +63,10 @@ namespace DownKyi.ViewModels.PageViewModels
             set => SetProperty(ref createTime, value);
         }
 
+        #endregion
+
+        #region 命令申明
+
         // 视频标题点击事件
         private DelegateCommand<object> titleCommand;
         public DelegateCommand<object> TitleCommand => titleCommand ?? (titleCommand = new DelegateCommand<object>(ExecuteTitleCommand));
@@ -77,6 +83,8 @@ namespace DownKyi.ViewModels.PageViewModels
             //string url = "https://www.bilibili.com/video/" + tag;
             //System.Diagnostics.Process.Start(url);
         }
+
+        #endregion
 
     }
 }

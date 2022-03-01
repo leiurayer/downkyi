@@ -76,6 +76,12 @@
     <system:String x:Key="FavoritesCreateTime">投稿：</system:String>
     <system:String x:Key="FavoritesFavTime">收藏于：</system:String>
 
+    <!--  MyBangumiFollow  -->
+    <system:String x:Key="MyBangumiFollow">我的订阅</system:String>
+    <system:String x:Key="FollowAnime">追番</system:String>
+    <system:String x:Key="FollowMovie">追剧</system:String>
+    <system:String x:Key="BangumiNotWatched">尚未观看</system:String>
+
     <!--  Publication  -->
     <system:String x:Key="DownloadSelectedPublication">下载选中项</system:String>
     <system:String x:Key="DownloadAllPublication">下载全部</system:String>

@@ -15,6 +15,7 @@ using Prism.Services.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -249,8 +250,12 @@ namespace DownKyi.ViewModels
             int i = 0;
             await Task.Run(() =>
             {
+                // 为了避免执行其他操作时，
+                // Medias变化导致的异常
+                var list = FavoritesMedias.ToList();
+
                 // 添加到下载
-                foreach (FavoritesMedia media in FavoritesMedias)
+                foreach (var media in list)
                 {
                     // 只下载选中项，跳过未选中项
                     if (isOnlySelected && !media.IsSelected) { continue; }

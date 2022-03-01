@@ -1,6 +1,6 @@
-﻿using DownKyi.Core.BiliApi.VideoStream;
+﻿using DownKyi.Core.BiliApi.BiliUtils;
+using DownKyi.Core.BiliApi.VideoStream;
 using DownKyi.Core.Storage;
-using DownKyi.Core.Utils;
 using DownKyi.CustomControl;
 using DownKyi.Events;
 using DownKyi.Images;
@@ -8,14 +8,12 @@ using DownKyi.Services;
 using DownKyi.Services.Download;
 using DownKyi.Utils;
 using DownKyi.ViewModels.PageViewModels;
-using DownKyi.ViewModels.UserSpace;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Regions;
 using Prism.Services.Dialogs;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
@@ -25,9 +23,9 @@ using System.Windows.Media.Imaging;
 
 namespace DownKyi.ViewModels
 {
-    public class ViewPublicationViewModel : BaseViewModel
+    public class ViewMyBangumiFollowViewModel : BaseViewModel
     {
-        public const string Tag = "PagePublication";
+        public const string Tag = "PageMyBangumiFollow";
 
         private readonly IDialogService dialogService;
 
@@ -36,7 +34,7 @@ namespace DownKyi.ViewModels
         private long mid = -1;
 
         // 每页视频数量，暂时在此写死，以后在设置中增加选项
-        private readonly int VideoNumberInPage = 30;
+        private readonly int VideoNumberInPage = 15;
 
         #region 页面属性申明
 
@@ -45,27 +43,6 @@ namespace DownKyi.ViewModels
         {
             get => pageName;
             set => SetProperty(ref pageName, value);
-        }
-
-        private GifImage loading;
-        public GifImage Loading
-        {
-            get => loading;
-            set => SetProperty(ref loading, value);
-        }
-
-        private Visibility loadingVisibility;
-        public Visibility LoadingVisibility
-        {
-            get => loadingVisibility;
-            set => SetProperty(ref loadingVisibility, value);
-        }
-
-        private Visibility noDataVisibility;
-        public Visibility NoDataVisibility
-        {
-            get => noDataVisibility;
-            set => SetProperty(ref noDataVisibility, value);
         }
 
         private VectorImage arrowBack;
@@ -96,6 +73,13 @@ namespace DownKyi.ViewModels
             set => SetProperty(ref isEnabled, value);
         }
 
+        private Visibility contentVisibility;
+        public Visibility ContentVisibility
+        {
+            get => contentVisibility;
+            set => SetProperty(ref contentVisibility, value);
+        }
+
         private CustomPagerViewModel pager;
         public CustomPagerViewModel Pager
         {
@@ -103,8 +87,8 @@ namespace DownKyi.ViewModels
             set => SetProperty(ref pager, value);
         }
 
-        private ObservableCollection<PublicationMedia> medias;
-        public ObservableCollection<PublicationMedia> Medias
+        private ObservableCollection<BangumiFollowMedia> medias;
+        public ObservableCollection<BangumiFollowMedia> Medias
         {
             get => medias;
             set => SetProperty(ref medias, value);
@@ -117,9 +101,30 @@ namespace DownKyi.ViewModels
             set => SetProperty(ref isSelectAll, value);
         }
 
+        private GifImage loading;
+        public GifImage Loading
+        {
+            get => loading;
+            set => SetProperty(ref loading, value);
+        }
+
+        private Visibility loadingVisibility;
+        public Visibility LoadingVisibility
+        {
+            get => loadingVisibility;
+            set => SetProperty(ref loadingVisibility, value);
+        }
+
+        private Visibility noDataVisibility;
+        public Visibility NoDataVisibility
+        {
+            get => noDataVisibility;
+            set => SetProperty(ref noDataVisibility, value);
+        }
+
         #endregion
 
-        public ViewPublicationViewModel(IEventAggregator eventAggregator, IDialogService dialogService) : base(eventAggregator)
+        public ViewMyBangumiFollowViewModel(IEventAggregator eventAggregator, IDialogService dialogService) : base(eventAggregator)
         {
             this.dialogService = dialogService;
 
@@ -134,10 +139,16 @@ namespace DownKyi.ViewModels
             ArrowBack = NavigationIcon.Instance().ArrowBack;
             ArrowBack.Fill = DictionaryResource.GetColor("ColorTextDark");
 
-            TabHeaders = new ObservableCollection<TabHeader>();
-            Medias = new ObservableCollection<PublicationMedia>();
+            TabHeaders = new ObservableCollection<TabHeader>
+            {
+                new TabHeader { Id = (int)Core.BiliApi.Users.Models.BangumiType.ANIME, Title = DictionaryResource.GetString("FollowAnime") },
+                new TabHeader { Id = (int)Core.BiliApi.Users.Models.BangumiType.EPISODE, Title = DictionaryResource.GetString("FollowMovie") }
+            };
+
+            Medias = new ObservableCollection<BangumiFollowMedia>();
 
             #endregion
+
         }
 
         #region 命令申明
@@ -151,6 +162,8 @@ namespace DownKyi.ViewModels
         /// </summary>
         private void ExecuteBackSpace()
         {
+            InitView();
+
             ArrowBack.Fill = DictionaryResource.GetColor("ColorText");
 
             // 结束任务
@@ -165,31 +178,31 @@ namespace DownKyi.ViewModels
             eventAggregator.GetEvent<NavigationEvent>().Publish(parameter);
         }
 
-        // 左侧tab点击事件
-        private DelegateCommand<object> leftTabHeadersCommand;
-        public DelegateCommand<object> LeftTabHeadersCommand => leftTabHeadersCommand ?? (leftTabHeadersCommand = new DelegateCommand<object>(ExecuteLeftTabHeadersCommand, CanExecuteLeftTabHeadersCommand));
+        // 顶部tab点击事件
+        private DelegateCommand<object> tabHeadersCommand;
+        public DelegateCommand<object> TabHeadersCommand => tabHeadersCommand ?? (tabHeadersCommand = new DelegateCommand<object>(ExecuteTabHeadersCommand, CanExecuteTabHeadersCommand));
 
         /// <summary>
         /// 左侧tab点击事件
         /// </summary>
         /// <param name="parameter"></param>
-        private void ExecuteLeftTabHeadersCommand(object parameter)
+        private void ExecuteTabHeadersCommand(object parameter)
         {
             if (!(parameter is TabHeader tabHeader)) { return; }
 
             // 页面选择
-            Pager = new CustomPagerViewModel(1, (int)Math.Ceiling(double.Parse(tabHeader.SubTitle) / VideoNumberInPage));
+            Pager = new CustomPagerViewModel(1, 1);
             Pager.CurrentChanged += OnCurrentChanged_Pager;
             Pager.CountChanged += OnCountChanged_Pager;
             Pager.Current = 1;
         }
 
         /// <summary>
-        /// 左侧tab点击事件是否允许执行
+        /// 顶部tab点击事件是否允许执行
         /// </summary>
         /// <param name="parameter"></param>
         /// <returns></returns>
-        private bool CanExecuteLeftTabHeadersCommand(object parameter)
+        private bool CanExecuteTabHeadersCommand(object parameter)
         {
             return IsEnabled;
         }
@@ -274,8 +287,8 @@ namespace DownKyi.ViewModels
         /// <param name="isOnlySelected"></param>
         private async void AddToDownload(bool isOnlySelected)
         {
-            // 收藏夹里只有视频
-            AddToDownloadService addToDownloadService = new AddToDownloadService(PlayStreamType.VIDEO);
+            // 订阅里只有BANGUMI类型
+            AddToDownloadService addToDownloadService = new AddToDownloadService(PlayStreamType.BANGUMI);
 
             // 选择文件夹
             string directory = addToDownloadService.SetDirectory(dialogService);
@@ -297,11 +310,11 @@ namespace DownKyi.ViewModels
                     /// 有分P的就下载全部
 
                     // 开启服务
-                    VideoInfoService videoInfoService = new VideoInfoService(media.Bvid);
+                    BangumiInfoService service = new BangumiInfoService($"{ParseEntrance.BangumiMediaUrl}md{media.MediaId}");
 
-                    addToDownloadService.SetVideoInfoService(videoInfoService);
+                    addToDownloadService.SetVideoInfoService(service);
                     addToDownloadService.GetVideo();
-                    addToDownloadService.ParseVideo(videoInfoService);
+                    addToDownloadService.ParseVideo(service);
                     // 下载
                     i += addToDownloadService.AddToDownload(eventAggregator, directory);
                 }
@@ -333,97 +346,107 @@ namespace DownKyi.ViewModels
                 return false;
             }
 
-            Medias.Clear();
-            LoadingVisibility = Visibility.Visible;
-            NoDataVisibility = Visibility.Collapsed;
-
-            UpdatePublication(current);
+            UpdateBangumiMediaList(current);
 
             return true;
         }
 
-        private async void UpdatePublication(int current)
+        private async void UpdateBangumiMediaList(int current)
         {
+            Medias.Clear();
+            LoadingVisibility = Visibility.Visible;
+            NoDataVisibility = Visibility.Collapsed;
+
             // 是否正在获取数据
             // 在所有的退出分支中都需要设为true
             IsEnabled = false;
 
             var tab = TabHeaders[SelectTabId];
+            Core.BiliApi.Users.Models.BangumiType type = (Core.BiliApi.Users.Models.BangumiType)tab.Id;
 
             await Task.Run(() =>
             {
                 CancellationToken cancellationToken = tokenSource.Token;
 
-                var publications = Core.BiliApi.Users.UserSpace.GetPublication(mid, current, VideoNumberInPage, tab.Id);
-                if (publications == null)
+                var bangumiFollows = Core.BiliApi.Users.UserSpace.GetBangumiFollow(mid, type, current, VideoNumberInPage);
+                if (bangumiFollows == null || bangumiFollows.List == null || bangumiFollows.List.Count == 0)
                 {
-                    // 没有数据，UI提示
                     LoadingVisibility = Visibility.Collapsed;
                     NoDataVisibility = Visibility.Visible;
                     return;
                 }
 
-                var videos = publications.Vlist;
-                if (videos == null)
-                {
-                    // 没有数据，UI提示
-                    LoadingVisibility = Visibility.Collapsed;
-                    NoDataVisibility = Visibility.Visible;
-                    return;
-                }
+                // 更新总页码
+                Pager.Count = (int)Math.Ceiling((double)bangumiFollows.Total / VideoNumberInPage);
+                // 更新内容
+                ContentVisibility = Visibility.Visible;
 
-                foreach (var video in videos)
+                foreach (var bangumiFollow in bangumiFollows.List)
                 {
                     // 查询、保存封面
-                    string coverUrl = video.Pic;
+                    string coverUrl = bangumiFollow.Cover;
                     BitmapImage cover;
                     if (coverUrl == null || coverUrl == "")
                     {
-                        cover = null; // new BitmapImage(new Uri($"pack://application:,,,/Resources/video-placeholder.png"));
+                        cover = null;
                     }
                     else
                     {
                         if (!coverUrl.ToLower().StartsWith("http"))
                         {
-                            coverUrl = $"https:{video.Pic}";
+                            coverUrl = $"https:{bangumiFollow.Cover}";
                         }
 
                         StorageCover storageCover = new StorageCover();
-                        cover = storageCover.GetCoverThumbnail(video.Aid, video.Bvid, -1, coverUrl, 200, 125);
+                        cover = storageCover.GetCoverThumbnail(bangumiFollow.MediaId, bangumiFollow.SeasonId.ToString(), -1, coverUrl, 110, 140);
                     }
 
-                    // 播放数
-                    string play = string.Empty;
-                    if (video.Play > 0)
+                    // 地区
+                    string area = string.Empty;
+                    if (bangumiFollow.Areas != null && bangumiFollow.Areas.Count > 0)
                     {
-                        play = Format.FormatNumber(video.Play);
+                        area = bangumiFollow.Areas[0].Name;
+                    }
+
+                    // 视频更新进度
+                    string indexShow = string.Empty;
+                    if (bangumiFollow.NewEp != null)
+                    {
+                        indexShow = bangumiFollow.NewEp.IndexShow;
+                    }
+
+                    // 观看进度
+                    string progress;
+                    if (bangumiFollow.Progress == null || bangumiFollow.Progress == "")
+                    {
+                        progress = DictionaryResource.GetString("BangumiNotWatched");
                     }
                     else
                     {
-                        play = "--";
+                        progress = bangumiFollow.Progress;
                     }
 
-                    DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1)); // 当地时区
-                    DateTime dateCTime = startTime.AddSeconds(video.Created);
-                    string ctime = dateCTime.ToString("yyyy-MM-dd");
-
-                    App.PropertyChangeAsync(new Action(() =>
+                    App.PropertyChangeAsync(() =>
                     {
-                        PublicationMedia media = new PublicationMedia(eventAggregator)
+                        BangumiFollowMedia media = new BangumiFollowMedia(eventAggregator)
                         {
-                            Avid = video.Aid,
-                            Bvid = video.Bvid,
+                            MediaId = bangumiFollow.MediaId,
+                            SeasonId = bangumiFollow.SeasonId,
+                            Title = bangumiFollow.Title,
+                            SeasonTypeName = bangumiFollow.SeasonTypeName,
+                            Area = area,
+                            Badge = bangumiFollow.Badge,
                             Cover = cover ?? new BitmapImage(new Uri($"pack://application:,,,/Resources/video-placeholder.png")),
-                            Duration = video.Length,
-                            Title = video.Title,
-                            PlayNumber = play,
-                            CreateTime = ctime
+                            Evaluate = bangumiFollow.Evaluate,
+                            IndexShow = indexShow,
+                            Progress = progress
                         };
-                        medias.Add(media);
+
+                        Medias.Add(media);
 
                         LoadingVisibility = Visibility.Collapsed;
                         NoDataVisibility = Visibility.Collapsed;
-                    }));
+                    });
 
                     // 判断是否该结束线程，若为true，跳出循环
                     if (cancellationToken.IsCancellationRequested)
@@ -431,8 +454,8 @@ namespace DownKyi.ViewModels
                         break;
                     }
                 }
-
             }, (tokenSource = new CancellationTokenSource()).Token);
+
             IsEnabled = true;
         }
 
@@ -443,9 +466,11 @@ namespace DownKyi.ViewModels
         {
             ArrowBack.Fill = DictionaryResource.GetColor("ColorTextDark");
 
-            TabHeaders.Clear();
+            ContentVisibility = Visibility.Collapsed;
+            LoadingVisibility = Visibility.Visible;
+            NoDataVisibility = Visibility.Collapsed;
+
             Medias.Clear();
-            SelectTabId = -1;
         }
 
         /// <summary>
@@ -457,34 +482,19 @@ namespace DownKyi.ViewModels
             base.OnNavigatedTo(navigationContext);
 
             // 根据传入参数不同执行不同任务
-            var parameter = navigationContext.Parameters.GetValue<Dictionary<string, object>>("Parameter");
-            if (parameter == null)
+            mid = navigationContext.Parameters.GetValue<long>("Parameter");
+            if (mid == 0)
             {
                 return;
             }
 
             InitView();
 
-            mid = (long)parameter["mid"];
-            int tid = (int)parameter["tid"];
-            List<PublicationZone> zones = (List<PublicationZone>)parameter["list"];
-
-            foreach (var item in zones)
-            {
-                TabHeaders.Add(new TabHeader
-                {
-                    Id = item.Tid,
-                    Title = item.Name,
-                    SubTitle = item.Count.ToString()
-                });
-            }
-
             // 初始选中项
-            var selectTab = TabHeaders.FirstOrDefault(item => item.Id == tid);
-            SelectTabId = TabHeaders.IndexOf(selectTab);
+            SelectTabId = 0;
 
             // 页面选择
-            Pager = new CustomPagerViewModel(1, (int)Math.Ceiling(double.Parse(selectTab.SubTitle) / VideoNumberInPage));
+            Pager = new CustomPagerViewModel(1, 1);
             Pager.CurrentChanged += OnCurrentChanged_Pager;
             Pager.CountChanged += OnCountChanged_Pager;
             Pager.Current = 1;

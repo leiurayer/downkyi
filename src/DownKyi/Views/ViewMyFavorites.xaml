@@ -105,7 +105,6 @@
                                 Margin="0,5"
                                 Cursor="Hand"
                                 Foreground="{DynamicResource BrushTextDark}"
-                                Tag="{Binding Bvid}"
                                 Text="{Binding Title}"
                                 TextTrimming="CharacterEllipsis"
                                 TextWrapping="WrapWithOverflow"

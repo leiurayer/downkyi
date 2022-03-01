@@ -100,6 +100,7 @@
     <Compile Include="Services\Download\AddToDownloadService.cs" />
     <Compile Include="Services\Download\DownloadStorageService.cs" />
     <Compile Include="Services\SearchService.cs" />
+    <Compile Include="ViewModels\PageViewModels\BangumiFollowMedia.cs" />
     <Compile Include="ViewModels\PageViewModels\Favorites.cs" />
     <Compile Include="ViewModels\PageViewModels\FavoritesMedia.cs" />
     <Compile Include="ViewModels\PageViewModels\ChannelMedia.cs" />
@@ -152,6 +153,7 @@
     <Compile Include="ViewModels\ViewLoginViewModel.cs" />
     <Compile Include="ViewModels\Settings\ViewNetworkViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\ViewParsingSelectorViewModel.cs" />
+    <Compile Include="ViewModels\ViewMyBangumiFollowViewModel.cs" />
     <Compile Include="ViewModels\ViewMyFavoritesViewModel.cs" />
     <Compile Include="ViewModels\ViewMySpaceViewModel.cs" />
     <Compile Include="ViewModels\ViewPublicationViewModel.cs" />
@@ -217,6 +219,9 @@
     </Compile>
     <Compile Include="Views\ViewLogin.xaml.cs">
       <DependentUpon>ViewLogin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewMyBangumiFollow.xaml.cs">
+      <DependentUpon>ViewMyBangumiFollow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ViewMyFavorites.xaml.cs">
       <DependentUpon>ViewMyFavorites.xaml</DependentUpon>
@@ -399,6 +404,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ViewLogin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewMyBangumiFollow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
