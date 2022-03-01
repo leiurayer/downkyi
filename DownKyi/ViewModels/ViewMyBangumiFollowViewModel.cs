@@ -141,8 +141,8 @@ namespace DownKyi.ViewModels
 
             TabHeaders = new ObservableCollection<TabHeader>
             {
-                new TabHeader { Id = (int)Core.BiliApi.Users.Models.BangumiType.ANIME, Title = "追番" },
-                new TabHeader { Id = (int)Core.BiliApi.Users.Models.BangumiType.EPISODE, Title = "追剧" }
+                new TabHeader { Id = (int)Core.BiliApi.Users.Models.BangumiType.ANIME, Title = DictionaryResource.GetString("FollowAnime") },
+                new TabHeader { Id = (int)Core.BiliApi.Users.Models.BangumiType.EPISODE, Title = DictionaryResource.GetString("FollowMovie") }
             };
 
             Medias = new ObservableCollection<BangumiFollowMedia>();
@@ -419,7 +419,7 @@ namespace DownKyi.ViewModels
                     string progress;
                     if (bangumiFollow.Progress == null || bangumiFollow.Progress == "")
                     {
-                        progress = "尚未观看";
+                        progress = DictionaryResource.GetString("BangumiNotWatched");
                     }
                     else
                     {
