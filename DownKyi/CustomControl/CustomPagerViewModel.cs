@@ -74,6 +74,8 @@ namespace DownKyi.CustomControl
 
                     OnCountChanged(count);
 
+                    SetView();
+
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Count"));
                 }
             }
@@ -99,6 +101,8 @@ namespace DownKyi.CustomControl
                     if (isSuccess)
                     {
                         current = value;
+
+                        SetView();
 
                         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Current"));
                     }
