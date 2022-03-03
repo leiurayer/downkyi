@@ -104,6 +104,7 @@
     <Compile Include="ViewModels\PageViewModels\Favorites.cs" />
     <Compile Include="ViewModels\PageViewModels\FavoritesMedia.cs" />
     <Compile Include="ViewModels\PageViewModels\ChannelMedia.cs" />
+    <Compile Include="ViewModels\PageViewModels\HistoryMedia.cs" />
     <Compile Include="ViewModels\PageViewModels\PublicationMedia.cs" />
     <Compile Include="ViewModels\PageViewModels\SpaceItem.cs" />
     <Compile Include="ViewModels\Settings\DisplayFileNamePart.cs" />
@@ -155,6 +156,7 @@
     <Compile Include="ViewModels\Dialogs\ViewParsingSelectorViewModel.cs" />
     <Compile Include="ViewModels\ViewMyBangumiFollowViewModel.cs" />
     <Compile Include="ViewModels\ViewMyFavoritesViewModel.cs" />
+    <Compile Include="ViewModels\ViewMyHistoryViewModel.cs" />
     <Compile Include="ViewModels\ViewMySpaceViewModel.cs" />
     <Compile Include="ViewModels\ViewPublicationViewModel.cs" />
     <Compile Include="ViewModels\ViewPublicFavoritesViewModel.cs" />
@@ -225,6 +227,9 @@
     </Compile>
     <Compile Include="Views\ViewMyFavorites.xaml.cs">
       <DependentUpon>ViewMyFavorites.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewMyHistory.xaml.cs">
+      <DependentUpon>ViewMyHistory.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ViewMySpace.xaml.cs">
       <DependentUpon>ViewMySpace.xaml</DependentUpon>
@@ -412,6 +417,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ViewMyFavorites.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewMyHistory.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

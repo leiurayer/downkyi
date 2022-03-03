@@ -18,7 +18,7 @@ namespace DownKyi.ViewModels.PageViewModels
 
         public long Avid { get; set; }
         public string Bvid { get; set; }
-        public long UpperMid { get; set; }
+        public long UpMid { get; set; }
 
         #region 页面属性申明
 
@@ -130,7 +130,7 @@ namespace DownKyi.ViewModels.PageViewModels
         {
             if (!(parameter is string tag)) { return; }
 
-            NavigateToView.NavigateToViewUserSpace(eventAggregator, tag, UpperMid);
+            NavigateToView.NavigateToViewUserSpace(eventAggregator, tag, UpMid);
         }
 
         #endregion

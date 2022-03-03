@@ -82,6 +82,12 @@
     <system:String x:Key="FollowMovie">追剧</system:String>
     <system:String x:Key="BangumiNotWatched">尚未观看</system:String>
 
+    <!--  MyHistory  -->
+    <system:String x:Key="MyHistory">历史记录</system:String>
+    <system:String x:Key="HistoryFinished">已看完</system:String>
+    <system:String x:Key="HistoryStarted">刚开始</system:String>
+    <system:String x:Key="HistoryWatch">看到</system:String>
+
     <!--  Publication  -->
     <system:String x:Key="DownloadSelectedPublication">下载选中项</system:String>
     <system:String x:Key="DownloadAllPublication">下载全部</system:String>

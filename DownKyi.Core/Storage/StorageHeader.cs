@@ -28,6 +28,7 @@ namespace DownKyi.Core.Storage
         public BitmapImage GetHeaderThumbnail(long mid, string name, string url, int width, int height)
         {
             string header = GetHeader(mid, name, url);
+            if(header == null) { return null; }
 
             return GetHeaderThumbnail(header, width, height);
         }

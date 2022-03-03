@@ -156,7 +156,7 @@ namespace DownKyi.Services
                         FavoriteNumber = media.CntInfo != null ? Format.FormatNumber(media.CntInfo.Collect) : "0",
                         Duration = Format.FormatDuration2(media.Duration),
                         UpName = media.Upper != null ? media.Upper.Name : string.Empty,
-                        UpperMid = media.Upper != null ? media.Upper.Mid : -1,
+                        UpMid = media.Upper != null ? media.Upper.Mid : -1,
                         CreateTime = ctime,
                         FavTime = favTime
                     };

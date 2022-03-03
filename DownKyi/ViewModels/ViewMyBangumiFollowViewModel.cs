@@ -471,6 +471,7 @@ namespace DownKyi.ViewModels
             NoDataVisibility = Visibility.Collapsed;
 
             Medias.Clear();
+            IsSelectAll = false;
         }
 
         /// <summary>
@@ -480,6 +481,8 @@ namespace DownKyi.ViewModels
         public override void OnNavigatedTo(NavigationContext navigationContext)
         {
             base.OnNavigatedTo(navigationContext);
+
+            ArrowBack.Fill = DictionaryResource.GetColor("ColorTextDark");
 
             // 根据传入参数不同执行不同任务
             mid = navigationContext.Parameters.GetValue<long>("Parameter");

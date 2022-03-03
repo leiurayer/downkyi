@@ -349,7 +349,7 @@ namespace DownKyi.ViewModels
                     Console.WriteLine(SelectedPackage);
                     break;
                 case 3:
-                    Console.WriteLine(SelectedPackage);
+                    NavigateToView.NavigationView(eventAggregator, ViewMyHistoryViewModel.Tag, Tag, mid);
                     break;
                 default:
                     break;
