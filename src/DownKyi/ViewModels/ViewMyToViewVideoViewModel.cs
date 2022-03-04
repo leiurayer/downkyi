@@ -1,6 +1,6 @@
-﻿using DownKyi.Core.BiliApi.VideoStream;
+﻿using DownKyi.Core.BiliApi.History;
+using DownKyi.Core.BiliApi.VideoStream;
 using DownKyi.Core.Storage;
-using DownKyi.Core.Utils;
 using DownKyi.CustomControl;
 using DownKyi.Events;
 using DownKyi.Images;
@@ -14,7 +14,6 @@ using Prism.Regions;
 using Prism.Services.Dialogs;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
@@ -24,19 +23,13 @@ using System.Windows.Media.Imaging;
 
 namespace DownKyi.ViewModels
 {
-    public class ViewChannelViewModel : BaseViewModel
+    public class ViewMyToViewVideoViewModel : BaseViewModel
     {
-        public const string Tag = "PageChannel";
+        public const string Tag = "PageMyToView";
 
         private readonly IDialogService dialogService;
 
         private CancellationTokenSource tokenSource;
-
-        private long mid = -1;
-        private long cid = -1;
-
-        // 每页视频数量，暂时在此写死，以后在设置中增加选项
-        private readonly int VideoNumberInPage = 30;
 
         #region 页面属性申明
 
@@ -45,6 +38,34 @@ namespace DownKyi.ViewModels
         {
             get => pageName;
             set => SetProperty(ref pageName, value);
+        }
+
+        private VectorImage arrowBack;
+        public VectorImage ArrowBack
+        {
+            get => arrowBack;
+            set => SetProperty(ref arrowBack, value);
+        }
+
+        private Visibility contentVisibility;
+        public Visibility ContentVisibility
+        {
+            get => contentVisibility;
+            set => SetProperty(ref contentVisibility, value);
+        }
+
+        private ObservableCollection<ToViewMedia> medias;
+        public ObservableCollection<ToViewMedia> Medias
+        {
+            get => medias;
+            set => SetProperty(ref medias, value);
+        }
+
+        private bool isSelectAll;
+        public bool IsSelectAll
+        {
+            get => isSelectAll;
+            set => SetProperty(ref isSelectAll, value);
         }
 
         private GifImage loading;
@@ -68,51 +89,9 @@ namespace DownKyi.ViewModels
             set => SetProperty(ref noDataVisibility, value);
         }
 
-        private VectorImage arrowBack;
-        public VectorImage ArrowBack
-        {
-            get => arrowBack;
-            set => SetProperty(ref arrowBack, value);
-        }
-
-        private string title;
-        public string Title
-        {
-            get => title;
-            set => SetProperty(ref title, value);
-        }
-
-        private bool isEnabled = true;
-        public bool IsEnabled
-        {
-            get => isEnabled;
-            set => SetProperty(ref isEnabled, value);
-        }
-
-        private CustomPagerViewModel pager;
-        public CustomPagerViewModel Pager
-        {
-            get => pager;
-            set => SetProperty(ref pager, value);
-        }
-
-        private ObservableCollection<ChannelMedia> medias;
-        public ObservableCollection<ChannelMedia> Medias
-        {
-            get => medias;
-            set => SetProperty(ref medias, value);
-        }
-
-        private bool isSelectAll;
-        public bool IsSelectAll
-        {
-            get => isSelectAll;
-            set => SetProperty(ref isSelectAll, value);
-        }
-
         #endregion
 
-        public ViewChannelViewModel(IEventAggregator eventAggregator, IDialogService dialogService) : base(eventAggregator)
+        public ViewMyToViewVideoViewModel(IEventAggregator eventAggregator, IDialogService dialogService) : base(eventAggregator)
         {
             this.dialogService = dialogService;
 
@@ -127,9 +106,10 @@ namespace DownKyi.ViewModels
             ArrowBack = NavigationIcon.Instance().ArrowBack;
             ArrowBack.Fill = DictionaryResource.GetColor("ColorTextDark");
 
-            Medias = new ObservableCollection<ChannelMedia>();
+            Medias = new ObservableCollection<ToViewMedia>();
 
             #endregion
+
         }
 
         #region 命令申明
@@ -143,6 +123,8 @@ namespace DownKyi.ViewModels
         /// </summary>
         private void ExecuteBackSpace()
         {
+            InitView();
+
             ArrowBack.Fill = DictionaryResource.GetColor("ColorText");
 
             // 结束任务
@@ -237,7 +219,7 @@ namespace DownKyi.ViewModels
         /// <param name="isOnlySelected"></param>
         private async void AddToDownload(bool isOnlySelected)
         {
-            // 频道里只有视频
+            // 稍后再看里只有视频
             AddToDownloadService addToDownloadService = new AddToDownloadService(PlayStreamType.VIDEO);
 
             // 选择文件夹
@@ -286,108 +268,81 @@ namespace DownKyi.ViewModels
             }
         }
 
-        private void OnCountChanged_Pager(int count) { }
-
-        private bool OnCurrentChanged_Pager(int old, int current)
+        private async void UpdateToViewMediaList()
         {
-            if (!IsEnabled)
-            {
-                //Pager.Current = old;
-                return false;
-            }
-
-            Medias.Clear();
             LoadingVisibility = Visibility.Visible;
             NoDataVisibility = Visibility.Collapsed;
-
-            UpdateChannel(current);
-
-            return true;
-        }
-
-        private async void UpdateChannel(int current)
-        {
-            // 是否正在获取数据
-            // 在所有的退出分支中都需要设为true
-            IsEnabled = false;
+            Medias.Clear();
 
             await Task.Run(() =>
             {
                 CancellationToken cancellationToken = tokenSource.Token;
 
-                var channels = Core.BiliApi.Users.UserSpace.GetChannelVideoList(mid, cid, current, VideoNumberInPage);
-                if (channels == null || channels.Count == 0)
+                var toViewList = ToView.GetToView();
+                if (toViewList == null || toViewList.Count == 0)
                 {
-                    // 没有数据，UI提示
                     LoadingVisibility = Visibility.Collapsed;
                     NoDataVisibility = Visibility.Visible;
                     return;
                 }
 
-                foreach (var video in channels)
+                foreach (var toView in toViewList)
                 {
-                    if (video.Cid == 0)
-                    {
-                        continue;
-                    }
 
                     // 查询、保存封面
-                    string coverUrl = video.Pic;
+                    string coverUrl = toView.Pic;
                     BitmapImage cover;
                     if (coverUrl == null || coverUrl == "")
                     {
-                        cover = null; // new BitmapImage(new Uri($"pack://application:,,,/Resources/video-placeholder.png"));
+                        cover = null;
                     }
                     else
                     {
                         if (!coverUrl.ToLower().StartsWith("http"))
                         {
-                            coverUrl = $"https:{video.Pic}";
+                            coverUrl = $"https:{toView.Pic}";
                         }
 
                         StorageCover storageCover = new StorageCover();
-                        cover = storageCover.GetCoverThumbnail(video.Aid, video.Bvid, -1, coverUrl, 200, 125);
+                        cover = storageCover.GetCoverThumbnail(toView.Aid, toView.Bvid, toView.Cid, coverUrl, 160, 100);
                     }
 
-                    // 播放数
-                    string play = string.Empty;
-                    if (video.Stat != null)
+                    // 获取用户头像
+                    long upMid = -1;
+                    string upName;
+                    BitmapImage upHeader;
+                    if (toView.Owner != null && toView.Owner.Face != null)
                     {
-                        if (video.Stat.View > 0)
-                        {
-                            play = Format.FormatNumber(video.Stat.View);
-                        }
-                        else
-                        {
-                            play = "--";
-                        }
+                        upMid = toView.Owner.Mid;
+                        upName = toView.Owner.Name;
+                        StorageHeader storageHeader = new StorageHeader();
+                        upHeader = storageHeader.GetHeaderThumbnail(toView.Owner.Mid, upName, toView.Owner.Face, 24, 24);
                     }
                     else
                     {
-                        play = "--";
+                        upName = "";
+                        upHeader = null;
                     }
 
-                    DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1)); // 当地时区
-                    DateTime dateCTime = startTime.AddSeconds(video.Ctime);
-                    string ctime = dateCTime.ToString("yyyy-MM-dd");
-
-                    App.PropertyChangeAsync(new Action(() =>
+                    App.PropertyChangeAsync(() =>
                     {
-                        ChannelMedia media = new ChannelMedia(eventAggregator)
+                        ToViewMedia media = new ToViewMedia(eventAggregator)
                         {
-                            Avid = video.Aid,
-                            Bvid = video.Bvid,
+                            Aid = toView.Aid,
+                            Bvid = toView.Bvid,
+                            UpMid = upMid,
                             Cover = cover ?? new BitmapImage(new Uri($"pack://application:,,,/Resources/video-placeholder.png")),
-                            Duration = Format.FormatDuration3(video.Duration),
-                            Title = video.Title,
-                            PlayNumber = play,
-                            CreateTime = ctime
+                            Title = toView.Title,
+                            UpName = upName,
+                            UpHeader = upHeader
                         };
+
                         Medias.Add(media);
 
+                        ContentVisibility = Visibility.Visible;
                         LoadingVisibility = Visibility.Collapsed;
                         NoDataVisibility = Visibility.Collapsed;
-                    }));
+                    });
 
                     // 判断是否该结束线程，若为true，跳出循环
                     if (cancellationToken.IsCancellationRequested)
@@ -395,10 +350,22 @@ namespace DownKyi.ViewModels
                         break;
                     }
                 }
-
             }, (tokenSource = new CancellationTokenSource()).Token);
+        }
 
-            IsEnabled = true;
+        /// <summary>
+        /// 初始化页面数据
+        /// </summary>
+        private void InitView()
+        {
+            ArrowBack.Fill = DictionaryResource.GetColor("ColorTextDark");
+
+            ContentVisibility = Visibility.Collapsed;
+            LoadingVisibility = Visibility.Collapsed;
+            NoDataVisibility = Visibility.Collapsed;
+
+            Medias.Clear();
+            IsSelectAll = false;
         }
 
         /// <summary>
@@ -410,26 +377,23 @@ namespace DownKyi.ViewModels
             base.OnNavigatedTo(navigationContext);
 
             ArrowBack.Fill = DictionaryResource.GetColor("ColorTextDark");
-            Medias.Clear();
-            IsSelectAll = false;
 
             // 根据传入参数不同执行不同任务
-            var parameter = navigationContext.Parameters.GetValue<Dictionary<string, object>>("Parameter");
-            if (parameter == null)
+            long mid = navigationContext.Parameters.GetValue<long>("Parameter");
+            if (mid == 0)
             {
+                IsSelectAll = false;
+                foreach (var media in Medias)
+                {
+                    media.IsSelected = false;
+                }
+
                 return;
             }
 
-            mid = (long)parameter["mid"];
-            cid = (long)parameter["cid"];
-            Title = (string)parameter["name"];
-            int count = (int)parameter["count"];
+            InitView();
 
-            // 页面选择
-            Pager = new CustomPagerViewModel(1, (int)Math.Ceiling((double)count / VideoNumberInPage));
-            Pager.CurrentChanged += OnCurrentChanged_Pager;
-            Pager.CountChanged += OnCountChanged_Pager;
-            Pager.Current = 1;
+            UpdateToViewMediaList();
         }
 
     }

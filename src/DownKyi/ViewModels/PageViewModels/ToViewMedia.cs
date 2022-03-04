@@ -7,21 +7,27 @@ using System.Windows.Media.Imaging;
 
 namespace DownKyi.ViewModels.PageViewModels
 {
-    public class FavoritesMedia : BindableBase
+    public class ToViewMedia : BindableBase
     {
         protected readonly IEventAggregator eventAggregator;
 
-        public FavoritesMedia(IEventAggregator eventAggregator)
+        public ToViewMedia(IEventAggregator eventAggregator)
         {
             this.eventAggregator = eventAggregator;
         }
 
-        public long Avid { get; set; }
+        // aid
+        public long Aid { get; set; }
+
+        // bvid
         public string Bvid { get; set; }
+
+        // UP主的mid
         public long UpMid { get; set; }
 
         #region 页面属性申明
 
+        // 是否选中
         private bool isSelected;
         public bool IsSelected
         {
@@ -29,13 +35,7 @@ namespace DownKyi.ViewModels.PageViewModels
             set => SetProperty(ref isSelected, value);
         }
 
-        private int order;
-        public int Order
-        {
-            get => order;
-            set => SetProperty(ref order, value);
-        }
-
+        // 封面
         private BitmapImage cover;
         public BitmapImage Cover
         {
@@ -43,6 +43,7 @@ namespace DownKyi.ViewModels.PageViewModels
             set => SetProperty(ref cover, value);
         }
 
+        // 视频标题
         private string title;
         public string Title
         {
@@ -50,34 +51,7 @@ namespace DownKyi.ViewModels.PageViewModels
             set => SetProperty(ref title, value);
         }
 
-        private string playNumber;
-        public string PlayNumber
-        {
-            get => playNumber;
-            set => SetProperty(ref playNumber, value);
-        }
-
-        private string danmakuNumber;
-        public string DanmakuNumber
-        {
-            get => danmakuNumber;
-            set => SetProperty(ref danmakuNumber, value);
-        }
-
-        private string favoriteNumber;
-        public string FavoriteNumber
-        {
-            get => favoriteNumber;
-            set => SetProperty(ref favoriteNumber, value);
-        }
-
-        private string duration;
-        public string Duration
-        {
-            get => duration;
-            set => SetProperty(ref duration, value);
-        }
-
+        // UP主的昵称
         private string upName;
         public string UpName
         {
@@ -85,18 +59,12 @@ namespace DownKyi.ViewModels.PageViewModels
             set => SetProperty(ref upName, value);
         }
 
-        private string createTime;
-        public string CreateTime
+        // UP主的头像
+        private BitmapImage upHeader;
+        public BitmapImage UpHeader
         {
-            get => createTime;
-            set => SetProperty(ref createTime, value);
-        }
-
-        private string favTime;
-        public string FavTime
-        {
-            get => favTime;
-            set => SetProperty(ref favTime, value);
+            get => upHeader;
+            set => SetProperty(ref upHeader, value);
         }
 
         #endregion
@@ -118,15 +86,15 @@ namespace DownKyi.ViewModels.PageViewModels
             NavigateToView.NavigationView(eventAggregator, ViewVideoDetailViewModel.Tag, tag, $"{ParseEntrance.VideoUrl}{Bvid}");
         }
 
-        // 视频的UP主点击事件
-        private DelegateCommand<object> videoUpperCommand;
-        public DelegateCommand<object> VideoUpperCommand => videoUpperCommand ?? (videoUpperCommand = new DelegateCommand<object>(ExecuteVideoUpperCommand));
+        // UP主头像点击事件
+        private DelegateCommand<object> upCommand;
+        public DelegateCommand<object> UpCommand => upCommand ?? (upCommand = new DelegateCommand<object>(ExecuteUpCommand));
 
         /// <summary>
-        /// 视频的UP主点击事件
+        /// UP主头像点击事件
         /// </summary>
         /// <param name="parameter"></param>
-        private void ExecuteVideoUpperCommand(object parameter)
+        private void ExecuteUpCommand(object parameter)
         {
             if (!(parameter is string tag)) { return; }
 

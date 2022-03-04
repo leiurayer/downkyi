@@ -104,8 +104,10 @@
     <Compile Include="ViewModels\PageViewModels\Favorites.cs" />
     <Compile Include="ViewModels\PageViewModels\FavoritesMedia.cs" />
     <Compile Include="ViewModels\PageViewModels\ChannelMedia.cs" />
+    <Compile Include="ViewModels\PageViewModels\HistoryMedia.cs" />
     <Compile Include="ViewModels\PageViewModels\PublicationMedia.cs" />
     <Compile Include="ViewModels\PageViewModels\SpaceItem.cs" />
+    <Compile Include="ViewModels\PageViewModels\ToViewMedia.cs" />
     <Compile Include="ViewModels\Settings\DisplayFileNamePart.cs" />
     <Compile Include="Models\ParseScopeDisplay.cs" />
     <Compile Include="ViewModels\PageViewModels\TabHeader.cs" />
@@ -155,7 +157,9 @@
     <Compile Include="ViewModels\Dialogs\ViewParsingSelectorViewModel.cs" />
     <Compile Include="ViewModels\ViewMyBangumiFollowViewModel.cs" />
     <Compile Include="ViewModels\ViewMyFavoritesViewModel.cs" />
+    <Compile Include="ViewModels\ViewMyHistoryViewModel.cs" />
     <Compile Include="ViewModels\ViewMySpaceViewModel.cs" />
+    <Compile Include="ViewModels\ViewMyToViewVideoViewModel.cs" />
     <Compile Include="ViewModels\ViewPublicationViewModel.cs" />
     <Compile Include="ViewModels\ViewPublicFavoritesViewModel.cs" />
     <Compile Include="ViewModels\ViewSettingsViewModel.cs" />
@@ -226,8 +230,14 @@
     <Compile Include="Views\ViewMyFavorites.xaml.cs">
       <DependentUpon>ViewMyFavorites.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ViewMyHistory.xaml.cs">
+      <DependentUpon>ViewMyHistory.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ViewMySpace.xaml.cs">
       <DependentUpon>ViewMySpace.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewMyToViewVideo.xaml.cs">
+      <DependentUpon>ViewMyToViewVideo.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ViewPublication.xaml.cs">
       <DependentUpon>ViewPublication.xaml</DependentUpon>
@@ -415,7 +425,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\ViewMyHistory.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ViewMySpace.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewMyToViewVideo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

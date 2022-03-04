@@ -422,6 +422,7 @@ namespace DownKyi.ViewModels
             TabHeaders.Clear();
             Medias.Clear();
             SelectTabId = -1;
+            IsSelectAll = false;
         }
 
         /// <summary>

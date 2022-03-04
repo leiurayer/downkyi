@@ -346,10 +346,10 @@ namespace DownKyi.ViewModels
                     NavigateToView.NavigationView(eventAggregator, ViewMyBangumiFollowViewModel.Tag, Tag, mid);
                     break;
                 case 2:
-                    Console.WriteLine(SelectedPackage);
+                    NavigateToView.NavigationView(eventAggregator, ViewMyToViewVideoViewModel.Tag, Tag, mid);
                     break;
                 case 3:
-                    Console.WriteLine(SelectedPackage);
+                    NavigateToView.NavigationView(eventAggregator, ViewMyHistoryViewModel.Tag, Tag, mid);
                     break;
                 default:
                     break;

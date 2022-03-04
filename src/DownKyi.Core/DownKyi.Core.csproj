@@ -151,6 +151,15 @@
     <Compile Include="BiliApi\Favorites\Models\FavStatus.cs" />
     <Compile Include="BiliApi\Favorites\Models\FavUpper.cs" />
     <Compile Include="BiliApi\Favorites\Models\MediaStatus.cs" />
+    <Compile Include="BiliApi\History\History.cs" />
+    <Compile Include="BiliApi\History\Models\HistoryBusiness.cs" />
+    <Compile Include="BiliApi\History\Models\HistoryCursor.cs" />
+    <Compile Include="BiliApi\History\Models\HistoryData.cs" />
+    <Compile Include="BiliApi\History\Models\HistoryList.cs" />
+    <Compile Include="BiliApi\History\Models\HistoryListHistory.cs" />
+    <Compile Include="BiliApi\History\Models\ToViewData.cs" />
+    <Compile Include="BiliApi\History\Models\ToViewList.cs" />
+    <Compile Include="BiliApi\History\ToView.cs" />
     <Compile Include="BiliApi\Login\LoginHelper.cs" />
     <Compile Include="BiliApi\Models\BaseModel.cs" />
     <Compile Include="BiliApi\BiliUtils\BvId.cs" />

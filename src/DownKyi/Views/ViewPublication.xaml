@@ -186,7 +186,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition />
                     <RowDefinition Height="1" />
-                    <RowDefinition Height="49" />
+                    <RowDefinition Height="50" />
                 </Grid.RowDefinitions>
 
                 <ListBox
