@@ -9,18 +9,18 @@
 
 [全部更新日志](CHANGELOG.md)
 
-* `2021/06/12` v1.4.0
-    1. [修复] 视频无封面时崩溃的问题。
-    2. [优化] 视频分区代码与图标。
-    3. [优化] 屏蔽频道中的失效视频。
-    4. [优化] 二维码登录逻辑。
-    5. [新增] 弹幕下载（借鉴并重写于项目 [niconvert](https://github.com/muzuiget/niconvert)）。
-    6. [新增] 弹幕样式设置。
-    7. [新增] 下载弹幕、下载封面的选项。
+* `2022/03/05` v1.5.0-alpha1
+    1. [优化] 重构程序架构，解决一些已知问题。
+    2. [新增] 最高支持8K视频。
+    3. [新增] 支持杜比全景声和杜比视界。
+    4. [新增] 支持字幕下载。
+    5. [新增] 支持部分短链接（如 https://b23.tv/BV17x411w7KC ）。
+    6. [新增] 下载内容可选，可根据需要选择下载视频、音频、弹幕、字幕、封面。
+    7. [新增] 下载文件命名模块，可自主设置文件名。
 
 ## 下载
 
-- [哔哩下载姬最新版](https://github.com/FlySelfLog/downkyi/releases/download/v1.4.0/DownKyi-1.4.0.zip)
+- [哔哩下载姬最新版](https://github.com/FlySelfLog/downkyi/releases/download/v1.5.0-alpha1/DownKyi-1.5.0-alpha1.zip)
 
 - [下载页面](https://github.com/FlySelfLog/downkyi/releases)
 
