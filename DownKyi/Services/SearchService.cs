@@ -11,7 +11,7 @@ namespace DownKyi.Services
         /// 解析支持的输入，
         /// 支持的格式有：<para/>
         /// av号：av170001, AV170001, https://www.bilibili.com/video/av170001 <para/>
-        /// BV号：BV17x411w7KC, https://www.bilibili.com/video/BV17x411w7KC <para/>
+        /// BV号：BV17x411w7KC, https://www.bilibili.com/video/BV17x411w7KC, https://b23.tv/BV17x411w7KC <para/>
         /// 番剧（电影、电视剧）ss号：ss32982, SS32982, https://www.bilibili.com/bangumi/play/ss32982 <para/>
         /// 番剧（电影、电视剧）ep号：ep317925, EP317925, https://www.bilibili.com/bangumi/play/ep317925 <para/>
         /// 番剧（电影、电视剧）md号：md28228367, MD28228367, https://www.bilibili.com/bangumi/media/md28228367 <para/>
