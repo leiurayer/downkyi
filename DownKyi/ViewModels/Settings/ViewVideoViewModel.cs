@@ -478,6 +478,12 @@ namespace DownKyi.ViewModels.Settings
                 case FileNamePart.CID:
                     display = "cid";
                     break;
+                case FileNamePart.UP_MID:
+                    display = DictionaryResource.GetString("DisplayUpMid");
+                    break;
+                case FileNamePart.UP_NAME:
+                    display = DictionaryResource.GetString("DisplayUpName");
+                    break;
             }
 
             if (((int)item) >= 100)

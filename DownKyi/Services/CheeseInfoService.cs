@@ -67,6 +67,27 @@ namespace DownKyi.Services
                     Name = name,
                     Duration = "N/A"
                 };
+
+                // UP主信息
+                if (cheeseView.UpInfo != null)
+                {
+                    page.Owner = new Core.BiliApi.Models.VideoOwner
+                    {
+                        Name = cheeseView.UpInfo.Name,
+                        Face = cheeseView.UpInfo.Avatar,
+                        Mid = cheeseView.UpInfo.Mid,
+                    };
+                }
+                else
+                {
+                    page.Owner = new Core.BiliApi.Models.VideoOwner
+                    {
+                        Name = "",
+                        Face = "",
+                        Mid = -1,
+                    };
+                }
+
                 pages.Add(page);
             }
 

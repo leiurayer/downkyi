@@ -1,4 +1,5 @@
 ﻿using DownKyi.Core.BiliApi.BiliUtils;
+using DownKyi.Core.BiliApi.Models;
 using DownKyi.Core.BiliApi.VideoStream.Models;
 using DownKyi.Core.Utils;
 using Prism.Commands;
@@ -16,6 +17,7 @@ namespace DownKyi.ViewModels.PageViewModels
         public string Bvid { get; set; }
         public long Cid { get; set; }
         public long EpisodeId { get; set; }
+        public VideoOwner Owner { get; set; }
 
         public string FirstFrame { get; set; }
 

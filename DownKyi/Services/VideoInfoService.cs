@@ -83,6 +83,19 @@ namespace DownKyi.Services
                     Name = name,
                     Duration = "N/A"
                 };
+
+                // UP主信息
+                videoPage.Owner = videoView.Owner;
+                if (videoPage.Owner == null)
+                {
+                    videoPage.Owner = new Core.BiliApi.Models.VideoOwner
+                    {
+                        Name = "",
+                        Face = "",
+                        Mid = -1,
+                    };
+                }
+
                 videoPages.Add(videoPage);
             }
 

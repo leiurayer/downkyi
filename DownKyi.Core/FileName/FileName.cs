@@ -19,6 +19,9 @@ namespace DownKyi.Core.FileName
         private string bvid = "BVID";
         private long cid = -1;
 
+        private long upMid = -1;
+        private string upName = "UP_NAME";
+
         private FileName(List<FileNamePart> nameParts)
         {
             this.nameParts = nameParts;
@@ -95,6 +98,18 @@ namespace DownKyi.Core.FileName
             return this;
         }
 
+        public FileName SetUpMid(long upMid)
+        {
+            this.upMid = upMid;
+            return this;
+        }
+
+        public FileName SetUpName(string upName)
+        {
+            this.upName = upName;
+            return this;
+        }
+
         public string RelativePath()
         {
             string path = string.Empty;
@@ -142,6 +157,12 @@ namespace DownKyi.Core.FileName
                         break;
                     case FileNamePart.CID:
                         path += cid;
+                        break;
+                    case FileNamePart.UP_MID:
+                        path += upMid;
+                        break;
+                    case FileNamePart.UP_NAME:
+                        path += upName;
                         break;
                 }
 

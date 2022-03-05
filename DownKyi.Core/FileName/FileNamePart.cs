@@ -16,6 +16,9 @@
         BVID,
         CID,
 
+        UP_MID,
+        UP_NAME,
+
         // 斜杠
         SLASH = 100,
 
