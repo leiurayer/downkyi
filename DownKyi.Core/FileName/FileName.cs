@@ -15,6 +15,10 @@ namespace DownKyi.Core.FileName
         private string videoQuality = "VIDEO_QUALITY";
         private string videoCodec = "VIDEO_CODEC";
 
+        private long avid = -1;
+        private string bvid = "BVID";
+        private long cid = -1;
+
         private FileName(List<FileNamePart> nameParts)
         {
             this.nameParts = nameParts;
@@ -73,6 +77,24 @@ namespace DownKyi.Core.FileName
             return this;
         }
 
+        public FileName SetAvid(long avid)
+        {
+            this.avid = avid;
+            return this;
+        }
+
+        public FileName SetBvid(string bvid)
+        {
+            this.bvid = bvid;
+            return this;
+        }
+
+        public FileName SetCid(long cid)
+        {
+            this.cid = cid;
+            return this;
+        }
+
         public string RelativePath()
         {
             string path = string.Empty;
@@ -111,6 +133,15 @@ namespace DownKyi.Core.FileName
                         break;
                     case FileNamePart.VIDEO_CODEC:
                         path += videoCodec;
+                        break;
+                    case FileNamePart.AVID:
+                        path += avid;
+                        break;
+                    case FileNamePart.BVID:
+                        path += bvid;
+                        break;
+                    case FileNamePart.CID:
+                        path += cid;
                         break;
                 }
 

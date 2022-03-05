@@ -469,6 +469,15 @@ namespace DownKyi.ViewModels.Settings
                 case FileNamePart.VIDEO_CODEC:
                     display = DictionaryResource.GetString("DisplayVideoCodec");
                     break;
+                case FileNamePart.AVID:
+                    display = "avid";
+                    break;
+                case FileNamePart.BVID:
+                    display = "bvid";
+                    break;
+                case FileNamePart.CID:
+                    display = "cid";
+                    break;
             }
 
             if (((int)item) >= 100)

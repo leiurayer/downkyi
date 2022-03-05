@@ -12,6 +12,10 @@
         VIDEO_QUALITY,
         VIDEO_CODEC,
 
+        AVID,
+        BVID,
+        CID,
+
         // 斜杠
         SLASH = 100,
 

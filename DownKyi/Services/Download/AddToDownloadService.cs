@@ -294,7 +294,10 @@ namespace DownKyi.Services.Download
                         .SetVideoZone(videoInfoView.VideoZone.Split('>')[0])
                         .SetAudioQuality(page.AudioQualityFormat)
                         .SetVideoQuality(page.VideoQuality == null ? "" : page.VideoQuality.QualityFormat)
-                        .SetVideoCodec(page.VideoQuality == null ? "" : page.VideoQuality.SelectedVideoCodec.Contains("AVC") ? "AVC" : page.VideoQuality.SelectedVideoCodec.Contains("HEVC") ? "HEVC" : page.VideoQuality.SelectedVideoCodec.Contains("Dolby") ? "Dolby Vision" : "");
+                        .SetVideoCodec(page.VideoQuality == null ? "" : page.VideoQuality.SelectedVideoCodec.Contains("AVC") ? "AVC" : page.VideoQuality.SelectedVideoCodec.Contains("HEVC") ? "HEVC" : page.VideoQuality.SelectedVideoCodec.Contains("Dolby") ? "Dolby Vision" : "")
+                        .SetAvid(page.Avid)
+                        .SetBvid(page.Bvid)
+                        .SetCid(page.Cid);
                     string filePath = Path.Combine(directory, fileName.RelativePath());
 
                     // 视频类别
