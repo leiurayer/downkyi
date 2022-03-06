@@ -295,6 +295,7 @@ namespace DownKyi.Services.Download
                         .SetAudioQuality(page.AudioQualityFormat)
                         .SetVideoQuality(page.VideoQuality == null ? "" : page.VideoQuality.QualityFormat)
                         .SetVideoCodec(page.VideoQuality == null ? "" : page.VideoQuality.SelectedVideoCodec.Contains("AVC") ? "AVC" : page.VideoQuality.SelectedVideoCodec.Contains("HEVC") ? "HEVC" : page.VideoQuality.SelectedVideoCodec.Contains("Dolby") ? "Dolby Vision" : "")
+                        .SetVideoPublishTime(page.PublishTime)
                         .SetAvid(page.Avid)
                         .SetBvid(page.Bvid)
                         .SetCid(page.Cid)

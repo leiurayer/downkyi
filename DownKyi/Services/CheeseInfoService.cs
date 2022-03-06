@@ -88,6 +88,11 @@ namespace DownKyi.Services
                     };
                 }
 
+                // 视频发布时间
+                DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1)); // 当地时区
+                DateTime dateTime = startTime.AddSeconds(episode.ReleaseDate);
+                page.PublishTime = dateTime.ToString("yyyy-MM-dd");
+
                 pages.Add(page);
             }
 

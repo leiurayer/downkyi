@@ -18,6 +18,7 @@ namespace DownKyi.ViewModels.PageViewModels
         public long Cid { get; set; }
         public long EpisodeId { get; set; }
         public VideoOwner Owner { get; set; }
+        public string PublishTime { get; set; }
 
         public string FirstFrame { get; set; }
 

@@ -15,6 +15,8 @@ namespace DownKyi.Core.FileName
         private string videoQuality = "VIDEO_QUALITY";
         private string videoCodec = "VIDEO_CODEC";
 
+        private string videoPublishTime = "VIDEO_PUBLISH_TIME";
+
         private long avid = -1;
         private string bvid = "BVID";
         private long cid = -1;
@@ -77,6 +79,12 @@ namespace DownKyi.Core.FileName
         public FileName SetVideoCodec(string videoCodec)
         {
             this.videoCodec = videoCodec;
+            return this;
+        }
+
+        public FileName SetVideoPublishTime(string videoPublishTime)
+        {
+            this.videoPublishTime = videoPublishTime;
             return this;
         }
 
@@ -148,6 +156,9 @@ namespace DownKyi.Core.FileName
                         break;
                     case FileNamePart.VIDEO_CODEC:
                         path += videoCodec;
+                        break;
+                    case FileNamePart.VIDEO_PUBLISH_TIME:
+                        path += videoPublishTime;
                         break;
                     case FileNamePart.AVID:
                         path += avid;

@@ -12,6 +12,8 @@
         VIDEO_QUALITY,
         VIDEO_CODEC,
 
+        VIDEO_PUBLISH_TIME,
+
         AVID,
         BVID,
         CID,
