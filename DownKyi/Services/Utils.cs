@@ -165,7 +165,10 @@ namespace DownKyi.Services
                 if (videoQualityExist == null)
                 {
                     List<string> videoCodecList = new List<string>();
-                    ListHelper.AddUnique(videoCodecList, codecName);
+                    if (codecName != string.Empty)
+                    {
+                        ListHelper.AddUnique(videoCodecList, codecName);
+                    }
 
                     VideoQuality videoQuality = new VideoQuality()
                     {
@@ -179,7 +182,10 @@ namespace DownKyi.Services
                 {
                     if (!videoQualityList[videoQualityList.IndexOf(videoQualityExist)].VideoCodecList.Exists(t => t.Equals(codecName)))
                     {
-                        videoQualityList[videoQualityList.IndexOf(videoQualityExist)].VideoCodecList.Add(codecName);
+                        if (codecName != string.Empty)
+                        {
+                            videoQualityList[videoQualityList.IndexOf(videoQualityExist)].VideoCodecList.Add(codecName);
+                        }
                     }
                 }
 
