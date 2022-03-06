@@ -469,6 +469,24 @@ namespace DownKyi.ViewModels.Settings
                 case FileNamePart.VIDEO_CODEC:
                     display = DictionaryResource.GetString("DisplayVideoCodec");
                     break;
+                case FileNamePart.VIDEO_PUBLISH_TIME:
+                    display = DictionaryResource.GetString("DisplayVideoPublishTime");
+                    break;
+                case FileNamePart.AVID:
+                    display = "avid";
+                    break;
+                case FileNamePart.BVID:
+                    display = "bvid";
+                    break;
+                case FileNamePart.CID:
+                    display = "cid";
+                    break;
+                case FileNamePart.UP_MID:
+                    display = DictionaryResource.GetString("DisplayUpMid");
+                    break;
+                case FileNamePart.UP_NAME:
+                    display = DictionaryResource.GetString("DisplayUpName");
+                    break;
             }
 
             if (((int)item) >= 100)
