@@ -214,7 +214,10 @@
     <system:String x:Key="DisplayAudioQuality">音质</system:String>
     <system:String x:Key="DisplayVideoQuality">画质</system:String>
     <system:String x:Key="DisplayVideoCodec">视频编码</system:String>
+    <system:String x:Key="DisplayVideoPublishTime">视频发布时间</system:String>
     <system:String x:Key="DisplaySpace">空格</system:String>
+    <system:String x:Key="DisplayUpMid">UP主ID</system:String>
+    <system:String x:Key="DisplayUpName">UP主昵称</system:String>
     <system:String x:Key="Reset">恢复默认</system:String>
 
     <system:String x:Key="SettingDanmaku">弹幕</system:String>

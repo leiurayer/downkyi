@@ -80,6 +80,14 @@ namespace DownKyi.ViewModels
             set => SetProperty(ref mediaLoading, value);
         }
 
+        private Visibility mediaContentVisibility;
+        public Visibility MediaContentVisibility
+        {
+            get => mediaContentVisibility;
+            set => SetProperty(ref mediaContentVisibility, value);
+        }
+
+
         private Visibility mediaLoadingVisibility;
         public Visibility MediaLoadingVisibility
         {
@@ -210,6 +218,9 @@ namespace DownKyi.ViewModels
         private void ExecuteLeftTabHeadersCommand(object parameter)
         {
             if (!(parameter is TabHeader tabHeader)) { return; }
+
+            // tab点击后，隐藏MediaContent
+            MediaContentVisibility = Visibility.Collapsed;
 
             // 页面选择
             Pager = new CustomPagerViewModel(1, (int)Math.Ceiling(double.Parse(tabHeader.SubTitle) / VideoNumberInPage));
@@ -375,6 +386,8 @@ namespace DownKyi.ViewModels
         private async void UpdateFavoritesMediaList(int current)
         {
             Medias.Clear();
+            IsSelectAll = false;
+
             MediaLoadingVisibility = Visibility.Visible;
             MediaNoDataVisibility = Visibility.Collapsed;
 
@@ -391,11 +404,13 @@ namespace DownKyi.ViewModels
                 List<Core.BiliApi.Favorites.Models.FavoritesMedia> medias = FavoritesResource.GetFavoritesMedia(tab.Id, current, VideoNumberInPage);
                 if (medias == null || medias.Count == 0)
                 {
+                    MediaContentVisibility = Visibility.Visible;
                     MediaLoadingVisibility = Visibility.Collapsed;
                     MediaNoDataVisibility = Visibility.Visible;
                     return;
                 }
 
+                MediaContentVisibility = Visibility.Visible;
                 MediaLoadingVisibility = Visibility.Collapsed;
                 MediaNoDataVisibility = Visibility.Collapsed;
 

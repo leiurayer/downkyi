@@ -99,6 +99,32 @@ namespace DownKyi.Services
                     Name = name,
                     Duration = "N/A"
                 };
+
+                // UP主信息
+                if (bangumiSeason.UpInfo != null)
+                {
+                    page.Owner = new Core.BiliApi.Models.VideoOwner
+                    {
+                        Name = bangumiSeason.UpInfo.Name,
+                        Face = bangumiSeason.UpInfo.Avatar,
+                        Mid = bangumiSeason.UpInfo.Mid,
+                    };
+                }
+                else
+                {
+                    page.Owner = new Core.BiliApi.Models.VideoOwner
+                    {
+                        Name = "",
+                        Face = "",
+                        Mid = -1,
+                    };
+                }
+
+                // 视频发布时间
+                DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1)); // 当地时区
+                DateTime dateTime = startTime.AddSeconds(episode.PubTime);
+                page.PublishTime = dateTime.ToString("yyyy-MM-dd");
+
                 pages.Add(page);
             }
 

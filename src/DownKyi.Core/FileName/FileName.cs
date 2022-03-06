@@ -15,6 +15,15 @@ namespace DownKyi.Core.FileName
         private string videoQuality = "VIDEO_QUALITY";
         private string videoCodec = "VIDEO_CODEC";
 
+        private string videoPublishTime = "VIDEO_PUBLISH_TIME";
+
+        private long avid = -1;
+        private string bvid = "BVID";
+        private long cid = -1;
+
+        private long upMid = -1;
+        private string upName = "UP_NAME";
+
         private FileName(List<FileNamePart> nameParts)
         {
             this.nameParts = nameParts;
@@ -73,6 +82,42 @@ namespace DownKyi.Core.FileName
             return this;
         }
 
+        public FileName SetVideoPublishTime(string videoPublishTime)
+        {
+            this.videoPublishTime = videoPublishTime;
+            return this;
+        }
+
+        public FileName SetAvid(long avid)
+        {
+            this.avid = avid;
+            return this;
+        }
+
+        public FileName SetBvid(string bvid)
+        {
+            this.bvid = bvid;
+            return this;
+        }
+
+        public FileName SetCid(long cid)
+        {
+            this.cid = cid;
+            return this;
+        }
+
+        public FileName SetUpMid(long upMid)
+        {
+            this.upMid = upMid;
+            return this;
+        }
+
+        public FileName SetUpName(string upName)
+        {
+            this.upName = upName;
+            return this;
+        }
+
         public string RelativePath()
         {
             string path = string.Empty;
@@ -111,6 +156,24 @@ namespace DownKyi.Core.FileName
                         break;
                     case FileNamePart.VIDEO_CODEC:
                         path += videoCodec;
+                        break;
+                    case FileNamePart.VIDEO_PUBLISH_TIME:
+                        path += videoPublishTime;
+                        break;
+                    case FileNamePart.AVID:
+                        path += avid;
+                        break;
+                    case FileNamePart.BVID:
+                        path += bvid;
+                        break;
+                    case FileNamePart.CID:
+                        path += cid;
+                        break;
+                    case FileNamePart.UP_MID:
+                        path += upMid;
+                        break;
+                    case FileNamePart.UP_NAME:
+                        path += upName;
                         break;
                 }
 

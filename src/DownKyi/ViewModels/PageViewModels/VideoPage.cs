@@ -1,8 +1,11 @@
 ﻿using DownKyi.Core.BiliApi.BiliUtils;
+using DownKyi.Core.BiliApi.Models;
 using DownKyi.Core.BiliApi.VideoStream.Models;
+using DownKyi.Core.Logging;
 using DownKyi.Core.Utils;
 using Prism.Commands;
 using Prism.Mvvm;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -16,6 +19,8 @@ namespace DownKyi.ViewModels.PageViewModels
         public string Bvid { get; set; }
         public long Cid { get; set; }
         public long EpisodeId { get; set; }
+        public VideoOwner Owner { get; set; }
+        public string PublishTime { get; set; }
 
         public string FirstFrame { get; set; }
 
@@ -87,7 +92,18 @@ namespace DownKyi.ViewModels.PageViewModels
         private void ExecuteVideoQualitySelectedCommand()
         {
             // 杜比视界
-            string dolby = Constant.GetAudioQualities()[3].Name;
+            string dolby = string.Empty;
+            try
+            {
+                var qualities = Constant.GetAudioQualities();
+                dolby = qualities[3].Name;
+            }
+            catch (Exception e)
+            {
+                Core.Utils.Debugging.Console.PrintLine("ExecuteVideoQualitySelectedCommand()发生异常: {0}", e);
+                LogManager.Error("ExecuteVideoQualitySelectedCommand", e);
+            }
+
             if (VideoQuality != null && VideoQuality.Quality == 126)
             {
                 ListHelper.AddUnique(AudioQualityFormatList, dolby);
@@ -101,7 +117,6 @@ namespace DownKyi.ViewModels.PageViewModels
                     AudioQualityFormat = AudioQualityFormatList[0];
                 }
             }
-
         }
 
         #endregion

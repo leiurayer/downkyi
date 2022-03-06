@@ -9,21 +9,18 @@
 
 [全部更新日志](CHANGELOG.md)
 
-* `2022/03/05` v1.5.0-alpha1
+* `2022/03/07` v1.5.0-alpha2
     1. [优化] 重构程序架构，解决一些已知问题。
-    2. [新增] 最高支持8K视频。
-    3. [新增] 支持杜比全景声和杜比视界。
-    4. [新增] 支持字幕下载。
-    5. [新增] 支持部分短链接（如 https://b23.tv/BV17x411w7KC ）。
-    6. [新增] 下载内容可选，可根据需要选择下载视频、音频、弹幕、字幕、封面。
-    7. [新增] 下载文件命名模块，可自主设置文件名。
+    2. [优化] 界面UI的显示与操作。
+    3. [新增] 文件命名格式：avid、bvid、cid、UP主信息、视频发布时间。
+    4. [修复] 视频音质列表导致的闪退问题。
+    5. [修复] 图片下载导致的闪退问题。
 
 ## 下载
 
-- [哔哩下载姬最新版](https://github.com/FlySelfLog/downkyi/releases/download/v1.5.0-alpha1/DownKyi-1.5.0-alpha1.zip)
+- [哔哩下载姬最新版](https://github.com/FlySelfLog/downkyi/releases/download/v1.5.0-alpha2/DownKyi-1.5.0-alpha2.zip)
 
 - [下载页面](https://github.com/FlySelfLog/downkyi/releases)
-
 
 ## 赞助
 

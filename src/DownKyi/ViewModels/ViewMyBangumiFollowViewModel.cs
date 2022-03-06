@@ -190,6 +190,9 @@ namespace DownKyi.ViewModels
         {
             if (!(parameter is TabHeader tabHeader)) { return; }
 
+            // 顶部tab点击后，隐藏Content
+            ContentVisibility = Visibility.Collapsed;
+
             // 页面选择
             Pager = new CustomPagerViewModel(1, 1);
             Pager.CurrentChanged += OnCurrentChanged_Pager;
@@ -354,6 +357,8 @@ namespace DownKyi.ViewModels
         private async void UpdateBangumiMediaList(int current)
         {
             Medias.Clear();
+            IsSelectAll = false;
+
             LoadingVisibility = Visibility.Visible;
             NoDataVisibility = Visibility.Collapsed;
 

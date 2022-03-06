@@ -16,6 +16,8 @@
 
 - [x] 支持封面下载
 
+- [x] 支持自定义文件命名
+
 - [x] 支持断点续传
 
 - [x] 支持Aria2c
@@ -60,7 +62,7 @@
 目前已支持的有：
 
 - [x] av号：av170001，https://www.bilibili.com/video/av170001
-- [x] BV号：BV17x411w7KC，https://www.bilibili.com/video/BV17x411w7KC
+- [x] BV号：BV17x411w7KC，https://www.bilibili.com/video/BV17x411w7KC, https://b23.tv/BV17x411w7KC
 - [x] 番剧（电影、电视剧）ss号：https://www.bilibili.com/bangumi/play/ss32982
 - [x] 番剧（电影、电视剧）ep号：https://www.bilibili.com/bangumi/play/ep317925
 - [x] 番剧（电影、电视剧）md号：https://www.bilibili.com/bangumi/media/md28228367

@@ -12,6 +12,15 @@
         VIDEO_QUALITY,
         VIDEO_CODEC,
 
+        VIDEO_PUBLISH_TIME,
+
+        AVID,
+        BVID,
+        CID,
+
+        UP_MID,
+        UP_NAME,
+
         // 斜杠
         SLASH = 100,
 

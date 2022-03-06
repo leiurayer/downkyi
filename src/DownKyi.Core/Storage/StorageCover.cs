@@ -165,12 +165,14 @@ namespace DownKyi.Core.Storage
                     {
                         string destFile = $"{StorageManager.GetCover()}/{md5}";
 
-                        // 如果不存在
-                        if (!File.Exists(destFile))
+                        try
                         {
-                            // 移动到指定位置
-                            File.Move(localFile, destFile);
+                            File.Delete(destFile);
                         }
+                        catch { }
+
+                        // 移动到指定位置
+                        File.Move(localFile, destFile);
 
                         return md5;
                     }

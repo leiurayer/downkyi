@@ -83,6 +83,24 @@ namespace DownKyi.Services
                     Name = name,
                     Duration = "N/A"
                 };
+
+                // UP主信息
+                videoPage.Owner = videoView.Owner;
+                if (videoPage.Owner == null)
+                {
+                    videoPage.Owner = new Core.BiliApi.Models.VideoOwner
+                    {
+                        Name = "",
+                        Face = "",
+                        Mid = -1,
+                    };
+                }
+
+                // 视频发布时间
+                DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1)); // 当地时区
+                DateTime dateTime = startTime.AddSeconds(videoView.Pubdate);
+                videoPage.PublishTime = dateTime.ToString("yyyy-MM-dd");
+
                 videoPages.Add(videoPage);
             }
 

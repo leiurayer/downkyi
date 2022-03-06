@@ -33,7 +33,10 @@ namespace DownKyi.Core.BiliApi.BiliUtils
         /// <returns></returns>
         public static List<Quality> GetResolutions()
         {
-            return resolutions;
+            // 使用深复制，
+            // 保证外部修改list后，
+            // 不会影响其他调用处
+            return new List<Quality>(resolutions);
         }
 
         /// <summary>
@@ -42,7 +45,10 @@ namespace DownKyi.Core.BiliApi.BiliUtils
         /// <returns></returns>
         public static List<Quality> GetAudioQualities()
         {
-            return qualities;
+            // 使用深复制，
+            // 保证外部修改list后，
+            // 不会影响其他调用处
+            return new List<Quality>(qualities);
         }
 
     }
