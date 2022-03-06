@@ -191,6 +191,15 @@ namespace DownKyi.Services
 
                 // 设置选中的视频编码
                 VideoQuality selectedVideoQuality = videoQualityList.FirstOrDefault(t => t.Quality == video.Id);
+                if(selectedVideoQuality == null) { continue; }
+
+                if (videoQualityList[videoQualityList.IndexOf(selectedVideoQuality)].VideoCodecList.Count == 1)
+                {
+                    // 当获取的视频没有设置的视频编码时，执行
+                    videoQualityList[videoQualityList.IndexOf(selectedVideoQuality)].SelectedVideoCodec = videoQualityList[videoQualityList.IndexOf(selectedVideoQuality)].VideoCodecList[0];
+                }
+
+                // 设置选中的视频编码
                 switch (videoCodecs)
                 {
                     case VideoCodecs.AVC:
@@ -211,11 +220,6 @@ namespace DownKyi.Services
                         break;
                 }
 
-                if (videoQualityList[videoQualityList.IndexOf(selectedVideoQuality)].VideoCodecList.Count == 1)
-                {
-                    // 当获取的视频没有设置的视频编码时，执行
-                    videoQualityList[videoQualityList.IndexOf(selectedVideoQuality)].SelectedVideoCodec = videoQualityList[videoQualityList.IndexOf(selectedVideoQuality)].VideoCodecList[0];
-                }
             }
 
             return videoQualityList;
