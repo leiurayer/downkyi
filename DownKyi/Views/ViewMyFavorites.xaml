@@ -221,7 +221,10 @@
                 </i:Interaction.Triggers>
             </ListBox>
 
-            <Grid Name="nameMediaPanel" Grid.Column="1">
+            <Grid
+                Name="nameMediaPanel"
+                Grid.Column="1"
+                Visibility="{Binding MediaContentVisibility}">
                 <Grid.RowDefinitions>
                     <RowDefinition />
                     <RowDefinition Height="1" />
@@ -267,27 +270,6 @@
                         </Style>
                     </ListBox.Style>
                 </ListBox>
-
-                <!--  加载gif  -->
-                <StackPanel
-                    Grid.Row="0"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Orientation="Vertical"
-                    Visibility="{Binding MediaLoadingVisibility}">
-                    <ContentControl
-                        Width="40"
-                        Height="40"
-                        Content="{Binding MediaLoading}" />
-                </StackPanel>
-
-                <!--  没有数据提示  -->
-                <Image
-                    Grid.Row="0"
-                    Width="256"
-                    Height="256"
-                    Source="/DownKyi;component/Resources/no-data.png"
-                    Visibility="{Binding MediaNoDataVisibility}" />
 
                 <TextBlock Grid.Row="1" Background="{DynamicResource BrushBorder}" />
 
@@ -340,6 +322,28 @@
                         Style="{StaticResource BtnStyle}" />
                 </Grid>
             </Grid>
+
+            <!--  加载gif  -->
+            <StackPanel
+                Grid.Column="1"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Orientation="Vertical"
+                Visibility="{Binding MediaLoadingVisibility}">
+                <ContentControl
+                    Width="40"
+                    Height="40"
+                    Content="{Binding MediaLoading}" />
+            </StackPanel>
+
+            <!--  没有数据提示  -->
+            <Image
+                Grid.Column="1"
+                Width="256"
+                Height="256"
+                Source="/DownKyi;component/Resources/no-data.png"
+                Visibility="{Binding MediaNoDataVisibility}" />
+
         </Grid>
 
         <!--  加载gif  -->
