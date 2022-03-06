@@ -334,6 +334,7 @@ namespace DownKyi.ViewModels
             }
 
             Medias.Clear();
+            IsSelectAll = false;
             LoadingVisibility = Visibility.Visible;
             NoDataVisibility = Visibility.Collapsed;
 
