@@ -375,6 +375,8 @@ namespace DownKyi.ViewModels
         private async void UpdateFavoritesMediaList(int current)
         {
             Medias.Clear();
+            IsSelectAll = false;
+
             MediaLoadingVisibility = Visibility.Visible;
             MediaNoDataVisibility = Visibility.Collapsed;
 
