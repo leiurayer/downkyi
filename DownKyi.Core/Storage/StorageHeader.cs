@@ -28,7 +28,7 @@ namespace DownKyi.Core.Storage
         public BitmapImage GetHeaderThumbnail(long mid, string name, string url, int width, int height)
         {
             string header = GetHeader(mid, name, url);
-            if(header == null) { return null; }
+            if (header == null) { return null; }
 
             return GetHeaderThumbnail(header, width, height);
         }
@@ -42,6 +42,8 @@ namespace DownKyi.Core.Storage
         /// <returns></returns>
         public BitmapImage GetHeaderThumbnail(string header, int width, int height)
         {
+            if (header == null) { return null; }
+
             var bitmap = new Bitmap(header);
             var thumbnail = bitmap.GetThumbnailImage(width, height, null, IntPtr.Zero);
 
@@ -141,7 +143,16 @@ namespace DownKyi.Core.Storage
 
                     if (File.Exists(localFile))
                     {
-                        File.Move(localFile, $"{StorageManager.GetHeader()}/{md5}");
+                        string destFile = $"{StorageManager.GetHeader()}/{md5}";
+
+                        try
+                        {
+                            File.Delete(destFile);
+                        }
+                        catch { }
+
+                        // 移动到指定位置
+                        File.Move(localFile, destFile);
 
                         return md5;
                     }
