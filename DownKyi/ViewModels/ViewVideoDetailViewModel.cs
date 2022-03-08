@@ -541,7 +541,7 @@ namespace DownKyi.ViewModels
             });
 
             // 通知用户添加到下载列表的结果
-            if (i == 0)
+            if (i <= 0)
             {
                 eventAggregator.GetEvent<MessageEvent>().Publish(DictionaryResource.GetString("TipAddDownloadingZero"));
             }
