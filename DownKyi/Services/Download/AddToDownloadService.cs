@@ -185,7 +185,7 @@ namespace DownKyi.Services.Download
             // 下载设置dialog中如果点击取消或者关闭窗口，
             // 会返回空字符串，
             // 这时直接退出
-            if (directory == string.Empty) { return null; }
+            if (directory == null || directory == string.Empty) { return null; }
 
             // 文件夹不存在则创建
             if (!Directory.Exists(directory))
