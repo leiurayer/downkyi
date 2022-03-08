@@ -207,6 +207,8 @@ namespace DownKyi.Services.Download
             // 添加到下载
             foreach (VideoSection section in videoSections)
             {
+                if (section.VideoPages == null) { continue; }
+
                 foreach (VideoPage page in section.VideoPages)
                 {
                     // 只下载选中项，跳过未选中项
@@ -338,49 +340,49 @@ namespace DownKyi.Services.Download
                             break;
                     }
 
-                    // 如果不存在，直接添加到下载列表
-                    DownloadBase downloadBase = new DownloadBase
-                    {
-                        Bvid = page.Bvid,
-                        Avid = page.Avid,
-                        Cid = page.Cid,
-                        EpisodeId = page.EpisodeId,
-                        CoverUrl = videoInfoView.CoverUrl,
-                        PageCoverUrl = page.FirstFrame,
-                        ZoneId = zoneId,
-                        FilePath = filePath,
-
-                        Order = page.Order,
-                        MainTitle = videoInfoView.Title,
-                        Name = page.Name,
-                        Duration = page.Duration,
-                        VideoCodecName = page.VideoQuality.SelectedVideoCodec,
-                        Resolution = new Quality { Name = page.VideoQuality.QualityFormat, Id = page.VideoQuality.Quality },
-                        AudioCodec = Constant.GetAudioQualities().FirstOrDefault(t => { return t.Name == page.AudioQualityFormat; }),
-                    };
-                    Downloading downloading = new Downloading
-                    {
-                        PlayStreamType = playStreamType,
-                        DownloadStatus = DownloadStatus.NOT_STARTED,
-                    };
-
-                    // 需要下载的内容
-                    downloadBase.NeedDownloadContent["downloadAudio"] = downloadAudio;
-                    downloadBase.NeedDownloadContent["downloadVideo"] = downloadVideo;
-                    downloadBase.NeedDownloadContent["downloadDanmaku"] = downloadDanmaku;
-                    downloadBase.NeedDownloadContent["downloadSubtitle"] = downloadSubtitle;
-                    downloadBase.NeedDownloadContent["downloadCover"] = downloadCover;
-
-                    DownloadingItem downloadingItem = new DownloadingItem
-                    {
-                        DownloadBase = downloadBase,
-                        Downloading = downloading,
-                        PlayUrl = page.PlayUrl,
-                    };
-
                     // 添加到下载列表
                     App.PropertyChangeAsync(new Action(() =>
                     {
+                        // 如果不存在，直接添加到下载列表
+                        DownloadBase downloadBase = new DownloadBase
+                        {
+                            Bvid = page.Bvid,
+                            Avid = page.Avid,
+                            Cid = page.Cid,
+                            EpisodeId = page.EpisodeId,
+                            CoverUrl = videoInfoView.CoverUrl,
+                            PageCoverUrl = page.FirstFrame,
+                            ZoneId = zoneId,
+                            FilePath = filePath,
+
+                            Order = page.Order,
+                            MainTitle = videoInfoView.Title,
+                            Name = page.Name,
+                            Duration = page.Duration,
+                            VideoCodecName = page.VideoQuality.SelectedVideoCodec,
+                            Resolution = new Quality { Name = page.VideoQuality.QualityFormat, Id = page.VideoQuality.Quality },
+                            AudioCodec = Constant.GetAudioQualities().FirstOrDefault(t => { return t.Name == page.AudioQualityFormat; }),
+                        };
+                        Downloading downloading = new Downloading
+                        {
+                            PlayStreamType = playStreamType,
+                            DownloadStatus = DownloadStatus.NOT_STARTED,
+                        };
+
+                        // 需要下载的内容
+                        downloadBase.NeedDownloadContent["downloadAudio"] = downloadAudio;
+                        downloadBase.NeedDownloadContent["downloadVideo"] = downloadVideo;
+                        downloadBase.NeedDownloadContent["downloadDanmaku"] = downloadDanmaku;
+                        downloadBase.NeedDownloadContent["downloadSubtitle"] = downloadSubtitle;
+                        downloadBase.NeedDownloadContent["downloadCover"] = downloadCover;
+
+                        DownloadingItem downloadingItem = new DownloadingItem
+                        {
+                            DownloadBase = downloadBase,
+                            Downloading = downloading,
+                            PlayUrl = page.PlayUrl,
+                        };
+
                         App.DownloadingList.Add(downloadingItem);
                         Thread.Sleep(10);
                     }));

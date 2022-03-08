@@ -7,6 +7,6 @@
         public VideoSettings Video { get; set; } = new VideoSettings();
         public DanmakuSettings Danmaku { get; set; } = new DanmakuSettings();
         public AboutSettings About { get; set; } = new AboutSettings();
-        public UserInfoSettings UserInfo { get; set; }
+        public UserInfoSettings UserInfo { get; set; } = new UserInfoSettings();
     }
 }
