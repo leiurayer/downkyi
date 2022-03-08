@@ -435,8 +435,6 @@ namespace DownKyi.ViewModels
                             {
                                 foreach (VideoPage page in section.VideoPages)
                                 {
-                                    //VideoPage videoPage = section.VideoPages.FirstOrDefault(t => t == page);
-
                                     if (page.IsSelected)
                                     {
                                         // 执行解析任务
@@ -452,8 +450,6 @@ namespace DownKyi.ViewModels
                                 {
                                     foreach (VideoPage page in section.VideoPages)
                                     {
-                                        //VideoPage videoPage = section.VideoPages.FirstOrDefault(t => t == page);
-
                                         // 执行解析任务
                                         UnityUpdateView(ParseVideo, input, page);
                                     }
@@ -465,8 +461,6 @@ namespace DownKyi.ViewModels
                             {
                                 foreach (VideoPage page in section.VideoPages)
                                 {
-                                    //VideoPage videoPage = section.VideoPages.FirstOrDefault(t => t == page);
-
                                     // 执行解析任务
                                     UnityUpdateView(ParseVideo, input, page);
                                 }
@@ -539,6 +533,11 @@ namespace DownKyi.ViewModels
                 // 下载
                 i = addToDownloadService.AddToDownload(eventAggregator, directory);
             });
+
+            if (directory == null)
+            {
+                return;
+            }
 
             // 通知用户添加到下载列表的结果
             if (i <= 0)
