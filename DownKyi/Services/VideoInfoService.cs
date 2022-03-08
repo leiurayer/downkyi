@@ -138,6 +138,28 @@ namespace DownKyi.Services
                         Name = episode.Title,
                         Duration = "N/A"
                     };
+
+                    // UP主信息
+                    page.Owner = videoView.Owner;
+                    if (page.Owner == null)
+                    {
+                        page.Owner = new Core.BiliApi.Models.VideoOwner
+                        {
+                            Name = "",
+                            Face = "",
+                            Mid = -1,
+                        };
+                    }
+
+                    // 视频发布时间
+                    DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1)); // 当地时区
+                    DateTime dateTime = startTime.AddSeconds(videoView.Pubdate);
+                    page.PublishTime = dateTime.ToString("yyyy-MM-dd");
+                    // 这里的发布时间有问题，
+                    // 如果是合集，也会执行这里，
+                    // 但是发布时间是入口视频的，不是所有视频的
+                    // TODO 修复
+
                     pages.Add(page);
                 }
 
