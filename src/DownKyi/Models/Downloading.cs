@@ -1,4 +1,4 @@
-﻿using DownKyi.Core.BiliApi.VideoStream;
+using DownKyi.Core.BiliApi.VideoStream;
 using System;
 using System.Collections.Generic;
 
@@ -11,6 +11,7 @@ namespace DownKyi.Models
         {
             // 初始化下载的文件列表
             DownloadFiles = new Dictionary<string, string>();
+            DownloadedFiles = new List<string>();
         }
 
         // Aria相关
@@ -18,6 +19,9 @@ namespace DownKyi.Models
 
         // 下载的文件
         public Dictionary<string, string> DownloadFiles { get; set; }
+
+        // 已下载的文件
+        public List<string> DownloadedFiles { get; set; }
 
         // 视频类别
         public PlayStreamType PlayStreamType { get; set; }

@@ -1,4 +1,4 @@
-﻿using DownKyi.Core.BiliApi.Login;
+using DownKyi.Core.BiliApi.Login;
 using DownKyi.Core.BiliApi.Users;
 using DownKyi.Core.BiliApi.Users.Models;
 using DownKyi.Core.Storage;
@@ -490,7 +490,7 @@ namespace DownKyi.ViewModels
                     ExpProgress = myInfo.LevelExp.CurrentExp;
                     // 节操值
                     StatusList[4].Subtitle = myInfo.Moral.ToString();
-                    // 封禁状态                   
+                    // 封禁状态
                     if (myInfo.Silence == 0)
                     {
                         StatusList[5].Subtitle = DictionaryResource.GetString("Normal");
@@ -526,7 +526,8 @@ namespace DownKyi.ViewModels
                 StorageHeader storageHeader = new StorageHeader();
                 Header = storageHeader.GetHeaderThumbnail(headerUri, 64, 64);
                 // 性别
-                Sex = new BitmapImage(sexUri);
+                if (sexUri != null)
+                    Sex = new BitmapImage(sexUri);
                 // 等级
                 Level = new BitmapImage(levelUri);
 
