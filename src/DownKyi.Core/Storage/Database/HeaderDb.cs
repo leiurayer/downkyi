@@ -7,8 +7,13 @@ namespace DownKyi.Core.Storage.Database
     public class HeaderDb
     {
         private const string key = "7c1f1f40-7cdf-4d11-ad28-f0137a3c5308";
-        private readonly DbHelper dbHelper = new DbHelper(StorageManager.GetHeaderIndex(), key);
         private readonly string tableName = "header";
+
+#if DEBUG
+        private readonly DbHelper dbHelper = new DbHelper(StorageManager.GetHeaderIndex().Replace(".db", "_debug.db"));
+#else
+        private readonly DbHelper dbHelper = new DbHelper(StorageManager.GetHeaderIndex(), key);
+#endif
 
         public HeaderDb()
         {
@@ -90,20 +95,29 @@ namespace DownKyi.Core.Storage.Database
         {
             List<Header> headers = new List<Header>();
 
-            dbHelper.ExecuteQuery(sql, reader =>
+            try
             {
-                while (reader.Read())
+                dbHelper.ExecuteQuery(sql, reader =>
                 {
-                    Header header = new Header
+                    while (reader.Read())
                     {
-                        Mid = (long)reader["mid"],
-                        Name = (string)reader["name"],
-                        Url = (string)reader["url"],
-                        Md5 = (string)reader["md5"]
-                    };
-                    headers.Add(header);
-                }
-            });
+                        Header header = new Header
+                        {
+                            Mid = (long)reader["mid"],
+                            Name = (string)reader["name"],
+                            Url = (string)reader["url"],
+                            Md5 = (string)reader["md5"]
+                        };
+                        headers.Add(header);
+                    }
+                });
+            }
+            catch (Exception e)
+            {
+                Utils.Debugging.Console.PrintLine("Query()发生异常: {0}", e);
+                LogManager.Error($"{tableName}", e);
+            }
+
             return headers;
         }
 

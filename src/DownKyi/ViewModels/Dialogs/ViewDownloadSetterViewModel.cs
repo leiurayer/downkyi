@@ -56,7 +56,7 @@ namespace DownKyi.ViewModels.Dialogs
             {
                 SetProperty(ref directory, value);
 
-                if (directory != string.Empty)
+                if (directory != null && directory != string.Empty)
                 {
                     DriveName = directory.Substring(0, 1).ToUpper();
                     DriveNameFreeSpace = Format.FormatFileSize(HardDisk.GetHardDiskFreeSpace(DriveName));
@@ -381,7 +381,7 @@ namespace DownKyi.ViewModels.Dialogs
 
             // 弹出选择下载目录的窗口
             path = DialogUtils.SetDownloadDirectory();
-            if (path == null || path == "")
+            if (path == null || path == string.Empty)
             {
                 return null;
             }

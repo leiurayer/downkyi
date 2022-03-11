@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using DownKyi.Core.Logging;
+using System;
+using System.IO;
 
 namespace DownKyi.Core.Utils
 {
@@ -11,16 +13,25 @@ namespace DownKyi.Core.Utils
         /// <returns></returns>
         public static long GetHardDiskSpace(string hardDiskName)
         {
-            long totalSize = new long();
-            hardDiskName = $"{hardDiskName}:\\";
-            DriveInfo[] drives = DriveInfo.GetDrives();
+            long totalSize = 0;
 
-            foreach (DriveInfo drive in drives)
+            try
             {
-                if (drive.Name == hardDiskName)
+                hardDiskName = $"{hardDiskName}:\\";
+                DriveInfo[] drives = DriveInfo.GetDrives();
+
+                foreach (DriveInfo drive in drives)
                 {
-                    totalSize = drive.TotalSize;
+                    if (drive.Name == hardDiskName)
+                    {
+                        totalSize = drive.TotalSize;
+                    }
                 }
+            }
+            catch (Exception e)
+            {
+                Debugging.Console.PrintLine("GetHardDiskSpace()发生异常: {0}", e);
+                LogManager.Error("HardDisk", e);
             }
 
             return totalSize;
@@ -33,16 +44,24 @@ namespace DownKyi.Core.Utils
         /// <returns></returns>
         public static long GetHardDiskFreeSpace(string hardDiskName)
         {
-            long freeSpace = new long();
-            hardDiskName = $"{hardDiskName}:\\";
-            DriveInfo[] drives = DriveInfo.GetDrives();
-
-            foreach (DriveInfo drive in drives)
+            long freeSpace = 0;
+            try
             {
-                if (drive.Name == hardDiskName)
+                hardDiskName = $"{hardDiskName}:\\";
+                DriveInfo[] drives = DriveInfo.GetDrives();
+
+                foreach (DriveInfo drive in drives)
                 {
-                    freeSpace = drive.TotalFreeSpace;
+                    if (drive.Name == hardDiskName)
+                    {
+                        freeSpace = drive.TotalFreeSpace;
+                    }
                 }
+            }
+            catch (Exception e)
+            {
+                Debugging.Console.PrintLine("GetHardDiskFreeSpace()发生异常: {0}", e);
+                LogManager.Error("HardDisk", e);
             }
 
             return freeSpace;

@@ -9,16 +9,14 @@
 
 [全部更新日志](CHANGELOG.md)
 
-* `2022/03/07` v1.5.0-alpha2
-    1. [优化] 重构程序架构，解决一些已知问题。
-    2. [优化] 界面UI的显示与操作。
-    3. [新增] 文件命名格式：avid、bvid、cid、UP主信息、视频发布时间。
-    4. [修复] 视频音质列表导致的闪退问题。
-    5. [修复] 图片下载导致的闪退问题。
+* `2022/03/12` v1.5.0-alpha3
+    1. [修复] 当用户性别为保密时，程序闪退的问题。
+    2. [修复] 批量下载UP主视频时，程序偶尔闪退的问题。
+    3. [修复] 其他已知问题。
 
 ## 下载
 
-- [哔哩下载姬最新版](https://github.com/FlySelfLog/downkyi/releases/download/v1.5.0-alpha2/DownKyi-1.5.0-alpha2.zip)
+- [哔哩下载姬最新版](https://github.com/FlySelfLog/downkyi/releases/download/v1.5.0-alpha3/DownKyi-1.5.0-alpha3.zip)
 
 - [下载页面](https://github.com/FlySelfLog/downkyi/releases)
 

@@ -82,16 +82,16 @@ namespace DownKyi.Core.Settings
         /// <returns></returns>
         private bool SetSettings()
         {
-            string json = JsonConvert.SerializeObject(appSettings);
+            try
+            {
+                string json = JsonConvert.SerializeObject(appSettings);
 
 #if DEBUG
 #else
-            // 加密字符串
-            json = Encryptor.EncryptString(json, password);
+                // 加密字符串
+                json = Encryptor.EncryptString(json, password);
 #endif
 
-            try
-            {
                 File.WriteAllText(settingsName, json);
                 return true;
             }

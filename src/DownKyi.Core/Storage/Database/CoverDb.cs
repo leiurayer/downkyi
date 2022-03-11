@@ -7,8 +7,13 @@ namespace DownKyi.Core.Storage.Database
     public class CoverDb
     {
         private const string key = "b5018ecc-09d1-4da2-aa49-4625e41e623e";
-        private readonly DbHelper dbHelper = new DbHelper(StorageManager.GetCoverIndex(), key);
         private readonly string tableName = "cover";
+
+#if DEBUG
+        private readonly DbHelper dbHelper = new DbHelper(StorageManager.GetCoverIndex().Replace(".db", "_debug.db"));
+#else
+        private readonly DbHelper dbHelper = new DbHelper(StorageManager.GetCoverIndex(), key);
+#endif
 
         public CoverDb()
         {
@@ -103,21 +108,30 @@ namespace DownKyi.Core.Storage.Database
         {
             List<Cover> covers = new List<Cover>();
 
-            dbHelper.ExecuteQuery(sql, reader =>
+            try
             {
-                while (reader.Read())
+                dbHelper.ExecuteQuery(sql, reader =>
                 {
-                    Cover cover = new Cover
+                    while (reader.Read())
                     {
-                        Avid = (long)reader["avid"],
-                        Bvid = (string)reader["bvid"],
-                        Cid = (long)reader["cid"],
-                        Url = (string)reader["url"],
-                        Md5 = (string)reader["md5"]
-                    };
-                    covers.Add(cover);
-                }
-            });
+                        Cover cover = new Cover
+                        {
+                            Avid = (long)reader["avid"],
+                            Bvid = (string)reader["bvid"],
+                            Cid = (long)reader["cid"],
+                            Url = (string)reader["url"],
+                            Md5 = (string)reader["md5"]
+                        };
+                        covers.Add(cover);
+                    }
+                });
+            }
+            catch (Exception e)
+            {
+                Utils.Debugging.Console.PrintLine("Query()发生异常: {0}", e);
+                LogManager.Error($"{tableName}", e);
+            }
+
             return covers;
         }
 
