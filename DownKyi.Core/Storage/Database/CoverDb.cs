@@ -7,8 +7,13 @@ namespace DownKyi.Core.Storage.Database
     public class CoverDb
     {
         private const string key = "b5018ecc-09d1-4da2-aa49-4625e41e623e";
-        private readonly DbHelper dbHelper = new DbHelper(StorageManager.GetCoverIndex(), key);
         private readonly string tableName = "cover";
+
+#if DEBUG
+        private readonly DbHelper dbHelper = new DbHelper(StorageManager.GetCoverIndex().Replace(".db", "_debug.db"));
+#else
+        private readonly DbHelper dbHelper = new DbHelper(StorageManager.GetCoverIndex(), key);
+#endif
 
         public CoverDb()
         {

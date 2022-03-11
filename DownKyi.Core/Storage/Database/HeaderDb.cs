@@ -7,8 +7,13 @@ namespace DownKyi.Core.Storage.Database
     public class HeaderDb
     {
         private const string key = "7c1f1f40-7cdf-4d11-ad28-f0137a3c5308";
-        private readonly DbHelper dbHelper = new DbHelper(StorageManager.GetHeaderIndex(), key);
         private readonly string tableName = "header";
+
+#if DEBUG
+        private readonly DbHelper dbHelper = new DbHelper(StorageManager.GetHeaderIndex().Replace(".db", "_debug.db"));
+#else
+        private readonly DbHelper dbHelper = new DbHelper(StorageManager.GetHeaderIndex(), key);
+#endif
 
         public HeaderDb()
         {
