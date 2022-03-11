@@ -526,7 +526,7 @@ namespace DownKyi.ViewModels
                 StorageHeader storageHeader = new StorageHeader();
                 Header = storageHeader.GetHeaderThumbnail(headerUri, 64, 64);
                 // 性别
-                Sex = new BitmapImage(sexUri);
+                Sex = sexUri == null ? null : new BitmapImage(sexUri);
                 // 等级
                 Level = new BitmapImage(levelUri);
 
