@@ -90,20 +90,29 @@ namespace DownKyi.Core.Storage.Database
         {
             List<Header> headers = new List<Header>();
 
-            dbHelper.ExecuteQuery(sql, reader =>
+            try
             {
-                while (reader.Read())
+                dbHelper.ExecuteQuery(sql, reader =>
                 {
-                    Header header = new Header
+                    while (reader.Read())
                     {
-                        Mid = (long)reader["mid"],
-                        Name = (string)reader["name"],
-                        Url = (string)reader["url"],
-                        Md5 = (string)reader["md5"]
-                    };
-                    headers.Add(header);
-                }
-            });
+                        Header header = new Header
+                        {
+                            Mid = (long)reader["mid"],
+                            Name = (string)reader["name"],
+                            Url = (string)reader["url"],
+                            Md5 = (string)reader["md5"]
+                        };
+                        headers.Add(header);
+                    }
+                });
+            }
+            catch (Exception e)
+            {
+                Utils.Debugging.Console.PrintLine("Query()发生异常: {0}", e);
+                LogManager.Error($"{tableName}", e);
+            }
+
             return headers;
         }
 

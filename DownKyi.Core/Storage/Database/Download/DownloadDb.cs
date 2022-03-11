@@ -14,7 +14,7 @@ namespace DownKyi.Core.Storage.Database.Download
         protected string tableName = "download";
 
 #if DEBUG
-        private readonly DbHelper dbHelper = new DbHelper(StorageManager.GetDownload().Replace(".db","_debug.db"));
+        private readonly DbHelper dbHelper = new DbHelper(StorageManager.GetDownload().Replace(".db", "_debug.db"));
 #else
         private readonly DbHelper dbHelper = new DbHelper(StorageManager.GetDownload(), key);
 #endif
@@ -33,25 +33,25 @@ namespace DownKyi.Core.Storage.Database.Download
         /// <param name="obj"></param>
         public void Insert(string uuid, object obj)
         {
-            // 定义一个流
-            Stream stream = new MemoryStream();
-            // 定义一个格式化器
-            BinaryFormatter formatter = new BinaryFormatter();
-            // 序列化
-            formatter.Serialize(stream, obj);
-
-            byte[] array = null;
-            array = new byte[stream.Length];
-
-            //将二进制流写入数组
-            stream.Position = 0;
-            stream.Read(array, 0, (int)stream.Length);
-
-            //关闭流
-            stream.Close();
-
             try
             {
+                // 定义一个流
+                Stream stream = new MemoryStream();
+                // 定义一个格式化器
+                BinaryFormatter formatter = new BinaryFormatter();
+                // 序列化
+                formatter.Serialize(stream, obj);
+
+                byte[] array = null;
+                array = new byte[stream.Length];
+
+                //将二进制流写入数组
+                stream.Position = 0;
+                stream.Read(array, 0, (int)stream.Length);
+
+                //关闭流
+                stream.Close();
+
                 string sql = $"insert into {tableName}(id, data) values (@id, @data)";
                 dbHelper.ExecuteNonQuery(sql, new Action<SQLiteParameterCollection>((para) =>
                 {
@@ -86,25 +86,25 @@ namespace DownKyi.Core.Storage.Database.Download
 
         public void Update(string uuid, object obj)
         {
-            // 定义一个流
-            Stream stream = new MemoryStream();
-            // 定义一个格式化器
-            BinaryFormatter formatter = new BinaryFormatter();
-            // 序列化
-            formatter.Serialize(stream, obj);
-
-            byte[] array = null;
-            array = new byte[stream.Length];
-
-            //将二进制流写入数组
-            stream.Position = 0;
-            stream.Read(array, 0, (int)stream.Length);
-
-            //关闭流
-            stream.Close();
-
             try
             {
+                // 定义一个流
+                Stream stream = new MemoryStream();
+                // 定义一个格式化器
+                BinaryFormatter formatter = new BinaryFormatter();
+                // 序列化
+                formatter.Serialize(stream, obj);
+
+                byte[] array = null;
+                array = new byte[stream.Length];
+
+                //将二进制流写入数组
+                stream.Position = 0;
+                stream.Read(array, 0, (int)stream.Length);
+
+                //关闭流
+                stream.Close();
+
                 string sql = $"update {tableName} set data=@data where id glob @id";
                 dbHelper.ExecuteNonQuery(sql, new Action<SQLiteParameterCollection>((para) =>
                 {
@@ -160,22 +160,31 @@ namespace DownKyi.Core.Storage.Database.Download
         {
             Dictionary<string, object> objects = new Dictionary<string, object>();
 
-            dbHelper.ExecuteQuery(sql, reader =>
+            try
             {
-                while (reader.Read())
+                dbHelper.ExecuteQuery(sql, reader =>
                 {
-                    // 读取字节数组
-                    byte[] array = (byte[])reader["data"];
-                    // 定义一个流
-                    MemoryStream stream = new MemoryStream(array);
-                    //定义一个格式化器
-                    BinaryFormatter formatter = new BinaryFormatter();
-                    // 反序列化
-                    object obj = formatter.Deserialize(stream);
+                    while (reader.Read())
+                    {
+                        // 读取字节数组
+                        byte[] array = (byte[])reader["data"];
+                        // 定义一个流
+                        MemoryStream stream = new MemoryStream(array);
+                        //定义一个格式化器
+                        BinaryFormatter formatter = new BinaryFormatter();
+                        // 反序列化
+                        object obj = formatter.Deserialize(stream);
 
-                    objects.Add((string)reader["id"], obj);
-                }
-            });
+                        objects.Add((string)reader["id"], obj);
+                    }
+                });
+            }
+            catch (Exception e)
+            {
+                Utils.Debugging.Console.PrintLine("Query()发生异常: {0}", e);
+                LogManager.Error($"{tableName}", e);
+            }
+
             return objects;
         }
 

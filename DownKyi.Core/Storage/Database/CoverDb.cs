@@ -103,21 +103,30 @@ namespace DownKyi.Core.Storage.Database
         {
             List<Cover> covers = new List<Cover>();
 
-            dbHelper.ExecuteQuery(sql, reader =>
+            try
             {
-                while (reader.Read())
+                dbHelper.ExecuteQuery(sql, reader =>
                 {
-                    Cover cover = new Cover
+                    while (reader.Read())
                     {
-                        Avid = (long)reader["avid"],
-                        Bvid = (string)reader["bvid"],
-                        Cid = (long)reader["cid"],
-                        Url = (string)reader["url"],
-                        Md5 = (string)reader["md5"]
-                    };
-                    covers.Add(cover);
-                }
-            });
+                        Cover cover = new Cover
+                        {
+                            Avid = (long)reader["avid"],
+                            Bvid = (string)reader["bvid"],
+                            Cid = (long)reader["cid"],
+                            Url = (string)reader["url"],
+                            Md5 = (string)reader["md5"]
+                        };
+                        covers.Add(cover);
+                    }
+                });
+            }
+            catch (Exception e)
+            {
+                Utils.Debugging.Console.PrintLine("Query()发生异常: {0}", e);
+                LogManager.Error($"{tableName}", e);
+            }
+
             return covers;
         }
 
