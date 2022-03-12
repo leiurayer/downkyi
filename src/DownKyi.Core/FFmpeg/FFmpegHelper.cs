@@ -127,7 +127,7 @@ namespace DownKyi.Core.FFmpeg
         public static void Delogo(string video, string destVideo, int x, int y, int width, int height, Action<string> action)
         {
             // ffmpeg -y -i "video.mp4" -vf delogo=x=1670:y=50:w=180:h=70:show=1 "delogo.mp4"
-            string param = $"-y -i \"{video}\" -vf delogo=x={x}:y={y}:w={width}:h={height}:show=0 \"{destVideo}\" -hide_banner -y";
+            string param = $"-y -i \"{video}\" -vf delogo=x={x}:y={y}:w={width}:h={height}:show=0 \"{destVideo}\" -hide_banner";
             ExcuteProcess("ffmpeg.exe", param, null, (s, e) =>
             {
                 Console.WriteLine(e.Data);
