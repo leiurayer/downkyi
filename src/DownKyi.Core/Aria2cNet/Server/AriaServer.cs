@@ -137,6 +137,18 @@ namespace DownKyi.Core.Aria2cNet.Server
         public static async Task<bool> CloseServerAsync()
         {
             await AriaClient.ShutdownAsync();
+            // 等待进程结束
+            await Task.Run(() =>
+            {
+                Server.WaitForExit(30000);
+                try
+                {
+                    Server.Kill();
+                }
+                catch (Exception)
+                {
+                }
+            });
             return true;
         }
 
@@ -166,7 +178,18 @@ namespace DownKyi.Core.Aria2cNet.Server
         {
             var task = AriaClient.ShutdownAsync();
             if (task.Result != null && task.Result.Result != null && task.Result.Result == "OK")
-            { return true; }
+            {
+                // 等待进程结束
+                Server.WaitForExit(30000);
+                try
+                {
+                    Server.Kill();
+                }
+                catch (Exception)
+                {
+                }
+                return true;
+            }
             return false;
         }
 
@@ -208,39 +231,35 @@ namespace DownKyi.Core.Aria2cNet.Server
 
         private static void ExcuteProcess(string exe, string arg, string workingDirectory, DataReceivedEventHandler output)
         {
-            using (var p = new Process())
+            var p = new Process();
+            Server = p;
+
+            p.StartInfo.FileName = exe;
+            p.StartInfo.Arguments = arg;
+
+            // 工作目录
+            if (workingDirectory != null)
             {
-                Server = p;
-
-                p.StartInfo.FileName = exe;
-                p.StartInfo.Arguments = arg;
-
-                // 工作目录
-                if (workingDirectory != null)
-                {
-                    p.StartInfo.WorkingDirectory = workingDirectory;
-                }
-
-                // 输出信息重定向
-                p.StartInfo.UseShellExecute = false;
-                p.StartInfo.CreateNoWindow = true;
-                p.StartInfo.RedirectStandardError = true;
-                p.StartInfo.RedirectStandardOutput = true;
-
-                // 将 StandardErrorEncoding 改为 UTF-8 才不会出现中文乱码
-                p.StartInfo.StandardOutputEncoding = Encoding.UTF8;
-                p.StartInfo.StandardErrorEncoding = Encoding.UTF8;
-
-                p.OutputDataReceived += output;
-                p.ErrorDataReceived += output;
-
-                // 启动线程
-                p.Start();
-                p.BeginOutputReadLine();
-                p.BeginErrorReadLine();
-                // 等待进程结束
-                p.WaitForExit();
+                p.StartInfo.WorkingDirectory = workingDirectory;
             }
+
+            // 输出信息重定向
+            p.StartInfo.UseShellExecute = false;
+            p.StartInfo.CreateNoWindow = true;
+            p.StartInfo.RedirectStandardError = true;
+            p.StartInfo.RedirectStandardOutput = true;
+
+            // 将 StandardErrorEncoding 改为 UTF-8 才不会出现中文乱码
+            p.StartInfo.StandardOutputEncoding = Encoding.UTF8;
+            p.StartInfo.StandardErrorEncoding = Encoding.UTF8;
+
+            p.OutputDataReceived += output;
+            p.ErrorDataReceived += output;
+
+            // 启动线程
+            p.Start();
+            p.BeginOutputReadLine();
+            p.BeginErrorReadLine();
         }
 
     }
