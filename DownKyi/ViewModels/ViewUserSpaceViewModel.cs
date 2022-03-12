@@ -353,7 +353,7 @@ namespace DownKyi.ViewModels
                 // 性别
                 Sex = sexUri == null ? null : new BitmapImage(sexUri);
                 // 等级
-                Level = new BitmapImage(levelUri);
+                Level = levelUri == null ? null : new BitmapImage(levelUri);
 
                 ArrowBack.Fill = DictionaryResource.GetColor("ColorText");
                 TopNavigationBg = DictionaryResource.GetColor("ColorMask100");

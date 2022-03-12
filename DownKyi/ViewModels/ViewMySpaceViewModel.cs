@@ -12,6 +12,7 @@ using Prism.Events;
 using Prism.Regions;
 using System;
 using System.Collections.ObjectModel;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Imaging;
@@ -21,6 +22,8 @@ namespace DownKyi.ViewModels
     public class ViewMySpaceViewModel : BaseViewModel
     {
         public const string Tag = "PageMySpace";
+
+        private CancellationTokenSource tokenSource;
 
         // mid
         private long mid = -1;
@@ -291,6 +294,9 @@ namespace DownKyi.ViewModels
         /// </summary>
         private void ExecuteBackSpace()
         {
+            // 结束任务
+            tokenSource?.Cancel();
+
             NavigationParam parameter = new NavigationParam
             {
                 ViewName = ParentView,
@@ -415,6 +421,7 @@ namespace DownKyi.ViewModels
         /// </summary>
         private async void UpdateSpaceInfo()
         {
+            bool isCancel = false;
             bool isNoData = true;
             Uri toutuUri = null;
             string headerUri = null;
@@ -423,6 +430,8 @@ namespace DownKyi.ViewModels
 
             await Task.Run(() =>
             {
+                CancellationToken cancellationToken = tokenSource.Token;
+
                 // 背景图片
                 SpaceSettings spaceSettings = Core.BiliApi.Users.UserSpace.GetSpaceSettings(mid);
                 if (spaceSettings != null)
@@ -505,7 +514,19 @@ namespace DownKyi.ViewModels
                     // 没有数据
                     isNoData = true;
                 }
-            });
+
+                // 判断是否该结束线程
+                if (cancellationToken.IsCancellationRequested)
+                {
+                    isCancel = true;
+                }
+            }, (tokenSource = new CancellationTokenSource()).Token);
+
+            // 是否该结束线程
+            if (isCancel)
+            {
+                return;
+            }
 
             // 是否获取到数据
             if (isNoData)
@@ -528,7 +549,7 @@ namespace DownKyi.ViewModels
                 // 性别
                 Sex = sexUri == null ? null : new BitmapImage(sexUri);
                 // 等级
-                Level = new BitmapImage(levelUri);
+                Level = levelUri == null ? null : new BitmapImage(levelUri);
 
                 ArrowBack.Fill = DictionaryResource.GetColor("ColorText");
                 Logout.Fill = DictionaryResource.GetColor("ColorText");
