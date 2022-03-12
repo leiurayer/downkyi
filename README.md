@@ -9,14 +9,15 @@
 
 [全部更新日志](CHANGELOG.md)
 
-* `2022/03/12` v1.5.0-alpha3
-    1. [修复] 当用户性别为保密时，程序闪退的问题。
-    2. [修复] 批量下载UP主视频时，程序偶尔闪退的问题。
-    3. [修复] 其他已知问题。
+* `2022/03/13` v1.5.0-alpha4
+    1. [优化] 配置文件目录改为当前程序目录。
+    2. [修复] 部分UI显示。
+    3. [修复] 因数据库中的重复内容导致的闪退问题。
+    4. [修复] 其他已知问题。
 
 ## 下载
 
-- [哔哩下载姬最新版](https://github.com/FlySelfLog/downkyi/releases/download/v1.5.0-alpha3/DownKyi-1.5.0-alpha3.zip)
+- [哔哩下载姬最新版](https://github.com/FlySelfLog/downkyi/releases/download/v1.5.0-alpha4/DownKyi-1.5.0-alpha4.zip)
 
 - [下载页面](https://github.com/FlySelfLog/downkyi/releases)
 
@@ -25,6 +26,12 @@
 如果这个项目对您有很大帮助，并且您希望支持该项目的开发和维护，请随时扫描一下二维码进行捐赠。非常感谢您的捐款，谢谢！
 
 ![Alipay](images/Alipay.png)![WeChat](images/WeChat.png)
+
+## 开发
+
+### 相关项目
+
+- [哔哩哔哩-API收集整理](https://github.com/SocialSisterYi/bilibili-API-collect)
 
 ## 免责申明
 
