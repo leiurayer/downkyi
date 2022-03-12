@@ -8,7 +8,8 @@ namespace DownKyi.Core.Storage
     internal static class Constant
     {
         // 根目录
-        private static string Root { get; } = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/Downkyi";
+        //private static string Root { get; } = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/Downkyi";
+        private static string Root { get; } = Environment.CurrentDirectory;
 
         // Aria
         public static string Aria { get; } = $"{Root}/Aria";
