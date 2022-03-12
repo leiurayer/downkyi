@@ -3,12 +3,12 @@
     public class AppInfo
     {
         public string Name { get; } = "哔哩下载姬";
-        public int VersionCode { get; } = 502;
+        public int VersionCode { get; } = 503;
 
 #if DEBUG
-        public string VersionName { get; } = "1.5.0-alpha3 Debug";
+        public string VersionName { get; } = "1.5.0-alpha4 Debug";
 #else
-        public string VersionName { get; } = "1.5.0-alpha3";
+        public string VersionName { get; } = "1.5.0-alpha4";
 #endif
 
     }
