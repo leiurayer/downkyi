@@ -84,6 +84,8 @@ namespace DownKyi.ViewModels.DownloadManager
         /// </summary>
         private void ExecuteOpenFolderCommand()
         {
+            if (DownloadBase == null) { return; }
+
             string videoPath = $"{DownloadBase.FilePath}.mp4";
             FileInfo fileInfo = new FileInfo(videoPath);
             if (File.Exists(fileInfo.FullName))
@@ -105,6 +107,8 @@ namespace DownKyi.ViewModels.DownloadManager
         /// </summary>
         private void ExecuteOpenVideoCommand()
         {
+            if (DownloadBase == null) { return; }
+
             string videoPath = $"{DownloadBase.FilePath}.mp4";
             var fileInfo = new FileInfo(videoPath);
             if (File.Exists(fileInfo.FullName))

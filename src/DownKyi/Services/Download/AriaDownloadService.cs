@@ -32,8 +32,8 @@ namespace DownKyi.Services.Download
     {
         private CancellationTokenSource tokenSource;
 
-        private int retry = 5;
-        private string nullMark = "<null>";
+        private readonly int retry = 5;
+        private readonly string nullMark = "<null>";
 
         public AriaDownloadService(ObservableCollection<DownloadingItem> downloadingList, ObservableCollection<DownloadedItem> downloadedList) : base(downloadingList, downloadedList)
         {
@@ -582,13 +582,13 @@ namespace DownKyi.Services.Download
                         for (int i = 0; i < retry; i++)
                         {
                             audioUid = DownloadAudio(downloading);
-                            if (audioUid != null && audioUid != "<null>")
+                            if (audioUid != null && audioUid != nullMark)
                             {
                                 break;
                             }
                         }
                     }
-                    if (audioUid == "<null>")
+                    if (audioUid == nullMark)
                     {
                         DownloadFailed(downloading);
                         return;
@@ -611,13 +611,13 @@ namespace DownKyi.Services.Download
                         for (int i = 0; i < retry; i++)
                         {
                             videoUid = DownloadVideo(downloading);
-                            if (videoUid != null && videoUid != "<null>")
+                            if (videoUid != null && videoUid != nullMark)
                             {
                                 break;
                             }
                         }
                     }
-                    if (videoUid == "<null>")
+                    if (videoUid == nullMark)
                     {
                         DownloadFailed(downloading);
                         return;

@@ -160,11 +160,11 @@ namespace DownKyi.Core.Storage.Database.Download
         {
             Dictionary<string, object> objects = new Dictionary<string, object>();
 
-            try
+            dbHelper.ExecuteQuery(sql, reader =>
             {
-                dbHelper.ExecuteQuery(sql, reader =>
+                while (reader.Read())
                 {
-                    while (reader.Read())
+                    try
                     {
                         // 读取字节数组
                         byte[] array = (byte[])reader["data"];
@@ -177,17 +177,16 @@ namespace DownKyi.Core.Storage.Database.Download
 
                         objects.Add((string)reader["id"], obj);
                     }
-                });
-            }
-            catch (Exception e)
-            {
-                Utils.Debugging.Console.PrintLine("Query()发生异常: {0}", e);
-                LogManager.Error($"{tableName}", e);
-            }
+                    catch (Exception e)
+                    {
+                        Utils.Debugging.Console.PrintLine("Query()发生异常: {0}", e);
+                        LogManager.Error($"{tableName}", e);
+                    }
+                }
+            });
 
             return objects;
         }
-
 
         /// <summary>
         /// 如果表不存在则创建表
