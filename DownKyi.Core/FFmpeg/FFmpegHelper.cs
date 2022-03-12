@@ -17,14 +17,14 @@ namespace DownKyi.Core.FFmpeg
         /// <param name="destVideo"></param>
         public static bool MergeVideo(string video1, string video2, string destVideo)
         {
-            string param = $"-i \"{video1}\" -i \"{video2}\" -acodec copy -vcodec copy -f mp4 \"{destVideo}\"";
+            string param = $"-y -i \"{video1}\" -i \"{video2}\" -acodec copy -vcodec copy -f mp4 \"{destVideo}\"";
             if (video1 == null || !File.Exists(video1))
             {
-                param = $"-i \"{video2}\" -acodec copy -vcodec copy -f mp4 \"{destVideo}\"";
+                param = $"-y -i \"{video2}\" -acodec copy -vcodec copy -f mp4 \"{destVideo}\"";
             }
             if (video2 == null || !File.Exists(video2))
             {
-                param = $"-i \"{video1}\" -acodec copy -f aac \"{destVideo}\"";
+                param = $"-y -i \"{video1}\" -acodec copy -f aac \"{destVideo}\"";
             }
             if (!File.Exists(video1) && !File.Exists(video2)) { return false; }
 
@@ -89,9 +89,9 @@ namespace DownKyi.Core.FFmpeg
                 return false;
             }
 
-            // ffmpeg -f concat -safe 0 -i filelist.txt -c copy output.mkv
+            // ffmpeg -y -f concat -safe 0 -i filelist.txt -c copy output.mkv
             // 加上-y，表示如果有同名文件，则默认覆盖
-            string param = $"-f concat -safe 0 -i {concatFileName} -c copy \"{destVideo}\" -y";
+            string param = $"-y -f concat -safe 0 -i {concatFileName} -c copy \"{destVideo}\" -y";
             ExcuteProcess("ffmpeg.exe", param, workingDirectory, (s, e) => Console.WriteLine(e.Data));
 
             // 删除临时文件
@@ -126,8 +126,8 @@ namespace DownKyi.Core.FFmpeg
         /// <param name="action"></param>
         public static void Delogo(string video, string destVideo, int x, int y, int width, int height, Action<string> action)
         {
-            // ffmpeg -i "video.mp4" -vf delogo=x=1670:y=50:w=180:h=70:show=1 "delogo.mp4"
-            string param = $"-i \"{video}\" -vf delogo=x={x}:y={y}:w={width}:h={height}:show=0 \"{destVideo}\" -hide_banner -y";
+            // ffmpeg -y -i "video.mp4" -vf delogo=x=1670:y=50:w=180:h=70:show=1 "delogo.mp4"
+            string param = $"-y -i \"{video}\" -vf delogo=x={x}:y={y}:w={width}:h={height}:show=0 \"{destVideo}\" -hide_banner -y";
             ExcuteProcess("ffmpeg.exe", param, null, (s, e) =>
             {
                 Console.WriteLine(e.Data);

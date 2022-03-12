@@ -30,7 +30,10 @@ namespace DownKyi.Services.Download
     /// </summary>
     public class AriaDownloadService : DownloadService, IDownloadService
     {
+        private Task workTask;
         private CancellationTokenSource tokenSource;
+        private CancellationToken cancellationToken;
+        private List<Task> downloadingTasks = new List<Task>();
 
         private readonly int retry = 5;
         private readonly string nullMark = "<null>";
@@ -144,7 +147,9 @@ namespace DownKyi.Services.Download
             // 老版本数据库没有这一项，会变成null
             if (downloading.Downloading.DownloadedFiles == null)
                 downloading.Downloading.DownloadedFiles = new List<string>();
-            if (downloading.Downloading.DownloadedFiles.Contains(key))
+            // 还要检查一下文件有没有被人删掉，删掉的话重新下载
+            // 如果下载视频之后音频文件被人删了。此时gid还是视频的，会下错文件
+            if (downloading.Downloading.DownloadedFiles.Contains(key) && File.Exists(Path.Combine(path, fileName)))
                 return Path.Combine(path, fileName);
             if (downloading.Downloading.DownloadFiles.ContainsKey(key))
             {
@@ -171,6 +176,7 @@ namespace DownKyi.Services.Download
             {
                 case DownloadResult.SUCCESS:
                     downloading.Downloading.DownloadedFiles.Add(key);
+                    downloading.Downloading.Gid = null;
                     return Path.Combine(path, fileName);
                 case DownloadResult.FAILED:
                 case DownloadResult.ABORT:
@@ -419,10 +425,17 @@ namespace DownKyi.Services.Download
         }
 
         /// <summary>
-        /// 停止下载服务
+        /// 停止下载服务(转换await和Task.Wait两种调用形式)
         /// </summary>
-        public void End()
+        private async Task EndTask()
         {
+            // 结束任务
+            tokenSource.Cancel();
+
+            await workTask;
+
+            //先简单等待一下
+
             // 下载数据存储服务
             DownloadStorageService downloadStorageService = new DownloadStorageService();
             // 保存数据
@@ -441,7 +454,7 @@ namespace DownKyi.Services.Download
                     case DownloadStatus.DOWNLOADING:
                         // TODO 添加设置让用户选择重启后是否自动开始下载
                         item.Downloading.DownloadStatus = DownloadStatus.WAIT_FOR_DOWNLOAD;
-                        item.Downloading.DownloadStatus = DownloadStatus.PAUSE;
+                        //item.Downloading.DownloadStatus = DownloadStatus.PAUSE;
                         break;
                     case DownloadStatus.DOWNLOAD_SUCCEED:
                     case DownloadStatus.DOWNLOAD_FAILED:
@@ -460,29 +473,35 @@ namespace DownKyi.Services.Download
             }
 
             // 关闭Aria服务器
-            CloseAriaServer();
+            await CloseAriaServer();
+        }
 
-            // 结束任务
-            tokenSource.Cancel();
+        /// <summary>
+        /// 停止下载服务
+        /// </summary>
+        public void End()
+        {
+            Task.Run(EndTask).Wait();
         }
 
         /// <summary>
         /// 启动下载服务
         /// </summary>
-        public async void Start()
+        public void Start()
         {
             // 启动Aria服务器
             StartAriaServer();
 
-            await Task.Run(DoWork, (tokenSource = new CancellationTokenSource()).Token);
+            tokenSource = new CancellationTokenSource();
+            cancellationToken = tokenSource.Token;
+            workTask = Task.Run(DoWork);
         }
 
         /// <summary>
         /// 执行任务
         /// </summary>
-        private void DoWork()
+        private async Task DoWork()
         {
-            CancellationToken cancellationToken = tokenSource.Token;
             while (true)
             {
                 int maxDownloading = SettingsManager.GetInstance().GetAriaMaxConcurrentDownloads();
@@ -490,6 +509,7 @@ namespace DownKyi.Services.Download
 
                 try
                 {
+                    downloadingTasks.RemoveAll((m) => m.IsCompleted);
                     foreach (DownloadingItem downloading in downloadingList)
                     {
                         if (downloading.Downloading.DownloadStatus == DownloadStatus.DOWNLOADING)
@@ -508,7 +528,9 @@ namespace DownKyi.Services.Download
                         // 开始下载
                         if (downloading.Downloading.DownloadStatus == DownloadStatus.NOT_STARTED || downloading.Downloading.DownloadStatus == DownloadStatus.WAIT_FOR_DOWNLOAD)
                         {
-                            SingleDownload(downloading);
+                            //这里需要立刻设置状态，否则如果SingleDownload没有及时执行，会重复创建任务
+                            downloading.Downloading.DownloadStatus = DownloadStatus.DOWNLOADING;
+                            downloadingTasks.Add(SingleDownload(downloading));
                             downloadingCount++;
                         }
                     }
@@ -533,7 +555,14 @@ namespace DownKyi.Services.Download
                 }
 
                 // 降低CPU占用
-                Thread.Sleep(500);
+                await Task.Delay(500);
+            }
+
+            await Task.WhenAny(Task.WhenAll(downloadingTasks), Task.Delay(30000));
+            foreach (Task tsk in downloadingTasks.FindAll((m) => !m.IsCompleted))
+            {
+                Core.Utils.Debugging.Console.PrintLine("AriaDownloadService: 任务结束超时");
+                LogManager.Debug(Tag, "任务结束超时");
             }
         }
 
@@ -542,7 +571,7 @@ namespace DownKyi.Services.Download
         /// </summary>
         /// <param name="downloading"></param>
         /// <returns></returns>
-        private async void SingleDownload(DownloadingItem downloading)
+        private async Task SingleDownload(DownloadingItem downloading)
         {
             // 路径
             string[] temp = downloading.DownloadBase.FilePath.Split('/');
@@ -567,12 +596,6 @@ namespace DownKyi.Services.Download
 
                     // 暂停
                     Pause(downloading);
-                    // 是否存在
-                    var isExist = IsExist(downloading);
-                    if (!isExist.Result)
-                    {
-                        return;
-                    }
 
                     string audioUid = null;
                     // 如果需要下载音频
@@ -596,12 +619,6 @@ namespace DownKyi.Services.Download
 
                     // 暂停
                     Pause(downloading);
-                    // 是否存在
-                    isExist = IsExist(downloading);
-                    if (!isExist.Result)
-                    {
-                        return;
-                    }
 
                     string videoUid = null;
                     // 如果需要下载视频
@@ -625,12 +642,6 @@ namespace DownKyi.Services.Download
 
                     // 暂停
                     Pause(downloading);
-                    // 是否存在
-                    isExist = IsExist(downloading);
-                    if (!isExist.Result)
-                    {
-                        return;
-                    }
 
                     string outputDanmaku = null;
                     // 如果需要下载弹幕
@@ -641,12 +652,6 @@ namespace DownKyi.Services.Download
 
                     // 暂停
                     Pause(downloading);
-                    // 是否存在
-                    isExist = IsExist(downloading);
-                    if (!isExist.Result)
-                    {
-                        return;
-                    }
 
                     List<string> outputSubtitles = null;
                     // 如果需要下载字幕
@@ -657,12 +662,6 @@ namespace DownKyi.Services.Download
 
                     // 暂停
                     Pause(downloading);
-                    // 是否存在
-                    isExist = IsExist(downloading);
-                    if (!isExist.Result)
-                    {
-                        return;
-                    }
 
                     string outputCover = null;
                     string outputPageCover = null;
@@ -679,12 +678,6 @@ namespace DownKyi.Services.Download
 
                     // 暂停
                     Pause(downloading);
-                    // 是否存在
-                    isExist = IsExist(downloading);
-                    if (!isExist.Result)
-                    {
-                        return;
-                    }
 
                     // 混流
                     string outputMedia = string.Empty;
@@ -693,14 +686,13 @@ namespace DownKyi.Services.Download
                         outputMedia = MixedFlow(downloading, audioUid, videoUid);
                     }
 
-                    // 暂停
-                    //Pause(downloading);
+                    // 这里本来只有IsExist，没有pause，不知道怎么处理
                     // 是否存在
-                    isExist = IsExist(downloading);
-                    if (!isExist.Result)
-                    {
-                        return;
-                    }
+                    //isExist = IsExist(downloading);
+                    //if (!isExist.Result)
+                    //{
+                    //    return;
+                    //}
 
                     // 检测音频、视频是否下载成功
                     bool isMediaSuccess = true;
@@ -847,10 +839,18 @@ namespace DownKyi.Services.Download
         /// <param name="downloading"></param>
         private void Pause(DownloadingItem downloading)
         {
+            cancellationToken.ThrowIfCancellationRequested();
+
             downloading.DownloadStatusTitle = DictionaryResource.GetString("Pausing");
             if (downloading.Downloading.DownloadStatus == DownloadStatus.PAUSE)
             {
                 throw new OperationCanceledException("Stop thread by pause");
+            }
+            // 是否存在
+            var isExist = IsExist(downloading);
+            if (!isExist.Result)
+            {
+                throw new OperationCanceledException("Task is deleted");
             }
         }
 
@@ -915,26 +915,28 @@ namespace DownKyi.Services.Download
             };
             var task = await AriaServer.StartServerAsync(config);
             if (task) { Console.WriteLine("Start ServerAsync Completed"); }
+            for (int i = 0; i < 10; i++)
+            {
+                var globOpt = await AriaClient.GetGlobalOptionAsync();
+                if (globOpt != null)
+                    break;
+                await Task.Delay(1000);
+            }
             Console.WriteLine("Start ServerAsync end");
         }
 
         /// <summary>
         /// 关闭Aria服务器
         /// </summary>
-        private void CloseAriaServer()
+        private async Task CloseAriaServer()
         {
-            new Thread(() =>
-            {
-                // 暂停所有下载
-                var ariaPause = AriaClient.PauseAllAsync();
-                Core.Utils.Debugging.Console.PrintLine(ariaPause.ToString());
+            // 暂停所有下载
+            var ariaPause = await AriaClient.PauseAllAsync();
+            Core.Utils.Debugging.Console.PrintLine(ariaPause.ToString());
 
-                // 关闭服务器
-                bool close = AriaServer.CloseServer();
-                Core.Utils.Debugging.Console.PrintLine(close);
-            })
-            { IsBackground = false }
-            .Start();
+            // 关闭服务器
+            bool close = AriaServer.CloseServer();
+            Core.Utils.Debugging.Console.PrintLine(close);
         }
 
         /// <summary>
@@ -955,6 +957,14 @@ namespace DownKyi.Services.Download
                 Task<AriaTellStatus> status = AriaClient.TellStatus(downloading.Downloading.Gid);
                 if (status == null || status.Result == null)
                     downloading.Downloading.Gid = null;
+                else if (status.Result.Result == null && status.Result.Error != null)
+                {
+                    if (status.Result.Error.Message.Contains("is not found"))
+                    {
+                        downloading.Downloading.Gid = null;
+                    }
+                }
+
             }
 
             if (downloading.Downloading.Gid == null)
@@ -997,6 +1007,7 @@ namespace DownKyi.Services.Download
             ariaManager.DownloadFinish += AriaDownloadFinish;
             return ariaManager.GetDownloadStatus(downloading.Downloading.Gid, new Action(() =>
             {
+                cancellationToken.ThrowIfCancellationRequested();
                 switch (downloading.Downloading.DownloadStatus)
                 {
                     case DownloadStatus.PAUSE:
