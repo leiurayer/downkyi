@@ -105,8 +105,21 @@ namespace DownKyi.ViewModels.Settings
             set => SetProperty(ref selectedOptionalField, value);
         }
 
-        #endregion
+        private List<string> fileNamePartTimeFormatList;
+        public List<string> FileNamePartTimeFormatList
+        {
+            get => fileNamePartTimeFormatList;
+            set => SetProperty(ref fileNamePartTimeFormatList, value);
+        }
 
+        private string selectedFileNamePartTimeFormat;
+        public string SelectedFileNamePartTimeFormat
+        {
+            get => selectedFileNamePartTimeFormat;
+            set => SetProperty(ref selectedFileNamePartTimeFormat, value);
+        }
+
+        #endregion
 
         public ViewVideoViewModel(IEventAggregator eventAggregator) : base(eventAggregator)
         {
@@ -137,6 +150,13 @@ namespace DownKyi.ViewModels.Settings
             }
 
             SelectedOptionalField = -1;
+
+            // 文件命名中的时间格式
+            FileNamePartTimeFormatList = new List<string>
+            {
+                "yyyy-MM-dd",
+                "yyyy.MM.dd",
+            };
 
             #endregion
 
@@ -183,6 +203,9 @@ namespace DownKyi.ViewModels.Settings
                 string display = DisplayFileNamePart(item);
                 SelectedFileName.Add(new DisplayFileNamePart { Id = item, Title = display });
             }
+
+            // 文件命名中的时间格式
+            SelectedFileNamePartTimeFormat = SettingsManager.GetInstance().GetFileNamePartTimeFormat();
 
             isOnNavigatedTo = false;
         }
@@ -313,6 +336,8 @@ namespace DownKyi.ViewModels.Settings
 
             isSucceed = SettingsManager.GetInstance().SetFileNameParts(fileName);
             PublishTip(isSucceed);
+
+            SelectedOptionalField = -1;
         }
 
         // 可选文件名字段点击事件
@@ -363,8 +388,25 @@ namespace DownKyi.ViewModels.Settings
                 string display = DisplayFileNamePart(item);
                 SelectedFileName.Add(new DisplayFileNamePart { Id = item, Title = display });
             }
+
+            SelectedOptionalField = -1;
         }
 
+        // 文件命名中的时间格式事件
+        private DelegateCommand<object> fileNamePartTimeFormatCommand;
+        public DelegateCommand<object> FileNamePartTimeFormatCommand => fileNamePartTimeFormatCommand ?? (fileNamePartTimeFormatCommand = new DelegateCommand<object>(ExecuteFileNamePartTimeFormatCommand));
+
+        /// <summary>
+        /// 文件命名中的时间格式事件
+        /// </summary>
+        /// <param name="parameter"></param>
+        private void ExecuteFileNamePartTimeFormatCommand(object parameter)
+        {
+            if (!(parameter is string timeFormat)) { return; }
+
+            bool isSucceed = SettingsManager.GetInstance().SetFileNamePartTimeFormat(timeFormat);
+            PublishTip(isSucceed);
+        }
 
         #endregion
 
