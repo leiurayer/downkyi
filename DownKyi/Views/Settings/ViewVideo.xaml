@@ -228,7 +228,7 @@
                             VerticalAlignment="Center"
                             FontSize="12"
                             Foreground="{DynamicResource BrushTextDark}"
-                            Text="时间格式：" />
+                            Text="{DynamicResource FileNameTimeFormat}" />
                         <ComboBox
                             Name="nameFileNamePartTimeFormat"
                             Width="120"

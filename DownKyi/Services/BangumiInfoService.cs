@@ -197,10 +197,12 @@ namespace DownKyi.Services
                         };
                     }
 
+                    // 文件命名中的时间格式
+                    string timeFormat = SettingsManager.GetInstance().GetFileNamePartTimeFormat();
                     // 视频发布时间
                     DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1)); // 当地时区
                     DateTime dateTime = startTime.AddSeconds(episode.PubTime);
-                    page.PublishTime = dateTime.ToString("yyyy-MM-dd");
+                    page.PublishTime = dateTime.ToString(timeFormat);
 
                     pages.Add(page);
                 }
