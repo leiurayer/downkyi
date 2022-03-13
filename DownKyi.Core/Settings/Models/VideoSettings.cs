@@ -16,5 +16,6 @@ namespace DownKyi.Core.Settings.Models
         public List<string> HistoryVideoRootPaths { get; set; } // 历史视频保存路径
         public AllowStatus IsUseSaveVideoRootPath { get; set; } // 是否使用默认视频保存路径
         public List<FileNamePart> FileNameParts { get; set; } // 文件命名格式
+        public string FileNamePartTimeFormat { get; set; } // 文件命名中的时间格式
     }
 }
