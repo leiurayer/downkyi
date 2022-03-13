@@ -183,7 +183,7 @@ namespace DownKyi.ViewModels
         public DelegateCommand<object> TabHeadersCommand => tabHeadersCommand ?? (tabHeadersCommand = new DelegateCommand<object>(ExecuteTabHeadersCommand, CanExecuteTabHeadersCommand));
 
         /// <summary>
-        /// 左侧tab点击事件
+        /// 顶部tab点击事件
         /// </summary>
         /// <param name="parameter"></param>
         private void ExecuteTabHeadersCommand(object parameter)

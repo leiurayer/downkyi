@@ -4,6 +4,8 @@ namespace DownKyi.ViewModels.UserSpace
 {
     public class TabRightBanner : BindableBase
     {
+        public int Id { get; set; }
+
         private bool isEnabled;
         public bool IsEnabled
         {

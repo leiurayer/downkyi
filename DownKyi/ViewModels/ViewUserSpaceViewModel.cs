@@ -156,6 +156,14 @@ namespace DownKyi.ViewModels
             set => SetProperty(ref tabRightBanners, value);
         }
 
+        private int selectedRightBanner;
+        public int SelectedRightBanner
+        {
+            get => selectedRightBanner;
+            set => SetProperty(ref selectedRightBanner, value);
+        }
+
+
         #endregion
 
         public ViewUserSpaceViewModel(IRegionManager regionManager, IEventAggregator eventAggregator) : base(eventAggregator)
@@ -200,7 +208,6 @@ namespace DownKyi.ViewModels
             eventAggregator.GetEvent<NavigationEvent>().Publish(parameter);
         }
 
-
         // 左侧tab点击事件
         private DelegateCommand<object> tabLeftBannersCommand;
         public DelegateCommand<object> TabLeftBannersCommand => tabLeftBannersCommand ?? (tabLeftBannersCommand = new DelegateCommand<object>(ExecuteTabLeftBannersCommand));
@@ -230,6 +237,38 @@ namespace DownKyi.ViewModels
             }
         }
 
+        // 右侧tab点击事件
+        private DelegateCommand<object> tabRightBannersCommand;
+        public DelegateCommand<object> TabRightBannersCommand => tabRightBannersCommand ?? (tabRightBannersCommand = new DelegateCommand<object>(ExecuteTabRightBannersCommand));
+
+        /// <summary>
+        /// 右侧tab点击事件
+        /// </summary>
+        private void ExecuteTabRightBannersCommand(object parameter)
+        {
+            if (!(parameter is TabRightBanner banner)) { return; }
+
+            Dictionary<string, object> data = new Dictionary<string, object>
+            {
+                { "mid", mid },
+                { "friendId", 0 }
+            };
+
+            switch (banner.Id)
+            {
+                case 0:
+                    data["friendId"] = 0;
+                    NavigateToView.NavigationView(eventAggregator, ViewFriendViewModel.Tag, Tag, data);
+                    break;
+                case 1:
+                    data["friendId"] = 1;
+                    NavigateToView.NavigationView(eventAggregator, ViewFriendViewModel.Tag, Tag, data);
+                    break;
+            }
+
+            SelectedRightBanner = -1;
+        }
+
         #endregion
 
         /// <summary>
@@ -251,6 +290,8 @@ namespace DownKyi.ViewModels
 
             TabLeftBanners.Clear();
             TabRightBanners.Clear();
+
+            SelectedRightBanner = -1;
 
             // 将内容置空，使其不指向任何页面
             regionManager.RequestNavigate("UserSpaceContentRegion", "");
@@ -416,6 +457,7 @@ namespace DownKyi.ViewModels
             {
                 TabRightBanners.Add(new TabRightBanner
                 {
+                    Id = 0,
                     IsEnabled = true,
                     LabelColor = DictionaryResource.GetColor("ColorPrimary"),
                     CountColor = DictionaryResource.GetColor("ColorPrimary"),
@@ -424,6 +466,7 @@ namespace DownKyi.ViewModels
                 });
                 TabRightBanners.Add(new TabRightBanner
                 {
+                    Id = 1,
                     IsEnabled = true,
                     LabelColor = DictionaryResource.GetColor("ColorPrimary"),
                     CountColor = DictionaryResource.GetColor("ColorPrimary"),
@@ -442,6 +485,7 @@ namespace DownKyi.ViewModels
             {
                 TabRightBanners.Add(new TabRightBanner
                 {
+                    Id = 2,
                     IsEnabled = false,
                     LabelColor = DictionaryResource.GetColor("ColorTextGrey"),
                     CountColor = DictionaryResource.GetColor("ColorTextDark"),
@@ -456,6 +500,7 @@ namespace DownKyi.ViewModels
                 }
                 TabRightBanners.Add(new TabRightBanner
                 {
+                    Id = 3,
                     IsEnabled = false,
                     LabelColor = DictionaryResource.GetColor("ColorTextGrey"),
                     CountColor = DictionaryResource.GetColor("ColorTextDark"),
@@ -470,6 +515,7 @@ namespace DownKyi.ViewModels
                 }
                 TabRightBanners.Add(new TabRightBanner
                 {
+                    Id = 4,
                     IsEnabled = false,
                     LabelColor = DictionaryResource.GetColor("ColorTextGrey"),
                     CountColor = DictionaryResource.GetColor("ColorTextDark"),
