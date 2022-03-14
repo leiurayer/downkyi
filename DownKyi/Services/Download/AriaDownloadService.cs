@@ -147,15 +147,15 @@ namespace DownKyi.Services.Download
             // 老版本数据库没有这一项，会变成null
             if (downloading.Downloading.DownloadedFiles == null)
                 downloading.Downloading.DownloadedFiles = new List<string>();
-            // 还要检查一下文件有没有被人删掉，删掉的话重新下载
-            // 如果下载视频之后音频文件被人删了。此时gid还是视频的，会下错文件
-            if (downloading.Downloading.DownloadedFiles.Contains(key) && File.Exists(Path.Combine(path, fileName)))
-                return Path.Combine(path, fileName);
             if (downloading.Downloading.DownloadFiles.ContainsKey(key))
             {
                 // 如果存在，表示下载过，
                 // 则继续使用上次下载的文件名
                 fileName = downloading.Downloading.DownloadFiles[key];
+                // 还要检查一下文件有没有被人删掉，删掉的话重新下载
+                // 如果下载视频之后音频文件被人删了。此时gid还是视频的，会下错文件
+                if (downloading.Downloading.DownloadedFiles.Contains(key) && File.Exists(Path.Combine(path, fileName)))
+                    return Path.Combine(path, fileName);
             }
             else
             {
