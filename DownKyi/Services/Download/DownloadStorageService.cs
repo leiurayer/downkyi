@@ -7,6 +7,16 @@ namespace DownKyi.Services.Download
 {
     public class DownloadStorageService
     {
+        ~DownloadStorageService()
+        {
+            DownloadingDb downloadingDb = new DownloadingDb();
+            downloadingDb.Close();
+            DownloadedDb downloadedDb = new DownloadedDb();
+            downloadedDb.Close();
+            DownloadBaseDb downloadBaseDb = new DownloadBaseDb();
+            downloadBaseDb.Close();
+        }
+
         #region 下载中数据
 
         /// <summary>
@@ -25,7 +35,7 @@ namespace DownKyi.Services.Download
             {
                 downloadingDb.Insert(downloadingItem.DownloadBase.Uuid, downloadingItem.Downloading);
             }
-            downloadingDb.Close();
+            //downloadingDb.Close();
         }
 
         /// <summary>
@@ -40,7 +50,7 @@ namespace DownKyi.Services.Download
 
             DownloadingDb downloadingDb = new DownloadingDb();
             downloadingDb.Delete(downloadingItem.DownloadBase.Uuid);
-            downloadingDb.Close();
+            //downloadingDb.Close();
         }
 
         /// <summary>
@@ -52,7 +62,7 @@ namespace DownKyi.Services.Download
             // 从数据库获取数据
             DownloadingDb downloadingDb = new DownloadingDb();
             Dictionary<string, object> dic = downloadingDb.QueryAll();
-            downloadingDb.Close();
+            //downloadingDb.Close();
 
             // 遍历
             List<DownloadingItem> list = new List<DownloadingItem>();
@@ -85,7 +95,7 @@ namespace DownKyi.Services.Download
 
             DownloadingDb downloadingDb = new DownloadingDb();
             downloadingDb.Update(downloadingItem.DownloadBase.Uuid, downloadingItem.Downloading);
-            downloadingDb.Close();
+            //downloadingDb.Close();
         }
 
         #endregion
@@ -108,7 +118,7 @@ namespace DownKyi.Services.Download
             {
                 downloadedDb.Insert(downloadedItem.DownloadBase.Uuid, downloadedItem.Downloaded);
             }
-            downloadedDb.Close();
+            //downloadedDb.Close();
         }
 
         /// <summary>
@@ -123,7 +133,7 @@ namespace DownKyi.Services.Download
 
             DownloadedDb downloadedDb = new DownloadedDb();
             downloadedDb.Delete(downloadedItem.DownloadBase.Uuid);
-            downloadedDb.Close();
+            //downloadedDb.Close();
         }
 
         /// <summary>
@@ -135,7 +145,7 @@ namespace DownKyi.Services.Download
             // 从数据库获取数据
             DownloadedDb downloadedDb = new DownloadedDb();
             Dictionary<string, object> dic = downloadedDb.QueryAll();
-            downloadedDb.Close();
+            //downloadedDb.Close();
 
             // 遍历
             List<DownloadedItem> list = new List<DownloadedItem>();
@@ -168,7 +178,7 @@ namespace DownKyi.Services.Download
 
             DownloadedDb downloadedDb = new DownloadedDb();
             downloadedDb.Update(downloadedItem.DownloadBase.Uuid, downloadedItem.Downloaded);
-            downloadedDb.Close();
+            //downloadedDb.Close();
         }
 
         #endregion
@@ -189,7 +199,7 @@ namespace DownKyi.Services.Download
             {
                 downloadBaseDb.Insert(downloadBase.Uuid, downloadBase);
             }
-            downloadBaseDb.Close();
+            //downloadBaseDb.Close();
         }
 
         /// <summary>
@@ -200,7 +210,7 @@ namespace DownKyi.Services.Download
         {
             DownloadBaseDb downloadBaseDb = new DownloadBaseDb();
             downloadBaseDb.Delete(uuid);
-            downloadBaseDb.Close();
+            //downloadBaseDb.Close();
         }
 
         /// <summary>
@@ -211,7 +221,7 @@ namespace DownKyi.Services.Download
         {
             DownloadBaseDb downloadBaseDb = new DownloadBaseDb();
             object obj = downloadBaseDb.QueryById(uuid);
-            downloadBaseDb.Close();
+            //downloadBaseDb.Close();
 
             return obj is DownloadBase downloadBase ? downloadBase : null;
         }
@@ -226,7 +236,7 @@ namespace DownKyi.Services.Download
 
             DownloadBaseDb downloadBaseDb = new DownloadBaseDb();
             downloadBaseDb.Update(downloadBase.Uuid, downloadBase);
-            downloadBaseDb.Close();
+            //downloadBaseDb.Close();
         }
 
         #endregion
