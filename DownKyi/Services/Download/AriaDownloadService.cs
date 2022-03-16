@@ -979,10 +979,10 @@ namespace DownKyi.Services.Download
                 {
                     //HttpProxy = $"http://{Settings.GetAriaHttpProxy()}:{Settings.GetAriaHttpProxyListenPort()}",
                     Dir = path,
-                    Out = localFileName
-                    //Header = $"cookie: {Login.GetLoginInfoCookiesString()}\nreferer: https://www.bilibili.com",
+                    Out = localFileName,
+                    //Header = $"cookie: {LoginHelper.GetLoginInfoCookiesString()}\nreferer: https://www.bilibili.com",
                     //UseHead = "true",
-                    //UserAgent = Utils.GetUserAgent()
+                    UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.99 Safari/537.36",
                 };
 
                 // 如果设置了代理，则增加HttpProxy
