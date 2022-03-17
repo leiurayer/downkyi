@@ -73,7 +73,7 @@ namespace DownKyi.Core.Storage
                         Md5 = header.Md5
                     };
                     headerDb.Update(newHeader);
-                    headerDb.Close();
+                    //headerDb.Close();
                     return $"{StorageManager.GetHeader()}/{header.Md5}";
                 }
                 else
@@ -89,12 +89,12 @@ namespace DownKyi.Core.Storage
                             Md5 = md5
                         };
                         headerDb.Insert(newHeader);
-                        headerDb.Close();
+                        //headerDb.Close();
                         return $"{StorageManager.GetHeader()}/{md5}";
                     }
                     else
                     {
-                        headerDb.Close();
+                        //headerDb.Close();
                         return null;
                     }
                 }
@@ -112,12 +112,12 @@ namespace DownKyi.Core.Storage
                         Md5 = md5
                     };
                     headerDb.Insert(newHeader);
-                    headerDb.Close();
+                    //headerDb.Close();
                     return $"{StorageManager.GetHeader()}/{md5}";
                 }
                 else
                 {
-                    headerDb.Close();
+                    //headerDb.Close();
                     return null;
                 }
             }
