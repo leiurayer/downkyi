@@ -227,65 +227,73 @@ namespace DownKyi.ViewModels
         /// </summary>
         private async void UpdateUserInfo()
         {
-            LoginPanelVisibility = Visibility.Hidden;
-
-            // 检查本地是否存在login文件，没有则说明未登录
-            if (!File.Exists(StorageManager.GetLogin()))
+            try
             {
-                LoginPanelVisibility = Visibility.Visible;
-                Header = new BitmapImage(new Uri("pack://application:,,,/Resources/default_header.jpg"));
-                UserName = null;
-                return;
-            }
+                LoginPanelVisibility = Visibility.Hidden;
 
-            await Task.Run(new Action(() =>
-            {
-                // 获取用户信息
-                var userInfo = UserInfo.GetUserInfoForNavigation();
-                if (userInfo != null)
-                {
-                    SettingsManager.GetInstance().SetUserInfo(new UserInfoSettings
-                    {
-                        Mid = userInfo.Mid,
-                        Name = userInfo.Name,
-                        IsLogin = userInfo.IsLogin,
-                        IsVip = userInfo.VipStatus == 1
-                    });
-                }
-                else
-                {
-                    SettingsManager.GetInstance().SetUserInfo(new UserInfoSettings
-                    {
-                        Mid = -1,
-                        Name = "",
-                        IsLogin = false,
-                        IsVip = false
-                    });
-                }
-
-                PropertyChangeAsync(new Action(() =>
+                // 检查本地是否存在login文件，没有则说明未登录
+                if (!File.Exists(StorageManager.GetLogin()))
                 {
                     LoginPanelVisibility = Visibility.Visible;
+                    Header = new BitmapImage(new Uri("pack://application:,,,/Resources/default_header.jpg"));
+                    UserName = null;
+                    return;
+                }
 
+                await Task.Run(new Action(() =>
+                {
+                    // 获取用户信息
+                    var userInfo = UserInfo.GetUserInfoForNavigation();
                     if (userInfo != null)
                     {
-                        if (userInfo.Face != null)
+                        SettingsManager.GetInstance().SetUserInfo(new UserInfoSettings
                         {
-                            Header = new StorageHeader().GetHeaderThumbnail(userInfo.Mid, userInfo.Name, userInfo.Face, 36, 36);
+                            Mid = userInfo.Mid,
+                            Name = userInfo.Name,
+                            IsLogin = userInfo.IsLogin,
+                            IsVip = userInfo.VipStatus == 1
+                        });
+                    }
+                    else
+                    {
+                        SettingsManager.GetInstance().SetUserInfo(new UserInfoSettings
+                        {
+                            Mid = -1,
+                            Name = "",
+                            IsLogin = false,
+                            IsVip = false
+                        });
+                    }
+
+                    PropertyChangeAsync(new Action(() =>
+                    {
+                        LoginPanelVisibility = Visibility.Visible;
+
+                        if (userInfo != null)
+                        {
+                            if (userInfo.Face != null)
+                            {
+                                Header = new StorageHeader().GetHeaderThumbnail(userInfo.Mid, userInfo.Name, userInfo.Face, 36, 36);
+                            }
+                            else
+                            {
+                                Header = new BitmapImage(new Uri("pack://application:,,,/Resources/default_header.jpg"));
+                            }
+                            UserName = userInfo.Name;
                         }
                         else
                         {
                             Header = new BitmapImage(new Uri("pack://application:,,,/Resources/default_header.jpg"));
+                            UserName = null;
                         }
-                        UserName = userInfo.Name;
-                    }
-                    else
-                    {
-                        Header = new BitmapImage(new Uri("pack://application:,,,/Resources/default_header.jpg"));
-                        UserName = null;
-                    }
+                    }));
                 }));
-            }));
+            }
+            catch (Exception e)
+            {
+                Core.Utils.Debugging.Console.PrintLine("UpdateUserInfo()发生异常: {0}", e);
+                LogManager.Error(Tag, e);
+            }
         }
 
         #endregion
