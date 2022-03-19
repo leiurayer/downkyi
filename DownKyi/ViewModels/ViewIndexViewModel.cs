@@ -227,19 +227,19 @@ namespace DownKyi.ViewModels
         /// </summary>
         private async void UpdateUserInfo()
         {
-            LoginPanelVisibility = Visibility.Hidden;
-
-            // 检查本地是否存在login文件，没有则说明未登录
-            if (!File.Exists(StorageManager.GetLogin()))
-            {
-                LoginPanelVisibility = Visibility.Visible;
-                Header = new BitmapImage(new Uri("pack://application:,,,/Resources/default_header.jpg"));
-                UserName = null;
-                return;
-            }
-
             try
             {
+                LoginPanelVisibility = Visibility.Hidden;
+
+                // 检查本地是否存在login文件，没有则说明未登录
+                if (!File.Exists(StorageManager.GetLogin()))
+                {
+                    LoginPanelVisibility = Visibility.Visible;
+                    Header = new BitmapImage(new Uri("pack://application:,,,/Resources/default_header.jpg"));
+                    UserName = null;
+                    return;
+                }
+
                 await Task.Run(new Action(() =>
                 {
                     // 获取用户信息
