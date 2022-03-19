@@ -138,7 +138,8 @@ namespace DownKyi.Services.Download
 
             // 路径
             string[] temp = downloading.DownloadBase.FilePath.Split('/');
-            string path = downloading.DownloadBase.FilePath.Replace(temp[temp.Length - 1], "");
+            //string path = downloading.DownloadBase.FilePath.Replace(temp[temp.Length - 1], "");
+            string path = downloading.DownloadBase.FilePath.TrimEnd(temp[temp.Length - 1].ToCharArray());
 
             // 下载文件名
             string fileName = Guid.NewGuid().ToString("N");
@@ -581,7 +582,9 @@ namespace DownKyi.Services.Download
         {
             // 路径
             string[] temp = downloading.DownloadBase.FilePath.Split('/');
-            string path = downloading.DownloadBase.FilePath.Replace(temp[temp.Length - 1], "");
+            //string path = downloading.DownloadBase.FilePath.Replace(temp[temp.Length - 1], "");
+            string path = downloading.DownloadBase.FilePath.TrimEnd(temp[temp.Length - 1].ToCharArray());
+
             // 路径不存在则创建
             if (!Directory.Exists(path))
             {
