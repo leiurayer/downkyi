@@ -1,11 +1,16 @@
-﻿using System;
+﻿using DownKyi.Core.Logging;
+using System;
+using System.Collections.Generic;
 using System.Data.SQLite;
 
 namespace DownKyi.Core.Storage.Database
 {
     public class DbHelper
     {
+        private readonly string connStr;
         private readonly SQLiteConnection conn;
+
+        private static readonly Dictionary<string, SQLiteConnection> database = new Dictionary<string, SQLiteConnection>();
 
         /// <summary>
         /// 创建一个数据库
@@ -13,8 +18,20 @@ namespace DownKyi.Core.Storage.Database
         /// <param name="dbPath"></param>
         public DbHelper(string dbPath)
         {
-            string connStr = $"Data Source={dbPath};Version=3;";
+            connStr = $"Data Source={dbPath};Version=3;";
+
+            if (database.ContainsKey(connStr))
+            {
+                conn = database[connStr];
+
+                if (conn != null)
+                {
+                    return;
+                }
+            }
+
             conn = new SQLiteConnection(connStr);
+            database.Add(connStr, conn);
         }
 
         /// <summary>
@@ -25,8 +42,20 @@ namespace DownKyi.Core.Storage.Database
         public DbHelper(string dbPath, string secretKey)
         {
             string connStr = $"Data Source={dbPath};Version=3;";
+
+            if (database.ContainsKey(connStr))
+            {
+                conn = database[connStr];
+
+                if (conn != null)
+                {
+                    return;
+                }
+            }
+
             conn = new SQLiteConnection(connStr);
             conn.SetPassword(secretKey);
+            database.Add(connStr, conn);
         }
 
         /// <summary>
@@ -57,6 +86,8 @@ namespace DownKyi.Core.Storage.Database
             if (IsOpen())
             {
                 conn.Close();
+
+                database.Remove(connStr);
             }
         }
 
@@ -66,20 +97,28 @@ namespace DownKyi.Core.Storage.Database
         /// <param name="sql"></param>
         public void ExecuteNonQuery(string sql, Action<SQLiteParameterCollection> action = null)
         {
-            lock (conn)
+            try
             {
-                Open();
-                using (var tr = conn.BeginTransaction())
+                lock (conn)
                 {
-                    using (var command = conn.CreateCommand())
+                    Open();
+                    using (var tr = conn.BeginTransaction())
                     {
-                        command.CommandText = sql;
-                        // 添加参数
-                        action?.Invoke(command.Parameters);
-                        command.ExecuteNonQuery();
+                        using (var command = conn.CreateCommand())
+                        {
+                            command.CommandText = sql;
+                            // 添加参数
+                            action?.Invoke(command.Parameters);
+                            command.ExecuteNonQuery();
+                        }
+                        tr.Commit();
                     }
-                    tr.Commit();
                 }
+            }
+            catch (SQLiteException e)
+            {
+                Utils.Debugging.Console.PrintLine("DbHelper ExecuteNonQuery()发生异常: {0}", e);
+                LogManager.Error("DbHelper ExecuteNonQuery()", e);
             }
         }
 
@@ -90,15 +129,23 @@ namespace DownKyi.Core.Storage.Database
         /// <param name="action"></param>
         public void ExecuteQuery(string sql, Action<SQLiteDataReader> action)
         {
-            lock (conn)
+            try
             {
-                Open();
-                using (var command = conn.CreateCommand())
+                lock (conn)
                 {
-                    command.CommandText = sql;
-                    var reader = command.ExecuteReader();
-                    action(reader);
+                    Open();
+                    using (var command = conn.CreateCommand())
+                    {
+                        command.CommandText = sql;
+                        var reader = command.ExecuteReader();
+                        action(reader);
+                    }
                 }
+            }
+            catch (SQLiteException e)
+            {
+                Utils.Debugging.Console.PrintLine("DbHelper ExecuteQuery()发生异常: {0}", e);
+                LogManager.Error("DbHelper ExecuteQuery()", e);
             }
         }
 

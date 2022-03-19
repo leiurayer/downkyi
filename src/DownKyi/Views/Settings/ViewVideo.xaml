@@ -178,34 +178,12 @@
                         Grid.Column="0"
                         FontSize="12"
                         Foreground="{DynamicResource BrushTextDark}"
-                        Text="{DynamicResource FileName}" />
-                    <ListBox
-                        x:Name="nameSelectedFileName"
-                        Grid.Row="0"
-                        Grid.Column="1"
-                        MinHeight="30"
-                        Margin="0,0,0,20"
-                        ItemContainerStyle="{StaticResource TagItem2Style}"
-                        ItemsSource="{Binding SelectedFileName, Mode=TwoWay}"
-                        SelectionMode="Single"
-                        Style="{StaticResource Tag2Style}">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="SelectionChanged">
-                                <i:InvokeCommandAction Command="{Binding SelectedFileNameCommand}" CommandParameter="{Binding ElementName=nameSelectedFileName, Path=SelectedItem}" />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </ListBox>
-
-                    <TextBlock
-                        Grid.Row="1"
-                        Grid.Column="0"
-                        FontSize="12"
-                        Foreground="{DynamicResource BrushTextDark}"
                         Text="{DynamicResource OptionalFields}" />
                     <ListBox
                         Name="nameOptionalFields"
-                        Grid.Row="1"
+                        Grid.Row="0"
                         Grid.Column="1"
+                        Margin="0,0,0,20"
                         ItemContainerStyle="{StaticResource TagItem2Style}"
                         ItemsSource="{Binding OptionalFields, Mode=TwoWay}"
                         SelectedIndex="{Binding SelectedOptionalField}"
@@ -217,6 +195,54 @@
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </ListBox>
+
+                    <TextBlock
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        FontSize="12"
+                        Foreground="{DynamicResource BrushTextDark}"
+                        Text="{DynamicResource FileName}" />
+                    <ListBox
+                        x:Name="nameSelectedFileName"
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        MinHeight="30"
+                        ItemContainerStyle="{StaticResource TagItem2Style}"
+                        ItemsSource="{Binding SelectedFileName, Mode=TwoWay}"
+                        SelectionMode="Single"
+                        Style="{StaticResource Tag2Style}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding SelectedFileNameCommand}" CommandParameter="{Binding ElementName=nameSelectedFileName, Path=SelectedItem}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ListBox>
+
+                    <StackPanel
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Bottom"
+                        Orientation="Horizontal">
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            FontSize="12"
+                            Foreground="{DynamicResource BrushTextDark}"
+                            Text="{DynamicResource FileNameTimeFormat}" />
+                        <ComboBox
+                            Name="nameFileNamePartTimeFormat"
+                            Width="120"
+                            VerticalAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            ItemsSource="{Binding FileNamePartTimeFormatList}"
+                            SelectedItem="{Binding SelectedFileNamePartTimeFormat}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding FileNamePartTimeFormatCommand}" CommandParameter="{Binding ElementName=nameFileNamePartTimeFormat, Path=SelectedItem}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ComboBox>
+                    </StackPanel>
 
                     <Button
                         Grid.Row="2"
@@ -232,6 +258,7 @@
                 </Grid>
             </GroupBox>
 
+            <StackPanel Margin="10" />
         </StackPanel>
     </ScrollViewer>
 </UserControl>

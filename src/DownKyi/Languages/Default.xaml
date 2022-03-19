@@ -219,6 +219,7 @@
     <system:String x:Key="DisplayUpMid">UP主ID</system:String>
     <system:String x:Key="DisplayUpName">UP主昵称</system:String>
     <system:String x:Key="Reset">恢复默认</system:String>
+    <system:String x:Key="FileNameTimeFormat">时间格式：</system:String>
 
     <system:String x:Key="SettingDanmaku">弹幕</system:String>
     <system:String x:Key="FilterType">按类型屏蔽</system:String>

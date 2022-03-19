@@ -302,7 +302,7 @@ namespace DownKyi.Services.Download
                         .SetBvid(page.Bvid)
                         .SetCid(page.Cid)
                         .SetUpMid(page.Owner.Mid)
-                        .SetUpName(page.Owner.Name);
+                        .SetUpName(Format.FormatFileName(page.Owner.Name));
                     string filePath = Path.Combine(directory, fileName.RelativePath());
 
                     // 视频类别

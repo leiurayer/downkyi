@@ -138,24 +138,31 @@ namespace DownKyi.Services.Download
 
             // 路径
             string[] temp = downloading.DownloadBase.FilePath.Split('/');
-            string path = downloading.DownloadBase.FilePath.Replace(temp[temp.Length - 1], "");
+            //string path = downloading.DownloadBase.FilePath.Replace(temp[temp.Length - 1], "");
+            string path = downloading.DownloadBase.FilePath.TrimEnd(temp[temp.Length - 1].ToCharArray());
 
             // 下载文件名
             string fileName = Guid.NewGuid().ToString("N");
-
             string key = $"{downloadVideo.Id}_{downloadVideo.Codecs}";
+
             // 老版本数据库没有这一项，会变成null
             if (downloading.Downloading.DownloadedFiles == null)
+            {
                 downloading.Downloading.DownloadedFiles = new List<string>();
+            }
+
             if (downloading.Downloading.DownloadFiles.ContainsKey(key))
             {
                 // 如果存在，表示下载过，
                 // 则继续使用上次下载的文件名
                 fileName = downloading.Downloading.DownloadFiles[key];
+
                 // 还要检查一下文件有没有被人删掉，删掉的话重新下载
                 // 如果下载视频之后音频文件被人删了。此时gid还是视频的，会下错文件
                 if (downloading.Downloading.DownloadedFiles.Contains(key) && File.Exists(Path.Combine(path, fileName)))
+                {
                     return Path.Combine(path, fileName);
+                }
             }
             else
             {
@@ -575,7 +582,9 @@ namespace DownKyi.Services.Download
         {
             // 路径
             string[] temp = downloading.DownloadBase.FilePath.Split('/');
-            string path = downloading.DownloadBase.FilePath.Replace(temp[temp.Length - 1], "");
+            //string path = downloading.DownloadBase.FilePath.Replace(temp[temp.Length - 1], "");
+            string path = downloading.DownloadBase.FilePath.TrimEnd(temp[temp.Length - 1].ToCharArray());
+
             // 路径不存在则创建
             if (!Directory.Exists(path))
             {
@@ -973,10 +982,10 @@ namespace DownKyi.Services.Download
                 {
                     //HttpProxy = $"http://{Settings.GetAriaHttpProxy()}:{Settings.GetAriaHttpProxyListenPort()}",
                     Dir = path,
-                    Out = localFileName
-                    //Header = $"cookie: {Login.GetLoginInfoCookiesString()}\nreferer: https://www.bilibili.com",
+                    Out = localFileName,
+                    //Header = $"cookie: {LoginHelper.GetLoginInfoCookiesString()}\nreferer: https://www.bilibili.com",
                     //UseHead = "true",
-                    //UserAgent = Utils.GetUserAgent()
+                    UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.99 Safari/537.36",
                 };
 
                 // 如果设置了代理，则增加HttpProxy

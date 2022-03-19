@@ -42,8 +42,8 @@ namespace DownKyi.Core.Aria2cNet.Client.Entity
         //[JsonProperty("use-head")]
         //public string UseHead { get; set; }
 
-        //[JsonProperty("user-agent")]
-        //public string UserAgent { get; set; }
+        [JsonProperty("user-agent")]
+        public string UserAgent { get; set; }
 
         public override string ToString()
         {

@@ -44,6 +44,9 @@ namespace DownKyi.Core.Settings
             FileNamePart.VIDEO_CODEC,
         };
 
+        // 文件命名中的时间格式
+        private readonly string fileNamePartTimeFormat = "yyyy-MM-dd";
+
         /// <summary>
         /// 获取优先下载的视频编码
         /// </summary>
@@ -257,6 +260,33 @@ namespace DownKyi.Core.Settings
         public bool SetFileNameParts(List<FileNamePart> fileNameParts)
         {
             appSettings.Video.FileNameParts = fileNameParts;
+            return SetSettings();
+        }
+
+        /// <summary>
+        /// 获取文件命名中的时间格式
+        /// </summary>
+        /// <returns></returns>
+        public string GetFileNamePartTimeFormat()
+        {
+            appSettings = GetSettings();
+            if (appSettings.Video.FileNamePartTimeFormat == null || appSettings.Video.FileNamePartTimeFormat == string.Empty)
+            {
+                // 第一次获取，先设置默认值
+                SetFileNamePartTimeFormat(fileNamePartTimeFormat);
+                return fileNamePartTimeFormat;
+            }
+            return appSettings.Video.FileNamePartTimeFormat;
+        }
+
+        /// <summary>
+        /// 设置文件命名中的时间格式
+        /// </summary>
+        /// <param name="fileNamePartTimeFormat"></param>
+        /// <returns></returns>
+        public bool SetFileNamePartTimeFormat(string fileNamePartTimeFormat)
+        {
+            appSettings.Video.FileNamePartTimeFormat = fileNamePartTimeFormat;
             return SetSettings();
         }
 

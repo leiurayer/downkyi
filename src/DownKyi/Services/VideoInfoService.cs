@@ -2,6 +2,7 @@
 using DownKyi.Core.BiliApi.Video;
 using DownKyi.Core.BiliApi.Video.Models;
 using DownKyi.Core.BiliApi.VideoStream;
+using DownKyi.Core.Settings;
 using DownKyi.Core.Storage;
 using DownKyi.Core.Utils;
 using DownKyi.ViewModels.PageViewModels;
@@ -96,10 +97,12 @@ namespace DownKyi.Services
                     };
                 }
 
+                // 文件命名中的时间格式
+                string timeFormat = SettingsManager.GetInstance().GetFileNamePartTimeFormat();
                 // 视频发布时间
                 DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1)); // 当地时区
                 DateTime dateTime = startTime.AddSeconds(videoView.Pubdate);
-                videoPage.PublishTime = dateTime.ToString("yyyy-MM-dd");
+                videoPage.PublishTime = dateTime.ToString(timeFormat);
 
                 videoPages.Add(videoPage);
             }
@@ -151,10 +154,12 @@ namespace DownKyi.Services
                         };
                     }
 
+                    // 文件命名中的时间格式
+                    string timeFormat = SettingsManager.GetInstance().GetFileNamePartTimeFormat();
                     // 视频发布时间
                     DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1)); // 当地时区
                     DateTime dateTime = startTime.AddSeconds(videoView.Pubdate);
-                    page.PublishTime = dateTime.ToString("yyyy-MM-dd");
+                    page.PublishTime = dateTime.ToString(timeFormat);
                     // 这里的发布时间有问题，
                     // 如果是合集，也会执行这里，
                     // 但是发布时间是入口视频的，不是所有视频的
