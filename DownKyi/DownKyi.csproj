@@ -100,6 +100,7 @@
     <Compile Include="Services\Download\AddToDownloadService.cs" />
     <Compile Include="Services\Download\DownloadStorageService.cs" />
     <Compile Include="Services\SearchService.cs" />
+    <Compile Include="Utils\WindowAdaptation.cs" />
     <Compile Include="ViewModels\PageViewModels\BangumiFollowMedia.cs" />
     <Compile Include="ViewModels\PageViewModels\Favorites.cs" />
     <Compile Include="ViewModels\PageViewModels\FavoritesMedia.cs" />
