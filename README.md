@@ -9,15 +9,16 @@
 
 [全部更新日志](CHANGELOG.md)
 
-* `2022/03/13` v1.5.0-alpha4
-    1. [优化] 配置文件目录改为当前程序目录。
-    2. [修复] 部分UI显示。
-    3. [修复] 因数据库中的重复内容导致的闪退问题。
-    4. [修复] 其他已知问题。
+* `2022/03/19` v1.5.0-alpha5
+    1. [优化] 文件命名格式中，时间格式可设置。
+    2. [修复] 数据库异常锁定的问题。
+    3. [修复] 视频标题和分P标题相同时找不到下载文件的问题。
+    4. [修复] 150%缩放下的窗口不超出屏幕。
+    5. [修复] 其他已知问题。
 
 ## 下载
 
-- [哔哩下载姬最新版](https://github.com/FlySelfLog/downkyi/releases/download/v1.5.0-alpha4/DownKyi-1.5.0-alpha4.zip)
+- [哔哩下载姬最新版](https://github.com/FlySelfLog/downkyi/releases/download/v1.5.0-alpha5/DownKyi-1.5.0-alpha5.zip)
 
 - [下载页面](https://github.com/FlySelfLog/downkyi/releases)
 
