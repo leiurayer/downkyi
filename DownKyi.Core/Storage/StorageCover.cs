@@ -90,7 +90,7 @@ namespace DownKyi.Core.Storage
                     };
                     coverDb.Update(newCover);
 
-                    coverDb.Close();
+                    //coverDb.Close();
                     return $"{StorageManager.GetCover()}/{cover.Md5}";
                 }
                 else
@@ -108,12 +108,12 @@ namespace DownKyi.Core.Storage
                         };
                         coverDb.Update(newCover);
 
-                        coverDb.Close();
+                        //coverDb.Close();
                         return $"{StorageManager.GetCover()}/{md5}";
                     }
                     else
                     {
-                        coverDb.Close();
+                        //coverDb.Close();
                         return null;
                     }
                 }
@@ -133,12 +133,12 @@ namespace DownKyi.Core.Storage
                     };
                     coverDb.Insert(newCover);
 
-                    coverDb.Close();
+                    //coverDb.Close();
                     return $"{StorageManager.GetCover()}/{md5}";
                 }
                 else
                 {
-                    coverDb.Close();
+                    //coverDb.Close();
                     return null;
                 }
             }
