@@ -98,26 +98,34 @@ namespace DownKyi.ViewModels
         /// </summary>
         private void Login()
         {
-            var loginUrl = LoginQR.GetLoginUrl();
-            if (loginUrl == null) { return; }
-
-            if (loginUrl.Status != true)
+            try
             {
-                ExecuteBackSpace();
-                return;
-            }
+                var loginUrl = LoginQR.GetLoginUrl();
+                if (loginUrl == null) { return; }
 
-            if (loginUrl.Data == null || loginUrl.Data.Url == null)
+                if (loginUrl.Status != true)
+                {
+                    ExecuteBackSpace();
+                    return;
+                }
+
+                if (loginUrl.Data == null || loginUrl.Data.Url == null)
+                {
+                    eventAggregator.GetEvent<MessageEvent>().Publish(DictionaryResource.GetString("GetLoginUrlFailed"));
+                    return;
+                }
+
+                PropertyChangeAsync(new Action(() => { LoginQRCode = LoginQR.GetLoginQRCode(loginUrl.Data.Url); }));
+                Core.Utils.Debugging.Console.PrintLine(loginUrl.Data.Url + "\n");
+                LogManager.Debug(Tag, loginUrl.Data.Url);
+
+                GetLoginStatus(loginUrl.Data.OauthKey);
+            }
+            catch (Exception e)
             {
-                eventAggregator.GetEvent<MessageEvent>().Publish(DictionaryResource.GetString("GetLoginUrlFailed"));
-                return;
+                Core.Utils.Debugging.Console.PrintLine("Login()发生异常: {0}", e);
+                LogManager.Error(Tag, e);
             }
-
-            PropertyChangeAsync(new Action(() => { LoginQRCode = LoginQR.GetLoginQRCode(loginUrl.Data.Url); }));
-            Core.Utils.Debugging.Console.PrintLine(loginUrl.Data.Url + "\n");
-            LogManager.Debug(Tag, loginUrl.Data.Url);
-
-            GetLoginStatus(loginUrl.Data.OauthKey);
         }
 
         /// <summary>
