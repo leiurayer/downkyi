@@ -41,7 +41,7 @@ namespace DownKyi.Core.Storage.Database
         /// <param name="secretKey"></param>
         public DbHelper(string dbPath, string secretKey)
         {
-            string connStr = $"Data Source={dbPath};Version=3;";
+            connStr = $"Data Source={dbPath};Version=3;";
 
             if (database.ContainsKey(connStr))
             {
