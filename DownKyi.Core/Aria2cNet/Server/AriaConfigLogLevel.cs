@@ -5,6 +5,7 @@
     /// </summary>
     public enum AriaConfigLogLevel
     {
+        NOT_SET = 0,
         DEBUG = 1,
         INFO,
         NOTICE,

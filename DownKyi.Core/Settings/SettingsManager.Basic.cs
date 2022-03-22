@@ -24,7 +24,7 @@
         public AfterDownloadOperation GetAfterDownloadOperation()
         {
             appSettings = GetSettings();
-            if (appSettings.Basic.AfterDownload == 0)
+            if (appSettings.Basic.AfterDownload == AfterDownloadOperation.NOT_SET)
             {
                 // 第一次获取，先设置默认值
                 SetAfterDownloadOperation(afterDownload);
@@ -51,7 +51,7 @@
         public AllowStatus IsListenClipboard()
         {
             appSettings = GetSettings();
-            if (appSettings.Basic.IsListenClipboard == 0)
+            if (appSettings.Basic.IsListenClipboard == AllowStatus.NONE)
             {
                 // 第一次获取，先设置默认值
                 IsListenClipboard(isListenClipboard);
@@ -78,7 +78,7 @@
         public AllowStatus IsAutoParseVideo()
         {
             appSettings = GetSettings();
-            if (appSettings.Basic.IsAutoParseVideo == 0)
+            if (appSettings.Basic.IsAutoParseVideo == AllowStatus.NONE)
             {
                 // 第一次获取，先设置默认值
                 IsAutoParseVideo(isAutoParseVideo);
@@ -105,7 +105,7 @@
         public ParseScope GetParseScope()
         {
             appSettings = GetSettings();
-            if (appSettings.Basic.ParseScope == 0)
+            if (appSettings.Basic.ParseScope == ParseScope.NOT_SET)
             {
                 // 第一次获取，先设置默认值
                 SetParseScope(parseScope);
@@ -132,7 +132,7 @@
         public DownloadFinishedSort GetDownloadFinishedSort()
         {
             appSettings = GetSettings();
-            if (appSettings.Basic.DownloadFinishedSort == 0)
+            if (appSettings.Basic.DownloadFinishedSort == DownloadFinishedSort.NOT_SET)
             {
                 // 第一次获取，先设置默认值
                 SetDownloadFinishedSort(finishedSort);

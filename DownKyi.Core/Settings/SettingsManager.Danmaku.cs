@@ -40,7 +40,7 @@
         public AllowStatus GetDanmakuTopFilter()
         {
             appSettings = GetSettings();
-            if (appSettings.Danmaku.DanmakuTopFilter == 0)
+            if (appSettings.Danmaku.DanmakuTopFilter == AllowStatus.NONE)
             {
                 // 第一次获取，先设置默认值
                 SetDanmakuTopFilter(danmakuTopFilter);
@@ -67,7 +67,7 @@
         public AllowStatus GetDanmakuBottomFilter()
         {
             appSettings = GetSettings();
-            if (appSettings.Danmaku.DanmakuBottomFilter == 0)
+            if (appSettings.Danmaku.DanmakuBottomFilter == AllowStatus.NONE)
             {
                 // 第一次获取，先设置默认值
                 SetDanmakuBottomFilter(danmakuBottomFilter);
@@ -94,7 +94,7 @@
         public AllowStatus GetDanmakuScrollFilter()
         {
             appSettings = GetSettings();
-            if (appSettings.Danmaku.DanmakuScrollFilter == 0)
+            if (appSettings.Danmaku.DanmakuScrollFilter == AllowStatus.NONE)
             {
                 // 第一次获取，先设置默认值
                 SetDanmakuScrollFilter(danmakuScrollFilter);
@@ -121,7 +121,7 @@
         public AllowStatus IsCustomDanmakuResolution()
         {
             appSettings = GetSettings();
-            if (appSettings.Danmaku.IsCustomDanmakuResolution == 0)
+            if (appSettings.Danmaku.IsCustomDanmakuResolution == AllowStatus.NONE)
             {
                 // 第一次获取，先设置默认值
                 IsCustomDanmakuResolution(isCustomDanmakuResolution);
@@ -148,7 +148,7 @@
         public int GetDanmakuScreenWidth()
         {
             appSettings = GetSettings();
-            if (appSettings.Danmaku.DanmakuScreenWidth == 0)
+            if (appSettings.Danmaku.DanmakuScreenWidth == -1)
             {
                 // 第一次获取，先设置默认值
                 SetDanmakuScreenWidth(danmakuScreenWidth);
@@ -175,7 +175,7 @@
         public int GetDanmakuScreenHeight()
         {
             appSettings = GetSettings();
-            if (appSettings.Danmaku.DanmakuScreenHeight == 0)
+            if (appSettings.Danmaku.DanmakuScreenHeight == -1)
             {
                 // 第一次获取，先设置默认值
                 SetDanmakuScreenHeight(danmakuScreenHeight);
@@ -229,7 +229,7 @@
         public int GetDanmakuFontSize()
         {
             appSettings = GetSettings();
-            if (appSettings.Danmaku.DanmakuFontSize == 0)
+            if (appSettings.Danmaku.DanmakuFontSize == -1)
             {
                 // 第一次获取，先设置默认值
                 SetDanmakuFontSize(danmakuFontSize);
@@ -256,7 +256,7 @@
         public int GetDanmakuLineCount()
         {
             appSettings = GetSettings();
-            if (appSettings.Danmaku.DanmakuLineCount == 0)
+            if (appSettings.Danmaku.DanmakuLineCount == -1)
             {
                 // 第一次获取，先设置默认值
                 SetDanmakuLineCount(danmakuLineCount);
@@ -283,7 +283,7 @@
         public DanmakuLayoutAlgorithm GetDanmakuLayoutAlgorithm()
         {
             appSettings = GetSettings();
-            if (appSettings.Danmaku.DanmakuLayoutAlgorithm == 0)
+            if (appSettings.Danmaku.DanmakuLayoutAlgorithm == DanmakuLayoutAlgorithm.NONE)
             {
                 // 第一次获取，先设置默认值
                 SetDanmakuLayoutAlgorithm(danmakuLayoutAlgorithm);
