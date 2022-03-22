@@ -26,7 +26,7 @@ namespace DownKyi.Core.Settings
         private readonly int ariaMaxDownloadLimit = 0;
 
         // Aria文件预分配
-        private readonly AriaConfigFileAllocation ariaFileAllocation = AriaConfigFileAllocation.PREALLOC;
+        private readonly AriaConfigFileAllocation ariaFileAllocation = AriaConfigFileAllocation.NONE;
 
         // Aria HttpProxy代理
         private readonly AllowStatus isAriaHttpProxy = AllowStatus.NO;
