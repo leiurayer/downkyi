@@ -137,6 +137,7 @@ namespace DownKyi.Services.Download
             if (downloadVideo.BackupUrl != null) { urls.AddRange(downloadVideo.BackupUrl); }
 
             // 路径
+            downloading.DownloadBase.FilePath = downloading.DownloadBase.FilePath.Replace("\\", "/");
             string[] temp = downloading.DownloadBase.FilePath.Split('/');
             //string path = downloading.DownloadBase.FilePath.Replace(temp[temp.Length - 1], "");
             string path = downloading.DownloadBase.FilePath.TrimEnd(temp[temp.Length - 1].ToCharArray());
@@ -581,6 +582,7 @@ namespace DownKyi.Services.Download
         private async Task SingleDownload(DownloadingItem downloading)
         {
             // 路径
+            downloading.DownloadBase.FilePath = downloading.DownloadBase.FilePath.Replace("\\", "/");
             string[] temp = downloading.DownloadBase.FilePath.Split('/');
             //string path = downloading.DownloadBase.FilePath.Replace(temp[temp.Length - 1], "");
             string path = downloading.DownloadBase.FilePath.TrimEnd(temp[temp.Length - 1].ToCharArray());
