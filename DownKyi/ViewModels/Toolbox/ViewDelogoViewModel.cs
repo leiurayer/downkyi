@@ -68,10 +68,10 @@ namespace DownKyi.ViewModels.Toolbox
 
             VideoPath = string.Empty;
 
-            LogoWidth = -1;
-            LogoHeight = -1;
-            LogoX = -1;
-            LogoY = -1;
+            LogoWidth = 0;
+            LogoHeight = 0;
+            LogoX = 0;
+            LogoY = 0;
 
             #endregion
         }
