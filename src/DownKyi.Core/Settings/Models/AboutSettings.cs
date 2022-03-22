@@ -5,7 +5,7 @@
     /// </summary>
     public class AboutSettings
     {
-        public AllowStatus IsReceiveBetaVersion { get; set; }
-        public AllowStatus AutoUpdateWhenLaunch { get; set; }
+        public AllowStatus IsReceiveBetaVersion { get; set; } = AllowStatus.NONE;
+        public AllowStatus AutoUpdateWhenLaunch { get; set; } = AllowStatus.NONE;
     }
 }

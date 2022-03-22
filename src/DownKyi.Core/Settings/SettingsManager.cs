@@ -71,7 +71,8 @@ namespace DownKyi.Core.Settings
             }
             catch (Exception e)
             {
-                Logging.LogManager.Error(e);
+                Utils.Debugging.Console.PrintLine("GetSettings()发生异常: {0}", e);
+                Logging.LogManager.Error("SettingsManager", e);
                 return new AppSettings();
             }
         }
@@ -97,7 +98,8 @@ namespace DownKyi.Core.Settings
             }
             catch (Exception e)
             {
-                Logging.LogManager.Error(e);
+                Utils.Debugging.Console.PrintLine("SetSettings()发生异常: {0}", e);
+                Logging.LogManager.Error("SettingsManager", e);
                 return false;
             }
         }

@@ -15,7 +15,7 @@
         public AllowStatus IsReceiveBetaVersion()
         {
             appSettings = GetSettings();
-            if (appSettings.About.IsReceiveBetaVersion == 0)
+            if (appSettings.About.IsReceiveBetaVersion == AllowStatus.NONE)
             {
                 // 第一次获取，先设置默认值
                 IsReceiveBetaVersion(isReceiveBetaVersion);
@@ -42,7 +42,7 @@
         public AllowStatus GetAutoUpdateWhenLaunch()
         {
             appSettings = GetSettings();
-            if (appSettings.About.AutoUpdateWhenLaunch == 0)
+            if (appSettings.About.AutoUpdateWhenLaunch == AllowStatus.NONE)
             {
                 // 第一次获取，先设置默认值
                 SetAutoUpdateWhenLaunch(autoUpdateWhenLaunch);
