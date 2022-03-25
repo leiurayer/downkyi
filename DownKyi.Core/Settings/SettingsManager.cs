@@ -57,9 +57,11 @@ namespace DownKyi.Core.Settings
         {
             try
             {
-                StreamReader streamReader = File.OpenText(settingsName);
+                FileStream fileStream = new FileStream(settingsName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+                StreamReader streamReader = new StreamReader(fileStream, System.Text.Encoding.UTF8);
                 string jsonWordTemplate = streamReader.ReadToEnd();
                 streamReader.Close();
+                fileStream.Close();
 
 #if DEBUG
 #else

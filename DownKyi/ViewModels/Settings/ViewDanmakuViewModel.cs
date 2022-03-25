@@ -144,7 +144,7 @@ namespace DownKyi.ViewModels.Settings
 
             // 弹幕字体
             string danmakuFont = SettingsManager.GetInstance().GetDanmakuFontName();
-            if (Fonts.Contains(danmakuFont))
+            if (danmakuFont != null && Fonts.Contains(danmakuFont))
             {
                 // 只有系统中存在当前设置的字体，才能显示
                 SelectedFont = danmakuFont;
