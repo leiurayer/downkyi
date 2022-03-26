@@ -9,6 +9,7 @@
         public AllowStatus IsListenClipboard { get; set; } = AllowStatus.NONE;
         public AllowStatus IsAutoParseVideo { get; set; } = AllowStatus.NONE;
         public ParseScope ParseScope { get; set; } = ParseScope.NOT_SET;
+        public AllowStatus IsAutoDownloadAll { get; set; } = AllowStatus.NONE;
         public DownloadFinishedSort DownloadFinishedSort { get; set; } = DownloadFinishedSort.NOT_SET;
     }
 }

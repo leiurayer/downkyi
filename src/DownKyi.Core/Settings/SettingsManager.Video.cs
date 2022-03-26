@@ -1,4 +1,5 @@
 ﻿using DownKyi.Core.FileName;
+using DownKyi.Core.Settings.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -27,6 +28,9 @@ namespace DownKyi.Core.Settings
 
         // 是否使用默认下载目录，如果是，则每次点击下载选中项时不再询问下载目录
         private readonly AllowStatus isUseSaveVideoRootPath = AllowStatus.NO;
+
+        // 下载内容
+        private readonly VideoContentSettings videoContent = new VideoContentSettings();
 
         // 文件命名格式
         private readonly List<FileNamePart> fileNameParts = new List<FileNamePart>
@@ -233,6 +237,33 @@ namespace DownKyi.Core.Settings
         public bool IsUseSaveVideoRootPath(AllowStatus isUseSaveVideoRootPath)
         {
             appSettings.Video.IsUseSaveVideoRootPath = isUseSaveVideoRootPath;
+            return SetSettings();
+        }
+
+        /// <summary>
+        /// 获取下载内容
+        /// </summary>
+        /// <returns></returns>
+        public VideoContentSettings GetVideoContent()
+        {
+            appSettings = GetSettings();
+            if (appSettings.Video.VideoContent == null)
+            {
+                // 第一次获取，先设置默认值
+                SetVideoContent(videoContent);
+                return videoContent;
+            }
+            return appSettings.Video.VideoContent;
+        }
+
+        /// <summary>
+        /// 设置下载内容
+        /// </summary>
+        /// <param name="videoContent"></param>
+        /// <returns></returns>
+        public bool SetVideoContent(VideoContentSettings videoContent)
+        {
+            appSettings.Video.VideoContent = videoContent;
             return SetSettings();
         }
 

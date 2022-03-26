@@ -19,8 +19,14 @@
             <GroupBox
                 Margin="0,20,0,0"
                 Padding="20,5"
-                HorizontalAlignment="Left"
-                Header="{DynamicResource FilterType}">
+                HorizontalAlignment="Left">
+                <GroupBox.Header>
+                    <TextBlock
+                        FontSize="12"
+                        Foreground="{DynamicResource BrushTextDark}"
+                        Text="{DynamicResource FilterType}" />
+                </GroupBox.Header>
+
                 <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
                     <CheckBox
                         Margin="0,0,0,0"
@@ -30,14 +36,14 @@
                         IsChecked="{Binding TopFilter, Mode=TwoWay}"
                         Style="{StaticResource CheckBoxStyle}" />
                     <CheckBox
-                        Margin="20,0,0,0"
+                        Margin="40,0,0,0"
                         Command="{Binding BottomFilterCommand}"
                         Content="{DynamicResource BottomFilter}"
                         Foreground="{DynamicResource BrushTextDark}"
                         IsChecked="{Binding BottomFilter, Mode=TwoWay}"
                         Style="{StaticResource CheckBoxStyle}" />
                     <CheckBox
-                        Margin="20,0,0,0"
+                        Margin="40,0,0,0"
                         Command="{Binding ScrollFilterCommand}"
                         Content="{DynamicResource ScrollFilter}"
                         Foreground="{DynamicResource BrushTextDark}"

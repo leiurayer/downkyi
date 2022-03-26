@@ -159,6 +159,63 @@
                     <TextBlock
                         FontSize="12"
                         Foreground="{DynamicResource BrushTextDark}"
+                        Text="{DynamicResource DownloadContent2}" />
+                </GroupBox.Header>
+
+                <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
+                    <CheckBox
+                        Margin="0,0,0,0"
+                        Command="{Binding DownloadAllCommand}"
+                        Content="{DynamicResource DownloadAll}"
+                        Foreground="{DynamicResource BrushTextDark}"
+                        IsChecked="{Binding DownloadAll, Mode=TwoWay}"
+                        Style="{StaticResource CheckBoxStyle}" />
+                    <CheckBox
+                        Margin="40,0,0,0"
+                        Command="{Binding DownloadAudioCommand}"
+                        Content="{DynamicResource DownloadAudio}"
+                        Foreground="{DynamicResource BrushTextDark}"
+                        IsChecked="{Binding DownloadAudio, Mode=TwoWay}"
+                        Style="{StaticResource CheckBoxStyle}" />
+                    <CheckBox
+                        Margin="40,0,0,0"
+                        Command="{Binding DownloadVideoCommand}"
+                        Content="{DynamicResource DownloadVideo}"
+                        Foreground="{DynamicResource BrushTextDark}"
+                        IsChecked="{Binding DownloadVideo, Mode=TwoWay}"
+                        Style="{StaticResource CheckBoxStyle}" />
+                    <CheckBox
+                        Margin="40,0,0,0"
+                        Command="{Binding DownloadDanmakuCommand}"
+                        Content="{DynamicResource DownloadDanmaku}"
+                        Foreground="{DynamicResource BrushTextDark}"
+                        IsChecked="{Binding DownloadDanmaku, Mode=TwoWay}"
+                        Style="{StaticResource CheckBoxStyle}" />
+                    <CheckBox
+                        Margin="40,0,0,0"
+                        Command="{Binding DownloadSubtitleCommand}"
+                        Content="{DynamicResource DownloadSubtitle}"
+                        Foreground="{DynamicResource BrushTextDark}"
+                        IsChecked="{Binding DownloadSubtitle, Mode=TwoWay}"
+                        Style="{StaticResource CheckBoxStyle}" />
+                    <CheckBox
+                        Margin="40,0,0,0"
+                        Command="{Binding DownloadCoverCommand}"
+                        Content="{DynamicResource DownloadCover}"
+                        Foreground="{DynamicResource BrushTextDark}"
+                        IsChecked="{Binding DownloadCover, Mode=TwoWay}"
+                        Style="{StaticResource CheckBoxStyle}" />
+                </StackPanel>
+            </GroupBox>
+
+            <GroupBox
+                Margin="0,20,0,0"
+                Padding="10,10"
+                HorizontalAlignment="Stretch">
+                <GroupBox.Header>
+                    <TextBlock
+                        FontSize="12"
+                        Foreground="{DynamicResource BrushTextDark}"
                         Text="{DynamicResource FileNameParts}" />
                 </GroupBox.Header>
 

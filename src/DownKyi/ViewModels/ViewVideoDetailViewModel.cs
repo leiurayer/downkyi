@@ -480,6 +480,13 @@ namespace DownKyi.ViewModels
             }
 
             LoadingVisibility = Visibility.Collapsed;
+
+            // 解析后是否自动下载解析视频
+            AllowStatus isAutoDownloadAll = SettingsManager.GetInstance().IsAutoDownloadAll();
+            if (parseScope != ParseScope.NONE && isAutoDownloadAll == AllowStatus.YES)
+            {
+                AddToDownload(true);
+            }
         }
 
         /// <summary>
@@ -498,56 +505,57 @@ namespace DownKyi.ViewModels
         /// <summary>
         /// 添加到下载列表事件
         /// </summary>
-        private async void ExecuteAddToDownloadCommand()
+        private void ExecuteAddToDownloadCommand()
         {
-            AddToDownloadService addToDownloadService = null;
-            // 视频
-            if (ParseEntrance.IsAvUrl(input) || ParseEntrance.IsBvUrl(input))
-            {
-                addToDownloadService = new AddToDownloadService(PlayStreamType.VIDEO);
-            }
-            // 番剧（电影、电视剧）
-            else if (ParseEntrance.IsBangumiSeasonUrl(input) || ParseEntrance.IsBangumiEpisodeUrl(input) || ParseEntrance.IsBangumiMediaUrl(input))
-            {
-                addToDownloadService = new AddToDownloadService(PlayStreamType.BANGUMI);
-            }
-            // 课程
-            else if (ParseEntrance.IsCheeseSeasonUrl(input) || ParseEntrance.IsCheeseEpisodeUrl(input))
-            {
-                addToDownloadService = new AddToDownloadService(PlayStreamType.CHEESE);
-            }
-            else
-            {
-                return;
-            }
+            AddToDownload(false);
+            //AddToDownloadService addToDownloadService = null;
+            //// 视频
+            //if (ParseEntrance.IsAvUrl(input) || ParseEntrance.IsBvUrl(input))
+            //{
+            //    addToDownloadService = new AddToDownloadService(PlayStreamType.VIDEO);
+            //}
+            //// 番剧（电影、电视剧）
+            //else if (ParseEntrance.IsBangumiSeasonUrl(input) || ParseEntrance.IsBangumiEpisodeUrl(input) || ParseEntrance.IsBangumiMediaUrl(input))
+            //{
+            //    addToDownloadService = new AddToDownloadService(PlayStreamType.BANGUMI);
+            //}
+            //// 课程
+            //else if (ParseEntrance.IsCheeseSeasonUrl(input) || ParseEntrance.IsCheeseEpisodeUrl(input))
+            //{
+            //    addToDownloadService = new AddToDownloadService(PlayStreamType.CHEESE);
+            //}
+            //else
+            //{
+            //    return;
+            //}
 
-            // 选择文件夹
-            string directory = addToDownloadService.SetDirectory(dialogService);
+            //// 选择文件夹
+            //string directory = addToDownloadService.SetDirectory(dialogService);
 
-            // 视频计数
-            int i = 0;
-            await Task.Run(() =>
-            {
-                // 传递video对象
-                addToDownloadService.GetVideo(VideoInfoView, VideoSections.ToList());
-                // 下载
-                i = addToDownloadService.AddToDownload(eventAggregator, directory);
-            });
+            //// 视频计数
+            //int i = 0;
+            //await Task.Run(() =>
+            //{
+            //    // 传递video对象
+            //    addToDownloadService.GetVideo(VideoInfoView, VideoSections.ToList());
+            //    // 下载
+            //    i = addToDownloadService.AddToDownload(eventAggregator, directory);
+            //});
 
-            if (directory == null)
-            {
-                return;
-            }
+            //if (directory == null)
+            //{
+            //    return;
+            //}
 
-            // 通知用户添加到下载列表的结果
-            if (i <= 0)
-            {
-                eventAggregator.GetEvent<MessageEvent>().Publish(DictionaryResource.GetString("TipAddDownloadingZero"));
-            }
-            else
-            {
-                eventAggregator.GetEvent<MessageEvent>().Publish($"{DictionaryResource.GetString("TipAddDownloadingFinished1")}{i}{DictionaryResource.GetString("TipAddDownloadingFinished2")}");
-            }
+            //// 通知用户添加到下载列表的结果
+            //if (i <= 0)
+            //{
+            //    eventAggregator.GetEvent<MessageEvent>().Publish(DictionaryResource.GetString("TipAddDownloadingZero"));
+            //}
+            //else
+            //{
+            //    eventAggregator.GetEvent<MessageEvent>().Publish($"{DictionaryResource.GetString("TipAddDownloadingFinished1")}{i}{DictionaryResource.GetString("TipAddDownloadingFinished2")}");
+            //}
         }
 
         /// <summary>
@@ -627,7 +635,7 @@ namespace DownKyi.ViewModels
                 NoDataVisibility = Visibility.Collapsed;
             }
 
-            List<VideoSection> videoSections = videoInfoService.GetVideoSections();
+            List<VideoSection> videoSections = videoInfoService.GetVideoSections(false);
             if (videoSections == null)
             {
                 LogManager.Debug(Tag, "videoSections is not exist.");
@@ -661,6 +669,62 @@ namespace DownKyi.ViewModels
         private void ParseVideo(IInfoService videoInfoService, VideoPage videoPage)
         {
             videoInfoService.GetVideoStream(videoPage);
+        }
+
+
+        /// <summary>
+        /// 添加到下载列表事件
+        /// </summary>
+        private async void AddToDownload(bool isAll)
+        {
+            AddToDownloadService addToDownloadService = null;
+            // 视频
+            if (ParseEntrance.IsAvUrl(input) || ParseEntrance.IsBvUrl(input))
+            {
+                addToDownloadService = new AddToDownloadService(PlayStreamType.VIDEO);
+            }
+            // 番剧（电影、电视剧）
+            else if (ParseEntrance.IsBangumiSeasonUrl(input) || ParseEntrance.IsBangumiEpisodeUrl(input) || ParseEntrance.IsBangumiMediaUrl(input))
+            {
+                addToDownloadService = new AddToDownloadService(PlayStreamType.BANGUMI);
+            }
+            // 课程
+            else if (ParseEntrance.IsCheeseSeasonUrl(input) || ParseEntrance.IsCheeseEpisodeUrl(input))
+            {
+                addToDownloadService = new AddToDownloadService(PlayStreamType.CHEESE);
+            }
+            else
+            {
+                return;
+            }
+
+            // 选择文件夹
+            string directory = addToDownloadService.SetDirectory(dialogService);
+
+            // 视频计数
+            int i = 0;
+            await Task.Run(() =>
+            {
+                // 传递video对象
+                addToDownloadService.GetVideo(VideoInfoView, VideoSections.ToList());
+                // 下载
+                i = addToDownloadService.AddToDownload(eventAggregator, directory, isAll);
+            });
+
+            if (directory == null)
+            {
+                return;
+            }
+
+            // 通知用户添加到下载列表的结果
+            if (i <= 0)
+            {
+                eventAggregator.GetEvent<MessageEvent>().Publish(DictionaryResource.GetString("TipAddDownloadingZero"));
+            }
+            else
+            {
+                eventAggregator.GetEvent<MessageEvent>().Publish($"{DictionaryResource.GetString("TipAddDownloadingFinished1")}{i}{DictionaryResource.GetString("TipAddDownloadingFinished2")}");
+            }
         }
 
         #endregion

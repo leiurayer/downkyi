@@ -180,6 +180,7 @@
     <system:String x:Key="ListenClipboard">监听剪贴板</system:String>
     <system:String x:Key="VideoAutoParse">视频自动解析</system:String>
     <system:String x:Key="VideoParseScope">视频解析范围：</system:String>
+    <system:String x:Key="AutoDownloadAll">解析后自动下载已解析视频</system:String>
 
     <system:String x:Key="Network">网络</system:String>
     <system:String x:Key="AriaServerPort">Aria服务器端口：</system:String>
@@ -298,6 +299,7 @@
     <system:String x:Key="Browse">浏览</system:String>
     <system:String x:Key="HardDiskFreeSpace">盘剩余空间：</system:String>
     <system:String x:Key="DownloadContent">下载内容：</system:String>
+    <system:String x:Key="DownloadContent2">下载内容</system:String>
     <system:String x:Key="DownloadAll">所有</system:String>
     <system:String x:Key="DownloadAudio">音频</system:String>
     <system:String x:Key="DownloadVideo">视频</system:String>

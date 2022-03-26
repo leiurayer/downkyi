@@ -114,14 +114,29 @@ namespace DownKyi.Services
         /// 获取视频章节与剧集
         /// </summary>
         /// <returns></returns>
-        public List<VideoSection> GetVideoSections()
+        public List<VideoSection> GetVideoSections(bool noUgc = false)
         {
             if (videoView == null) { return null; }
+
+            List<VideoSection> videoSections = new List<VideoSection>();
+
+            // 不需要ugc内容
+            if (noUgc)
+            {
+                videoSections.Add(new VideoSection
+                {
+                    Id = 0,
+                    Title = "default",
+                    IsSelected = true,
+                    VideoPages = GetVideoPages()
+                });
+
+                return videoSections;
+            }
+
             if (videoView.UgcSeason == null) { return null; }
             if (videoView.UgcSeason.Sections == null) { return null; }
             if (videoView.UgcSeason.Sections.Count == 0) { return null; }
-
-            List<VideoSection> videoSections = new List<VideoSection>();
 
             foreach (UgcSection section in videoView.UgcSeason.Sections)
             {
