@@ -24,7 +24,7 @@ namespace DownKyi.Core.FFmpeg
             }
             if (video2 == null || !File.Exists(video2))
             {
-                param = $"-y -i \"{video1}\" -acodec copy -f aac \"{destVideo}\"";
+                param = $"-y -i \"{video1}\" -acodec copy \"{destVideo}\"";
             }
             if (!File.Exists(video1) && !File.Exists(video2)) { return false; }
 
