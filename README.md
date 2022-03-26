@@ -1,5 +1,6 @@
 # 哔哩下载姬
-![Alipay](images/app/index.png)
+
+![Alipay](https://croire.gitee.io/app/DownKyi/images/app/index.png)
 
 哔哩下载姬（DownKyi）是一个简单易用的哔哩哔哩视频下载工具，具有简洁的界面，流畅的操作逻辑。哔哩下载姬可以下载几乎所有的B站视频，并输出mp4格式的文件；采用Aria下载器多线程下载，采用FFmpeg对视频进行混流、提取音视频等操作。
 
@@ -11,33 +12,33 @@
 
 * `2022/03/26` v1.5.0-alpha7
     1. [优化] 批量下载时过滤UGC、其他季或花絮内容。
-    3. [优化] 保存下载视频内容到设置。
-    4. [优化] 更新ffmpeg为gpl版本。
-    5. [优化] 默认的aria的文件预分配改为NONE。
-    6. [新增] “解析后自动下载已解析视频”设置。
-    7. [修复] 只下载音频失败的问题。
-    8. [修复] Settings被占用无法读取的问题。
-    9. [修复] 因路径导致无法下载的问题。
-    10. [修复] 无法正确关闭数据库的问题。
+    2. [优化] 保存下载视频内容到设置。
+    3. [优化] 更新ffmpeg为gpl版本。
+    4. [优化] 默认的aria的文件预分配改为NONE。
+    5. [新增] “解析后自动下载已解析视频”设置。
+    6. [修复] 只下载音频失败的问题。
+    7. [修复] Settings被占用无法读取的问题。
+    8. [修复] 因路径导致无法下载的问题。
+    9. [修复] 无法正确关闭数据库的问题。
 
 ## 下载
 
-- [哔哩下载姬最新版](https://github.com/FlySelfLog/downkyi/releases/download/v1.5.0-alpha7/DownKyi-1.5.0-alpha7.zip)
+* [哔哩下载姬最新版](https://github.com/FlySelfLog/downkyi/releases/download/v1.5.0-alpha7/DownKyi-1.5.0-alpha7.zip)
 
-- [下载页面](https://github.com/FlySelfLog/downkyi/releases)
+* [下载页面](https://github.com/FlySelfLog/downkyi/releases)
 
 ## 赞助
 
 如果这个项目对您有很大帮助，并且您希望支持该项目的开发和维护，请随时扫描一下二维码进行捐赠。非常感谢您的捐款，谢谢！
 
-![Alipay](images/Alipay.png)![WeChat](images/WeChat.png)
+![Alipay](https://croire.gitee.io/app/DownKyi/images/Alipay.png)![WeChat](https://croire.gitee.io/app/DownKyi/images/WeChat.png)
 
 ## 开发
 
 ### 相关项目
 
-- [哔哩哔哩-API收集整理](https://github.com/SocialSisterYi/bilibili-API-collect)
-- [Prism](https://github.com/PrismLibrary/Prism)
+* [哔哩哔哩-API收集整理](https://github.com/SocialSisterYi/bilibili-API-collect)
+* [Prism](https://github.com/PrismLibrary/Prism)
 
 ## 免责申明
 
