@@ -180,6 +180,7 @@
     <system:String x:Key="ListenClipboard">监听剪贴板</system:String>
     <system:String x:Key="VideoAutoParse">视频自动解析</system:String>
     <system:String x:Key="VideoParseScope">视频解析范围：</system:String>
+    <system:String x:Key="AutoDownloadAll">解析后自动下载已解析视频</system:String>
 
     <system:String x:Key="Network">网络</system:String>
     <system:String x:Key="AriaServerPort">Aria服务器端口：</system:String>

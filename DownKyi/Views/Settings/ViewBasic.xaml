@@ -63,7 +63,6 @@
                 Background="{DynamicResource BrushBorder}" />
 
             <CheckBox
-                Grid.Column="0"
                 Margin="0,20,0,0"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
@@ -74,7 +73,6 @@
                 Style="{StaticResource CheckBoxStyle}" />
 
             <CheckBox
-                Grid.Column="0"
                 Margin="0,20,0,0"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
@@ -104,6 +102,16 @@
                     </i:Interaction.Triggers>
                 </ComboBox>
             </StackPanel>
+
+            <CheckBox
+                Margin="0,20,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Command="{Binding AutoDownloadAllCommand}"
+                Content="{DynamicResource AutoDownloadAll}"
+                Foreground="{DynamicResource BrushTextDark}"
+                IsChecked="{Binding AutoDownloadAll, Mode=TwoWay}"
+                Style="{StaticResource CheckBoxStyle}" />
 
             <StackPanel Margin="10" />
         </StackPanel>

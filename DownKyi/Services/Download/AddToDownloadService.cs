@@ -196,7 +196,7 @@ namespace DownKyi.Services.Download
             return directory;
         }
 
-        public int AddToDownload(IEventAggregator eventAggregator, string directory)
+        public int AddToDownload(IEventAggregator eventAggregator, string directory, bool isAll = false)
         {
             if (directory == null || directory == string.Empty) { return -1; }
             if (videoSections == null) { return -1; }
@@ -212,7 +212,7 @@ namespace DownKyi.Services.Download
                 foreach (VideoPage page in section.VideoPages)
                 {
                     // 只下载选中项，跳过未选中项
-                    if (!page.IsSelected) { continue; }
+                    if (!isAll && !page.IsSelected) { continue; }
 
                     // 没有解析的也跳过
                     if (page.PlayUrl == null) { continue; }

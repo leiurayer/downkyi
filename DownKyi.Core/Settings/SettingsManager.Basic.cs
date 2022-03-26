@@ -14,6 +14,9 @@
         // 默认的视频解析项
         private readonly ParseScope parseScope = ParseScope.NONE;
 
+        // 解析后自动下载解析视频
+        private readonly AllowStatus isAutoDownloadAll = AllowStatus.NO;
+
         // 下载完成列表排序
         private readonly DownloadFinishedSort finishedSort = DownloadFinishedSort.DOWNLOAD;
 
@@ -122,6 +125,33 @@
         public bool SetParseScope(ParseScope parseScope)
         {
             appSettings.Basic.ParseScope = parseScope;
+            return SetSettings();
+        }
+
+        /// <summary>
+        /// 解析后是否自动下载解析视频
+        /// </summary>
+        /// <returns></returns>
+        public AllowStatus IsAutoDownloadAll()
+        {
+            appSettings = GetSettings();
+            if (appSettings.Basic.IsAutoDownloadAll == AllowStatus.NONE)
+            {
+                // 第一次获取，先设置默认值
+                IsAutoParseVideo(isAutoDownloadAll);
+                return isAutoDownloadAll;
+            }
+            return appSettings.Basic.IsAutoDownloadAll;
+        }
+
+        /// <summary>
+        /// 解析后是否自动下载解析视频
+        /// </summary>
+        /// <param name="isAutoDownloadAll"></param>
+        /// <returns></returns>
+        public bool IsAutoDownloadAll(AllowStatus isAutoDownloadAll)
+        {
+            appSettings.Basic.IsAutoDownloadAll = isAutoDownloadAll;
             return SetSettings();
         }
 
