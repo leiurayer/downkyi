@@ -138,7 +138,7 @@
             if (appSettings.Basic.IsAutoDownloadAll == AllowStatus.NONE)
             {
                 // 第一次获取，先设置默认值
-                IsAutoParseVideo(isAutoDownloadAll);
+                IsAutoDownloadAll(isAutoDownloadAll);
                 return isAutoDownloadAll;
             }
             return appSettings.Basic.IsAutoDownloadAll;
