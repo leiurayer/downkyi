@@ -30,14 +30,14 @@
                         IsChecked="{Binding TopFilter, Mode=TwoWay}"
                         Style="{StaticResource CheckBoxStyle}" />
                     <CheckBox
-                        Margin="20,0,0,0"
+                        Margin="40,0,0,0"
                         Command="{Binding BottomFilterCommand}"
                         Content="{DynamicResource BottomFilter}"
                         Foreground="{DynamicResource BrushTextDark}"
                         IsChecked="{Binding BottomFilter, Mode=TwoWay}"
                         Style="{StaticResource CheckBoxStyle}" />
                     <CheckBox
-                        Margin="20,0,0,0"
+                        Margin="40,0,0,0"
                         Command="{Binding ScrollFilterCommand}"
                         Content="{DynamicResource ScrollFilter}"
                         Foreground="{DynamicResource BrushTextDark}"
