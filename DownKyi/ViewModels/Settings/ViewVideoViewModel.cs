@@ -1,6 +1,7 @@
 ﻿using DownKyi.Core.BiliApi.BiliUtils;
 using DownKyi.Core.FileName;
 using DownKyi.Core.Settings;
+using DownKyi.Core.Settings.Models;
 using DownKyi.Events;
 using DownKyi.Utils;
 using Prism.Commands;
@@ -82,6 +83,48 @@ namespace DownKyi.ViewModels.Settings
         {
             get => saveVideoDirectory;
             set => SetProperty(ref saveVideoDirectory, value);
+        }
+
+        private bool downloadAll;
+        public bool DownloadAll
+        {
+            get { return downloadAll; }
+            set { SetProperty(ref downloadAll, value); }
+        }
+
+        private bool downloadAudio;
+        public bool DownloadAudio
+        {
+            get { return downloadAudio; }
+            set { SetProperty(ref downloadAudio, value); }
+        }
+
+        private bool downloadVideo;
+        public bool DownloadVideo
+        {
+            get { return downloadVideo; }
+            set { SetProperty(ref downloadVideo, value); }
+        }
+
+        private bool downloadDanmaku;
+        public bool DownloadDanmaku
+        {
+            get { return downloadDanmaku; }
+            set { SetProperty(ref downloadDanmaku, value); }
+        }
+
+        private bool downloadSubtitle;
+        public bool DownloadSubtitle
+        {
+            get { return downloadSubtitle; }
+            set { SetProperty(ref downloadSubtitle, value); }
+        }
+
+        private bool downloadCover;
+        public bool DownloadCover
+        {
+            get { return downloadCover; }
+            set { SetProperty(ref downloadCover, value); }
         }
 
         private ObservableCollection<DisplayFileNamePart> selectedFileName;
@@ -194,6 +237,24 @@ namespace DownKyi.ViewModels.Settings
 
             // 默认下载目录
             SaveVideoDirectory = SettingsManager.GetInstance().GetSaveVideoRootPath();
+
+            // 下载内容
+            VideoContentSettings videoContent = SettingsManager.GetInstance().GetVideoContent();
+
+            DownloadAudio = videoContent.DownloadAudio;
+            DownloadVideo = videoContent.DownloadVideo;
+            DownloadDanmaku = videoContent.DownloadDanmaku;
+            DownloadSubtitle = videoContent.DownloadSubtitle;
+            DownloadCover = videoContent.DownloadCover;
+
+            if (DownloadAudio && DownloadVideo && DownloadDanmaku && DownloadSubtitle && DownloadCover)
+            {
+                DownloadAll = true;
+            }
+            else
+            {
+                DownloadAll = false;
+            }
 
             // 文件命名格式
             List<FileNamePart> fileNameParts = SettingsManager.GetInstance().GetFileNameParts();
@@ -309,6 +370,145 @@ namespace DownKyi.ViewModels.Settings
             {
                 SaveVideoDirectory = directory;
             }
+        }
+
+        // 所有内容选择事件
+        private DelegateCommand downloadAllCommand;
+        public DelegateCommand DownloadAllCommand => downloadAllCommand ?? (downloadAllCommand = new DelegateCommand(ExecuteDownloadAllCommand));
+
+        /// <summary>
+        /// 所有内容选择事件
+        /// </summary>
+        private void ExecuteDownloadAllCommand()
+        {
+            if (DownloadAll)
+            {
+                DownloadAudio = true;
+                DownloadVideo = true;
+                DownloadDanmaku = true;
+                DownloadSubtitle = true;
+                DownloadCover = true;
+            }
+            else
+            {
+                DownloadAudio = false;
+                DownloadVideo = false;
+                DownloadDanmaku = false;
+                DownloadSubtitle = false;
+                DownloadCover = false;
+            }
+
+            SetVideoContent();
+        }
+
+        // 音频选择事件
+        private DelegateCommand downloadAudioCommand;
+        public DelegateCommand DownloadAudioCommand => downloadAudioCommand ?? (downloadAudioCommand = new DelegateCommand(ExecuteDownloadAudioCommand));
+
+        /// <summary>
+        /// 音频选择事件
+        /// </summary>
+        private void ExecuteDownloadAudioCommand()
+        {
+            if (!DownloadAudio)
+            {
+                DownloadAll = false;
+            }
+
+            if (DownloadAudio && DownloadVideo && DownloadDanmaku && DownloadSubtitle && DownloadCover)
+            {
+                DownloadAll = true;
+            }
+
+            SetVideoContent();
+        }
+
+        // 视频选择事件
+        private DelegateCommand downloadVideoCommand;
+        public DelegateCommand DownloadVideoCommand => downloadVideoCommand ?? (downloadVideoCommand = new DelegateCommand(ExecuteDownloadVideoCommand));
+
+        /// <summary>
+        /// 视频选择事件
+        /// </summary>
+        private void ExecuteDownloadVideoCommand()
+        {
+            if (!DownloadVideo)
+            {
+                DownloadAll = false;
+            }
+
+            if (DownloadAudio && DownloadVideo && DownloadDanmaku && DownloadSubtitle && DownloadCover)
+            {
+                DownloadAll = true;
+            }
+
+            SetVideoContent();
+        }
+
+        // 弹幕选择事件
+        private DelegateCommand downloadDanmakuCommand;
+        public DelegateCommand DownloadDanmakuCommand => downloadDanmakuCommand ?? (downloadDanmakuCommand = new DelegateCommand(ExecuteDownloadDanmakuCommand));
+
+        /// <summary>
+        /// 弹幕选择事件
+        /// </summary>
+        private void ExecuteDownloadDanmakuCommand()
+        {
+            if (!DownloadDanmaku)
+            {
+                DownloadAll = false;
+            }
+
+            if (DownloadAudio && DownloadVideo && DownloadDanmaku && DownloadSubtitle && DownloadCover)
+            {
+                DownloadAll = true;
+            }
+
+            SetVideoContent();
+        }
+
+        // 字幕选择事件
+        private DelegateCommand downloadSubtitleCommand;
+        public DelegateCommand DownloadSubtitleCommand => downloadSubtitleCommand ?? (downloadSubtitleCommand = new DelegateCommand(ExecuteDownloadSubtitleCommand));
+
+        /// <summary>
+        /// 字幕选择事件
+        /// </summary>
+        private void ExecuteDownloadSubtitleCommand()
+        {
+            if (!DownloadSubtitle)
+            {
+                DownloadAll = false;
+            }
+
+            if (DownloadAudio && DownloadVideo && DownloadDanmaku && DownloadSubtitle && DownloadCover)
+            {
+                DownloadAll = true;
+            }
+
+            SetVideoContent();
+        }
+
+        // 封面选择事件
+        private DelegateCommand downloadCoverCommand;
+        public DelegateCommand DownloadCoverCommand => downloadCoverCommand ?? (downloadCoverCommand = new DelegateCommand(ExecuteDownloadCoverCommand));
+
+        /// <summary>
+        /// 封面选择事件
+        /// </summary>
+        private void ExecuteDownloadCoverCommand()
+        {
+            if (!DownloadCover)
+            {
+                DownloadAll = false;
+            }
+
+            if (DownloadAudio && DownloadVideo && DownloadDanmaku && DownloadSubtitle && DownloadCover)
+            {
+                DownloadAll = true;
+            }
+
+            SetVideoContent();
         }
 
         // 选中文件名字段点击事件
@@ -460,21 +660,21 @@ namespace DownKyi.ViewModels.Settings
         }
 
         /// <summary>
-        /// 发送需要显示的tip
+        /// 保存下载视频内容到设置
         /// </summary>
-        /// <param name="isSucceed"></param>
-        private void PublishTip(bool isSucceed)
+        private void SetVideoContent()
         {
-            if (isOnNavigatedTo) { return; }
+            VideoContentSettings videoContent = new VideoContentSettings
+            {
+                DownloadAudio = DownloadAudio,
+                DownloadVideo = DownloadVideo,
+                DownloadDanmaku = DownloadDanmaku,
+                DownloadSubtitle = DownloadSubtitle,
+                DownloadCover = DownloadCover
+            };
 
-            if (isSucceed)
-            {
-                eventAggregator.GetEvent<MessageEvent>().Publish(DictionaryResource.GetString("TipSettingUpdated"));
-            }
-            else
-            {
-                eventAggregator.GetEvent<MessageEvent>().Publish(DictionaryResource.GetString("TipSettingFailed"));
-            }
+            bool isSucceed = SettingsManager.GetInstance().SetVideoContent(videoContent);
+            PublishTip(isSucceed);
         }
 
         /// <summary>
@@ -542,6 +742,24 @@ namespace DownKyi.ViewModels.Settings
             }
 
             return display;
+        }
+
+        /// <summary>
+        /// 发送需要显示的tip
+        /// </summary>
+        /// <param name="isSucceed"></param>
+        private void PublishTip(bool isSucceed)
+        {
+            if (isOnNavigatedTo) { return; }
+
+            if (isSucceed)
+            {
+                eventAggregator.GetEvent<MessageEvent>().Publish(DictionaryResource.GetString("TipSettingUpdated"));
+            }
+            else
+            {
+                eventAggregator.GetEvent<MessageEvent>().Publish(DictionaryResource.GetString("TipSettingFailed"));
+            }
         }
 
     }

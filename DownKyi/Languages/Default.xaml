@@ -299,6 +299,7 @@
     <system:String x:Key="Browse">浏览</system:String>
     <system:String x:Key="HardDiskFreeSpace">盘剩余空间：</system:String>
     <system:String x:Key="DownloadContent">下载内容：</system:String>
+    <system:String x:Key="DownloadContent2">下载内容</system:String>
     <system:String x:Key="DownloadAll">所有</system:String>
     <system:String x:Key="DownloadAudio">音频</system:String>
     <system:String x:Key="DownloadVideo">视频</system:String>

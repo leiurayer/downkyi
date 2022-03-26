@@ -242,7 +242,6 @@ namespace DownKyi.ViewModels.Dialogs
             if (!DownloadAudio)
             {
                 DownloadAll = false;
-                return;
             }
 
             if (DownloadAudio && DownloadVideo && DownloadDanmaku && DownloadSubtitle && DownloadCover)
@@ -265,7 +264,6 @@ namespace DownKyi.ViewModels.Dialogs
             if (!DownloadVideo)
             {
                 DownloadAll = false;
-                return;
             }
 
             if (DownloadAudio && DownloadVideo && DownloadDanmaku && DownloadSubtitle && DownloadCover)
@@ -288,7 +286,6 @@ namespace DownKyi.ViewModels.Dialogs
             if (!DownloadDanmaku)
             {
                 DownloadAll = false;
-                return;
             }
 
             if (DownloadAudio && DownloadVideo && DownloadDanmaku && DownloadSubtitle && DownloadCover)
@@ -311,7 +308,6 @@ namespace DownKyi.ViewModels.Dialogs
             if (!DownloadSubtitle)
             {
                 DownloadAll = false;
-                return;
             }
 
             if (DownloadAudio && DownloadVideo && DownloadDanmaku && DownloadSubtitle && DownloadCover)
@@ -334,7 +330,6 @@ namespace DownKyi.ViewModels.Dialogs
             if (!DownloadCover)
             {
                 DownloadAll = false;
-                return;
             }
 
             if (DownloadAudio && DownloadVideo && DownloadDanmaku && DownloadSubtitle && DownloadCover)
