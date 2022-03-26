@@ -9,12 +9,20 @@
 
 [全部更新日志](CHANGELOG.md)
 
-* `2022/03/20` v1.5.0-alpha6
-    1. [修复] 一些已知问题。
+* `2022/03/26` v1.5.0-alpha7
+    1. [优化] 批量下载时过滤UGC、其他季或花絮内容。
+    3. [优化] 保存下载视频内容到设置。
+    4. [优化] 更新ffmpeg为gpl版本。
+    5. [优化] 默认的aria的文件预分配改为NONE。
+    6. [新增] “解析后自动下载已解析视频”设置。
+    7. [修复] 只下载音频失败的问题。
+    8. [修复] Settings被占用无法读取的问题。
+    9. [修复] 因路径导致无法下载的问题。
+    10. [修复] 无法正确关闭数据库的问题。
 
 ## 下载
 
-- [哔哩下载姬最新版](https://github.com/FlySelfLog/downkyi/releases/download/v1.5.0-alpha6/DownKyi-1.5.0-alpha6.zip)
+- [哔哩下载姬最新版](https://github.com/FlySelfLog/downkyi/releases/download/v1.5.0-alpha7/DownKyi-1.5.0-alpha7.zip)
 
 - [下载页面](https://github.com/FlySelfLog/downkyi/releases)
 
@@ -29,6 +37,7 @@
 ### 相关项目
 
 - [哔哩哔哩-API收集整理](https://github.com/SocialSisterYi/bilibili-API-collect)
+- [Prism](https://github.com/PrismLibrary/Prism)
 
 ## 免责申明
 
