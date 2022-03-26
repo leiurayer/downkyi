@@ -106,7 +106,7 @@ namespace DownKyi.Services
         /// 获取视频章节与剧集
         /// </summary>
         /// <returns></returns>
-        public List<VideoSection> GetVideoSections()
+        public List<VideoSection> GetVideoSections(bool noUgc = false)
         {
             return null;
         }

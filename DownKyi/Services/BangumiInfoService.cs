@@ -138,11 +138,9 @@ namespace DownKyi.Services
         /// 获取视频章节与剧集
         /// </summary>
         /// <returns></returns>
-        public List<VideoSection> GetVideoSections()
+        public List<VideoSection> GetVideoSections(bool noUgc = false)
         {
             if (bangumiSeason == null) { return null; }
-            if (bangumiSeason.Section == null) { return null; }
-            if (bangumiSeason.Section.Count == 0) { return null; }
 
             List<VideoSection> videoSections = new List<VideoSection>
             {
@@ -154,6 +152,15 @@ namespace DownKyi.Services
                     VideoPages = GetVideoPages()
                 }
             };
+
+            // 不需要其他季或花絮内容
+            if (noUgc)
+            {
+                return videoSections;
+            }
+
+            if (bangumiSeason.Section == null) { return null; }
+            if (bangumiSeason.Section.Count == 0) { return null; }
 
             foreach (BangumiSection section in bangumiSeason.Section)
             {

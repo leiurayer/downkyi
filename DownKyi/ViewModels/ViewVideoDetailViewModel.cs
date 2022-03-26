@@ -635,7 +635,7 @@ namespace DownKyi.ViewModels
                 NoDataVisibility = Visibility.Collapsed;
             }
 
-            List<VideoSection> videoSections = videoInfoService.GetVideoSections();
+            List<VideoSection> videoSections = videoInfoService.GetVideoSections(false);
             if (videoSections == null)
             {
                 LogManager.Debug(Tag, "videoSections is not exist.");

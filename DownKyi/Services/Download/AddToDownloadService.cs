@@ -103,7 +103,7 @@ namespace DownKyi.Services.Download
                 return;
             }
 
-            videoSections = videoInfoService.GetVideoSections();
+            videoSections = videoInfoService.GetVideoSections(true);
             if (videoSections == null)
             {
                 LogManager.Debug(Tag, "videoSections is not exist.");
