@@ -72,6 +72,8 @@ namespace DownKyi.Core.Storage.Database
         /// </summary>
         public void Open()
         {
+            if (conn == null) { return; }
+
             if (!IsOpen())
             {
                 conn.Open();
@@ -83,6 +85,8 @@ namespace DownKyi.Core.Storage.Database
         /// </summary>
         public void Close()
         {
+            if (conn == null) { return; }
+
             if (IsOpen())
             {
                 conn.Close();
@@ -97,6 +101,8 @@ namespace DownKyi.Core.Storage.Database
         /// <param name="sql"></param>
         public void ExecuteNonQuery(string sql, Action<SQLiteParameterCollection> action = null)
         {
+            if (conn == null) { return; }
+
             try
             {
                 lock (conn)
@@ -129,6 +135,8 @@ namespace DownKyi.Core.Storage.Database
         /// <param name="action"></param>
         public void ExecuteQuery(string sql, Action<SQLiteDataReader> action)
         {
+            if (conn == null) { return; }
+
             try
             {
                 lock (conn)
