@@ -1,5 +1,20 @@
 # 哔哩下载姬
 
+<p align="center">
+    <a href="https://github.com/leiurayer/downkyi/stargazers" style="text-decoration:none" >
+        <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/leiurayer/downkyi">
+    </a>
+    <a href="https://github.com/leiurayer/downkyi/network" style="text-decoration:none" >
+        <img alt="GitHub forks" src="https://img.shields.io/github/forks/leiurayer/downkyi">
+    </a>
+    <a href="https://github.com/leiurayer/downkyi/issues" style="text-decoration:none">
+        <img alt="GitHub issues" src="https://img.shields.io/github/issues/leiurayer/downkyi">
+    </a>
+    <a href="https://github.com/leiurayer/downkyi/blob/main/LICENSE" style="text-decoration:none" >
+        <img alt="GitHub" src="https://img.shields.io/github/license/leiurayer/downkyi">
+    </a>
+</p>
+
 ![Alipay](https://croire.gitee.io/app/DownKyi/images/app/index.png)
 
 哔哩下载姬（DownKyi）是一个简单易用的哔哩哔哩视频下载工具，具有简洁的界面，流畅的操作逻辑。哔哩下载姬可以下载几乎所有的B站视频，并输出mp4格式的文件；采用Aria下载器多线程下载，采用FFmpeg对视频进行混流、提取音视频等操作。
@@ -23,9 +38,17 @@
 
 ## 下载
 
-* [哔哩下载姬最新版](https://github.com/FlySelfLog/downkyi/releases/download/v1.5.0-alpha7/DownKyi-1.5.0-alpha7.zip)
-
-* [下载页面](https://github.com/FlySelfLog/downkyi/releases)
+<p align="left">
+    <a href="https://github.com/leiurayer/downkyi/releases/latest" style="text-decoration:none">
+       <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/leiurayer/downkyi">
+    </a>
+    <a href="https://github.com/leiurayer/downkyi/releases/latest" style="text-decoration:none">
+       <img alt="GitHub Release Date" src="https://img.shields.io/github/release-date/leiurayer/downkyi">
+    </a>
+    <a href="https://github.com/leiurayer/downkyi/releases" style="text-decoration:none">
+       <img alt="GitHub all releases" src="https://img.shields.io/github/downloads/leiurayer/downkyi/total">
+    </a>
+</p>
 
 ## 赞助
 
