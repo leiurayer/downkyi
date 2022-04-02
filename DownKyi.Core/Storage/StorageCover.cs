@@ -44,10 +44,30 @@ namespace DownKyi.Core.Storage
         {
             if (cover == null) { return null; }
 
-            Bitmap bitmap = new Bitmap(cover);
-            Image thumbnail = bitmap.GetThumbnailImage(width, height, null, IntPtr.Zero);
+            try
+            {
+                Bitmap bitmap = new Bitmap(cover);
+                Image thumbnail = bitmap.GetThumbnailImage(width, height, null, IntPtr.Zero);
 
-            return StorageUtils.BitmapToBitmapImage(new Bitmap(thumbnail));
+                return StorageUtils.BitmapToBitmapImage(new Bitmap(thumbnail));
+            }
+            catch (ArgumentException e)
+            {
+                Utils.Debugging.Console.PrintLine(cover);
+                Utils.Debugging.Console.PrintLine("GetCoverThumbnail()发生异常: {0}", e);
+
+                LogManager.Error("StorageCover.GetCoverThumbnail()", cover);
+                LogManager.Error("StorageCover.GetCoverThumbnail()", e);
+
+                return null;
+            }
+            catch (Exception e)
+            {
+                Utils.Debugging.Console.PrintLine("GetCoverThumbnail()发生异常: {0}", e);
+                LogManager.Error("StorageCover.GetCoverThumbnail()", e);
+
+                return null;
+            }
         }
 
         /// <summary>

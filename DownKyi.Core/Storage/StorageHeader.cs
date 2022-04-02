@@ -44,10 +44,30 @@ namespace DownKyi.Core.Storage
         {
             if (header == null) { return null; }
 
-            var bitmap = new Bitmap(header);
-            var thumbnail = bitmap.GetThumbnailImage(width, height, null, IntPtr.Zero);
+            try
+            {
+                Bitmap bitmap = new Bitmap(header);
+                Image thumbnail = bitmap.GetThumbnailImage(width, height, null, IntPtr.Zero);
 
-            return StorageUtils.BitmapToBitmapImage(new Bitmap(thumbnail));
+                return StorageUtils.BitmapToBitmapImage(new Bitmap(thumbnail));
+            }
+            catch (ArgumentException e)
+            {
+                Utils.Debugging.Console.PrintLine(header);
+                Utils.Debugging.Console.PrintLine("GetHeaderThumbnail()发生异常: {0}", e);
+
+                LogManager.Error("StorageHeader.GetHeaderThumbnail()", header);
+                LogManager.Error("StorageHeader.GetHeaderThumbnail()", e);
+
+                return null;
+            }
+            catch (Exception e)
+            {
+                Utils.Debugging.Console.PrintLine("GetHeaderThumbnail()发生异常: {0}", e);
+                LogManager.Error("StorageHeader.GetHeaderThumbnail()", e);
+
+                return null;
+            }
         }
 
         /// <summary>
@@ -58,7 +78,7 @@ namespace DownKyi.Core.Storage
         public string GetHeader(long mid, string name, string url)
         {
             HeaderDb headerDb = new HeaderDb();
-            var header = headerDb.QueryByMid(mid);
+            Header header = headerDb.QueryByMid(mid);
 
             if (header != null)
             {
