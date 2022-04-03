@@ -671,10 +671,10 @@ namespace DownKyi.ViewModels
             videoInfoService.GetVideoStream(videoPage);
         }
 
-
         /// <summary>
         /// 添加到下载列表事件
         /// </summary>
+        /// <param name="isAll">是否下载所有，包括未选中项</param>
         private async void AddToDownload(bool isAll)
         {
             AddToDownloadService addToDownloadService = null;
