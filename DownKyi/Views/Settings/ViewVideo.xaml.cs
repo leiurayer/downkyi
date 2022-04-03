@@ -16,6 +16,9 @@ namespace DownKyi.Views.Settings
             InitializeComponent();
         }
 
+        // ListBox拖拽的代码参考
+        // https://stackoverflow.com/questions/3350187/wpf-c-rearrange-items-in-listbox-via-drag-and-drop
+
         private void SelectedFileName_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (sender is ListBoxItem)
