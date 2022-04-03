@@ -264,15 +264,22 @@
                         Grid.Row="1"
                         Grid.Column="1"
                         MinHeight="30"
-                        ItemContainerStyle="{StaticResource TagItem2Style}"
                         ItemsSource="{Binding SelectedFileName, Mode=TwoWay}"
                         SelectionMode="Single"
                         Style="{StaticResource Tag2Style}">
                         <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="SelectionChanged">
-                                <i:InvokeCommandAction Command="{Binding SelectedFileNameCommand}" CommandParameter="{Binding ElementName=nameSelectedFileName, Path=SelectedItem}" />
+                            <i:EventTrigger EventName="MouseRightButtonUp">
+                                <i:InvokeCommandAction Command="{Binding SelectedFileNameRightCommand}" CommandParameter="{Binding ElementName=nameSelectedFileName, Path=SelectedItem}" />
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
+
+                        <ListBox.ItemContainerStyle>
+                            <Style BasedOn="{StaticResource TagItem2Style}" TargetType="{x:Type ListBoxItem}">
+                                <Setter Property="AllowDrop" Value="True" />
+                                <EventSetter Event="PreviewMouseLeftButtonDown" Handler="SelectedFileName_PreviewMouseLeftButtonDown" />
+                                <EventSetter Event="Drop" Handler="SelectedFileName_Drop" />
+                            </Style>
+                        </ListBox.ItemContainerStyle>
                     </ListBox>
 
                     <StackPanel
