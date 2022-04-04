@@ -76,6 +76,7 @@ namespace DownKyi.Services.Download
                         Downloading = downloading
                     };
 
+                    if (downloadingItem.DownloadBase == null) { continue; }
                     list.Add(downloadingItem);
                 }
             }
@@ -153,13 +154,14 @@ namespace DownKyi.Services.Download
             {
                 if (item.Value is Downloaded downloaded)
                 {
-                    DownloadedItem downloadingItem = new DownloadedItem
+                    DownloadedItem downloadedItem = new DownloadedItem
                     {
                         DownloadBase = GetDownloadBase(item.Key),
                         Downloaded = downloaded
                     };
 
-                    list.Add(downloadingItem);
+                    if (downloadedItem.DownloadBase == null) { continue; }
+                    list.Add(downloadedItem);
                 }
             }
 
