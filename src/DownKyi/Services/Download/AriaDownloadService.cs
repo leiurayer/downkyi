@@ -510,6 +510,9 @@ namespace DownKyi.Services.Download
         /// </summary>
         private async Task DoWork()
         {
+            // 上次循环时正在下载的数量
+            int lastDownloadingCount = 0;
+
             while (true)
             {
                 int maxDownloading = SettingsManager.GetInstance().GetAriaMaxConcurrentDownloads();
@@ -561,6 +564,13 @@ namespace DownKyi.Services.Download
                     LogManager.Debug(Tag, "下载服务结束");
                     break;
                 }
+
+                // 判断下载列表中的视频是否全部下载完成
+                if (lastDownloadingCount > 0 && downloadingList.Count == 0 && downloadedList.Count > 0)
+                {
+                    AfterDownload();
+                }
+                lastDownloadingCount = downloadingList.Count;
 
                 // 降低CPU占用
                 await Task.Delay(500);
@@ -824,6 +834,36 @@ namespace DownKyi.Services.Download
             downloading.Downloading.DownloadStatus = DownloadStatus.DOWNLOAD_FAILED;
             downloading.StartOrPause = ButtonIcon.Instance().Retry;
             downloading.StartOrPause.Fill = DictionaryResource.GetColor("ColorPrimary");
+        }
+
+        /// <summary>
+        /// 下载完成后的操作
+        /// </summary>
+        private void AfterDownload()
+        {
+            AfterDownloadOperation operation = SettingsManager.GetInstance().GetAfterDownloadOperation();
+            switch (operation)
+            {
+                case AfterDownloadOperation.NONE:
+                    // 没有操作
+                    break;
+                case AfterDownloadOperation.OPEN_FOLDER:
+                    // 打开文件夹
+                    break;
+                case AfterDownloadOperation.CLOSE_APP:
+                    // 关闭程序
+                    App.PropertyChangeAsync(() =>
+                    {
+                        System.Windows.Application.Current.Shutdown();
+                    });
+                    break;
+                case AfterDownloadOperation.CLOSE_SYSTEM:
+                    // 关机
+                    System.Diagnostics.Process.Start("shutdown.exe", "-s");
+                    break;
+                default:
+                    break;
+            }
         }
 
         /// <summary>
