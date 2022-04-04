@@ -10,6 +10,7 @@ using Prism.Regions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 
 namespace DownKyi.ViewModels.Settings
@@ -185,6 +186,20 @@ namespace DownKyi.ViewModels.Settings
 
             // 文件命名格式
             SelectedFileName = new ObservableCollection<DisplayFileNamePart>();
+
+            SelectedFileName.CollectionChanged += new NotifyCollectionChangedEventHandler((sender, e) =>
+            {
+                // 当前显示的命名格式part
+                List<FileNamePart> fileName = new List<FileNamePart>();
+                foreach (DisplayFileNamePart item in SelectedFileName)
+                {
+                    fileName.Add(item.Id);
+                }
+
+                bool isSucceed = SettingsManager.GetInstance().SetFileNameParts(fileName);
+                PublishTip(isSucceed);
+            });
+
             OptionalFields = new ObservableCollection<DisplayFileNamePart>();
             foreach (FileNamePart item in Enum.GetValues(typeof(FileNamePart)))
             {
@@ -511,16 +526,18 @@ namespace DownKyi.ViewModels.Settings
             SetVideoContent();
         }
 
-        // 选中文件名字段点击事件
-        private DelegateCommand<object> selectedFileNameCommand;
-        public DelegateCommand<object> SelectedFileNameCommand => selectedFileNameCommand ?? (selectedFileNameCommand = new DelegateCommand<object>(ExecuteSelectedFileNameCommand));
+        // 选中文件名字段右键点击事件
+        private DelegateCommand<object> selectedFileNameRightCommand;
+        public DelegateCommand<object> SelectedFileNameRightCommand => selectedFileNameRightCommand ?? (selectedFileNameRightCommand = new DelegateCommand<object>(ExecuteSelectedFileNameRightCommand));
 
         /// <summary>
-        /// 选中文件名字段点击事件
+        /// 选中文件名字段右键点击事件
         /// </summary>
         /// <param name="parameter"></param>
-        private void ExecuteSelectedFileNameCommand(object parameter)
+        private void ExecuteSelectedFileNameRightCommand(object parameter)
         {
+            if (parameter == null) { return; }
+
             bool isSucceed = SelectedFileName.Remove((DisplayFileNamePart)parameter);
             if (!isSucceed)
             {
@@ -528,14 +545,14 @@ namespace DownKyi.ViewModels.Settings
                 return;
             }
 
-            List<FileNamePart> fileName = new List<FileNamePart>();
-            foreach (DisplayFileNamePart item in SelectedFileName)
-            {
-                fileName.Add(item.Id);
-            }
+            //List<FileNamePart> fileName = new List<FileNamePart>();
+            //foreach (DisplayFileNamePart item in SelectedFileName)
+            //{
+            //    fileName.Add(item.Id);
+            //}
 
-            isSucceed = SettingsManager.GetInstance().SetFileNameParts(fileName);
-            PublishTip(isSucceed);
+            //isSucceed = SettingsManager.GetInstance().SetFileNameParts(fileName);
+            //PublishTip(isSucceed);
 
             SelectedOptionalField = -1;
         }
