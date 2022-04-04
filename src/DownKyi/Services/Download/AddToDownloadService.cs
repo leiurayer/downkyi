@@ -4,6 +4,7 @@ using DownKyi.Core.BiliApi.Zone;
 using DownKyi.Core.FileName;
 using DownKyi.Core.Logging;
 using DownKyi.Core.Settings;
+using DownKyi.Core.Settings.Models;
 using DownKyi.Core.Utils;
 using DownKyi.Events;
 using DownKyi.Models;
@@ -160,6 +161,14 @@ namespace DownKyi.Services.Download
             // 是否使用默认下载目录
             if (SettingsManager.GetInstance().IsUseSaveVideoRootPath() == AllowStatus.YES)
             {
+                // 下载内容
+                VideoContentSettings videoContent = SettingsManager.GetInstance().GetVideoContent();
+                downloadAudio = videoContent.DownloadAudio;
+                downloadVideo = videoContent.DownloadVideo;
+                downloadDanmaku = videoContent.DownloadDanmaku;
+                downloadSubtitle = videoContent.DownloadSubtitle;
+                downloadCover = videoContent.DownloadCover;
+
                 directory = SettingsManager.GetInstance().GetSaveVideoRootPath();
             }
             else
@@ -196,6 +205,13 @@ namespace DownKyi.Services.Download
             return directory;
         }
 
+        /// <summary>
+        /// 添加到下载列表
+        /// </summary>
+        /// <param name="eventAggregator">传递事件的对象</param>
+        /// <param name="directory">下载路径</param>
+        /// <param name="isAll">是否下载所有，包括未选中项</param>
+        /// <returns>添加的数量</returns>
         public int AddToDownload(IEventAggregator eventAggregator, string directory, bool isAll = false)
         {
             if (directory == null || directory == string.Empty) { return -1; }
