@@ -1,6 +1,7 @@
 ﻿using DownKyi.Core.Logging;
 using DownKyi.Core.Storage.Database;
 using DownKyi.Core.Utils.Encryptor;
+using Imazen.WebP;
 using System;
 using System.Drawing;
 using System.IO;
@@ -51,15 +52,26 @@ namespace DownKyi.Core.Storage
 
                 return StorageUtils.BitmapToBitmapImage(new Bitmap(thumbnail));
             }
-            catch (ArgumentException e)
+            catch (ArgumentException)
             {
-                Utils.Debugging.Console.PrintLine(header);
-                Utils.Debugging.Console.PrintLine("GetHeaderThumbnail()发生异常: {0}", e);
+                try
+                {
+                    byte[] bytes = File.ReadAllBytes(header);
+                    Imazen.WebP.Extern.LoadLibrary.LoadWebPOrFail();
+                    SimpleDecoder simpleDecoder = new SimpleDecoder();
+                    Bitmap bitmap = simpleDecoder.DecodeFromBytes(bytes, bytes.Length);
 
-                LogManager.Error("StorageHeader.GetHeaderThumbnail()", header);
-                LogManager.Error("StorageHeader.GetHeaderThumbnail()", e);
+                    Image thumbnail = bitmap.GetThumbnailImage(width, height, null, IntPtr.Zero);
 
-                return null;
+                    return StorageUtils.BitmapToBitmapImage(new Bitmap(thumbnail));
+                }
+                catch (Exception ex)
+                {
+                    Utils.Debugging.Console.PrintLine("GetHeaderThumbnail()发生异常: {0}", ex);
+                    LogManager.Error("StorageHeader.GetHeaderThumbnail()", ex);
+
+                    return null;
+                }
             }
             catch (Exception e)
             {
