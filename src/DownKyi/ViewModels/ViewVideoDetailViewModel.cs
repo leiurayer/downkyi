@@ -618,6 +618,7 @@ namespace DownKyi.ViewModels
         /// <param name="videoInfoService"></param>
         private void UpdateView(IInfoService videoInfoService, VideoPage param)
         {
+            // 获取视频详情
             VideoInfoView = videoInfoService.GetVideoView();
             if (VideoInfoView == null)
             {
@@ -635,7 +636,16 @@ namespace DownKyi.ViewModels
                 NoDataVisibility = Visibility.Collapsed;
             }
 
+            // 获取视频列表
             List<VideoSection> videoSections = videoInfoService.GetVideoSections(false);
+
+            // 清空以前的数据
+            PropertyChangeAsync(new Action(() =>
+            {
+                VideoSections.Clear();
+            }));
+
+            // 添加新数据
             if (videoSections == null)
             {
                 LogManager.Debug(Tag, "videoSections is not exist.");
