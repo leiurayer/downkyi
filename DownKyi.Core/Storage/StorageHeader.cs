@@ -59,7 +59,7 @@ namespace DownKyi.Core.Storage
                     byte[] bytes = File.ReadAllBytes(header);
                     Imazen.WebP.Extern.LoadLibrary.LoadWebPOrFail();
                     SimpleDecoder simpleDecoder = new SimpleDecoder();
-                    Bitmap bitmap = simpleDecoder.DecodeFromBytes(bytes, bytes.Length);
+                    Bitmap bitmap = simpleDecoder.DecodeFromBytes(bytes, bytes.LongLength);
 
                     Image thumbnail = bitmap.GetThumbnailImage(width, height, null, IntPtr.Zero);
 
