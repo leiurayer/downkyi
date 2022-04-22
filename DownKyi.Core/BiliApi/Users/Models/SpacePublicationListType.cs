@@ -21,7 +21,7 @@ namespace DownKyi.Core.BiliApi.Users.Models
         public SpacePublicationListTypeVideoZone Technology { get; set; }
         [JsonProperty("188")]
         public SpacePublicationListTypeVideoZone Digital { get; set; }
-        [JsonProperty("224")]
+        [JsonProperty("234")]
         public SpacePublicationListTypeVideoZone Sports { get; set; }
         [JsonProperty("223")]
         public SpacePublicationListTypeVideoZone Car { get; set; }
