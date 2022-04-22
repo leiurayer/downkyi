@@ -18,5 +18,6 @@ namespace DownKyi.Core.Settings.Models
         public VideoContentSettings VideoContent { get; set; } = null; // 下载内容
         public List<FileNamePart> FileNameParts { get; set; } = null; // 文件命名格式
         public string FileNamePartTimeFormat { get; set; } = null; // 文件命名中的时间格式
+        public OrderFormat OrderFormat { get; set; } = OrderFormat.NOT_SET; // 文件命名中的序号格式
     }
 }

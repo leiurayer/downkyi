@@ -282,43 +282,78 @@
                         </ListBox.ItemContainerStyle>
                     </ListBox>
 
-                    <StackPanel
+                    <Grid
                         Grid.Row="2"
                         Grid.Column="1"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Bottom"
-                        Orientation="Horizontal">
-                        <TextBlock
-                            VerticalAlignment="Center"
-                            FontSize="12"
-                            Foreground="{DynamicResource BrushTextDark}"
-                            Text="{DynamicResource FileNameTimeFormat}" />
-                        <ComboBox
-                            Name="nameFileNamePartTimeFormat"
-                            Width="120"
-                            VerticalAlignment="Center"
-                            VerticalContentAlignment="Center"
-                            ItemsSource="{Binding FileNamePartTimeFormatList}"
-                            SelectedItem="{Binding SelectedFileNamePartTimeFormat}">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="SelectionChanged">
-                                    <i:InvokeCommandAction Command="{Binding FileNamePartTimeFormatCommand}" CommandParameter="{Binding ElementName=nameFileNamePartTimeFormat, Path=SelectedItem}" />
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </ComboBox>
-                    </StackPanel>
+                        Margin="0,20,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
 
-                    <Button
-                        Grid.Row="2"
-                        Grid.Column="1"
-                        Width="75"
-                        Margin="0,20,0,0"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Center"
-                        Command="{Binding ResetCommand}"
-                        Content="{DynamicResource Reset}"
-                        FontSize="12"
-                        Style="{StaticResource BtnBorderStyle}" />
+                        <StackPanel
+                            Grid.Column="0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Bottom"
+                            Orientation="Horizontal">
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                FontSize="12"
+                                Foreground="{DynamicResource BrushTextDark}"
+                                Text="{DynamicResource FileNameTimeFormat}" />
+                            <ComboBox
+                                Name="nameFileNamePartTimeFormat"
+                                Width="120"
+                                VerticalAlignment="Center"
+                                VerticalContentAlignment="Center"
+                                ItemsSource="{Binding FileNamePartTimeFormatList}"
+                                SelectedItem="{Binding SelectedFileNamePartTimeFormat}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectionChanged">
+                                        <i:InvokeCommandAction Command="{Binding FileNamePartTimeFormatCommand}" CommandParameter="{Binding ElementName=nameFileNamePartTimeFormat, Path=SelectedItem}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </ComboBox>
+                        </StackPanel>
+
+                        <StackPanel
+                            Grid.Column="1"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Bottom"
+                            Orientation="Horizontal">
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                FontSize="12"
+                                Foreground="{DynamicResource BrushTextDark}"
+                                Text="{DynamicResource OrderFormat}" />
+                            <ComboBox
+                                Name="nameOrderFormat"
+                                Width="120"
+                                VerticalAlignment="Center"
+                                VerticalContentAlignment="Center"
+                                DisplayMemberPath="Name"
+                                ItemsSource="{Binding OrderFormatList}"
+                                SelectedItem="{Binding OrderFormatDisplay}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectionChanged">
+                                        <i:InvokeCommandAction Command="{Binding OrderFormatCommand}" CommandParameter="{Binding ElementName=nameOrderFormat, Path=SelectedItem}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </ComboBox>
+                        </StackPanel>
+
+                        <Button
+                            Grid.Column="2"
+                            Width="75"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            Command="{Binding ResetCommand}"
+                            Content="{DynamicResource Reset}"
+                            FontSize="12"
+                            Style="{StaticResource BtnBorderStyle}" />
+                    </Grid>
+
                 </Grid>
             </GroupBox>
 

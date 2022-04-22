@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace DownKyi.Core.FileName
@@ -6,7 +7,7 @@ namespace DownKyi.Core.FileName
     public class FileName
     {
         private readonly List<FileNamePart> nameParts;
-        private int order = -1;
+        private string order = "ORDER";
         private string section = "SECTION";
         private string mainTitle = "MAIN_TITLE";
         private string pageTitle = "PAGE_TITLE";
@@ -36,7 +37,15 @@ namespace DownKyi.Core.FileName
 
         public FileName SetOrder(int order)
         {
-            this.order = order;
+            this.order = order.ToString();
+            return this;
+        }
+
+        public FileName SetOrder(int order, int count)
+        {
+            int length = Math.Abs(count).ToString().Length;
+            this.order = order.ToString("D" + length);
+
             return this;
         }
 
@@ -127,14 +136,7 @@ namespace DownKyi.Core.FileName
                 switch (part)
                 {
                     case FileNamePart.ORDER:
-                        if (order != -1)
-                        {
-                            path += order;
-                        }
-                        else
-                        {
-                            path += "ORDER";
-                        }
+                        path += order;
                         break;
                     case FileNamePart.SECTION:
                         path += section;

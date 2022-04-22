@@ -84,10 +84,10 @@ namespace DownKyi.ViewModels.Settings
             // 解析范围
             ParseScopes = new List<ParseScopeDisplay>()
             {
-                new ParseScopeDisplay{ Name =DictionaryResource.GetString("ParseNone"),ParseScope=ParseScope.NONE},
-                new ParseScopeDisplay{ Name =DictionaryResource.GetString("ParseSelectedItem"),ParseScope=ParseScope.SELECTED_ITEM},
-                new ParseScopeDisplay{ Name =DictionaryResource.GetString("ParseCurrentSection"),ParseScope=ParseScope.CURRENT_SECTION},
-                new ParseScopeDisplay{ Name =DictionaryResource.GetString("ParseAll"),ParseScope=ParseScope.ALL}
+                new ParseScopeDisplay{ Name = DictionaryResource.GetString("ParseNone"), ParseScope = ParseScope.NONE },
+                new ParseScopeDisplay{ Name = DictionaryResource.GetString("ParseSelectedItem"), ParseScope = ParseScope.SELECTED_ITEM },
+                new ParseScopeDisplay{ Name = DictionaryResource.GetString("ParseCurrentSection"), ParseScope = ParseScope.CURRENT_SECTION },
+                new ParseScopeDisplay{ Name = DictionaryResource.GetString("ParseAll"), ParseScope = ParseScope.ALL }
             };
 
             #endregion

@@ -304,8 +304,7 @@ namespace DownKyi.Services.Download
 
                     // 文件路径
                     List<FileNamePart> fileNameParts = SettingsManager.GetInstance().GetFileNameParts();
-                    FileName fileName = FileName.Builder(fileNameParts)
-                        .SetOrder(page.Order)
+                    FileName fileName = FileName.Builder(fileNameParts)                        
                         .SetSection(Format.FormatFileName(sectionName))
                         .SetMainTitle(Format.FormatFileName(videoInfoView.Title))
                         .SetPageTitle(Format.FormatFileName(page.Name))
@@ -319,6 +318,20 @@ namespace DownKyi.Services.Download
                         .SetCid(page.Cid)
                         .SetUpMid(page.Owner.Mid)
                         .SetUpName(Format.FormatFileName(page.Owner.Name));
+
+                    // 序号设置
+                    OrderFormat orderFormat = SettingsManager.GetInstance().GetOrderFormat();
+                    switch (orderFormat)
+                    {
+                        case OrderFormat.NATURAL:
+                            fileName.SetOrder(page.Order);
+                            break;
+                        case OrderFormat.LEADING_ZEROS:
+                            fileName.SetOrder(page.Order, section.VideoPages.Count);
+                            break;
+                    }
+
+                    // 合成绝对路径
                     string filePath = Path.Combine(directory, fileName.RelativePath());
 
                     // 视频类别
