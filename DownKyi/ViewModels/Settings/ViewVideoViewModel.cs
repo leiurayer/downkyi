@@ -3,6 +3,7 @@ using DownKyi.Core.FileName;
 using DownKyi.Core.Settings;
 using DownKyi.Core.Settings.Models;
 using DownKyi.Events;
+using DownKyi.Models;
 using DownKyi.Utils;
 using Prism.Commands;
 using Prism.Events;
@@ -163,6 +164,20 @@ namespace DownKyi.ViewModels.Settings
             set => SetProperty(ref selectedFileNamePartTimeFormat, value);
         }
 
+        private List<OrderFormatDisplay> orderFormatList;
+        public List<OrderFormatDisplay> OrderFormatList
+        {
+            get => orderFormatList;
+            set => SetProperty(ref orderFormatList, value);
+        }
+
+        private OrderFormatDisplay orderFormatDisplay;
+        public OrderFormatDisplay OrderFormatDisplay
+        {
+            get => orderFormatDisplay;
+            set => SetProperty(ref orderFormatDisplay, value);
+        }
+
         #endregion
 
         public ViewVideoViewModel(IEventAggregator eventAggregator) : base(eventAggregator)
@@ -214,6 +229,13 @@ namespace DownKyi.ViewModels.Settings
             {
                 "yyyy-MM-dd",
                 "yyyy.MM.dd",
+            };
+
+            // 文件命名中的序号格式
+            OrderFormatList = new List<OrderFormatDisplay>
+            {
+                new OrderFormatDisplay{ Name = DictionaryResource.GetString("OrderFormatNatural"), OrderFormat = OrderFormat.NATURAL },
+                new OrderFormatDisplay{ Name = DictionaryResource.GetString("OrderFormatLeadingZeros"), OrderFormat = OrderFormat.LEADING_ZEROS },
             };
 
             #endregion
@@ -282,6 +304,10 @@ namespace DownKyi.ViewModels.Settings
 
             // 文件命名中的时间格式
             SelectedFileNamePartTimeFormat = SettingsManager.GetInstance().GetFileNamePartTimeFormat();
+
+            // 文件命名中的序号格式
+            OrderFormat orderFormat = SettingsManager.GetInstance().GetOrderFormat();
+            OrderFormatDisplay = OrderFormatList.FirstOrDefault(t => { return t.OrderFormat == orderFormat; });
 
             isOnNavigatedTo = false;
         }
@@ -622,6 +648,22 @@ namespace DownKyi.ViewModels.Settings
             if (!(parameter is string timeFormat)) { return; }
 
             bool isSucceed = SettingsManager.GetInstance().SetFileNamePartTimeFormat(timeFormat);
+            PublishTip(isSucceed);
+        }
+
+        // 文件命名中的序号格式事件
+        private DelegateCommand<object> orderFormatCommand;
+        public DelegateCommand<object> OrderFormatCommand => orderFormatCommand ?? (orderFormatCommand = new DelegateCommand<object>(ExecuteOrderFormatCommandCommand));
+
+        /// <summary>
+        /// 文件命名中的序号格式事件
+        /// </summary>
+        /// <param name="parameter"></param>
+        private void ExecuteOrderFormatCommandCommand(object parameter)
+        {
+            if (!(parameter is OrderFormatDisplay orderFormatDisplay)) { return; }
+
+            bool isSucceed = SettingsManager.GetInstance().SetOrderFormat(orderFormatDisplay.OrderFormat);
             PublishTip(isSucceed);
         }
 

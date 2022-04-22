@@ -291,6 +291,7 @@
     <Compile Include="Logging\LogManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings\Models\VideoContentSettings.cs" />
+    <Compile Include="Settings\OrderFormat.cs" />
     <Compile Include="Settings\ParseScope.cs" />
     <Compile Include="Settings\SettingsManager.Video.cs" />
     <Compile Include="Settings\SettingsManager.Basic.cs" />

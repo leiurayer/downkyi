@@ -51,6 +51,9 @@ namespace DownKyi.Core.Settings
         // 文件命名中的时间格式
         private readonly string fileNamePartTimeFormat = "yyyy-MM-dd";
 
+        // 文件命名中的序号格式
+        private readonly OrderFormat orderFormat = OrderFormat.NATURAL;
+
         /// <summary>
         /// 获取优先下载的视频编码
         /// </summary>
@@ -318,6 +321,33 @@ namespace DownKyi.Core.Settings
         public bool SetFileNamePartTimeFormat(string fileNamePartTimeFormat)
         {
             appSettings.Video.FileNamePartTimeFormat = fileNamePartTimeFormat;
+            return SetSettings();
+        }
+
+        /// <summary>
+        /// 获取文件命名中的序号格式
+        /// </summary>
+        /// <returns></returns>
+        public OrderFormat GetOrderFormat()
+        {
+            appSettings = GetSettings();
+            if (appSettings.Video.OrderFormat == OrderFormat.NOT_SET)
+            {
+                // 第一次获取，先设置默认值
+                SetOrderFormat(orderFormat);
+                return orderFormat;
+            }
+            return appSettings.Video.OrderFormat;
+        }
+
+        /// <summary>
+        /// 设置文件命名中的序号格式
+        /// </summary>
+        /// <param name="orderFormat"></param>
+        /// <returns></returns>
+        public bool SetOrderFormat(OrderFormat orderFormat)
+        {
+            appSettings.Video.OrderFormat = orderFormat;
             return SetSettings();
         }
 
