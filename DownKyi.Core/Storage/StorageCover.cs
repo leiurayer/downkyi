@@ -1,11 +1,11 @@
 ﻿using DownKyi.Core.Logging;
 using DownKyi.Core.Storage.Database;
 using DownKyi.Core.Utils.Encryptor;
-using Imazen.WebP;
 using System;
 using System.Drawing;
 using System.IO;
 using System.Windows.Media.Imaging;
+using WebP.Net;
 
 namespace DownKyi.Core.Storage
 {
@@ -56,11 +56,8 @@ namespace DownKyi.Core.Storage
             {
                 try
                 {
-                    byte[] bytes = File.ReadAllBytes(cover);
-                    Imazen.WebP.Extern.LoadLibrary.LoadWebPOrFail();
-                    SimpleDecoder simpleDecoder = new SimpleDecoder();
-                    Bitmap bitmap = simpleDecoder.DecodeFromBytes(bytes, bytes.LongLength);
-
+                    SimpleDecoder simpleDecoder = new SimpleDecoder(cover);
+                    Bitmap bitmap = simpleDecoder.WebPtoBitmap();
                     Image thumbnail = bitmap.GetThumbnailImage(width, height, null, IntPtr.Zero);
 
                     return StorageUtils.BitmapToBitmapImage(new Bitmap(thumbnail));
