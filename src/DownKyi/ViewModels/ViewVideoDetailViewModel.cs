@@ -30,7 +30,7 @@ namespace DownKyi.ViewModels
         private readonly IDialogService dialogService;
 
         // 保存输入字符串，避免被用户修改
-        private string input;
+        private string input = null;
 
         #region 页面属性申明
 
@@ -745,8 +745,6 @@ namespace DownKyi.ViewModels
         /// <param name="navigationContext"></param>
         public override void OnNavigatedTo(NavigationContext navigationContext)
         {
-            base.OnNavigatedTo(navigationContext);
-
             ArrowBack.Fill = DictionaryResource.GetColor("ColorTextDark");
 
             DownloadManage = ButtonIcon.Instance().DownloadManage;
@@ -757,13 +755,25 @@ namespace DownKyi.ViewModels
             // Parent参数为null时，表示是从下一个页面返回到本页面，不需要执行任务
             if (navigationContext.Parameters.GetValue<string>("Parent") != null)
             {
+                string param = navigationContext.Parameters.GetValue<string>("Parameter");
+                // 移除剪贴板id
+                string intput = param.Replace(AppConstant.ClipboardId, "");
+
+                // 检测是否从剪贴板传入
+                if (InputText == intput && param.EndsWith(AppConstant.ClipboardId))
+                {
+                    return;
+                }
+
                 // 正在执行任务时不开启新任务
                 if (LoadingVisibility != Visibility.Visible)
                 {
-                    InputText = navigationContext.Parameters.GetValue<string>("Parameter");
+                    InputText = intput;
                     PropertyChangeAsync(ExecuteInputCommand);
                 }
             }
+
+            base.OnNavigatedTo(navigationContext);
         }
 
     }
