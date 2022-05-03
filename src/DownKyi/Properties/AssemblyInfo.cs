@@ -12,7 +12,7 @@ using System.Windows;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("DownKyi")]
 [assembly: AssemblyProduct("DownKyi")]
-[assembly: AssemblyCopyright("Copyright ©  Downkyi 2020-2021")]
+[assembly: AssemblyCopyright("Copyright ©  Downkyi 2020-2022")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

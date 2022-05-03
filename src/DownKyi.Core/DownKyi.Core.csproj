@@ -32,6 +32,22 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>bin\x64\Release\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Release\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Brotli.Core, Version=2.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Brotli.NET.2.1.1\lib\net45\Brotli.Core.dll</HintPath>
@@ -78,6 +94,9 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="WebPSharp, Version=0.5.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebPSharp.0.5.1\lib\net472\WebPSharp.dll</HintPath>
+    </Reference>
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
@@ -344,7 +363,9 @@
     <Error Condition="!Exists('..\packages\Brotli.NET.2.1.1\build\Brotli.NET.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Brotli.NET.2.1.1\build\Brotli.NET.targets'))" />
     <Error Condition="!Exists('..\packages\System.Data.SQLite.Core.1.0.112.2\build\net40\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Data.SQLite.Core.1.0.112.2\build\net40\System.Data.SQLite.Core.targets'))" />
     <Error Condition="!Exists('..\packages\Google.Protobuf.Tools.3.19.1\build\Google.Protobuf.Tools.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Google.Protobuf.Tools.3.19.1\build\Google.Protobuf.Tools.targets'))" />
+    <Error Condition="!Exists('..\packages\WebPSharp.0.5.1\build\WebPSharp.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\WebPSharp.0.5.1\build\WebPSharp.targets'))" />
   </Target>
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.112.2\build\net40\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.112.2\build\net40\System.Data.SQLite.Core.targets')" />
   <Import Project="..\packages\Google.Protobuf.Tools.3.19.1\build\Google.Protobuf.Tools.targets" Condition="Exists('..\packages\Google.Protobuf.Tools.3.19.1\build\Google.Protobuf.Tools.targets')" />
+  <Import Project="..\packages\WebPSharp.0.5.1\build\WebPSharp.targets" Condition="Exists('..\packages\WebPSharp.0.5.1\build\WebPSharp.targets')" />
 </Project>
