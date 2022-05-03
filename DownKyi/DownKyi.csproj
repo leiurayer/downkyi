@@ -498,7 +498,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include=".gitignore" />
     <None Include="app.config" />
     <None Include="app.manifest" />
     <None Include="Properties\Settings.settings">
@@ -580,12 +579,6 @@
     <Resource Include="Resources\channel.png" />
     <Resource Include="Resources\play.png" />
     <Resource Include="Resources\time.png" />
-    <Content Include="x64\libwebp.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="x86\libwebp.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="打不开DownKyi请点我.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
