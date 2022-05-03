@@ -95,6 +95,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AppConstant.cs" />
     <Compile Include="Converter\CountConverter.cs" />
     <Compile Include="CustomControl\CustomPager.xaml.cs">
       <DependentUpon>CustomPager.xaml</DependentUpon>
