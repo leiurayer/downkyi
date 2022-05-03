@@ -56,8 +56,9 @@
 
 ### 相关项目
 
-* [哔哩哔哩-API收集整理](https://github.com/SocialSisterYi/bilibili-API-collect)
-* [Prism](https://github.com/PrismLibrary/Prism)
+* [哔哩哔哩-API收集整理](https://github.com/SocialSisterYi/bilibili-API-collect)：B站API归档
+* [Prism](https://github.com/PrismLibrary/Prism)：MVVM框架
+* [WebPSharp](https://github.com/leiurayer/WebPSharp)：WebP格式图片支持
 
 ## 免责申明
 
