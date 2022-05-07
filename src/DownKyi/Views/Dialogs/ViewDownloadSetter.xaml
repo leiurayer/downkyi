@@ -24,7 +24,7 @@
 
             <Grid
                 Grid.Row="0"
-                Background="{DynamicResource BrushCaptionBackground}"
+                Background="{DynamicResource BrushBackgroundGreyTranslucent3}"
                 KeyboardNavigation.TabNavigation="None">
                 <!--<i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseLeftButtonDown">
@@ -63,6 +63,9 @@
                             <i:InvokeCommandAction Command="{Binding CloseEnterCommand}" />
                         </i:EventTrigger>
                         <i:EventTrigger EventName="MouseLeave">
+                            <i:InvokeCommandAction Command="{Binding CloseLeaveCommand}" />
+                        </i:EventTrigger>
+                        <i:EventTrigger EventName="LostMouseCapture">
                             <i:InvokeCommandAction Command="{Binding CloseLeaveCommand}" />
                         </i:EventTrigger>
                     </i:Interaction.Triggers>

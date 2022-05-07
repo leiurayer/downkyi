@@ -9,6 +9,7 @@ using DownKyi.Utils;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Regions;
+using Prism.Services.Dialogs;
 using System;
 using System.IO;
 using System.Threading.Tasks;
@@ -88,7 +89,7 @@ namespace DownKyi.ViewModels
 
         #endregion
 
-        public ViewIndexViewModel(IEventAggregator eventAggregator) : base(eventAggregator)
+        public ViewIndexViewModel(IEventAggregator eventAggregator, IDialogService dialogService) : base(eventAggregator, dialogService)
         {
             #region 属性初始化
 
@@ -207,7 +208,10 @@ namespace DownKyi.ViewModels
         /// </summary>
         private void EnterBili()
         {
-            if (InputText == null || InputText == string.Empty) { return; }
+            if (InputText == null || InputText == string.Empty)
+            {
+                return;
+            }
 
             LogManager.Debug(Tag, $"InputText: {InputText}");
 

@@ -1,14 +1,20 @@
 ﻿using DownKyi.Core.BiliApi.VideoStream.Models;
 using DownKyi.Images;
 using DownKyi.Models;
+using DownKyi.Services;
 using DownKyi.Utils;
 using Prism.Commands;
+using Prism.Services.Dialogs;
 
 namespace DownKyi.ViewModels.DownloadManager
 {
     public class DownloadingItem : DownloadBaseItem
     {
-        public DownloadingItem() : base()
+        public DownloadingItem() : this(null)
+        {
+        }
+
+        public DownloadingItem(IDialogService dialogService) : base(dialogService)
         {
             // 暂停继续按钮
             StartOrPause = ButtonIcon.Instance().Pause;
@@ -211,6 +217,13 @@ namespace DownKyi.ViewModels.DownloadManager
         /// </summary>
         private void ExecuteDeleteCommand()
         {
+            AlertService alertService = new AlertService(DialogService);
+            ButtonResult result = alertService.ShowWarning(DictionaryResource.GetString("ConfirmDelete"));
+            if (result != ButtonResult.OK)
+            {
+                return;
+            }
+
             App.DownloadingList.Remove(this);
         }
 

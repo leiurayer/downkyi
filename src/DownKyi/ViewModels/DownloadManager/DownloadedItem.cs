@@ -1,14 +1,20 @@
 ﻿using DownKyi.Images;
 using DownKyi.Models;
+using DownKyi.Services;
 using DownKyi.Utils;
 using Prism.Commands;
+using Prism.Services.Dialogs;
 using System.IO;
 
 namespace DownKyi.ViewModels.DownloadManager
 {
     public class DownloadedItem : DownloadBaseItem
     {
-        public DownloadedItem() : base()
+        public DownloadedItem() : this(null)
+        {
+        }
+
+        public DownloadedItem(IDialogService dialogService) : base(dialogService)
         {
             // 打开文件夹按钮
             OpenFolder = ButtonIcon.Instance().Folder;
@@ -131,6 +137,13 @@ namespace DownKyi.ViewModels.DownloadManager
         /// </summary>
         private void ExecuteRemoveVideoCommand()
         {
+            AlertService alertService = new AlertService(DialogService);
+            ButtonResult result = alertService.ShowWarning(DictionaryResource.GetString("ConfirmDelete"));
+            if (result != ButtonResult.OK)
+            {
+                return;
+            }
+
             App.DownloadedList.Remove(this);
         }
 
