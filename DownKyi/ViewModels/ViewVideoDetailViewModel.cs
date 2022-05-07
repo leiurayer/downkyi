@@ -27,8 +27,6 @@ namespace DownKyi.ViewModels
     {
         public const string Tag = "PageVideoDetail";
 
-        private readonly IDialogService dialogService;
-
         // 保存输入字符串，避免被用户修改
         private string input = null;
 
@@ -106,10 +104,8 @@ namespace DownKyi.ViewModels
 
         #endregion
 
-        public ViewVideoDetailViewModel(IEventAggregator eventAggregator, IDialogService dialogService) : base(eventAggregator)
+        public ViewVideoDetailViewModel(IEventAggregator eventAggregator, IDialogService dialogService) : base(eventAggregator, dialogService)
         {
-            this.dialogService = dialogService;
-
             #region 属性初始化
 
             // 初始化loading gif

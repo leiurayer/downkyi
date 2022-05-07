@@ -293,6 +293,11 @@
     <system:String x:Key="ExtractVideo">提取视频</system:String>
 
     <!--  Dialog  -->
+    <system:String x:Key="Info">信息</system:String>
+    <system:String x:Key="Warning">警告</system:String>
+    <system:String x:Key="Error">错误</system:String>
+
+    <system:String x:Key="Allow">确定</system:String>
     <system:String x:Key="Cancel">取消</system:String>
     <system:String x:Key="SelectDirectory">请选择文件夹</system:String>
 

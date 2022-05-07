@@ -1,6 +1,7 @@
 ﻿using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
+using Prism.Services.Dialogs;
 using System;
 using System.Windows;
 
@@ -9,11 +10,18 @@ namespace DownKyi.ViewModels
     public class BaseViewModel : BindableBase, INavigationAware
     {
         protected readonly IEventAggregator eventAggregator;
+        protected readonly IDialogService dialogService;
         protected string ParentView = string.Empty;
 
         public BaseViewModel(IEventAggregator eventAggregator)
         {
             this.eventAggregator = eventAggregator;
+        }
+
+        public BaseViewModel(IEventAggregator eventAggregator, IDialogService dialogService)
+        {
+            this.eventAggregator = eventAggregator;
+            this.dialogService = dialogService;
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
