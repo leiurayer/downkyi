@@ -2,6 +2,7 @@
 using DownKyi.Core.BiliApi.Zone;
 using DownKyi.Models;
 using Prism.Mvvm;
+using Prism.Services.Dialogs;
 using System.Windows;
 using System.Windows.Media;
 
@@ -9,6 +10,18 @@ namespace DownKyi.ViewModels.DownloadManager
 {
     public class DownloadBaseItem : BindableBase
     {
+        public IDialogService DialogService;
+
+        public DownloadBaseItem()
+        {
+            DialogService = null;
+        }
+
+        public DownloadBaseItem(IDialogService dialogService)
+        {
+            DialogService = dialogService;
+        }
+
         // model数据
         private DownloadBase downloadBase;
         public DownloadBase DownloadBase

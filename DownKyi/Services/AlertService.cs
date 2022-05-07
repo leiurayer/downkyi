@@ -53,6 +53,10 @@ namespace DownKyi.Services
         private ButtonResult ShowMessage(VectorImage image, string type, string message)
         {
             ButtonResult result = ButtonResult.None;
+            if (dialogService == null)
+            {
+                return result;
+            }
 
             DialogParameters param = new DialogParameters
             {

@@ -299,6 +299,8 @@
 
     <system:String x:Key="Allow">确定</system:String>
     <system:String x:Key="Cancel">取消</system:String>
+
+    <system:String x:Key="ConfirmDelete">您确定要删除吗？</system:String>
     <system:String x:Key="SelectDirectory">请选择文件夹</system:String>
 
     <!--  ViewDownloadSetter  -->
