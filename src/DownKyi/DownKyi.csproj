@@ -558,18 +558,6 @@
     <Resource Include="Resources\no-data.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="aria2c.exe">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="aria2_COPYING.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ffmpeg.exe">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="FFmpeg_LICENSE.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Resource Include="Resources\checked.png" />
     <Resource Include="Resources\nodata02.png" />
     <Resource Include="Resources\backgound\9-绿荫秘境.png" />
