@@ -104,7 +104,7 @@ namespace DownKyi.ViewModels.PageViewModels
                 LogManager.Error("ExecuteVideoQualitySelectedCommand", e);
             }
 
-            if (VideoQuality != null && VideoQuality.Quality == 126)
+            if (VideoQuality != null && VideoQuality.Quality == 126 && PlayUrl != null && PlayUrl.Dash != null && PlayUrl.Dash.Dolby != null)
             {
                 ListHelper.AddUnique(AudioQualityFormatList, dolby);
                 AudioQualityFormat = dolby;
