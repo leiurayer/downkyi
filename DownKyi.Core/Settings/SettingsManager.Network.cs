@@ -8,7 +8,7 @@ namespace DownKyi.Core.Settings
         private readonly AllowStatus isLiftingOfRegion = AllowStatus.YES;
 
         // Aria服务器端口号
-        private readonly int ariaListenPort = 6800;
+        private readonly int ariaListenPort = 6801;
 
         // Aria日志等级
         private readonly AriaConfigLogLevel ariaLogLevel = AriaConfigLogLevel.INFO;
