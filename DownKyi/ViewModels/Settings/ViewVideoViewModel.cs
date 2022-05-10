@@ -1,7 +1,9 @@
 ﻿using DownKyi.Core.BiliApi.BiliUtils;
 using DownKyi.Core.FileName;
 using DownKyi.Core.Settings;
+using DownKyi.Core.Settings.Models;
 using DownKyi.Events;
+using DownKyi.Models;
 using DownKyi.Utils;
 using Prism.Commands;
 using Prism.Events;
@@ -9,6 +11,7 @@ using Prism.Regions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 
 namespace DownKyi.ViewModels.Settings
@@ -84,6 +87,48 @@ namespace DownKyi.ViewModels.Settings
             set => SetProperty(ref saveVideoDirectory, value);
         }
 
+        private bool downloadAll;
+        public bool DownloadAll
+        {
+            get { return downloadAll; }
+            set { SetProperty(ref downloadAll, value); }
+        }
+
+        private bool downloadAudio;
+        public bool DownloadAudio
+        {
+            get { return downloadAudio; }
+            set { SetProperty(ref downloadAudio, value); }
+        }
+
+        private bool downloadVideo;
+        public bool DownloadVideo
+        {
+            get { return downloadVideo; }
+            set { SetProperty(ref downloadVideo, value); }
+        }
+
+        private bool downloadDanmaku;
+        public bool DownloadDanmaku
+        {
+            get { return downloadDanmaku; }
+            set { SetProperty(ref downloadDanmaku, value); }
+        }
+
+        private bool downloadSubtitle;
+        public bool DownloadSubtitle
+        {
+            get { return downloadSubtitle; }
+            set { SetProperty(ref downloadSubtitle, value); }
+        }
+
+        private bool downloadCover;
+        public bool DownloadCover
+        {
+            get { return downloadCover; }
+            set { SetProperty(ref downloadCover, value); }
+        }
+
         private ObservableCollection<DisplayFileNamePart> selectedFileName;
         public ObservableCollection<DisplayFileNamePart> SelectedFileName
         {
@@ -105,8 +150,35 @@ namespace DownKyi.ViewModels.Settings
             set => SetProperty(ref selectedOptionalField, value);
         }
 
-        #endregion
+        private List<string> fileNamePartTimeFormatList;
+        public List<string> FileNamePartTimeFormatList
+        {
+            get => fileNamePartTimeFormatList;
+            set => SetProperty(ref fileNamePartTimeFormatList, value);
+        }
 
+        private string selectedFileNamePartTimeFormat;
+        public string SelectedFileNamePartTimeFormat
+        {
+            get => selectedFileNamePartTimeFormat;
+            set => SetProperty(ref selectedFileNamePartTimeFormat, value);
+        }
+
+        private List<OrderFormatDisplay> orderFormatList;
+        public List<OrderFormatDisplay> OrderFormatList
+        {
+            get => orderFormatList;
+            set => SetProperty(ref orderFormatList, value);
+        }
+
+        private OrderFormatDisplay orderFormatDisplay;
+        public OrderFormatDisplay OrderFormatDisplay
+        {
+            get => orderFormatDisplay;
+            set => SetProperty(ref orderFormatDisplay, value);
+        }
+
+        #endregion
 
         public ViewVideoViewModel(IEventAggregator eventAggregator) : base(eventAggregator)
         {
@@ -129,6 +201,20 @@ namespace DownKyi.ViewModels.Settings
 
             // 文件命名格式
             SelectedFileName = new ObservableCollection<DisplayFileNamePart>();
+
+            SelectedFileName.CollectionChanged += new NotifyCollectionChangedEventHandler((sender, e) =>
+            {
+                // 当前显示的命名格式part
+                List<FileNamePart> fileName = new List<FileNamePart>();
+                foreach (DisplayFileNamePart item in SelectedFileName)
+                {
+                    fileName.Add(item.Id);
+                }
+
+                bool isSucceed = SettingsManager.GetInstance().SetFileNameParts(fileName);
+                PublishTip(isSucceed);
+            });
+
             OptionalFields = new ObservableCollection<DisplayFileNamePart>();
             foreach (FileNamePart item in Enum.GetValues(typeof(FileNamePart)))
             {
@@ -137,6 +223,20 @@ namespace DownKyi.ViewModels.Settings
             }
 
             SelectedOptionalField = -1;
+
+            // 文件命名中的时间格式
+            FileNamePartTimeFormatList = new List<string>
+            {
+                "yyyy-MM-dd",
+                "yyyy.MM.dd",
+            };
+
+            // 文件命名中的序号格式
+            OrderFormatList = new List<OrderFormatDisplay>
+            {
+                new OrderFormatDisplay{ Name = DictionaryResource.GetString("OrderFormatNatural"), OrderFormat = OrderFormat.NATURAL },
+                new OrderFormatDisplay{ Name = DictionaryResource.GetString("OrderFormatLeadingZeros"), OrderFormat = OrderFormat.LEADING_ZEROS },
+            };
 
             #endregion
 
@@ -175,6 +275,24 @@ namespace DownKyi.ViewModels.Settings
             // 默认下载目录
             SaveVideoDirectory = SettingsManager.GetInstance().GetSaveVideoRootPath();
 
+            // 下载内容
+            VideoContentSettings videoContent = SettingsManager.GetInstance().GetVideoContent();
+
+            DownloadAudio = videoContent.DownloadAudio;
+            DownloadVideo = videoContent.DownloadVideo;
+            DownloadDanmaku = videoContent.DownloadDanmaku;
+            DownloadSubtitle = videoContent.DownloadSubtitle;
+            DownloadCover = videoContent.DownloadCover;
+
+            if (DownloadAudio && DownloadVideo && DownloadDanmaku && DownloadSubtitle && DownloadCover)
+            {
+                DownloadAll = true;
+            }
+            else
+            {
+                DownloadAll = false;
+            }
+
             // 文件命名格式
             List<FileNamePart> fileNameParts = SettingsManager.GetInstance().GetFileNameParts();
             SelectedFileName.Clear();
@@ -183,6 +301,13 @@ namespace DownKyi.ViewModels.Settings
                 string display = DisplayFileNamePart(item);
                 SelectedFileName.Add(new DisplayFileNamePart { Id = item, Title = display });
             }
+
+            // 文件命名中的时间格式
+            SelectedFileNamePartTimeFormat = SettingsManager.GetInstance().GetFileNamePartTimeFormat();
+
+            // 文件命名中的序号格式
+            OrderFormat orderFormat = SettingsManager.GetInstance().GetOrderFormat();
+            OrderFormatDisplay = OrderFormatList.FirstOrDefault(t => { return t.OrderFormat == orderFormat; });
 
             isOnNavigatedTo = false;
         }
@@ -288,16 +413,157 @@ namespace DownKyi.ViewModels.Settings
             }
         }
 
-        // 选中文件名字段点击事件
-        private DelegateCommand<object> selectedFileNameCommand;
-        public DelegateCommand<object> SelectedFileNameCommand => selectedFileNameCommand ?? (selectedFileNameCommand = new DelegateCommand<object>(ExecuteSelectedFileNameCommand));
+        // 所有内容选择事件
+        private DelegateCommand downloadAllCommand;
+        public DelegateCommand DownloadAllCommand => downloadAllCommand ?? (downloadAllCommand = new DelegateCommand(ExecuteDownloadAllCommand));
 
         /// <summary>
-        /// 选中文件名字段点击事件
+        /// 所有内容选择事件
+        /// </summary>
+        private void ExecuteDownloadAllCommand()
+        {
+            if (DownloadAll)
+            {
+                DownloadAudio = true;
+                DownloadVideo = true;
+                DownloadDanmaku = true;
+                DownloadSubtitle = true;
+                DownloadCover = true;
+            }
+            else
+            {
+                DownloadAudio = false;
+                DownloadVideo = false;
+                DownloadDanmaku = false;
+                DownloadSubtitle = false;
+                DownloadCover = false;
+            }
+
+            SetVideoContent();
+        }
+
+        // 音频选择事件
+        private DelegateCommand downloadAudioCommand;
+        public DelegateCommand DownloadAudioCommand => downloadAudioCommand ?? (downloadAudioCommand = new DelegateCommand(ExecuteDownloadAudioCommand));
+
+        /// <summary>
+        /// 音频选择事件
+        /// </summary>
+        private void ExecuteDownloadAudioCommand()
+        {
+            if (!DownloadAudio)
+            {
+                DownloadAll = false;
+            }
+
+            if (DownloadAudio && DownloadVideo && DownloadDanmaku && DownloadSubtitle && DownloadCover)
+            {
+                DownloadAll = true;
+            }
+
+            SetVideoContent();
+        }
+
+        // 视频选择事件
+        private DelegateCommand downloadVideoCommand;
+        public DelegateCommand DownloadVideoCommand => downloadVideoCommand ?? (downloadVideoCommand = new DelegateCommand(ExecuteDownloadVideoCommand));
+
+        /// <summary>
+        /// 视频选择事件
+        /// </summary>
+        private void ExecuteDownloadVideoCommand()
+        {
+            if (!DownloadVideo)
+            {
+                DownloadAll = false;
+            }
+
+            if (DownloadAudio && DownloadVideo && DownloadDanmaku && DownloadSubtitle && DownloadCover)
+            {
+                DownloadAll = true;
+            }
+
+            SetVideoContent();
+        }
+
+        // 弹幕选择事件
+        private DelegateCommand downloadDanmakuCommand;
+        public DelegateCommand DownloadDanmakuCommand => downloadDanmakuCommand ?? (downloadDanmakuCommand = new DelegateCommand(ExecuteDownloadDanmakuCommand));
+
+        /// <summary>
+        /// 弹幕选择事件
+        /// </summary>
+        private void ExecuteDownloadDanmakuCommand()
+        {
+            if (!DownloadDanmaku)
+            {
+                DownloadAll = false;
+            }
+
+            if (DownloadAudio && DownloadVideo && DownloadDanmaku && DownloadSubtitle && DownloadCover)
+            {
+                DownloadAll = true;
+            }
+
+            SetVideoContent();
+        }
+
+        // 字幕选择事件
+        private DelegateCommand downloadSubtitleCommand;
+        public DelegateCommand DownloadSubtitleCommand => downloadSubtitleCommand ?? (downloadSubtitleCommand = new DelegateCommand(ExecuteDownloadSubtitleCommand));
+
+        /// <summary>
+        /// 字幕选择事件
+        /// </summary>
+        private void ExecuteDownloadSubtitleCommand()
+        {
+            if (!DownloadSubtitle)
+            {
+                DownloadAll = false;
+            }
+
+            if (DownloadAudio && DownloadVideo && DownloadDanmaku && DownloadSubtitle && DownloadCover)
+            {
+                DownloadAll = true;
+            }
+
+            SetVideoContent();
+        }
+
+        // 封面选择事件
+        private DelegateCommand downloadCoverCommand;
+        public DelegateCommand DownloadCoverCommand => downloadCoverCommand ?? (downloadCoverCommand = new DelegateCommand(ExecuteDownloadCoverCommand));
+
+        /// <summary>
+        /// 封面选择事件
+        /// </summary>
+        private void ExecuteDownloadCoverCommand()
+        {
+            if (!DownloadCover)
+            {
+                DownloadAll = false;
+            }
+
+            if (DownloadAudio && DownloadVideo && DownloadDanmaku && DownloadSubtitle && DownloadCover)
+            {
+                DownloadAll = true;
+            }
+
+            SetVideoContent();
+        }
+
+        // 选中文件名字段右键点击事件
+        private DelegateCommand<object> selectedFileNameRightCommand;
+        public DelegateCommand<object> SelectedFileNameRightCommand => selectedFileNameRightCommand ?? (selectedFileNameRightCommand = new DelegateCommand<object>(ExecuteSelectedFileNameRightCommand));
+
+        /// <summary>
+        /// 选中文件名字段右键点击事件
         /// </summary>
         /// <param name="parameter"></param>
-        private void ExecuteSelectedFileNameCommand(object parameter)
+        private void ExecuteSelectedFileNameRightCommand(object parameter)
         {
+            if (parameter == null) { return; }
+
             bool isSucceed = SelectedFileName.Remove((DisplayFileNamePart)parameter);
             if (!isSucceed)
             {
@@ -305,14 +571,16 @@ namespace DownKyi.ViewModels.Settings
                 return;
             }
 
-            List<FileNamePart> fileName = new List<FileNamePart>();
-            foreach (DisplayFileNamePart item in SelectedFileName)
-            {
-                fileName.Add(item.Id);
-            }
+            //List<FileNamePart> fileName = new List<FileNamePart>();
+            //foreach (DisplayFileNamePart item in SelectedFileName)
+            //{
+            //    fileName.Add(item.Id);
+            //}
 
-            isSucceed = SettingsManager.GetInstance().SetFileNameParts(fileName);
-            PublishTip(isSucceed);
+            //isSucceed = SettingsManager.GetInstance().SetFileNameParts(fileName);
+            //PublishTip(isSucceed);
+
+            SelectedOptionalField = -1;
         }
 
         // 可选文件名字段点击事件
@@ -363,8 +631,41 @@ namespace DownKyi.ViewModels.Settings
                 string display = DisplayFileNamePart(item);
                 SelectedFileName.Add(new DisplayFileNamePart { Id = item, Title = display });
             }
+
+            SelectedOptionalField = -1;
         }
 
+        // 文件命名中的时间格式事件
+        private DelegateCommand<object> fileNamePartTimeFormatCommand;
+        public DelegateCommand<object> FileNamePartTimeFormatCommand => fileNamePartTimeFormatCommand ?? (fileNamePartTimeFormatCommand = new DelegateCommand<object>(ExecuteFileNamePartTimeFormatCommand));
+
+        /// <summary>
+        /// 文件命名中的时间格式事件
+        /// </summary>
+        /// <param name="parameter"></param>
+        private void ExecuteFileNamePartTimeFormatCommand(object parameter)
+        {
+            if (!(parameter is string timeFormat)) { return; }
+
+            bool isSucceed = SettingsManager.GetInstance().SetFileNamePartTimeFormat(timeFormat);
+            PublishTip(isSucceed);
+        }
+
+        // 文件命名中的序号格式事件
+        private DelegateCommand<object> orderFormatCommand;
+        public DelegateCommand<object> OrderFormatCommand => orderFormatCommand ?? (orderFormatCommand = new DelegateCommand<object>(ExecuteOrderFormatCommandCommand));
+
+        /// <summary>
+        /// 文件命名中的序号格式事件
+        /// </summary>
+        /// <param name="parameter"></param>
+        private void ExecuteOrderFormatCommandCommand(object parameter)
+        {
+            if (!(parameter is OrderFormatDisplay orderFormatDisplay)) { return; }
+
+            bool isSucceed = SettingsManager.GetInstance().SetOrderFormat(orderFormatDisplay.OrderFormat);
+            PublishTip(isSucceed);
+        }
 
         #endregion
 
@@ -418,21 +719,21 @@ namespace DownKyi.ViewModels.Settings
         }
 
         /// <summary>
-        /// 发送需要显示的tip
+        /// 保存下载视频内容到设置
         /// </summary>
-        /// <param name="isSucceed"></param>
-        private void PublishTip(bool isSucceed)
+        private void SetVideoContent()
         {
-            if (isOnNavigatedTo) { return; }
+            VideoContentSettings videoContent = new VideoContentSettings
+            {
+                DownloadAudio = DownloadAudio,
+                DownloadVideo = DownloadVideo,
+                DownloadDanmaku = DownloadDanmaku,
+                DownloadSubtitle = DownloadSubtitle,
+                DownloadCover = DownloadCover
+            };
 
-            if (isSucceed)
-            {
-                eventAggregator.GetEvent<MessageEvent>().Publish(DictionaryResource.GetString("TipSettingUpdated"));
-            }
-            else
-            {
-                eventAggregator.GetEvent<MessageEvent>().Publish(DictionaryResource.GetString("TipSettingFailed"));
-            }
+            bool isSucceed = SettingsManager.GetInstance().SetVideoContent(videoContent);
+            PublishTip(isSucceed);
         }
 
         /// <summary>
@@ -500,6 +801,24 @@ namespace DownKyi.ViewModels.Settings
             }
 
             return display;
+        }
+
+        /// <summary>
+        /// 发送需要显示的tip
+        /// </summary>
+        /// <param name="isSucceed"></param>
+        private void PublishTip(bool isSucceed)
+        {
+            if (isOnNavigatedTo) { return; }
+
+            if (isSucceed)
+            {
+                eventAggregator.GetEvent<MessageEvent>().Publish(DictionaryResource.GetString("TipSettingUpdated"));
+            }
+            else
+            {
+                eventAggregator.GetEvent<MessageEvent>().Publish(DictionaryResource.GetString("TipSettingFailed"));
+            }
         }
 
     }

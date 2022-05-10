@@ -1,4 +1,5 @@
 ﻿using DownKyi.Core.Settings;
+using DownKyi.Core.Settings.Models;
 using DownKyi.Core.Utils;
 using DownKyi.Events;
 using DownKyi.Images;
@@ -136,14 +137,23 @@ namespace DownKyi.ViewModels.Dialogs
             FolderIcon = NormalIcon.Instance().Folder;
             FolderIcon.Fill = DictionaryResource.GetColor("ColorPrimary");
 
-            DownloadAll = true;
-            DownloadAudio = true;
-            DownloadVideo = true;
-            DownloadDanmaku = true;
-            DownloadSubtitle = true;
-            DownloadCover = true;
+            // 下载内容
+            VideoContentSettings videoContent = SettingsManager.GetInstance().GetVideoContent();
 
-            #endregion
+            DownloadAudio = videoContent.DownloadAudio;
+            DownloadVideo = videoContent.DownloadVideo;
+            DownloadDanmaku = videoContent.DownloadDanmaku;
+            DownloadSubtitle = videoContent.DownloadSubtitle;
+            DownloadCover = videoContent.DownloadCover;
+
+            if (DownloadAudio && DownloadVideo && DownloadDanmaku && DownloadSubtitle && DownloadCover)
+            {
+                DownloadAll = true;
+            }
+            else
+            {
+                DownloadAll = false;
+            }
 
             // 历史下载目录
             DirectoryList = SettingsManager.GetInstance().GetHistoryVideoRootPaths();
@@ -156,6 +166,9 @@ namespace DownKyi.ViewModels.Dialogs
 
             // 是否使用默认下载目录
             IsDefaultDownloadDirectory = SettingsManager.GetInstance().IsUseSaveVideoRootPath() == AllowStatus.YES;
+
+            #endregion
+
         }
 
         #region 命令申明
@@ -213,6 +226,8 @@ namespace DownKyi.ViewModels.Dialogs
                 DownloadSubtitle = false;
                 DownloadCover = false;
             }
+
+            SetVideoContent();
         }
 
         // 音频选择事件
@@ -227,13 +242,14 @@ namespace DownKyi.ViewModels.Dialogs
             if (!DownloadAudio)
             {
                 DownloadAll = false;
-                return;
             }
 
             if (DownloadAudio && DownloadVideo && DownloadDanmaku && DownloadSubtitle && DownloadCover)
             {
                 DownloadAll = true;
             }
+
+            SetVideoContent();
         }
 
         // 视频选择事件
@@ -248,13 +264,14 @@ namespace DownKyi.ViewModels.Dialogs
             if (!DownloadVideo)
             {
                 DownloadAll = false;
-                return;
             }
 
             if (DownloadAudio && DownloadVideo && DownloadDanmaku && DownloadSubtitle && DownloadCover)
             {
                 DownloadAll = true;
             }
+
+            SetVideoContent();
         }
 
         // 弹幕选择事件
@@ -269,13 +286,14 @@ namespace DownKyi.ViewModels.Dialogs
             if (!DownloadDanmaku)
             {
                 DownloadAll = false;
-                return;
             }
 
             if (DownloadAudio && DownloadVideo && DownloadDanmaku && DownloadSubtitle && DownloadCover)
             {
                 DownloadAll = true;
             }
+
+            SetVideoContent();
         }
 
         // 字幕选择事件
@@ -290,13 +308,14 @@ namespace DownKyi.ViewModels.Dialogs
             if (!DownloadSubtitle)
             {
                 DownloadAll = false;
-                return;
             }
 
             if (DownloadAudio && DownloadVideo && DownloadDanmaku && DownloadSubtitle && DownloadCover)
             {
                 DownloadAll = true;
             }
+
+            SetVideoContent();
         }
 
         // 封面选择事件
@@ -311,13 +330,14 @@ namespace DownKyi.ViewModels.Dialogs
             if (!DownloadCover)
             {
                 DownloadAll = false;
-                return;
             }
 
             if (DownloadAudio && DownloadVideo && DownloadDanmaku && DownloadSubtitle && DownloadCover)
             {
                 DownloadAll = true;
             }
+
+            SetVideoContent();
         }
 
         // 确认下载事件
@@ -369,6 +389,23 @@ namespace DownKyi.ViewModels.Dialogs
         }
 
         #endregion
+
+        /// <summary>
+        /// 保存下载视频内容到设置
+        /// </summary>
+        private void SetVideoContent()
+        {
+            VideoContentSettings videoContent = new VideoContentSettings
+            {
+                DownloadAudio = DownloadAudio,
+                DownloadVideo = DownloadVideo,
+                DownloadDanmaku = DownloadDanmaku,
+                DownloadSubtitle = DownloadSubtitle,
+                DownloadCover = DownloadCover
+            };
+
+            SettingsManager.GetInstance().SetVideoContent(videoContent);
+        }
 
         /// <summary>
         /// 设置下载路径

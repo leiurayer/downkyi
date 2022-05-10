@@ -9,6 +9,23 @@ namespace DownKyi.Core.FFmpeg
     {
         private const string Tag = "FFmpegHelper";
 
+        private static readonly bool is64Bit = false;
+        private static readonly string exec = "";
+
+        static FFmpegHelper()
+        {
+            is64Bit = IntPtr.Size == 8;
+
+            if (is64Bit)
+            {
+                exec = Path.Combine(Environment.CurrentDirectory, "ffmpeg.exe");
+            }
+            else
+            {
+                exec = Path.Combine(Environment.CurrentDirectory, "ffmpeg.exe");
+            }
+        }
+
         /// <summary>
         /// 合并音频和视频
         /// </summary>
@@ -24,7 +41,7 @@ namespace DownKyi.Core.FFmpeg
             }
             if (video2 == null || !File.Exists(video2))
             {
-                param = $"-y -i \"{video1}\" -acodec copy -f aac \"{destVideo}\"";
+                param = $"-y -i \"{video1}\" -acodec copy \"{destVideo}\"";
             }
             if (!File.Exists(video1) && !File.Exists(video2)) { return false; }
 
@@ -37,7 +54,7 @@ namespace DownKyi.Core.FFmpeg
                 return false;
             }
 
-            ExcuteProcess("ffmpeg.exe", param, null, (s, e) => Console.WriteLine(e.Data));
+            ExcuteProcess(exec, param, null, (s, e) => Console.WriteLine(e.Data));
 
             try
             {
@@ -92,7 +109,7 @@ namespace DownKyi.Core.FFmpeg
             // ffmpeg -y -f concat -safe 0 -i filelist.txt -c copy output.mkv
             // 加上-y，表示如果有同名文件，则默认覆盖
             string param = $"-y -f concat -safe 0 -i {concatFileName} -c copy \"{destVideo}\" -y";
-            ExcuteProcess("ffmpeg.exe", param, workingDirectory, (s, e) => Console.WriteLine(e.Data));
+            ExcuteProcess(exec, param, workingDirectory, (s, e) => Console.WriteLine(e.Data));
 
             // 删除临时文件
             try
@@ -128,7 +145,7 @@ namespace DownKyi.Core.FFmpeg
         {
             // ffmpeg -y -i "video.mp4" -vf delogo=x=1670:y=50:w=180:h=70:show=1 "delogo.mp4"
             string param = $"-y -i \"{video}\" -vf delogo=x={x}:y={y}:w={width}:h={height}:show=0 \"{destVideo}\" -hide_banner";
-            ExcuteProcess("ffmpeg.exe", param, null, (s, e) =>
+            ExcuteProcess(exec, param, null, (s, e) =>
             {
                 Console.WriteLine(e.Data);
                 action.Invoke(e.Data);
@@ -147,7 +164,7 @@ namespace DownKyi.Core.FFmpeg
             // ffmpeg -i 3.mp4 -vn -y -acodec copy 3.aac
             // ffmpeg -i 3.mp4 -vn -y -acodec copy 3.m4a
             string param = $"-i \"{video}\" -vn -y -acodec copy \"{audio}\" -hide_banner";
-            ExcuteProcess("ffmpeg.exe", param,
+            ExcuteProcess(exec, param,
                 null, (s, e) =>
                 {
                     Console.WriteLine(e.Data);
@@ -166,7 +183,7 @@ namespace DownKyi.Core.FFmpeg
             // 提取视频 （Extract Video）
             // ffmpeg -i Life.of.Pi.has.subtitles.mkv -vcodec copy –an videoNoAudioSubtitle.mp4
             string param = $"-i \"{video}\" -y -vcodec copy -an \"{destVideo}\" -hide_banner";
-            ExcuteProcess("ffmpeg.exe", param,
+            ExcuteProcess(exec, param,
                 null, (s, e) =>
                 {
                     Console.WriteLine(e.Data);
@@ -185,7 +202,7 @@ namespace DownKyi.Core.FFmpeg
             // 提取帧
             // ffmpeg -i caiyilin.wmv -vframes 1 wm.bmp
             string param = $"-i \"{video}\" -y -vframes {number} \"{image}\"";
-            ExcuteProcess("ffmpeg.exe", param, null, (s, e) => Console.WriteLine(e.Data));
+            ExcuteProcess(exec, param, null, (s, e) => Console.WriteLine(e.Data));
         }
 
 

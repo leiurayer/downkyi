@@ -20,8 +20,8 @@ namespace DownKyi.Core.Utils
 
             string machineCodeString = "PC." +
                 machineCode.GetMainBordId() + "." +
-                machineCode.GetCpuInfo() + "." +
-                machineCode.GetDiskID();// + "." +
+                machineCode.GetCpuInfo();// + "." +
+                //machineCode.GetDiskID();// + "." +
                                         //machineCode.GetMoAddress();
             return machineCodeString.Replace(" ", "");
         }

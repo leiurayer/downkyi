@@ -3,6 +3,7 @@ using DownKyi.Core.BiliApi.Bangumi.Models;
 using DownKyi.Core.BiliApi.BiliUtils;
 using DownKyi.Core.BiliApi.VideoStream;
 using DownKyi.Core.BiliApi.VideoStream.Models;
+using DownKyi.Core.Settings;
 using DownKyi.Core.Storage;
 using DownKyi.Core.Utils;
 using DownKyi.Utils;
@@ -120,10 +121,12 @@ namespace DownKyi.Services
                     };
                 }
 
+                // 文件命名中的时间格式
+                string timeFormat = SettingsManager.GetInstance().GetFileNamePartTimeFormat();
                 // 视频发布时间
                 DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1)); // 当地时区
                 DateTime dateTime = startTime.AddSeconds(episode.PubTime);
-                page.PublishTime = dateTime.ToString("yyyy-MM-dd");
+                page.PublishTime = dateTime.ToString(timeFormat);
 
                 pages.Add(page);
             }
@@ -135,11 +138,9 @@ namespace DownKyi.Services
         /// 获取视频章节与剧集
         /// </summary>
         /// <returns></returns>
-        public List<VideoSection> GetVideoSections()
+        public List<VideoSection> GetVideoSections(bool noUgc = false)
         {
             if (bangumiSeason == null) { return null; }
-            if (bangumiSeason.Section == null) { return null; }
-            if (bangumiSeason.Section.Count == 0) { return null; }
 
             List<VideoSection> videoSections = new List<VideoSection>
             {
@@ -151,6 +152,15 @@ namespace DownKyi.Services
                     VideoPages = GetVideoPages()
                 }
             };
+
+            // 不需要其他季或花絮内容
+            if (noUgc)
+            {
+                return videoSections;
+            }
+
+            if (bangumiSeason.Section == null) { return null; }
+            if (bangumiSeason.Section.Count == 0) { return null; }
 
             foreach (BangumiSection section in bangumiSeason.Section)
             {
@@ -194,10 +204,12 @@ namespace DownKyi.Services
                         };
                     }
 
+                    // 文件命名中的时间格式
+                    string timeFormat = SettingsManager.GetInstance().GetFileNamePartTimeFormat();
                     // 视频发布时间
                     DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1)); // 当地时区
                     DateTime dateTime = startTime.AddSeconds(episode.PubTime);
-                    page.PublishTime = dateTime.ToString("yyyy-MM-dd");
+                    page.PublishTime = dateTime.ToString(timeFormat);
 
                     pages.Add(page);
                 }

@@ -4,6 +4,7 @@ using DownKyi.Core.BiliApi.Zone;
 using DownKyi.Core.FileName;
 using DownKyi.Core.Logging;
 using DownKyi.Core.Settings;
+using DownKyi.Core.Settings.Models;
 using DownKyi.Core.Utils;
 using DownKyi.Events;
 using DownKyi.Models;
@@ -103,7 +104,7 @@ namespace DownKyi.Services.Download
                 return;
             }
 
-            videoSections = videoInfoService.GetVideoSections();
+            videoSections = videoInfoService.GetVideoSections(true);
             if (videoSections == null)
             {
                 LogManager.Debug(Tag, "videoSections is not exist.");
@@ -160,6 +161,14 @@ namespace DownKyi.Services.Download
             // 是否使用默认下载目录
             if (SettingsManager.GetInstance().IsUseSaveVideoRootPath() == AllowStatus.YES)
             {
+                // 下载内容
+                VideoContentSettings videoContent = SettingsManager.GetInstance().GetVideoContent();
+                downloadAudio = videoContent.DownloadAudio;
+                downloadVideo = videoContent.DownloadVideo;
+                downloadDanmaku = videoContent.DownloadDanmaku;
+                downloadSubtitle = videoContent.DownloadSubtitle;
+                downloadCover = videoContent.DownloadCover;
+
                 directory = SettingsManager.GetInstance().GetSaveVideoRootPath();
             }
             else
@@ -196,7 +205,14 @@ namespace DownKyi.Services.Download
             return directory;
         }
 
-        public int AddToDownload(IEventAggregator eventAggregator, string directory)
+        /// <summary>
+        /// 添加到下载列表
+        /// </summary>
+        /// <param name="eventAggregator">传递事件的对象</param>
+        /// <param name="directory">下载路径</param>
+        /// <param name="isAll">是否下载所有，包括未选中项</param>
+        /// <returns>添加的数量</returns>
+        public int AddToDownload(IEventAggregator eventAggregator, string directory, bool isAll = false)
         {
             if (directory == null || directory == string.Empty) { return -1; }
             if (videoSections == null) { return -1; }
@@ -212,7 +228,7 @@ namespace DownKyi.Services.Download
                 foreach (VideoPage page in section.VideoPages)
                 {
                     // 只下载选中项，跳过未选中项
-                    if (!page.IsSelected) { continue; }
+                    if (!isAll && !page.IsSelected) { continue; }
 
                     // 没有解析的也跳过
                     if (page.PlayUrl == null) { continue; }
@@ -288,8 +304,7 @@ namespace DownKyi.Services.Download
 
                     // 文件路径
                     List<FileNamePart> fileNameParts = SettingsManager.GetInstance().GetFileNameParts();
-                    FileName fileName = FileName.Builder(fileNameParts)
-                        .SetOrder(page.Order)
+                    FileName fileName = FileName.Builder(fileNameParts)                        
                         .SetSection(Format.FormatFileName(sectionName))
                         .SetMainTitle(Format.FormatFileName(videoInfoView.Title))
                         .SetPageTitle(Format.FormatFileName(page.Name))
@@ -302,7 +317,21 @@ namespace DownKyi.Services.Download
                         .SetBvid(page.Bvid)
                         .SetCid(page.Cid)
                         .SetUpMid(page.Owner.Mid)
-                        .SetUpName(page.Owner.Name);
+                        .SetUpName(Format.FormatFileName(page.Owner.Name));
+
+                    // 序号设置
+                    OrderFormat orderFormat = SettingsManager.GetInstance().GetOrderFormat();
+                    switch (orderFormat)
+                    {
+                        case OrderFormat.NATURAL:
+                            fileName.SetOrder(page.Order);
+                            break;
+                        case OrderFormat.LEADING_ZEROS:
+                            fileName.SetOrder(page.Order, section.VideoPages.Count);
+                            break;
+                    }
+
+                    // 合成绝对路径
                     string filePath = Path.Combine(directory, fileName.RelativePath());
 
                     // 视频类别

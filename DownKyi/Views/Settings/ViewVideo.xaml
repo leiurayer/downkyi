@@ -159,6 +159,63 @@
                     <TextBlock
                         FontSize="12"
                         Foreground="{DynamicResource BrushTextDark}"
+                        Text="{DynamicResource DownloadContent2}" />
+                </GroupBox.Header>
+
+                <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
+                    <CheckBox
+                        Margin="0,0,0,0"
+                        Command="{Binding DownloadAllCommand}"
+                        Content="{DynamicResource DownloadAll}"
+                        Foreground="{DynamicResource BrushTextDark}"
+                        IsChecked="{Binding DownloadAll, Mode=TwoWay}"
+                        Style="{StaticResource CheckBoxStyle}" />
+                    <CheckBox
+                        Margin="40,0,0,0"
+                        Command="{Binding DownloadAudioCommand}"
+                        Content="{DynamicResource DownloadAudio}"
+                        Foreground="{DynamicResource BrushTextDark}"
+                        IsChecked="{Binding DownloadAudio, Mode=TwoWay}"
+                        Style="{StaticResource CheckBoxStyle}" />
+                    <CheckBox
+                        Margin="40,0,0,0"
+                        Command="{Binding DownloadVideoCommand}"
+                        Content="{DynamicResource DownloadVideo}"
+                        Foreground="{DynamicResource BrushTextDark}"
+                        IsChecked="{Binding DownloadVideo, Mode=TwoWay}"
+                        Style="{StaticResource CheckBoxStyle}" />
+                    <CheckBox
+                        Margin="40,0,0,0"
+                        Command="{Binding DownloadDanmakuCommand}"
+                        Content="{DynamicResource DownloadDanmaku}"
+                        Foreground="{DynamicResource BrushTextDark}"
+                        IsChecked="{Binding DownloadDanmaku, Mode=TwoWay}"
+                        Style="{StaticResource CheckBoxStyle}" />
+                    <CheckBox
+                        Margin="40,0,0,0"
+                        Command="{Binding DownloadSubtitleCommand}"
+                        Content="{DynamicResource DownloadSubtitle}"
+                        Foreground="{DynamicResource BrushTextDark}"
+                        IsChecked="{Binding DownloadSubtitle, Mode=TwoWay}"
+                        Style="{StaticResource CheckBoxStyle}" />
+                    <CheckBox
+                        Margin="40,0,0,0"
+                        Command="{Binding DownloadCoverCommand}"
+                        Content="{DynamicResource DownloadCover}"
+                        Foreground="{DynamicResource BrushTextDark}"
+                        IsChecked="{Binding DownloadCover, Mode=TwoWay}"
+                        Style="{StaticResource CheckBoxStyle}" />
+                </StackPanel>
+            </GroupBox>
+
+            <GroupBox
+                Margin="0,20,0,0"
+                Padding="10,10"
+                HorizontalAlignment="Stretch">
+                <GroupBox.Header>
+                    <TextBlock
+                        FontSize="12"
+                        Foreground="{DynamicResource BrushTextDark}"
                         Text="{DynamicResource FileNameParts}" />
                 </GroupBox.Header>
 
@@ -178,34 +235,12 @@
                         Grid.Column="0"
                         FontSize="12"
                         Foreground="{DynamicResource BrushTextDark}"
-                        Text="{DynamicResource FileName}" />
-                    <ListBox
-                        x:Name="nameSelectedFileName"
-                        Grid.Row="0"
-                        Grid.Column="1"
-                        MinHeight="30"
-                        Margin="0,0,0,20"
-                        ItemContainerStyle="{StaticResource TagItem2Style}"
-                        ItemsSource="{Binding SelectedFileName, Mode=TwoWay}"
-                        SelectionMode="Single"
-                        Style="{StaticResource Tag2Style}">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="SelectionChanged">
-                                <i:InvokeCommandAction Command="{Binding SelectedFileNameCommand}" CommandParameter="{Binding ElementName=nameSelectedFileName, Path=SelectedItem}" />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </ListBox>
-
-                    <TextBlock
-                        Grid.Row="1"
-                        Grid.Column="0"
-                        FontSize="12"
-                        Foreground="{DynamicResource BrushTextDark}"
                         Text="{DynamicResource OptionalFields}" />
                     <ListBox
                         Name="nameOptionalFields"
-                        Grid.Row="1"
+                        Grid.Row="0"
                         Grid.Column="1"
+                        Margin="0,0,0,20"
                         ItemContainerStyle="{StaticResource TagItem2Style}"
                         ItemsSource="{Binding OptionalFields, Mode=TwoWay}"
                         SelectedIndex="{Binding SelectedOptionalField}"
@@ -218,20 +253,111 @@
                         </i:Interaction.Triggers>
                     </ListBox>
 
-                    <Button
+                    <TextBlock
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        FontSize="12"
+                        Foreground="{DynamicResource BrushTextDark}"
+                        Text="{DynamicResource FileName}" />
+                    <ListBox
+                        x:Name="nameSelectedFileName"
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        MinHeight="30"
+                        ItemsSource="{Binding SelectedFileName, Mode=TwoWay}"
+                        SelectionMode="Single"
+                        Style="{StaticResource Tag2Style}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseRightButtonUp">
+                                <i:InvokeCommandAction Command="{Binding SelectedFileNameRightCommand}" CommandParameter="{Binding ElementName=nameSelectedFileName, Path=SelectedItem}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+
+                        <ListBox.ItemContainerStyle>
+                            <Style BasedOn="{StaticResource TagItem2Style}" TargetType="{x:Type ListBoxItem}">
+                                <Setter Property="AllowDrop" Value="True" />
+                                <EventSetter Event="PreviewMouseLeftButtonDown" Handler="SelectedFileName_PreviewMouseLeftButtonDown" />
+                                <EventSetter Event="Drop" Handler="SelectedFileName_Drop" />
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                    </ListBox>
+
+                    <Grid
                         Grid.Row="2"
                         Grid.Column="1"
-                        Width="75"
-                        Margin="0,20,0,0"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Center"
-                        Command="{Binding ResetCommand}"
-                        Content="{DynamicResource Reset}"
-                        FontSize="12"
-                        Style="{StaticResource BtnBorderStyle}" />
+                        Margin="0,20,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel
+                            Grid.Column="0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Bottom"
+                            Orientation="Horizontal">
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                FontSize="12"
+                                Foreground="{DynamicResource BrushTextDark}"
+                                Text="{DynamicResource FileNameTimeFormat}" />
+                            <ComboBox
+                                Name="nameFileNamePartTimeFormat"
+                                Width="120"
+                                VerticalAlignment="Center"
+                                VerticalContentAlignment="Center"
+                                ItemsSource="{Binding FileNamePartTimeFormatList}"
+                                SelectedItem="{Binding SelectedFileNamePartTimeFormat}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectionChanged">
+                                        <i:InvokeCommandAction Command="{Binding FileNamePartTimeFormatCommand}" CommandParameter="{Binding ElementName=nameFileNamePartTimeFormat, Path=SelectedItem}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </ComboBox>
+                        </StackPanel>
+
+                        <StackPanel
+                            Grid.Column="1"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Bottom"
+                            Orientation="Horizontal">
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                FontSize="12"
+                                Foreground="{DynamicResource BrushTextDark}"
+                                Text="{DynamicResource OrderFormat}" />
+                            <ComboBox
+                                Name="nameOrderFormat"
+                                Width="120"
+                                VerticalAlignment="Center"
+                                VerticalContentAlignment="Center"
+                                DisplayMemberPath="Name"
+                                ItemsSource="{Binding OrderFormatList}"
+                                SelectedItem="{Binding OrderFormatDisplay}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectionChanged">
+                                        <i:InvokeCommandAction Command="{Binding OrderFormatCommand}" CommandParameter="{Binding ElementName=nameOrderFormat, Path=SelectedItem}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </ComboBox>
+                        </StackPanel>
+
+                        <Button
+                            Grid.Column="2"
+                            Width="75"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            Command="{Binding ResetCommand}"
+                            Content="{DynamicResource Reset}"
+                            FontSize="12"
+                            Style="{StaticResource BtnBorderStyle}" />
+                    </Grid>
+
                 </Grid>
             </GroupBox>
 
+            <StackPanel Margin="10" />
         </StackPanel>
     </ScrollViewer>
 </UserControl>

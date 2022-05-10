@@ -57,9 +57,11 @@ namespace DownKyi.Core.Settings
         {
             try
             {
-                StreamReader streamReader = File.OpenText(settingsName);
+                FileStream fileStream = new FileStream(settingsName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+                StreamReader streamReader = new StreamReader(fileStream, System.Text.Encoding.UTF8);
                 string jsonWordTemplate = streamReader.ReadToEnd();
                 streamReader.Close();
+                fileStream.Close();
 
 #if DEBUG
 #else
@@ -71,7 +73,8 @@ namespace DownKyi.Core.Settings
             }
             catch (Exception e)
             {
-                Logging.LogManager.Error(e);
+                Utils.Debugging.Console.PrintLine("GetSettings()发生异常: {0}", e);
+                Logging.LogManager.Error("SettingsManager", e);
                 return new AppSettings();
             }
         }
@@ -97,7 +100,8 @@ namespace DownKyi.Core.Settings
             }
             catch (Exception e)
             {
-                Logging.LogManager.Error(e);
+                Utils.Debugging.Console.PrintLine("SetSettings()发生异常: {0}", e);
+                Logging.LogManager.Error("SettingsManager", e);
                 return false;
             }
         }

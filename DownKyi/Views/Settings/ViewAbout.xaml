@@ -403,6 +403,7 @@
                     TextWrapping="WrapWithOverflow" />
             </StackPanel>
 
+            <StackPanel Margin="10" />
         </StackPanel>
     </ScrollViewer>
 </UserControl>

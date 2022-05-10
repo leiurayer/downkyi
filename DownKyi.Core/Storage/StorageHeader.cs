@@ -5,6 +5,7 @@ using System;
 using System.Drawing;
 using System.IO;
 using System.Windows.Media.Imaging;
+using WebPSharp;
 
 namespace DownKyi.Core.Storage
 {
@@ -44,10 +45,38 @@ namespace DownKyi.Core.Storage
         {
             if (header == null) { return null; }
 
-            var bitmap = new Bitmap(header);
-            var thumbnail = bitmap.GetThumbnailImage(width, height, null, IntPtr.Zero);
+            try
+            {
+                Bitmap bitmap = new Bitmap(header);
+                Image thumbnail = bitmap.GetThumbnailImage(width, height, null, IntPtr.Zero);
 
-            return StorageUtils.BitmapToBitmapImage(new Bitmap(thumbnail));
+                return StorageUtils.BitmapToBitmapImage(new Bitmap(thumbnail));
+            }
+            catch (ArgumentException)
+            {
+                try
+                {
+                    SimpleDecoder simpleDecoder = new SimpleDecoder(header);
+                    Bitmap bitmap = simpleDecoder.WebPtoBitmap();
+                    Image thumbnail = bitmap.GetThumbnailImage(width, height, null, IntPtr.Zero);
+
+                    return StorageUtils.BitmapToBitmapImage(new Bitmap(thumbnail));
+                }
+                catch (Exception ex)
+                {
+                    Utils.Debugging.Console.PrintLine("GetHeaderThumbnail()发生异常: {0}", ex);
+                    LogManager.Error("StorageHeader.GetHeaderThumbnail()", ex);
+
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                Utils.Debugging.Console.PrintLine("GetHeaderThumbnail()发生异常: {0}", e);
+                LogManager.Error("StorageHeader.GetHeaderThumbnail()", e);
+
+                return null;
+            }
         }
 
         /// <summary>
@@ -58,7 +87,7 @@ namespace DownKyi.Core.Storage
         public string GetHeader(long mid, string name, string url)
         {
             HeaderDb headerDb = new HeaderDb();
-            var header = headerDb.QueryByMid(mid);
+            Header header = headerDb.QueryByMid(mid);
 
             if (header != null)
             {
@@ -73,7 +102,7 @@ namespace DownKyi.Core.Storage
                         Md5 = header.Md5
                     };
                     headerDb.Update(newHeader);
-                    headerDb.Close();
+                    //headerDb.Close();
                     return $"{StorageManager.GetHeader()}/{header.Md5}";
                 }
                 else
@@ -89,12 +118,12 @@ namespace DownKyi.Core.Storage
                             Md5 = md5
                         };
                         headerDb.Insert(newHeader);
-                        headerDb.Close();
+                        //headerDb.Close();
                         return $"{StorageManager.GetHeader()}/{md5}";
                     }
                     else
                     {
-                        headerDb.Close();
+                        //headerDb.Close();
                         return null;
                     }
                 }
@@ -112,12 +141,12 @@ namespace DownKyi.Core.Storage
                         Md5 = md5
                     };
                     headerDb.Insert(newHeader);
-                    headerDb.Close();
+                    //headerDb.Close();
                     return $"{StorageManager.GetHeader()}/{md5}";
                 }
                 else
                 {
-                    headerDb.Close();
+                    //headerDb.Close();
                     return null;
                 }
             }

@@ -67,6 +67,13 @@ namespace DownKyi.ViewModels.Settings
             set { SetProperty(ref selectedParseScope, value); }
         }
 
+        private bool autoDownloadAll;
+        public bool AutoDownloadAll
+        {
+            get => autoDownloadAll;
+            set => SetProperty(ref autoDownloadAll, value);
+        }
+
         #endregion
 
         public ViewBasicViewModel(IEventAggregator eventAggregator) : base(eventAggregator)
@@ -77,10 +84,10 @@ namespace DownKyi.ViewModels.Settings
             // 解析范围
             ParseScopes = new List<ParseScopeDisplay>()
             {
-                new ParseScopeDisplay{ Name =DictionaryResource.GetString("ParseNone"),ParseScope=ParseScope.NONE},
-                new ParseScopeDisplay{ Name =DictionaryResource.GetString("ParseSelectedItem"),ParseScope=ParseScope.SELECTED_ITEM},
-                new ParseScopeDisplay{ Name =DictionaryResource.GetString("ParseCurrentSection"),ParseScope=ParseScope.CURRENT_SECTION},
-                new ParseScopeDisplay{ Name =DictionaryResource.GetString("ParseAll"),ParseScope=ParseScope.ALL}
+                new ParseScopeDisplay{ Name = DictionaryResource.GetString("ParseNone"), ParseScope = ParseScope.NONE },
+                new ParseScopeDisplay{ Name = DictionaryResource.GetString("ParseSelectedItem"), ParseScope = ParseScope.SELECTED_ITEM },
+                new ParseScopeDisplay{ Name = DictionaryResource.GetString("ParseCurrentSection"), ParseScope = ParseScope.CURRENT_SECTION },
+                new ParseScopeDisplay{ Name = DictionaryResource.GetString("ParseAll"), ParseScope = ParseScope.ALL }
             };
 
             #endregion
@@ -112,6 +119,10 @@ namespace DownKyi.ViewModels.Settings
             // 解析范围
             ParseScope parseScope = SettingsManager.GetInstance().GetParseScope();
             SelectedParseScope = ParseScopes.FirstOrDefault(t => { return t.ParseScope == parseScope; });
+
+            // 解析后是否自动下载解析视频
+            AllowStatus isAutoDownloadAll = SettingsManager.GetInstance().IsAutoDownloadAll();
+            AutoDownloadAll = isAutoDownloadAll == AllowStatus.YES;
 
             isOnNavigatedTo = false;
         }
@@ -190,6 +201,21 @@ namespace DownKyi.ViewModels.Settings
             if (!(parameter is ParseScopeDisplay parseScope)) { return; }
 
             bool isSucceed = SettingsManager.GetInstance().SetParseScope(parseScope.ParseScope);
+            PublishTip(isSucceed);
+        }
+
+        // 解析后是否自动下载解析视频
+        private DelegateCommand autoDownloadAllCommand;
+        public DelegateCommand AutoDownloadAllCommand => autoDownloadAllCommand ?? (autoDownloadAllCommand = new DelegateCommand(ExecuteAutoDownloadAllCommand));
+
+        /// <summary>
+        /// 解析后是否自动下载解析视频
+        /// </summary>
+        private void ExecuteAutoDownloadAllCommand()
+        {
+            AllowStatus isAutoDownloadAll = AutoDownloadAll ? AllowStatus.YES : AllowStatus.NO;
+
+            bool isSucceed = SettingsManager.GetInstance().IsAutoDownloadAll(isAutoDownloadAll);
             PublishTip(isSucceed);
         }
 

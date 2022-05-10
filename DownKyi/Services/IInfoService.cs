@@ -7,7 +7,7 @@ namespace DownKyi.Services
     {
         VideoInfoView GetVideoView();
 
-        List<VideoSection> GetVideoSections();
+        List<VideoSection> GetVideoSections(bool noUgc);
 
         List<VideoPage> GetVideoPages();
 

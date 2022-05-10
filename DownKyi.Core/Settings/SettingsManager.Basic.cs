@@ -14,6 +14,9 @@
         // 默认的视频解析项
         private readonly ParseScope parseScope = ParseScope.NONE;
 
+        // 解析后自动下载解析视频
+        private readonly AllowStatus isAutoDownloadAll = AllowStatus.NO;
+
         // 下载完成列表排序
         private readonly DownloadFinishedSort finishedSort = DownloadFinishedSort.DOWNLOAD;
 
@@ -24,7 +27,7 @@
         public AfterDownloadOperation GetAfterDownloadOperation()
         {
             appSettings = GetSettings();
-            if (appSettings.Basic.AfterDownload == 0)
+            if (appSettings.Basic.AfterDownload == AfterDownloadOperation.NOT_SET)
             {
                 // 第一次获取，先设置默认值
                 SetAfterDownloadOperation(afterDownload);
@@ -51,7 +54,7 @@
         public AllowStatus IsListenClipboard()
         {
             appSettings = GetSettings();
-            if (appSettings.Basic.IsListenClipboard == 0)
+            if (appSettings.Basic.IsListenClipboard == AllowStatus.NONE)
             {
                 // 第一次获取，先设置默认值
                 IsListenClipboard(isListenClipboard);
@@ -78,7 +81,7 @@
         public AllowStatus IsAutoParseVideo()
         {
             appSettings = GetSettings();
-            if (appSettings.Basic.IsAutoParseVideo == 0)
+            if (appSettings.Basic.IsAutoParseVideo == AllowStatus.NONE)
             {
                 // 第一次获取，先设置默认值
                 IsAutoParseVideo(isAutoParseVideo);
@@ -105,7 +108,7 @@
         public ParseScope GetParseScope()
         {
             appSettings = GetSettings();
-            if (appSettings.Basic.ParseScope == 0)
+            if (appSettings.Basic.ParseScope == ParseScope.NOT_SET)
             {
                 // 第一次获取，先设置默认值
                 SetParseScope(parseScope);
@@ -126,13 +129,40 @@
         }
 
         /// <summary>
+        /// 解析后是否自动下载解析视频
+        /// </summary>
+        /// <returns></returns>
+        public AllowStatus IsAutoDownloadAll()
+        {
+            appSettings = GetSettings();
+            if (appSettings.Basic.IsAutoDownloadAll == AllowStatus.NONE)
+            {
+                // 第一次获取，先设置默认值
+                IsAutoDownloadAll(isAutoDownloadAll);
+                return isAutoDownloadAll;
+            }
+            return appSettings.Basic.IsAutoDownloadAll;
+        }
+
+        /// <summary>
+        /// 解析后是否自动下载解析视频
+        /// </summary>
+        /// <param name="isAutoDownloadAll"></param>
+        /// <returns></returns>
+        public bool IsAutoDownloadAll(AllowStatus isAutoDownloadAll)
+        {
+            appSettings.Basic.IsAutoDownloadAll = isAutoDownloadAll;
+            return SetSettings();
+        }
+
+        /// <summary>
         /// 获取下载完成列表排序
         /// </summary>
         /// <returns></returns>
         public DownloadFinishedSort GetDownloadFinishedSort()
         {
             appSettings = GetSettings();
-            if (appSettings.Basic.DownloadFinishedSort == 0)
+            if (appSettings.Basic.DownloadFinishedSort == DownloadFinishedSort.NOT_SET)
             {
                 // 第一次获取，先设置默认值
                 SetDownloadFinishedSort(finishedSort);

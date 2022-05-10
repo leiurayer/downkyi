@@ -354,7 +354,7 @@ namespace DownKyi.ViewModels
             }
 
             SearchService searchService = new SearchService();
-            searchService.BiliInput(input, ViewIndexViewModel.Tag, eventAggregator);
+            searchService.BiliInput(input + AppConstant.ClipboardId, ViewIndexViewModel.Tag, eventAggregator);
         }
 
         #endregion

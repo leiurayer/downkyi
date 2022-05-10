@@ -199,7 +199,7 @@ namespace DownKyi.Core.Utils
             destName = Regex.Replace(destName, @"\p{C}+", string.Empty);
 
             // 移除前导和尾部的空白字符、dot符
-            return destName.Trim().TrimStart('.').TrimEnd('.');
+            return destName.Trim('.').Trim();
         }
 
     }

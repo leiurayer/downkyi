@@ -5,15 +5,15 @@
     /// </summary>
     public class DanmakuSettings
     {
-        public AllowStatus DanmakuTopFilter { get; set; }
-        public AllowStatus DanmakuBottomFilter { get; set; }
-        public AllowStatus DanmakuScrollFilter { get; set; }
-        public AllowStatus IsCustomDanmakuResolution { get; set; }
-        public int DanmakuScreenWidth { get; set; }
-        public int DanmakuScreenHeight { get; set; }
-        public string DanmakuFontName { get; set; }
-        public int DanmakuFontSize { get; set; }
-        public int DanmakuLineCount { get; set; }
-        public DanmakuLayoutAlgorithm DanmakuLayoutAlgorithm { get; set; }
+        public AllowStatus DanmakuTopFilter { get; set; } = AllowStatus.NONE;
+        public AllowStatus DanmakuBottomFilter { get; set; } = AllowStatus.NONE;
+        public AllowStatus DanmakuScrollFilter { get; set; } = AllowStatus.NONE;
+        public AllowStatus IsCustomDanmakuResolution { get; set; } = AllowStatus.NONE;
+        public int DanmakuScreenWidth { get; set; } = -1;
+        public int DanmakuScreenHeight { get; set; } = -1;
+        public string DanmakuFontName { get; set; } = null;
+        public int DanmakuFontSize { get; set; } = -1;
+        public int DanmakuLineCount { get; set; } = -1;
+        public DanmakuLayoutAlgorithm DanmakuLayoutAlgorithm { get; set; } = DanmakuLayoutAlgorithm.NONE;
     }
 }

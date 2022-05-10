@@ -1,4 +1,5 @@
 ﻿using DownKyi.Core.FileName;
+using DownKyi.Core.Settings.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -28,6 +29,9 @@ namespace DownKyi.Core.Settings
         // 是否使用默认下载目录，如果是，则每次点击下载选中项时不再询问下载目录
         private readonly AllowStatus isUseSaveVideoRootPath = AllowStatus.NO;
 
+        // 下载内容
+        private readonly VideoContentSettings videoContent = new VideoContentSettings();
+
         // 文件命名格式
         private readonly List<FileNamePart> fileNameParts = new List<FileNamePart>
         {
@@ -44,6 +48,12 @@ namespace DownKyi.Core.Settings
             FileNamePart.VIDEO_CODEC,
         };
 
+        // 文件命名中的时间格式
+        private readonly string fileNamePartTimeFormat = "yyyy-MM-dd";
+
+        // 文件命名中的序号格式
+        private readonly OrderFormat orderFormat = OrderFormat.NATURAL;
+
         /// <summary>
         /// 获取优先下载的视频编码
         /// </summary>
@@ -51,7 +61,7 @@ namespace DownKyi.Core.Settings
         public VideoCodecs GetVideoCodecs()
         {
             appSettings = GetSettings();
-            if (appSettings.Video.VideoCodecs == 0)
+            if (appSettings.Video.VideoCodecs == VideoCodecs.NONE)
             {
                 // 第一次获取，先设置默认值
                 SetVideoCodecs(videoCodecs);
@@ -78,7 +88,7 @@ namespace DownKyi.Core.Settings
         public int GetQuality()
         {
             appSettings = GetSettings();
-            if (appSettings.Video.Quality == 0)
+            if (appSettings.Video.Quality == -1)
             {
                 // 第一次获取，先设置默认值
                 SetQuality(quality);
@@ -105,7 +115,7 @@ namespace DownKyi.Core.Settings
         public int GetAudioQuality()
         {
             appSettings = GetSettings();
-            if (appSettings.Video.AudioQuality == 0)
+            if (appSettings.Video.AudioQuality == -1)
             {
                 // 第一次获取，先设置默认值
                 SetAudioQuality(audioQuality);
@@ -132,7 +142,7 @@ namespace DownKyi.Core.Settings
         public AllowStatus IsTranscodingFlvToMp4()
         {
             appSettings = GetSettings();
-            if (appSettings.Video.IsTranscodingFlvToMp4 == 0)
+            if (appSettings.Video.IsTranscodingFlvToMp4 == AllowStatus.NONE)
             {
                 // 第一次获取，先设置默认值
                 IsTranscodingFlvToMp4(isTranscodingFlvToMp4);
@@ -213,7 +223,7 @@ namespace DownKyi.Core.Settings
         public AllowStatus IsUseSaveVideoRootPath()
         {
             appSettings = GetSettings();
-            if (appSettings.Video.IsUseSaveVideoRootPath == 0)
+            if (appSettings.Video.IsUseSaveVideoRootPath == AllowStatus.NONE)
             {
                 // 第一次获取，先设置默认值
                 IsUseSaveVideoRootPath(isUseSaveVideoRootPath);
@@ -230,6 +240,33 @@ namespace DownKyi.Core.Settings
         public bool IsUseSaveVideoRootPath(AllowStatus isUseSaveVideoRootPath)
         {
             appSettings.Video.IsUseSaveVideoRootPath = isUseSaveVideoRootPath;
+            return SetSettings();
+        }
+
+        /// <summary>
+        /// 获取下载内容
+        /// </summary>
+        /// <returns></returns>
+        public VideoContentSettings GetVideoContent()
+        {
+            appSettings = GetSettings();
+            if (appSettings.Video.VideoContent == null)
+            {
+                // 第一次获取，先设置默认值
+                SetVideoContent(videoContent);
+                return videoContent;
+            }
+            return appSettings.Video.VideoContent;
+        }
+
+        /// <summary>
+        /// 设置下载内容
+        /// </summary>
+        /// <param name="videoContent"></param>
+        /// <returns></returns>
+        public bool SetVideoContent(VideoContentSettings videoContent)
+        {
+            appSettings.Video.VideoContent = videoContent;
             return SetSettings();
         }
 
@@ -257,6 +294,60 @@ namespace DownKyi.Core.Settings
         public bool SetFileNameParts(List<FileNamePart> fileNameParts)
         {
             appSettings.Video.FileNameParts = fileNameParts;
+            return SetSettings();
+        }
+
+        /// <summary>
+        /// 获取文件命名中的时间格式
+        /// </summary>
+        /// <returns></returns>
+        public string GetFileNamePartTimeFormat()
+        {
+            appSettings = GetSettings();
+            if (appSettings.Video.FileNamePartTimeFormat == null || appSettings.Video.FileNamePartTimeFormat == string.Empty)
+            {
+                // 第一次获取，先设置默认值
+                SetFileNamePartTimeFormat(fileNamePartTimeFormat);
+                return fileNamePartTimeFormat;
+            }
+            return appSettings.Video.FileNamePartTimeFormat;
+        }
+
+        /// <summary>
+        /// 设置文件命名中的时间格式
+        /// </summary>
+        /// <param name="fileNamePartTimeFormat"></param>
+        /// <returns></returns>
+        public bool SetFileNamePartTimeFormat(string fileNamePartTimeFormat)
+        {
+            appSettings.Video.FileNamePartTimeFormat = fileNamePartTimeFormat;
+            return SetSettings();
+        }
+
+        /// <summary>
+        /// 获取文件命名中的序号格式
+        /// </summary>
+        /// <returns></returns>
+        public OrderFormat GetOrderFormat()
+        {
+            appSettings = GetSettings();
+            if (appSettings.Video.OrderFormat == OrderFormat.NOT_SET)
+            {
+                // 第一次获取，先设置默认值
+                SetOrderFormat(orderFormat);
+                return orderFormat;
+            }
+            return appSettings.Video.OrderFormat;
+        }
+
+        /// <summary>
+        /// 设置文件命名中的序号格式
+        /// </summary>
+        /// <param name="orderFormat"></param>
+        /// <returns></returns>
+        public bool SetOrderFormat(OrderFormat orderFormat)
+        {
+            appSettings.Video.OrderFormat = orderFormat;
             return SetSettings();
         }
 

@@ -137,25 +137,33 @@ namespace DownKyi.Services.Download
             if (downloadVideo.BackupUrl != null) { urls.AddRange(downloadVideo.BackupUrl); }
 
             // 路径
+            downloading.DownloadBase.FilePath = downloading.DownloadBase.FilePath.Replace("\\", "/");
             string[] temp = downloading.DownloadBase.FilePath.Split('/');
-            string path = downloading.DownloadBase.FilePath.Replace(temp[temp.Length - 1], "");
+            //string path = downloading.DownloadBase.FilePath.Replace(temp[temp.Length - 1], "");
+            string path = downloading.DownloadBase.FilePath.TrimEnd(temp[temp.Length - 1].ToCharArray());
 
             // 下载文件名
             string fileName = Guid.NewGuid().ToString("N");
-
             string key = $"{downloadVideo.Id}_{downloadVideo.Codecs}";
+
             // 老版本数据库没有这一项，会变成null
             if (downloading.Downloading.DownloadedFiles == null)
+            {
                 downloading.Downloading.DownloadedFiles = new List<string>();
-            // 还要检查一下文件有没有被人删掉，删掉的话重新下载
-            // 如果下载视频之后音频文件被人删了。此时gid还是视频的，会下错文件
-            if (downloading.Downloading.DownloadedFiles.Contains(key) && File.Exists(Path.Combine(path, fileName)))
-                return Path.Combine(path, fileName);
+            }
+
             if (downloading.Downloading.DownloadFiles.ContainsKey(key))
             {
                 // 如果存在，表示下载过，
                 // 则继续使用上次下载的文件名
                 fileName = downloading.Downloading.DownloadFiles[key];
+
+                // 还要检查一下文件有没有被人删掉，删掉的话重新下载
+                // 如果下载视频之后音频文件被人删了。此时gid还是视频的，会下错文件
+                if (downloading.Downloading.DownloadedFiles.Contains(key) && File.Exists(Path.Combine(path, fileName)))
+                {
+                    return Path.Combine(path, fileName);
+                }
             }
             else
             {
@@ -502,6 +510,9 @@ namespace DownKyi.Services.Download
         /// </summary>
         private async Task DoWork()
         {
+            // 上次循环时正在下载的数量
+            int lastDownloadingCount = 0;
+
             while (true)
             {
                 int maxDownloading = SettingsManager.GetInstance().GetAriaMaxConcurrentDownloads();
@@ -554,6 +565,13 @@ namespace DownKyi.Services.Download
                     break;
                 }
 
+                // 判断下载列表中的视频是否全部下载完成
+                if (lastDownloadingCount > 0 && downloadingList.Count == 0 && downloadedList.Count > 0)
+                {
+                    AfterDownload();
+                }
+                lastDownloadingCount = downloadingList.Count;
+
                 // 降低CPU占用
                 await Task.Delay(500);
             }
@@ -574,8 +592,11 @@ namespace DownKyi.Services.Download
         private async Task SingleDownload(DownloadingItem downloading)
         {
             // 路径
+            downloading.DownloadBase.FilePath = downloading.DownloadBase.FilePath.Replace("\\", "/");
             string[] temp = downloading.DownloadBase.FilePath.Split('/');
-            string path = downloading.DownloadBase.FilePath.Replace(temp[temp.Length - 1], "");
+            //string path = downloading.DownloadBase.FilePath.Replace(temp[temp.Length - 1], "");
+            string path = downloading.DownloadBase.FilePath.TrimEnd(temp[temp.Length - 1].ToCharArray());
+
             // 路径不存在则创建
             if (!Directory.Exists(path))
             {
@@ -816,6 +837,36 @@ namespace DownKyi.Services.Download
         }
 
         /// <summary>
+        /// 下载完成后的操作
+        /// </summary>
+        private void AfterDownload()
+        {
+            AfterDownloadOperation operation = SettingsManager.GetInstance().GetAfterDownloadOperation();
+            switch (operation)
+            {
+                case AfterDownloadOperation.NONE:
+                    // 没有操作
+                    break;
+                case AfterDownloadOperation.OPEN_FOLDER:
+                    // 打开文件夹
+                    break;
+                case AfterDownloadOperation.CLOSE_APP:
+                    // 关闭程序
+                    App.PropertyChangeAsync(() =>
+                    {
+                        System.Windows.Application.Current.Shutdown();
+                    });
+                    break;
+                case AfterDownloadOperation.CLOSE_SYSTEM:
+                    // 关机
+                    System.Diagnostics.Process.Start("shutdown.exe", "-s");
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        /// <summary>
         /// 获取图片的扩展名
         /// </summary>
         /// <param name="coverUrl"></param>
@@ -973,10 +1024,10 @@ namespace DownKyi.Services.Download
                 {
                     //HttpProxy = $"http://{Settings.GetAriaHttpProxy()}:{Settings.GetAriaHttpProxyListenPort()}",
                     Dir = path,
-                    Out = localFileName
-                    //Header = $"cookie: {Login.GetLoginInfoCookiesString()}\nreferer: https://www.bilibili.com",
-                    //UseHead = "true",
-                    //UserAgent = Utils.GetUserAgent()
+                    Out = localFileName,
+                    Header = $"cookie: {LoginHelper.GetLoginInfoCookiesString()}\nreferer: https://www.bilibili.com",
+                    UseHead = "true",
+                    UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.54 Safari/537.36",
                 };
 
                 // 如果设置了代理，则增加HttpProxy
