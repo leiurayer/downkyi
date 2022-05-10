@@ -952,7 +952,7 @@ namespace DownKyi.Services.Download
                 Token = "downkyi",
                 LogLevel = SettingsManager.GetInstance().GetAriaLogLevel(),
                 MaxConcurrentDownloads = SettingsManager.GetInstance().GetAriaMaxConcurrentDownloads(),
-                MaxConnectionPerServer = 16, // 最大取16
+                MaxConnectionPerServer = 8, // 最大取16
                 Split = SettingsManager.GetInstance().GetAriaSplit(),
                 //MaxTries = 5,
                 MinSplitSize = 10, // 10MB
@@ -983,11 +983,15 @@ namespace DownKyi.Services.Download
         {
             // 暂停所有下载
             var ariaPause = await AriaClient.PauseAllAsync();
+#if DEBUG
             Core.Utils.Debugging.Console.PrintLine(ariaPause.ToString());
+#endif
 
             // 关闭服务器
             bool close = AriaServer.CloseServer();
+#if DEBUG
             Core.Utils.Debugging.Console.PrintLine(close);
+#endif
         }
 
         /// <summary>
@@ -1025,8 +1029,8 @@ namespace DownKyi.Services.Download
                     //HttpProxy = $"http://{Settings.GetAriaHttpProxy()}:{Settings.GetAriaHttpProxyListenPort()}",
                     Dir = path,
                     Out = localFileName,
-                    Header = $"cookie: {LoginHelper.GetLoginInfoCookiesString()}\nreferer: https://www.bilibili.com",
-                    UseHead = "true",
+                    //Header = $"cookie: {LoginHelper.GetLoginInfoCookiesString()}\nreferer: https://www.bilibili.com",
+                    //UseHead = "true",
                     UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.54 Safari/537.36",
                 };
 
