@@ -90,6 +90,7 @@ namespace DownKyi.Core.Aria2cNet.Server
 
                 ExcuteProcess("aria2c.exe",
                     $"--enable-rpc --rpc-listen-all=true --rpc-allow-origin-all=true " +
+                    $"--check-certificate=false " + // 解决问题 SSL/TLS handshake failure
                     $"--rpc-listen-port={config.ListenPort} " +
                     $"--rpc-secret={config.Token} " +
                     $"--input-file=\"{sessionFile}\" --save-session=\"{sessionFile}\" " +
