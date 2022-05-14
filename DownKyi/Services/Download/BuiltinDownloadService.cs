@@ -1,6 +1,7 @@
 ﻿using DownKyi.Core.BiliApi.Login;
 using DownKyi.Core.BiliApi.VideoStream.Models;
 using DownKyi.Core.Downloader;
+using DownKyi.Core.Logging;
 using DownKyi.Core.Settings;
 using DownKyi.Core.Utils;
 using DownKyi.Models;
@@ -279,32 +280,45 @@ namespace DownKyi.Services.Download
                 // 下载进度回调
                 mtd.TotalProgressChanged += (sender, e) =>
                 {
-                    // 状态更新
-                    var downloader = sender as MultiThreadDownloader;
-
-                    // 下载进度百分比
-                    float percent = downloader.TotalProgress;
-
-                    // 根据进度判断本次是否需要更新UI
-                    if (Math.Abs(percent - downloading.Progress) < 0.01) { return; }
-                    if (Math.Abs(percent - downloading.Progress) > 5) { return; }
-
-                    // 下载进度
-                    downloading.Progress = percent;
-
-                    // 下载大小
-                    downloading.DownloadingFileSize = Format.FormatFileSize(downloader.TotalBytesReceived) + "/" + Format.FormatFileSize(downloader.Size);
-
-                    // 下载速度
-                    long speed = (long)downloader.TotalSpeedInBytes;
-
-                    // 下载速度显示
-                    downloading.SpeedDisplay = Format.FormatSpeed(speed);
-
-                    // 最大下载速度
-                    if (downloading.Downloading.MaxSpeed < speed)
+                    try
                     {
-                        downloading.Downloading.MaxSpeed = speed;
+                        // 状态更新
+                        var downloader = sender as MultiThreadDownloader;
+
+                        // 下载进度百分比
+                        float percent = downloader.TotalProgress;
+
+                        // 根据进度判断本次是否需要更新UI
+                        if (Math.Abs(percent - downloading.Progress) < 0.01) { return; }
+                        if (Math.Abs(percent - downloading.Progress) > 5) { return; }
+
+                        // 下载进度
+                        downloading.Progress = percent;
+
+                        // 下载大小
+                        downloading.DownloadingFileSize = Format.FormatFileSize(downloader.TotalBytesReceived) + "/" + Format.FormatFileSize(downloader.Size);
+
+                        // 下载速度
+                        long speed = (long)downloader.TotalSpeedInBytes;
+
+                        // 下载速度显示
+                        downloading.SpeedDisplay = Format.FormatSpeed(speed);
+
+                        // 最大下载速度
+                        if (downloading.Downloading.MaxSpeed < speed)
+                        {
+                            downloading.Downloading.MaxSpeed = speed;
+                        }
+                    }
+                    catch (InvalidOperationException ex)
+                    {
+                        Core.Utils.Debugging.Console.PrintLine($"{Tag}.DownloadByBuiltin()发生InvalidOperationException异常: {0}", ex);
+                        LogManager.Error($"{Tag}.DownloadByBuiltin()", ex);
+                    }
+                    catch (Exception ex)
+                    {
+                        Core.Utils.Debugging.Console.PrintLine($"{Tag}.DownloadByBuiltin()发生异常: {0}", ex);
+                        LogManager.Error($"{Tag}.DownloadByBuiltin()", ex);
                     }
                 };
 

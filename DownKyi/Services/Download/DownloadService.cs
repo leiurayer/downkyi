@@ -153,8 +153,8 @@ namespace DownKyi.Services.Download
             }
             catch (Exception e)
             {
-                Core.Utils.Debugging.Console.PrintLine(e);
-                LogManager.Error(Tag, e);
+                Core.Utils.Debugging.Console.PrintLine($"{Tag}.DownloadCover()发生异常: {0}", e);
+                LogManager.Error($"{Tag}.DownloadCover()", e);
             }
 
             return null;
@@ -378,20 +378,20 @@ namespace DownKyi.Services.Download
                 }
                 catch (InvalidOperationException e)
                 {
-                    Core.Utils.Debugging.Console.PrintLine("Start DoWork()发生InvalidOperationException异常: {0}", e);
-                    LogManager.Error("Start DoWork() InvalidOperationException", e);
+                    Core.Utils.Debugging.Console.PrintLine($"{Tag}.DoWork()发生InvalidOperationException异常: {0}", e);
+                    LogManager.Error($"{Tag}.DoWork() InvalidOperationException", e);
                 }
                 catch (Exception e)
                 {
-                    Core.Utils.Debugging.Console.PrintLine("Start DoWork()发生异常: {0}", e);
-                    LogManager.Error("Start DoWork()", e);
+                    Core.Utils.Debugging.Console.PrintLine($"{Tag}.DoWork()发生异常: {0}", e);
+                    LogManager.Error($"{Tag}.DoWork()", e);
                 }
 
                 // 判断是否该结束线程，若为true，跳出while循环
                 if (cancellationToken.IsCancellationRequested)
                 {
-                    Core.Utils.Debugging.Console.PrintLine("AriaDownloadService: 下载服务结束，跳出while循环");
-                    LogManager.Debug(Tag, "下载服务结束");
+                    Core.Utils.Debugging.Console.PrintLine($"{Tag}.DoWork() 下载服务结束，跳出while循环");
+                    LogManager.Debug($"{Tag}.DoWork()", "下载服务结束");
                     break;
                 }
 
@@ -409,8 +409,8 @@ namespace DownKyi.Services.Download
             await Task.WhenAny(Task.WhenAll(downloadingTasks), Task.Delay(30000));
             foreach (Task tsk in downloadingTasks.FindAll((m) => !m.IsCompleted))
             {
-                Core.Utils.Debugging.Console.PrintLine("AriaDownloadService: 任务结束超时");
-                LogManager.Debug(Tag, "任务结束超时");
+                Core.Utils.Debugging.Console.PrintLine($"{Tag}.DoWork() 任务结束超时");
+                LogManager.Debug($"{Tag}.DoWork()", "任务结束超时");
             }
         }
 
