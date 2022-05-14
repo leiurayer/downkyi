@@ -345,7 +345,7 @@ namespace DownKyi.Services.Download
 
             while (true)
             {
-                int maxDownloading = SettingsManager.GetInstance().GetAriaMaxConcurrentDownloads();
+                int maxDownloading = SettingsManager.GetInstance().GetMaxCurrentDownloads();
                 int downloadingCount = 0;
 
                 try

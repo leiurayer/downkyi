@@ -282,7 +282,7 @@ namespace DownKyi.Services.Download
                 ListenPort = SettingsManager.GetInstance().GetAriaListenPort(),
                 Token = "downkyi",
                 LogLevel = SettingsManager.GetInstance().GetAriaLogLevel(),
-                MaxConcurrentDownloads = SettingsManager.GetInstance().GetAriaMaxConcurrentDownloads(),
+                MaxConcurrentDownloads = SettingsManager.GetInstance().GetMaxCurrentDownloads(),
                 MaxConnectionPerServer = 8, // 最大取16
                 Split = SettingsManager.GetInstance().GetAriaSplit(),
                 //MaxTries = 5,

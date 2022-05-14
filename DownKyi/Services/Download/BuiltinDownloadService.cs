@@ -1,6 +1,7 @@
 ﻿using DownKyi.Core.BiliApi.Login;
 using DownKyi.Core.BiliApi.VideoStream.Models;
 using DownKyi.Core.Downloader;
+using DownKyi.Core.Settings;
 using DownKyi.Core.Utils;
 using DownKyi.Models;
 using DownKyi.Utils;
@@ -256,8 +257,11 @@ namespace DownKyi.Services.Download
             foreach (var url in urls)
             {
                 // 创建下载器
+                var mtd = new MultiThreadDownloader(url,
+                    Environment.GetEnvironmentVariable("temp"),
+                    Path.Combine(path, localFileName),
+                    SettingsManager.GetInstance().GetSplit());
                 // 配置网络请求
-                var mtd = new MultiThreadDownloader(url, Environment.GetEnvironmentVariable("temp"), Path.Combine(path, localFileName), 8);
                 mtd.Configure(req =>
                 {
                     req.CookieContainer = LoginHelper.GetLoginInfoCookies();
@@ -265,10 +269,10 @@ namespace DownKyi.Services.Download
                     req.Referer = "https://www.bilibili.com";
                     req.Headers.Add("Origin", "https://www.bilibili.com");
 
-                    if (false)
+                    if (SettingsManager.GetInstance().IsHttpProxy() == AllowStatus.YES)
                     {
-                        // TODO
-                        req.Proxy = new WebProxy("127.0.0.1", 1080);
+                        req.Proxy = new WebProxy(SettingsManager.GetInstance().GetHttpProxy(),
+                            SettingsManager.GetInstance().GetHttpProxyListenPort());
                     }
                 });
 
