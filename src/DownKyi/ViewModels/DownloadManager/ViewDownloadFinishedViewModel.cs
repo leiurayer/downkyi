@@ -1,4 +1,5 @@
-﻿using DownKyi.Core.Settings;
+﻿using DownKyi.Core.Logging;
+using DownKyi.Core.Settings;
 using DownKyi.Services;
 using DownKyi.Utils;
 using Prism.Commands;
@@ -40,21 +41,12 @@ namespace DownKyi.ViewModels.DownloadManager
         {
             // 初始化DownloadedList
             DownloadedList = App.DownloadedList;
-            DownloadedList.CollectionChanged += new NotifyCollectionChangedEventHandler(async (object sender, NotifyCollectionChangedEventArgs e) =>
+            DownloadedList.CollectionChanged += new NotifyCollectionChangedEventHandler((sender, e) =>
             {
-                await Task.Run(() =>
+                if (e.Action == NotifyCollectionChangedAction.Add)
                 {
-                    if (e.Action == NotifyCollectionChangedAction.Add)
-                    {
-                        foreach (var item in DownloadedList)
-                        {
-                            if (item != null && item.DialogService == null)
-                            {
-                                item.DialogService = dialogService;
-                            }
-                        }
-                    }
-                });
+                    SetDialogService();
+                }
             });
             SetDialogService();
 
@@ -144,16 +136,24 @@ namespace DownKyi.ViewModels.DownloadManager
 
         private async void SetDialogService()
         {
-            await Task.Run(() =>
+            try
             {
-                foreach (var item in DownloadedList)
+                await Task.Run(() =>
                 {
-                    if (item != null && item.DialogService == null)
+                    foreach (var item in DownloadedList)
                     {
-                        item.DialogService = dialogService;
+                        if (item != null && item.DialogService == null)
+                        {
+                            item.DialogService = dialogService;
+                        }
                     }
-                }
-            });
+                });
+            }
+            catch (Exception e)
+            {
+                Core.Utils.Debugging.Console.PrintLine("SetDialogService()发生异常: {0}", e);
+                LogManager.Error($"{Tag}.SetDialogService()", e);
+            }
         }
 
         public override void OnNavigatedFrom(NavigationContext navigationContext)
