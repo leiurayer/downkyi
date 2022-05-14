@@ -218,6 +218,7 @@ namespace DownKyi.Services.Download
         /// 强制暂停
         /// </summary>
         /// <param name="downloading"></param>
+        /// <exception cref="OperationCanceledException"></exception>
         protected override void Pause(DownloadingItem downloading)
         {
             cancellationToken.ThrowIfCancellationRequested();
@@ -422,6 +423,7 @@ namespace DownKyi.Services.Download
 
             if (video == null) { return; }
 
+            // 下载进度百分比
             float percent = 0;
             if (totalLength != 0)
             {

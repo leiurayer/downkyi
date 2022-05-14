@@ -50,6 +50,11 @@ namespace DownKyi.Services.Download
             // 更新状态显示
             downloading.DownloadStatusTitle = DictionaryResource.GetString("WhileDownloading");
             downloading.DownloadContent = DictionaryResource.GetString("DownloadingAudio");
+            // 下载大小
+            downloading.DownloadingFileSize = string.Empty;
+            downloading.Progress = 0;
+            // 下载速度
+            downloading.SpeedDisplay = string.Empty;
 
             // 如果没有Dash，返回null
             if (downloading.PlayUrl == null || downloading.PlayUrl.Dash == null) { return null; }
@@ -88,6 +93,11 @@ namespace DownKyi.Services.Download
             // 更新状态显示
             downloading.DownloadStatusTitle = DictionaryResource.GetString("WhileDownloading");
             downloading.DownloadContent = DictionaryResource.GetString("DownloadingVideo");
+            // 下载大小
+            downloading.DownloadingFileSize = string.Empty;
+            downloading.Progress = 0;
+            // 下载速度
+            downloading.SpeedDisplay = string.Empty;
 
             // 如果没有Dash，返回null
             if (downloading.PlayUrl == null || downloading.PlayUrl.Dash == null) { return null; }
@@ -293,6 +303,7 @@ namespace DownKyi.Services.Download
             downloading.DownloadContent = string.Empty;
             // 下载大小
             downloading.DownloadingFileSize = string.Empty;
+            downloading.Progress = 0;
             // 下载速度
             downloading.SpeedDisplay = string.Empty;
 
@@ -634,8 +645,10 @@ namespace DownKyi.Services.Download
                     }));
                 }));
             }
-            catch (OperationCanceledException)
+            catch (OperationCanceledException e)
             {
+                Core.Utils.Debugging.Console.PrintLine(Tag, e.ToString());
+                LogManager.Debug(Tag, e.Message);
             }
         }
 
@@ -649,6 +662,7 @@ namespace DownKyi.Services.Download
             downloading.DownloadContent = string.Empty;
             downloading.DownloadingFileSize = string.Empty;
             downloading.SpeedDisplay = string.Empty;
+            downloading.Progress = 0;
 
             downloading.Downloading.DownloadStatus = DownloadStatus.DOWNLOAD_FAILED;
             downloading.StartOrPause = ButtonIcon.Instance().Retry;

@@ -385,10 +385,34 @@ namespace DownKyi.Core.Downloader
         /// <summary>
         /// 开始下载
         /// </summary>
-        public void Start()
+        public void StartAsync()
+        {
+            //Task th = new Task(CreateFirstPartitions);
+            //th.Start();
+            StartAsync(false);
+        }
+
+        /// <summary>
+        /// 开始下载
+        /// </summary>
+        /// <param name="isWait"></param>
+        public void StartAsync(bool isWait)
         {
             Task th = new Task(CreateFirstPartitions);
             th.Start();
+
+            if (isWait)
+            {
+                th.Wait();
+            }
+        }
+
+        /// <summary>
+        /// 开始下载
+        /// </summary>
+        public void Start()
+        {
+            CreateFirstPartitions();
         }
 
         /// <summary>

@@ -122,7 +122,8 @@ namespace DownKyi
             });
 
             // 启动下载服务
-            downloadService = new AriaDownloadService(DownloadingList, DownloadedList);
+            //downloadService = new AriaDownloadService(DownloadingList, DownloadedList);
+            downloadService = new BuiltinDownloadService(DownloadingList, DownloadedList);
             downloadService.Start();
 
             return Container.Resolve<MainWindow>();
