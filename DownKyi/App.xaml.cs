@@ -14,7 +14,6 @@ using DownKyi.Views.Settings;
 using DownKyi.Views.Toolbox;
 using DownKyi.Views.UserSpace;
 using Prism.Ioc;
-using Prism.Services.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -122,8 +121,22 @@ namespace DownKyi
             });
 
             // 启动下载服务
-            downloadService = new AriaDownloadService(DownloadingList, DownloadedList);
-            downloadService.Start();
+            var download = SettingsManager.GetInstance().GetDownloader();
+            switch (download)
+            {
+                case Downloader.NOT_SET:
+                    break;
+                case Downloader.BUILT_IN:
+                    downloadService = new BuiltinDownloadService(DownloadingList, DownloadedList);
+                    break;
+                case Downloader.ARIA:
+                    downloadService = new AriaDownloadService(DownloadingList, DownloadedList);
+                    break;
+            }
+            if (downloadService != null)
+            {
+                downloadService.Start();
+            }
 
             return Container.Resolve<MainWindow>();
         }

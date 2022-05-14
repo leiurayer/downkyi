@@ -290,6 +290,7 @@
     <Compile Include="Logging\LogLevel.cs" />
     <Compile Include="Logging\LogManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Settings\Downloader.cs" />
     <Compile Include="Settings\Models\VideoContentSettings.cs" />
     <Compile Include="Settings\OrderFormat.cs" />
     <Compile Include="Settings\ParseScope.cs" />
