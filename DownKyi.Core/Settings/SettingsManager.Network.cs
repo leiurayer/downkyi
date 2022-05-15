@@ -7,14 +7,25 @@ namespace DownKyi.Core.Settings
         // 是否开启解除地区限制
         private readonly AllowStatus isLiftingOfRegion = AllowStatus.YES;
 
+        // 下载器
+        private readonly Downloader downloader = Downloader.ARIA;
+
+        // 最大同时下载数(任务数)
+        private readonly int maxCurrentDownloads = 3;
+
+        // 单文件最大线程数
+        private readonly int split = 8;
+
+        // HttpProxy代理
+        private readonly AllowStatus isHttpProxy = AllowStatus.NO;
+        private readonly string httpProxy = "";
+        private readonly int httpProxyListenPort = 0;
+
         // Aria服务器端口号
-        private readonly int ariaListenPort = 6801;
+        private readonly int ariaListenPort = 6800;
 
         // Aria日志等级
         private readonly AriaConfigLogLevel ariaLogLevel = AriaConfigLogLevel.INFO;
-
-        // Aria最大同时下载数(任务数)
-        private readonly int ariaMaxConcurrentDownloads = 3;
 
         // Aria单文件最大线程数
         private readonly int ariaSplit = 5;
@@ -57,6 +68,168 @@ namespace DownKyi.Core.Settings
         public bool IsLiftingOfRegion(AllowStatus isLiftingOfRegion)
         {
             appSettings.Network.IsLiftingOfRegion = isLiftingOfRegion;
+            return SetSettings();
+        }
+
+        /// <summary>
+        /// 获取下载器
+        /// </summary>
+        /// <returns></returns>
+        public Downloader GetDownloader()
+        {
+            appSettings = GetSettings();
+            if (appSettings.Network.Downloader == Downloader.NOT_SET)
+            {
+                // 第一次获取，先设置默认值
+                SetDownloader(downloader);
+                return downloader;
+            }
+            return appSettings.Network.Downloader;
+        }
+
+        /// <summary>
+        /// 设置下载器
+        /// </summary>
+        /// <param name="downloader"></param>
+        /// <returns></returns>
+        public bool SetDownloader(Downloader downloader)
+        {
+            appSettings.Network.Downloader = downloader;
+            return SetSettings();
+        }
+
+        /// <summary>
+        /// 获取最大同时下载数(任务数)
+        /// </summary>
+        /// <returns></returns>
+        public int GetMaxCurrentDownloads()
+        {
+            appSettings = GetSettings();
+            if (appSettings.Network.MaxCurrentDownloads == -1)
+            {
+                // 第一次获取，先设置默认值
+                SetMaxCurrentDownloads(maxCurrentDownloads);
+                return maxCurrentDownloads;
+            }
+            return appSettings.Network.MaxCurrentDownloads;
+        }
+
+        /// <summary>
+        /// 设置最大同时下载数(任务数)
+        /// </summary>
+        /// <param name="ariaMaxConcurrentDownloads"></param>
+        /// <returns></returns>
+        public bool SetMaxCurrentDownloads(int maxCurrentDownloads)
+        {
+            appSettings.Network.MaxCurrentDownloads = maxCurrentDownloads;
+            return SetSettings();
+        }
+
+        /// <summary>
+        /// 获取单文件最大线程数
+        /// </summary>
+        /// <returns></returns>
+        public int GetSplit()
+        {
+            appSettings = GetSettings();
+            if (appSettings.Network.Split == -1)
+            {
+                // 第一次获取，先设置默认值
+                SetSplit(split);
+                return split;
+            }
+            return appSettings.Network.Split;
+        }
+
+        /// <summary>
+        /// 设置单文件最大线程数
+        /// </summary>
+        /// <param name="split"></param>
+        /// <returns></returns>
+        public bool SetSplit(int split)
+        {
+            appSettings.Network.Split = split;
+            return SetSettings();
+        }
+
+        /// <summary>
+        /// 获取是否开启Http代理
+        /// </summary>
+        /// <returns></returns>
+        public AllowStatus IsHttpProxy()
+        {
+            appSettings = GetSettings();
+            if (appSettings.Network.IsHttpProxy == AllowStatus.NONE)
+            {
+                // 第一次获取，先设置默认值
+                IsHttpProxy(isHttpProxy);
+                return isHttpProxy;
+            }
+            return appSettings.Network.IsHttpProxy;
+        }
+
+        /// <summary>
+        /// 设置是否开启Http代理
+        /// </summary>
+        /// <param name="isHttpProxy"></param>
+        /// <returns></returns>
+        public bool IsHttpProxy(AllowStatus isHttpProxy)
+        {
+            appSettings.Network.IsHttpProxy = isHttpProxy;
+            return SetSettings();
+        }
+
+        /// <summary>
+        /// 获取Http代理的地址
+        /// </summary>
+        /// <returns></returns>
+        public string GetHttpProxy()
+        {
+            appSettings = GetSettings();
+            if (appSettings.Network.HttpProxy == null)
+            {
+                // 第一次获取，先设置默认值
+                SetHttpProxy(httpProxy);
+                return httpProxy;
+            }
+            return appSettings.Network.HttpProxy;
+        }
+
+        /// <summary>
+        /// 设置Aria的http代理的地址
+        /// </summary>
+        /// <param name="httpProxy"></param>
+        /// <returns></returns>
+        public bool SetHttpProxy(string httpProxy)
+        {
+            appSettings.Network.HttpProxy = httpProxy;
+            return SetSettings();
+        }
+
+        /// <summary>
+        /// 获取Http代理的端口
+        /// </summary>
+        /// <returns></returns>
+        public int GetHttpProxyListenPort()
+        {
+            appSettings = GetSettings();
+            if (appSettings.Network.HttpProxyListenPort == -1)
+            {
+                // 第一次获取，先设置默认值
+                SetHttpProxyListenPort(httpProxyListenPort);
+                return httpProxyListenPort;
+            }
+            return appSettings.Network.HttpProxyListenPort;
+        }
+
+        /// <summary>
+        /// 设置Http代理的端口
+        /// </summary>
+        /// <param name="httpProxyListenPort"></param>
+        /// <returns></returns>
+        public bool SetHttpProxyListenPort(int httpProxyListenPort)
+        {
+            appSettings.Network.HttpProxyListenPort = httpProxyListenPort;
             return SetSettings();
         }
 
@@ -111,33 +284,6 @@ namespace DownKyi.Core.Settings
         public bool SetAriaLogLevel(AriaConfigLogLevel ariaLogLevel)
         {
             appSettings.Network.AriaLogLevel = ariaLogLevel;
-            return SetSettings();
-        }
-
-        /// <summary>
-        /// 获取Aria最大同时下载数(任务数)
-        /// </summary>
-        /// <returns></returns>
-        public int GetAriaMaxConcurrentDownloads()
-        {
-            appSettings = GetSettings();
-            if (appSettings.Network.AriaMaxConcurrentDownloads == -1)
-            {
-                // 第一次获取，先设置默认值
-                SetAriaMaxConcurrentDownloads(ariaMaxConcurrentDownloads);
-                return ariaMaxConcurrentDownloads;
-            }
-            return appSettings.Network.AriaMaxConcurrentDownloads;
-        }
-
-        /// <summary>
-        /// 设置Aria最大同时下载数(任务数)
-        /// </summary>
-        /// <param name="ariaMaxConcurrentDownloads"></param>
-        /// <returns></returns>
-        public bool SetAriaMaxConcurrentDownloads(int ariaMaxConcurrentDownloads)
-        {
-            appSettings.Network.AriaMaxConcurrentDownloads = ariaMaxConcurrentDownloads;
             return SetSettings();
         }
 

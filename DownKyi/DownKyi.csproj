@@ -117,6 +117,7 @@
     <Compile Include="Models\OrderFormatDisplay.cs" />
     <Compile Include="Services\AlertService.cs" />
     <Compile Include="Services\Download\AddToDownloadService.cs" />
+    <Compile Include="Services\Download\BuiltinDownloadService.cs" />
     <Compile Include="Services\Download\DownloadStorageService.cs" />
     <Compile Include="Services\SearchService.cs" />
     <Compile Include="ViewModels\Friend\ViewFollowerViewModel.cs" />

@@ -188,6 +188,9 @@
     <system:String x:Key="AutoDownloadAll">解析后自动下载已解析视频</system:String>
 
     <system:String x:Key="Network">网络</system:String>
+    <system:String x:Key="SelectDownloader">选择下载器（重启生效）：</system:String>
+    <system:String x:Key="BuiltinDownloader">内建下载器</system:String>
+    <system:String x:Key="Aria2cDownloader">Aria2下载器</system:String>
     <system:String x:Key="AriaServerPort">Aria服务器端口：</system:String>
     <system:String x:Key="AriaLogLevel">Aria日志等级：</system:String>
     <system:String x:Key="AriaMaxConcurrentDownloads">Aria同时下载数：</system:String>
@@ -195,10 +198,12 @@
     <system:String x:Key="AriaDownloadLimit">Aria下载速度限制(KB/s)</system:String>
     <system:String x:Key="AriaMaxOverallDownloadLimit">全局下载速度限制[0: 无限制]</system:String>
     <system:String x:Key="AriaMaxDownloadLimit">单任务下载速度限制[0: 无限制]</system:String>
-    <system:String x:Key="IsAriaHttpProxy">使用Http代理</system:String>
-    <system:String x:Key="AriaHttpProxy">代理地址：</system:String>
-    <system:String x:Key="AriaHttpProxyPort">端口：</system:String>
     <system:String x:Key="AriaFileAllocation">Aria文件预分配：</system:String>
+    <system:String x:Key="IsHttpProxy">使用Http代理</system:String>
+    <system:String x:Key="HttpProxy">代理地址：</system:String>
+    <system:String x:Key="HttpProxyPort">端口：</system:String>
+    <system:String x:Key="MaxCurrentDownloads">同时下载数：</system:String>
+    <system:String x:Key="Split">最大线程数：</system:String>
 
     <system:String x:Key="Video">视频</system:String>
     <system:String x:Key="FirstVideoCodecs">优先下载的视频编码：</system:String>
@@ -305,6 +310,7 @@
     <system:String x:Key="Allow">确定</system:String>
     <system:String x:Key="Cancel">取消</system:String>
 
+    <system:String x:Key="ConfirmReboot">此项需重启生效，您确定要重新启动吗？</system:String>
     <system:String x:Key="ConfirmDelete">您确定要删除吗？</system:String>
     <system:String x:Key="SelectDirectory">请选择文件夹</system:String>
 
