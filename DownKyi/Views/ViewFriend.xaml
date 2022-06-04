@@ -51,7 +51,6 @@
                 Name="nameTabHeaders"
                 Grid.Column="1"
                 BorderThickness="0"
-                IsEnabled="{Binding IsEnabled}"
                 ItemsSource="{Binding TabHeaders}"
                 ScrollViewer.HorizontalScrollBarVisibility="Hidden"
                 ScrollViewer.VerticalScrollBarVisibility="Disabled"
