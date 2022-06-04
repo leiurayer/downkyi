@@ -519,11 +519,12 @@ namespace DownKyi.Services.Download
                     // 如果需要下载封面
                     if (downloading.DownloadBase.NeedDownloadContent["downloadCover"])
                     {
-                        string pageCoverFileName = $"{downloading.DownloadBase.FilePath}.{GetImageExtension(downloading.DownloadBase.PageCoverUrl)}";
-                        string coverFileName = $"{downloading.DownloadBase.FilePath}.Cover.{GetImageExtension(downloading.DownloadBase.PageCoverUrl)}";
-
                         // page的封面
+                        string pageCoverFileName = $"{downloading.DownloadBase.FilePath}.{GetImageExtension(downloading.DownloadBase.PageCoverUrl)}";
                         outputPageCover = DownloadCover(downloading, downloading.DownloadBase.PageCoverUrl, pageCoverFileName);
+
+
+                        string coverFileName = $"{downloading.DownloadBase.FilePath}.Cover.{GetImageExtension(downloading.DownloadBase.CoverUrl)}";
                         // 封面
                         //outputCover = DownloadCover(downloading, downloading.DownloadBase.CoverUrl, $"{path}/Cover.{GetImageExtension(downloading.DownloadBase.CoverUrl)}");
                         outputCover = DownloadCover(downloading, downloading.DownloadBase.CoverUrl, coverFileName);
