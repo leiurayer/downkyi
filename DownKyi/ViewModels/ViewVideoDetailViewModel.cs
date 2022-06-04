@@ -753,10 +753,10 @@ namespace DownKyi.ViewModels
             {
                 string param = navigationContext.Parameters.GetValue<string>("Parameter");
                 // 移除剪贴板id
-                string intput = param.Replace(AppConstant.ClipboardId, "");
+                string input = param.Replace(AppConstant.ClipboardId, "");
 
                 // 检测是否从剪贴板传入
-                if (InputText == intput && param.EndsWith(AppConstant.ClipboardId))
+                if (InputText == input && param.EndsWith(AppConstant.ClipboardId))
                 {
                     return;
                 }
@@ -764,7 +764,7 @@ namespace DownKyi.ViewModels
                 // 正在执行任务时不开启新任务
                 if (LoadingVisibility != Visibility.Visible)
                 {
-                    InputText = intput;
+                    InputText = input;
                     PropertyChangeAsync(ExecuteInputCommand);
                 }
             }
