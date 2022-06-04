@@ -123,6 +123,7 @@ namespace DownKyi.Core.BiliApi.Zone
             //生活
             zones.Add(new ZoneAttr(160, "life", "生活")); // 主分区
             zones.Add(new ZoneAttr(138, "funny", "搞笑", 160)); //各种沙雕有趣的搞笑剪辑，挑战，表演，配音等视频
+            zones.Add(new ZoneAttr(250, "travel", "出行", 160)); //为达到观光游览、休闲娱乐为目的的远途旅行、中近途户外生活、本地探店
             zones.Add(new ZoneAttr(239, "home", "家居房产", 160)); //与买房、装修、居家生活相关的分享
             zones.Add(new ZoneAttr(161, "handmake", "手工", 160)); //手工制品的制作过程或成品展示、教程、测评类视频
             zones.Add(new ZoneAttr(162, "painting", "绘画", 160)); //绘画过程或绘画教程，以及绘画相关的所有视频
