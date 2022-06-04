@@ -226,6 +226,26 @@
                     </Style>
                 </ListBox.Style>
             </ListBox>
+
+            <Button
+                Grid.Column="2"
+                Width="24"
+                Height="24"
+                Margin="10,5"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Command="{Binding DownloadManagerCommand}"
+                Style="{StaticResource ImageBtnStyle}"
+                ToolTip="{DynamicResource DownloadManager}">
+                <ContentControl>
+                    <Path
+                        Width="{Binding DownloadManage.Width}"
+                        Height="{Binding DownloadManage.Height}"
+                        Data="{Binding DownloadManage.Data}"
+                        Fill="{Binding DownloadManage.Fill}"
+                        Stretch="Uniform" />
+                </ContentControl>
+            </Button>
         </Grid>
 
         <TextBlock Grid.Row="1" Background="{DynamicResource BrushBorder}" />

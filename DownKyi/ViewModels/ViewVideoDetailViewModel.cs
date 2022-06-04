@@ -113,9 +113,11 @@ namespace DownKyi.ViewModels
             Loading.StartAnimate();
             LoadingVisibility = Visibility.Collapsed;
 
+            // 返回按钮
             ArrowBack = NavigationIcon.Instance().ArrowBack;
             ArrowBack.Fill = DictionaryResource.GetColor("ColorTextDark");
 
+            // 下载管理按钮
             DownloadManage = ButtonIcon.Instance().DownloadManage;
             DownloadManage.Height = 24;
             DownloadManage.Width = 24;

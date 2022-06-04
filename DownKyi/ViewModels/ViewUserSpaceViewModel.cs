@@ -200,7 +200,6 @@ namespace DownKyi.ViewModels
             eventAggregator.GetEvent<NavigationEvent>().Publish(parameter);
         }
 
-
         // 左侧tab点击事件
         private DelegateCommand<object> tabLeftBannersCommand;
         public DelegateCommand<object> TabLeftBannersCommand => tabLeftBannersCommand ?? (tabLeftBannersCommand = new DelegateCommand<object>(ExecuteTabLeftBannersCommand));
