@@ -183,6 +183,7 @@
     <system:String x:Key="AutoDownloadAll">解析后自动下载已解析视频</system:String>
 
     <system:String x:Key="Network">网络</system:String>
+    <system:String x:Key="UseSSL">启用https（若下载器提示SSL错误，则关闭此项）</system:String>
     <system:String x:Key="SelectDownloader">选择下载器（重启生效）：</system:String>
     <system:String x:Key="BuiltinDownloader">内建下载器（测试）</system:String>
     <system:String x:Key="Aria2cDownloader">Aria2下载器</system:String>

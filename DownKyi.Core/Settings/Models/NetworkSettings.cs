@@ -9,6 +9,8 @@ namespace DownKyi.Core.Settings.Models
     {
         public AllowStatus IsLiftingOfRegion { get; set; } = AllowStatus.NONE;
 
+        public AllowStatus UseSSL { get; set; } = AllowStatus.NONE;
+
         public Downloader Downloader { get; set; } = Downloader.NOT_SET;
         public int MaxCurrentDownloads { get; set; } = -1;
 

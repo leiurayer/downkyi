@@ -7,6 +7,9 @@ namespace DownKyi.Core.Settings
         // 是否开启解除地区限制
         private readonly AllowStatus isLiftingOfRegion = AllowStatus.YES;
 
+        // 启用https
+        private readonly AllowStatus useSSL = AllowStatus.YES;
+
         // 下载器
         private readonly Downloader downloader = Downloader.ARIA;
 
@@ -68,6 +71,33 @@ namespace DownKyi.Core.Settings
         public bool IsLiftingOfRegion(AllowStatus isLiftingOfRegion)
         {
             appSettings.Network.IsLiftingOfRegion = isLiftingOfRegion;
+            return SetSettings();
+        }
+
+        /// <summary>
+        /// 获取是否启用https
+        /// </summary>
+        /// <returns></returns>
+        public AllowStatus UseSSL()
+        {
+            appSettings = GetSettings();
+            if (appSettings.Network.UseSSL == AllowStatus.NONE)
+            {
+                // 第一次获取，先设置默认值
+                UseSSL(useSSL);
+                return useSSL;
+            }
+            return appSettings.Network.UseSSL;
+        }
+
+        /// <summary>
+        /// 设置是否启用https
+        /// </summary>
+        /// <param name="useSSL"></param>
+        /// <returns></returns>
+        public bool UseSSL(AllowStatus useSSL)
+        {
+            appSettings.Network.UseSSL = useSSL;
             return SetSettings();
         }
 
