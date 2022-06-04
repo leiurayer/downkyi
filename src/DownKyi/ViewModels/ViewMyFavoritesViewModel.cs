@@ -109,6 +109,13 @@ namespace DownKyi.ViewModels
             set => SetProperty(ref arrowBack, value);
         }
 
+        private VectorImage downloadManage;
+        public VectorImage DownloadManage
+        {
+            get => downloadManage;
+            set => SetProperty(ref downloadManage, value);
+        }
+
         private ObservableCollection<TabHeader> tabHeaders;
         public ObservableCollection<TabHeader> TabHeaders
         {
@@ -173,6 +180,12 @@ namespace DownKyi.ViewModels
             ArrowBack = NavigationIcon.Instance().ArrowBack;
             ArrowBack.Fill = DictionaryResource.GetColor("ColorTextDark");
 
+            // 下载管理按钮
+            DownloadManage = ButtonIcon.Instance().DownloadManage;
+            DownloadManage.Height = 24;
+            DownloadManage.Width = 24;
+            DownloadManage.Fill = DictionaryResource.GetColor("ColorPrimary");
+
             TabHeaders = new ObservableCollection<TabHeader>();
             Medias = new ObservableCollection<FavoritesMedia>();
 
@@ -202,6 +215,24 @@ namespace DownKyi.ViewModels
             {
                 ViewName = ParentView,
                 ParentViewName = null,
+                Parameter = null
+            };
+            eventAggregator.GetEvent<NavigationEvent>().Publish(parameter);
+        }
+
+        // 前往下载管理页面
+        private DelegateCommand downloadManagerCommand;
+        public DelegateCommand DownloadManagerCommand => downloadManagerCommand ?? (downloadManagerCommand = new DelegateCommand(ExecuteDownloadManagerCommand));
+
+        /// <summary>
+        /// 前往下载管理页面
+        /// </summary>
+        private void ExecuteDownloadManagerCommand()
+        {
+            NavigationParam parameter = new NavigationParam
+            {
+                ViewName = ViewDownloadManagerViewModel.Tag,
+                ParentViewName = Tag,
                 Parameter = null
             };
             eventAggregator.GetEvent<NavigationEvent>().Publish(parameter);
@@ -427,6 +458,11 @@ namespace DownKyi.ViewModels
         private void InitView()
         {
             ArrowBack.Fill = DictionaryResource.GetColor("ColorTextDark");
+
+            DownloadManage = ButtonIcon.Instance().DownloadManage;
+            DownloadManage.Height = 24;
+            DownloadManage.Width = 24;
+            DownloadManage.Fill = DictionaryResource.GetColor("ColorPrimary");
 
             ContentVisibility = Visibility.Collapsed;
             LoadingVisibility = Visibility.Visible;
