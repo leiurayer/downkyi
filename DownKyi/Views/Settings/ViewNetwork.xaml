@@ -16,6 +16,18 @@
                     Text="{DynamicResource Network}" />
             </StackPanel>
 
+            <CheckBox
+                Name="nameUseSSL"
+                Margin="0,20,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Command="{Binding UseSSLCommand}"
+                Content="{DynamicResource UseSSL}"
+                FontSize="12"
+                Foreground="{DynamicResource BrushTextDark}"
+                IsChecked="{Binding UseSSL, Mode=TwoWay}"
+                Style="{StaticResource CheckBoxStyle}" />
+
             <StackPanel Margin="0,20,0,0" Orientation="Vertical">
                 <TextBlock
                     FontSize="12"

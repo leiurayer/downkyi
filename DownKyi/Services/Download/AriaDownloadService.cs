@@ -113,6 +113,31 @@ namespace DownKyi.Services.Download
                 downloading.Downloading.Gid = null;
             }
 
+            // 启用https
+            AllowStatus useSSL = SettingsManager.GetInstance().UseSSL();
+            if (useSSL == AllowStatus.YES)
+            {
+                for (int i = 0; i < urls.Count; i++)
+                {
+                    string url = urls[i];
+                    if (url.StartsWith("http://"))
+                    {
+                        urls[i] = url.Replace("http://", "https://");
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i < urls.Count; i++)
+                {
+                    string url = urls[i];
+                    if (url.StartsWith("https://"))
+                    {
+                        urls[i] = url.Replace("https://", "http://");
+                    }
+                }
+            }
+
             // 开始下载
             DownloadResult downloadStatus = DownloadByAria(downloading, urls, path, fileName);
             switch (downloadStatus)

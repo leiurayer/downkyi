@@ -20,6 +20,13 @@ namespace DownKyi.ViewModels.Settings
 
         #region 页面属性申明
 
+        private bool useSSL;
+        public bool UseSSL
+        {
+            get => useSSL;
+            set => SetProperty(ref useSSL, value);
+        }
+
         private bool builtin;
         public bool Builtin
         {
@@ -236,6 +243,10 @@ namespace DownKyi.ViewModels.Settings
 
             isOnNavigatedTo = true;
 
+            // 启用https
+            AllowStatus useSSL = SettingsManager.GetInstance().UseSSL();
+            UseSSL = useSSL == AllowStatus.YES;
+
             // 选择下载器
             var downloader = SettingsManager.GetInstance().GetDownloader();
             switch (downloader)
@@ -303,6 +314,21 @@ namespace DownKyi.ViewModels.Settings
         }
 
         #region 命令申明
+
+        // 是否启用https事件
+        private DelegateCommand useSSLCommand;
+        public DelegateCommand UseSSLCommand => useSSLCommand ?? (useSSLCommand = new DelegateCommand(ExecuteUseSSLCommand));
+
+        /// <summary>
+        /// 是否启用https事件
+        /// </summary>
+        private void ExecuteUseSSLCommand()
+        {
+            AllowStatus useSSL = UseSSL ? AllowStatus.YES : AllowStatus.NO;
+
+            bool isSucceed = SettingsManager.GetInstance().UseSSL(useSSL);
+            PublishTip(isSucceed);
+        }
 
         // 下载器选择事件
         private DelegateCommand<string> selectDownloaderCommand;

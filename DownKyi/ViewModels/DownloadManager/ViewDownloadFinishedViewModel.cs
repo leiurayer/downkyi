@@ -140,7 +140,8 @@ namespace DownKyi.ViewModels.DownloadManager
             {
                 await Task.Run(() =>
                 {
-                    foreach (var item in DownloadedList)
+                    List<DownloadedItem> list = DownloadedList.ToList();
+                    foreach (var item in list)
                     {
                         if (item != null && item.DialogService == null)
                         {
