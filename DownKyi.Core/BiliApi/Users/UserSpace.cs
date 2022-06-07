@@ -232,10 +232,37 @@ namespace DownKyi.Core.BiliApi.Users
 
         #region 合集和列表
 
-        // TODO
-        // https://api.bilibili.com/x/polymer/space/seasons_series_list?mid=27899754&page_num=1&page_size=18
-        // page_size最大值为20
+        /// <summary>
+        /// 查询用户的合集和列表
+        /// </summary>
+        /// <param name="mid"></param>
+        /// <param name="pageNum">第几页</param>
+        /// <param name="pageSize">每页的数量；最大值为20</param>
+        /// <returns></returns>
+        public static SpaceSeasonsSeries GetSeasonsSeries(long mid, int pageNum, int pageSize)
+        {
+            // https://api.bilibili.com/x/polymer/space/seasons_series_list?mid=49246269&page_num=1&page_size=18
+            string url = $"https://api.bilibili.com/x/space/channel/video?mid={mid}&page_num={pageNum}&page_size={pageSize}";
+            string referer = "https://www.bilibili.com";
+            string response = WebClient.RequestWeb(url, referer);
 
+            try
+            {
+                SpaceSeasonsSeriesOrigin origin = JsonConvert.DeserializeObject<SpaceSeasonsSeriesOrigin>(response);
+                if (origin == null || origin.Data == null || origin.Data.ItemsLists == null)
+                { return null; }
+                return origin.Data.ItemsLists;
+            }
+            catch (Exception e)
+            {
+                Utils.Debugging.Console.PrintLine("GetSeasonsSeries()发生异常: {0}", e);
+                LogManager.Error("UserSpace", e);
+                return null;
+            }
+        }
+
+
+        // TODO
         // https://api.bilibili.com/x/polymer/space/seasons_archives_list?mid=23947287&season_id=665&sort_reverse=false&page_num=1&page_size=30
 
         // https://api.bilibili.com/x/series/archives?mid=27899754&series_id=1253087&only_normal=true&sort=desc&pn=1&ps=30

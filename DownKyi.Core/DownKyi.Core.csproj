@@ -217,6 +217,11 @@
     <Compile Include="BiliApi\Users\Models\SpacePublicationListTypeVideoZone.cs" />
     <Compile Include="BiliApi\Users\Models\SpacePublicationListVideo.cs" />
     <Compile Include="BiliApi\Users\Models\SpacePublicationPage.cs" />
+    <Compile Include="BiliApi\Users\Models\SpaceSeasonsSeries.cs" />
+    <Compile Include="BiliApi\Users\Models\SpaceSeasonsSeriesArchives.cs" />
+    <Compile Include="BiliApi\Users\Models\SpaceSeasonsSeriesMeta.cs" />
+    <Compile Include="BiliApi\Users\Models\SpaceSeasonsSeriesOrigin.cs" />
+    <Compile Include="BiliApi\Users\Models\SpaceSeasonsSeriesPage.cs" />
     <Compile Include="BiliApi\Users\Models\SpaceSettings.cs" />
     <Compile Include="BiliApi\Users\Models\SpaceSettingsToutu.cs" />
     <Compile Include="BiliApi\Users\Models\UpStat.cs" />
