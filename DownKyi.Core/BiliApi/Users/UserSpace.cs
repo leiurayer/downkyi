@@ -242,7 +242,7 @@ namespace DownKyi.Core.BiliApi.Users
         public static SpaceSeasonsSeries GetSeasonsSeries(long mid, int pageNum, int pageSize)
         {
             // https://api.bilibili.com/x/polymer/space/seasons_series_list?mid=49246269&page_num=1&page_size=18
-            string url = $"https://api.bilibili.com/x/space/channel/video?mid={mid}&page_num={pageNum}&page_size={pageSize}";
+            string url = $"https://api.bilibili.com/x/polymer/space/seasons_series_list?mid={mid}&page_num={pageNum}&page_size={pageSize}";
             string referer = "https://www.bilibili.com";
             string response = WebClient.RequestWeb(url, referer);
 
@@ -261,18 +261,96 @@ namespace DownKyi.Core.BiliApi.Users
             }
         }
 
+        /// <summary>
+        /// 查询用户的合集的视频详情
+        /// </summary>
+        /// <param name="mid"></param>
+        /// <param name="seasonId"></param>
+        /// <param name="pageNum"></param>
+        /// <param name="pageSize"></param>
+        public static SpaceSeasonsDetail GetSeasonsDetail(long mid, long seasonId, int pageNum, int pageSize)
+        {
+            // https://api.bilibili.com/x/polymer/space/seasons_archives_list?mid=23947287&season_id=665&sort_reverse=false&page_num=1&page_size=30
+            string url = $"https://api.bilibili.com/x/polymer/space/seasons_archives_list?mid={mid}&season_id={seasonId}&page_num={pageNum}&page_size={pageSize}&sort_reverse=false";
+            string referer = "https://www.bilibili.com";
+            string response = WebClient.RequestWeb(url, referer);
 
-        // TODO
-        // https://api.bilibili.com/x/polymer/space/seasons_archives_list?mid=23947287&season_id=665&sort_reverse=false&page_num=1&page_size=30
+            try
+            {
+                SpaceSeasonsDetailOrigin origin = JsonConvert.DeserializeObject<SpaceSeasonsDetailOrigin>(response);
+                if (origin == null || origin.Data == null)
+                { return null; }
+                return origin.Data;
+            }
+            catch (Exception e)
+            {
+                Utils.Debugging.Console.PrintLine("GetSeasonsDetail()发生异常: {0}", e);
+                LogManager.Error("UserSpace", e);
+                return null;
+            }
+        }
 
-        // https://api.bilibili.com/x/series/archives?mid=27899754&series_id=1253087&only_normal=true&sort=desc&pn=1&ps=30
-        // https://api.bilibili.com/x/series/archives?mid=27899754&series_id=1253087&only_normal=true&sort=asc&pn=1&ps=30
-        // https://api.bilibili.com/x/series/series?series_id=1253087
+        /// <summary>
+        /// 查询用户的列表元数据
+        /// </summary>
+        /// <param name="seriesId"></param>
+        /// <returns></returns>
+        public static SpaceSeriesMetaData GetSeriesMeta(long seriesId)
+        {
+            // https://api.bilibili.com/x/series/series?series_id=1253087
+            string url = $"https://api.bilibili.com/x/series/series?series_id={seriesId}";
+            string referer = "https://www.bilibili.com";
+            string response = WebClient.RequestWeb(url, referer);
+
+            try
+            {
+                SpaceSeriesMetaOrigin origin = JsonConvert.DeserializeObject<SpaceSeriesMetaOrigin>(response);
+                if (origin == null || origin.Data == null)
+                { return null; }
+                return origin.Data;
+            }
+            catch (Exception e)
+            {
+                Utils.Debugging.Console.PrintLine("GetSeriesMeta()发生异常: {0}", e);
+                LogManager.Error("UserSpace", e);
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// 查询用户的列表的视频详情
+        /// </summary>
+        /// <param name="mid"></param>
+        /// <param name="seriesId"></param>
+        /// <param name="pn"></param>
+        /// <param name="ps"></param>
+        /// <returns></returns>
+        public static SpaceSeriesDetail GetSeriesDetail(long mid, long seriesId, int pn, int ps)
+        {
+            // https://api.bilibili.com/x/series/archives?mid=27899754&series_id=1253087&only_normal=true&sort=desc&pn=1&ps=30
+
+            string url = $"https://api.bilibili.com/x/series/archives?mid={mid}&series_id={seriesId}&only_normal=true&sort=desc&pn={pn}&ps={ps}";
+            string referer = "https://www.bilibili.com";
+            string response = WebClient.RequestWeb(url, referer);
+
+            try
+            {
+                SpaceSeriesDetailOrigin origin = JsonConvert.DeserializeObject<SpaceSeriesDetailOrigin>(response);
+                if (origin == null || origin.Data == null)
+                { return null; }
+                return origin.Data;
+            }
+            catch (Exception e)
+            {
+                Utils.Debugging.Console.PrintLine("GetSeriesDetail()发生异常: {0}", e);
+                LogManager.Error("UserSpace", e);
+                return null;
+            }
+        }
 
         #endregion
 
         #region 课程
-
         /// <summary>
         /// 查询用户发布的课程列表
         /// </summary>
