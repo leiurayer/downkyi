@@ -19,7 +19,8 @@ namespace DownKyi.Core.BiliApi.Users.Models
         public string Pic { get; set; }
         [JsonProperty("pubdate")]
         public long Pubdate { get; set; }
-        // stat
+        [JsonProperty("stat")]
+        public SpaceSeasonsSeriesStat Stat { get; set; }
         // state
         [JsonProperty("title")]
         public string Title { get; set; }

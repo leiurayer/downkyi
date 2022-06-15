@@ -63,6 +63,7 @@
     <system:String x:Key="AllPublicationZones">全部</system:String>
     <system:String x:Key="Publication">投稿视频</system:String>
     <system:String x:Key="Channel">频道</system:String>
+    <system:String x:Key="SeasonsSeries">合集和列表</system:String>
     <system:String x:Key="UserSpaceWait">请稍等，马上就好~</system:String>
 
     <!--  PublicFavorites  -->

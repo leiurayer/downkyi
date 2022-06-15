@@ -223,6 +223,7 @@
     <Compile Include="BiliApi\Users\Models\SpaceSeasonsSeriesMeta.cs" />
     <Compile Include="BiliApi\Users\Models\SpaceSeasonsSeriesOrigin.cs" />
     <Compile Include="BiliApi\Users\Models\SpaceSeasonsSeriesPage.cs" />
+    <Compile Include="BiliApi\Users\Models\SpaceSeasonsSeriesStat.cs" />
     <Compile Include="BiliApi\Users\Models\SpaceSeriesDetail.cs" />
     <Compile Include="BiliApi\Users\Models\SpaceSeriesMeta.cs" />
     <Compile Include="BiliApi\Users\Models\SpaceSettings.cs" />
