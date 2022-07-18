@@ -24,6 +24,12 @@ namespace DownKyi.Core.Settings
         private readonly string httpProxy = "";
         private readonly int httpProxyListenPort = 0;
 
+        // Aria服务器token
+        private readonly string ariaToken = "downkyi";
+
+        // Aria服务器host
+        private readonly string ariaHost = "http://localhost";
+
         // Aria服务器端口号
         private readonly int ariaListenPort = 6800;
 
@@ -260,6 +266,60 @@ namespace DownKyi.Core.Settings
         public bool SetHttpProxyListenPort(int httpProxyListenPort)
         {
             appSettings.Network.HttpProxyListenPort = httpProxyListenPort;
+            return SetSettings();
+        }
+
+        /// <summary>
+        /// 获取Aria服务器的token
+        /// </summary>
+        /// <returns></returns>
+        public string GetAriaToken()
+        {
+            appSettings = GetSettings();
+            if (appSettings.Network.AriaToken == null)
+            {
+                // 第一次获取，先设置默认值
+                SetHttpProxy(ariaToken);
+                return ariaToken;
+            }
+            return appSettings.Network.AriaToken;
+        }
+
+        /// <summary>
+        /// 设置Aria服务器的token
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        public bool SetAriaToken(string token)
+        {
+            appSettings.Network.AriaToken = token;
+            return SetSettings();
+        }
+
+        /// <summary>
+        /// 获取Aria服务器的host
+        /// </summary>
+        /// <returns></returns>
+        public string GetAriaHost()
+        {
+            appSettings = GetSettings();
+            if (appSettings.Network.AriaHost == null)
+            {
+                // 第一次获取，先设置默认值
+                SetHttpProxy(ariaHost);
+                return ariaHost;
+            }
+            return appSettings.Network.AriaHost;
+        }
+
+        /// <summary>
+        /// 设置Aria服务器的host
+        /// </summary>
+        /// <param name="host"></param>
+        /// <returns></returns>
+        public bool SetAriaHost(string host)
+        {
+            appSettings.Network.AriaHost = host;
             return SetSettings();
         }
 
