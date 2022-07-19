@@ -132,6 +132,9 @@ namespace DownKyi
                 case Downloader.ARIA:
                     downloadService = new AriaDownloadService(DownloadingList, DownloadedList);
                     break;
+                case Downloader.CUSTOM_ARIA:
+                    downloadService = new CustomAriaDownloadService(DownloadingList, DownloadedList);
+                    break;
             }
             if (downloadService != null)
             {
