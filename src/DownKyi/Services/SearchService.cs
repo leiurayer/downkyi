@@ -2,6 +2,7 @@
 using DownKyi.Utils;
 using DownKyi.ViewModels;
 using Prism.Events;
+using System.Text.RegularExpressions;
 
 namespace DownKyi.Services
 {
@@ -28,7 +29,7 @@ namespace DownKyi.Services
         {
             // 移除剪贴板id
             string justId = input.Replace(AppConstant.ClipboardId, "");
-
+            
             // 视频
             if (ParseEntrance.IsAvId(justId))
             {
