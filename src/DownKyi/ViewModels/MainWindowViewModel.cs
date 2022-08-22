@@ -353,7 +353,7 @@ namespace DownKyi.ViewModels
                 LogManager.Error("OnClipboardUpdated", exc);
                 return;
             }
-            input = Regex.Replace(input, @"[【]*[^【]*[】 ]", "");
+            input = Regex.Replace(input, @"[【]*[^【]*[^】]*[】 ]", "");
             SearchService searchService = new SearchService();
             searchService.BiliInput(input + AppConstant.ClipboardId, ViewIndexViewModel.Tag, eventAggregator);
         }
