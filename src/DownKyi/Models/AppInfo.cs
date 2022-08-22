@@ -6,9 +6,9 @@
         public int VersionCode { get; } = 510;
 
 #if DEBUG
-        public string VersionName { get; } = "1.5.3 Debug";
+        public string VersionName { get; } = "1.5.4 Beta";
 #else
-        public string VersionName { get; } = "1.5.3";
+        public string VersionName { get; } = "1.5.4";
 #endif
 
     }
