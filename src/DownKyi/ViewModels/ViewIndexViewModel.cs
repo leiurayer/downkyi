@@ -12,6 +12,7 @@ using Prism.Regions;
 using Prism.Services.Dialogs;
 using System;
 using System.IO;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Imaging;
@@ -214,7 +215,7 @@ namespace DownKyi.ViewModels
             }
 
             LogManager.Debug(Tag, $"InputText: {InputText}");
-
+            InputText = Regex.Replace(InputText, @"[【][^【]*[】 ]", "");
             SearchService searchService = new SearchService();
             bool isSupport = searchService.BiliInput(InputText, Tag, eventAggregator);
             if (!isSupport)
