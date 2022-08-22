@@ -215,7 +215,7 @@ namespace DownKyi.ViewModels
             }
 
             LogManager.Debug(Tag, $"InputText: {InputText}");
-            InputText = Regex.Replace(InputText, @"[【][^【]*[】 ]", "");
+            InputText = Regex.Replace(InputText, @"[【]*[^【]*[】 ]", "");
             SearchService searchService = new SearchService();
             bool isSupport = searchService.BiliInput(InputText, Tag, eventAggregator);
             if (!isSupport)
