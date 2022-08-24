@@ -24,8 +24,8 @@
 ## 下载
 
 <p align="left">
-    <a href="https://github.com/leiurayer/downkyi/releases/latest" style="text-decoration:none">
-       <img alt="GitHub release (latest by date)" src="https://github.com/897601689/downkyi/releases/tag/v1.5.4-beta">
+    <a href="https://github.com/897601689/downkyi/releases/tag/v1.5.4-beta" style="text-decoration:none">
+       <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/leiurayer/downkyi">
     </a>
     <a href="https://github.com/leiurayer/downkyi/releases/latest" style="text-decoration:none">
        <img alt="GitHub Release Date" src="https://img.shields.io/github/release-date/leiurayer/downkyi">
