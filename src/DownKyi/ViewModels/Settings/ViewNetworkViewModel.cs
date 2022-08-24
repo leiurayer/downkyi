@@ -41,6 +41,13 @@ namespace DownKyi.ViewModels.Settings
             set => SetProperty(ref aria2c, value);
         }
 
+        private bool customAria2c;
+        public bool CustomAria2c
+        {
+            get => customAria2c;
+            set => SetProperty(ref customAria2c, value);
+        }
+
         private List<int> maxCurrentDownloads;
         public List<int> MaxCurrentDownloads
         {
@@ -90,11 +97,25 @@ namespace DownKyi.ViewModels.Settings
             set => SetProperty(ref httpProxyPort, value);
         }
 
+        private string ariaHost;
+        public string AriaHost
+        {
+            get => ariaHost;
+            set => SetProperty(ref ariaHost, value);
+        }
+
         private int ariaListenPort;
         public int AriaListenPort
         {
             get => ariaListenPort;
             set => SetProperty(ref ariaListenPort, value);
+        }
+
+        private string ariaToken;
+        public string AriaToken
+        {
+            get => ariaToken;
+            set => SetProperty(ref ariaToken, value);
         }
 
         private List<string> ariaLogLevels;
@@ -259,6 +280,9 @@ namespace DownKyi.ViewModels.Settings
                 case Downloader.ARIA:
                     Aria2c = true;
                     break;
+                case Downloader.CUSTOM_ARIA:
+                    CustomAria2c = true;
+                    break;
             }
 
             // builtin同时下载数
@@ -277,8 +301,14 @@ namespace DownKyi.ViewModels.Settings
             // builtin的http代理的端口
             HttpProxyPort = SettingsManager.GetInstance().GetHttpProxyListenPort();
 
+            // Aria服务器host
+            AriaHost = SettingsManager.GetInstance().GetAriaHost();
+
             // Aria服务器端口
             AriaListenPort = SettingsManager.GetInstance().GetAriaListenPort();
+
+            // Aria服务器Token
+            AriaToken = SettingsManager.GetInstance().GetAriaToken();
 
             // Aria的日志等级
             AriaConfigLogLevel ariaLogLevel = SettingsManager.GetInstance().GetAriaLogLevel();
@@ -348,6 +378,9 @@ namespace DownKyi.ViewModels.Settings
                     break;
                 case "Aria2c":
                     downloader = Downloader.ARIA;
+                    break;
+                case "CustomAria2c":
+                    downloader = Downloader.CUSTOM_ARIA;
                     break;
                 default:
                     downloader = SettingsManager.GetInstance().GetDownloader();
@@ -444,6 +477,21 @@ namespace DownKyi.ViewModels.Settings
             PublishTip(isSucceed);
         }
 
+        // Aria服务器host事件
+        private DelegateCommand<string> ariaHostCommand;
+        public DelegateCommand<string> AriaHostCommand => ariaHostCommand ?? (ariaHostCommand = new DelegateCommand<string>(ExecuteAriaHostCommand));
+
+        /// <summary>
+        /// Aria服务器host事件
+        /// </summary>
+        /// <param name="parameter"></param>
+        private void ExecuteAriaHostCommand(string parameter)
+        {
+            AriaHost = parameter;
+            bool isSucceed = SettingsManager.GetInstance().SetAriaHost(AriaHost);
+            PublishTip(isSucceed);
+        }
+
         // Aria服务器端口事件
         private DelegateCommand<string> ariaListenPortCommand;
         public DelegateCommand<string> AriaListenPortCommand => ariaListenPortCommand ?? (ariaListenPortCommand = new DelegateCommand<string>(ExecuteAriaListenPortCommand));
@@ -458,6 +506,21 @@ namespace DownKyi.ViewModels.Settings
             AriaListenPort = listenPort;
 
             bool isSucceed = SettingsManager.GetInstance().SetAriaListenPort(AriaListenPort);
+            PublishTip(isSucceed);
+        }
+
+        // Aria服务器token事件
+        private DelegateCommand<string> ariaTokenCommand;
+        public DelegateCommand<string> AriaTokenCommand => ariaTokenCommand ?? (ariaTokenCommand = new DelegateCommand<string>(ExecuteAriaTokenCommand));
+
+        /// <summary>
+        /// Aria服务器token事件
+        /// </summary>
+        /// <param name="parameter"></param>
+        private void ExecuteAriaTokenCommand(string parameter)
+        {
+            AriaToken = parameter;
+            bool isSucceed = SettingsManager.GetInstance().SetAriaToken(AriaToken);
             PublishTip(isSucceed);
         }
 

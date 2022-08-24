@@ -56,6 +56,15 @@
                             Foreground="{DynamicResource BrushTextDark}"
                             IsChecked="{Binding Aria2c}"
                             Style="{StaticResource RadioStyle}" />
+                        <RadioButton
+                            Margin="20,0,0,0"
+                            Command="{Binding SelectDownloaderCommand}"
+                            CommandParameter="CustomAria2c"
+                            Content="{DynamicResource CustomAria2cDownloader}"
+                            FontSize="12"
+                            Foreground="{DynamicResource BrushTextDark}"
+                            IsChecked="{Binding CustomAria2c}"
+                            Style="{StaticResource RadioStyle}" />
                     </StackPanel>
                 </GroupBox>
             </StackPanel>
@@ -207,6 +216,32 @@
                         </Style.Triggers>
                     </Style>
                 </StackPanel.Style>
+
+                <!--<StackPanel
+                    Margin="0,20,0,0"
+                    Orientation="Horizontal"
+                    ToolTip="{DynamicResource PressEnterToApplySettingTip}">
+                    <TextBlock
+                        Width="100"
+                        VerticalAlignment="Center"
+                        FontSize="12"
+                        Foreground="{DynamicResource BrushTextDark}"
+                        Text="{DynamicResource AriaServerHost}" />
+                    <TextBox
+                        Name="nameAriaLocalHost"
+                        Width="100"
+                        Height="20"
+                        VerticalContentAlignment="Center"
+                        IsReadOnly="True"
+                        Text="{Binding AriaHost}">
+                        <TextBox.InputBindings>
+                            <KeyBinding
+                                Key="Enter"
+                                Command="{Binding AriaHostCommand}"
+                                CommandParameter="{Binding ElementName=nameAriaLocalHost, Path=Text}" />
+                        </TextBox.InputBindings>
+                    </TextBox>
+                </StackPanel>-->
 
                 <StackPanel
                     Margin="0,20,0,0"
@@ -447,6 +482,97 @@
                         </i:Interaction.Triggers>
                     </ComboBox>
                 </StackPanel>
+            </StackPanel>
+
+            <StackPanel x:Name="nameCustomAria">
+                <StackPanel.Style>
+                    <Style TargetType="{x:Type StackPanel}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding CustomAria2c}" Value="True">
+                                <Setter Property="Visibility" Value="Visible" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding CustomAria2c}" Value="False">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackPanel.Style>
+
+                <StackPanel
+                    Margin="0,20,0,0"
+                    Orientation="Horizontal"
+                    ToolTip="{DynamicResource PressEnterToApplySettingTip}">
+                    <TextBlock
+                        Width="100"
+                        VerticalAlignment="Center"
+                        FontSize="12"
+                        Foreground="{DynamicResource BrushTextDark}"
+                        Text="{DynamicResource AriaServerHost}" />
+                    <TextBox
+                        Name="nameAriaHost"
+                        Width="300"
+                        Height="20"
+                        VerticalContentAlignment="Center"
+                        Text="{Binding AriaHost}">
+                        <TextBox.InputBindings>
+                            <KeyBinding
+                                Key="Enter"
+                                Command="{Binding AriaHostCommand}"
+                                CommandParameter="{Binding ElementName=nameAriaHost, Path=Text}" />
+                        </TextBox.InputBindings>
+                    </TextBox>
+                </StackPanel>
+
+                <StackPanel
+                    Margin="0,20,0,0"
+                    Orientation="Horizontal"
+                    ToolTip="{DynamicResource PressEnterToApplySettingTip}">
+                    <TextBlock
+                        Width="100"
+                        VerticalAlignment="Center"
+                        FontSize="12"
+                        Foreground="{DynamicResource BrushTextDark}"
+                        Text="{DynamicResource AriaServerPort}" />
+                    <TextBox
+                        Name="nameAriaPort"
+                        Width="100"
+                        Height="20"
+                        VerticalContentAlignment="Center"
+                        Text="{Binding AriaListenPort}">
+                        <TextBox.InputBindings>
+                            <KeyBinding
+                                Key="Enter"
+                                Command="{Binding AriaListenPortCommand}"
+                                CommandParameter="{Binding ElementName=nameAriaPort, Path=Text}" />
+                        </TextBox.InputBindings>
+                    </TextBox>
+                </StackPanel>
+
+                <StackPanel
+                    Margin="0,20,0,0"
+                    Orientation="Horizontal"
+                    ToolTip="{DynamicResource PressEnterToApplySettingTip}">
+                    <TextBlock
+                        Width="100"
+                        VerticalAlignment="Center"
+                        FontSize="12"
+                        Foreground="{DynamicResource BrushTextDark}"
+                        Text="{DynamicResource AriaServerToken}" />
+                    <TextBox
+                        Name="nameAriaToken"
+                        Width="100"
+                        Height="20"
+                        VerticalContentAlignment="Center"
+                        Text="{Binding AriaToken}">
+                        <TextBox.InputBindings>
+                            <KeyBinding
+                                Key="Enter"
+                                Command="{Binding AriaTokenCommand}"
+                                CommandParameter="{Binding ElementName=nameAriaToken, Path=Text}" />
+                        </TextBox.InputBindings>
+                    </TextBox>
+                </StackPanel>
+
             </StackPanel>
 
             <StackPanel Margin="10" />

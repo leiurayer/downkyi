@@ -22,6 +22,8 @@ namespace DownKyi.Core.Settings.Models
         #endregion
 
         #region Aria
+        public string AriaToken { get; set; } = null;
+        public string AriaHost { get; set; } = null;
         public int AriaListenPort { get; set; } = -1;
         public AriaConfigLogLevel AriaLogLevel { get; set; } = AriaConfigLogLevel.NOT_SET;
         public int AriaSplit { get; set; } = -1;

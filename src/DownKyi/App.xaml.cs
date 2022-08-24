@@ -132,6 +132,9 @@ namespace DownKyi
                 case Downloader.ARIA:
                     downloadService = new AriaDownloadService(DownloadingList, DownloadedList);
                     break;
+                case Downloader.CUSTOM_ARIA:
+                    downloadService = new CustomAriaDownloadService(DownloadingList, DownloadedList);
+                    break;
             }
             if (downloadService != null)
             {
@@ -180,6 +183,7 @@ namespace DownKyi
             containerRegistry.RegisterForNavigation<ViewUserSpace>(ViewUserSpaceViewModel.Tag);
             containerRegistry.RegisterForNavigation<ViewPublication>(ViewPublicationViewModel.Tag);
             containerRegistry.RegisterForNavigation<Views.ViewChannel>(ViewModels.ViewChannelViewModel.Tag);
+            containerRegistry.RegisterForNavigation<Views.ViewSeasonsSeries>(ViewModels.ViewSeasonsSeriesViewModel.Tag);
 
             containerRegistry.RegisterForNavigation<ViewMySpace>(ViewMySpaceViewModel.Tag);
             containerRegistry.RegisterForNavigation<ViewMyFavorites>(ViewMyFavoritesViewModel.Tag);
@@ -206,6 +210,7 @@ namespace DownKyi
             // UserSpace
             containerRegistry.RegisterForNavigation<ViewArchive>(ViewArchiveViewModel.Tag);
             containerRegistry.RegisterForNavigation<Views.UserSpace.ViewChannel>(ViewModels.UserSpace.ViewChannelViewModel.Tag);
+            containerRegistry.RegisterForNavigation<Views.UserSpace.ViewSeasonsSeries>(ViewModels.UserSpace.ViewSeasonsSeriesViewModel.Tag);
 
             // dialogs
             containerRegistry.RegisterDialog<ViewAlertDialog>(ViewAlertDialogViewModel.Tag);

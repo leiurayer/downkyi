@@ -95,7 +95,7 @@ namespace DownKyi.Services
         /// <param name="playUrl"></param>
         /// <param name="defaultAudioQuality"></param>
         /// <returns></returns>
-        private static ObservableCollection<string> GetAudioQualityFormatList(PlayUrl playUrl, int defaultAudioQuality)
+        private static ObservableCollection<string> GetAudioQualityFormatList_old(PlayUrl playUrl, int defaultAudioQuality)
         {
             List<string> audioQualityFormatList = new List<string>();
 
@@ -114,6 +114,43 @@ namespace DownKyi.Services
                 {
                     ListHelper.AddUnique(audioQualityFormatList, audioQuality.Name);
                 }
+            }
+
+            audioQualityFormatList.Sort(new StringLogicalComparer<string>());
+            audioQualityFormatList.Reverse();
+
+            return new ObservableCollection<string>(audioQualityFormatList);
+        }
+
+
+        /// <summary>
+        /// 设置音质
+        /// </summary>
+        /// <param name="playUrl"></param>
+        /// <param name="defaultAudioQuality"></param>
+        /// <returns></returns>
+        private static ObservableCollection<string> GetAudioQualityFormatList(PlayUrl playUrl, int defaultAudioQuality)
+        {
+            List<string> audioQualityFormatList = new List<string>();
+
+            if (playUrl.Dash.Audio != null && playUrl.Dash.Audio.Count > 0)
+            {
+                foreach (PlayUrlDashVideo audio in playUrl.Dash.Audio)
+                {
+                    // 音质id大于设置画质时，跳过
+                    if (audio.Id > defaultAudioQuality) { continue; }
+
+                    Quality audioQuality = Constant.GetAudioQualities().FirstOrDefault(t => { return t.Id == audio.Id; });
+                    if (audioQuality != null)
+                    {
+                        ListHelper.AddUnique(audioQualityFormatList, audioQuality.Name);
+                    }
+                }
+            }
+
+            if (playUrl.Dash.Dolby.Audio != null && playUrl.Dash.Dolby.Audio.Count > 0)
+            {
+                ListHelper.AddUnique(audioQualityFormatList, Constant.GetAudioQualities().Last().Name);
             }
 
             audioQualityFormatList.Sort(new StringLogicalComparer<string>());
@@ -191,7 +228,7 @@ namespace DownKyi.Services
 
                 // 设置选中的视频编码
                 VideoQuality selectedVideoQuality = videoQualityList.FirstOrDefault(t => t.Quality == video.Id);
-                if(selectedVideoQuality == null) { continue; }
+                if (selectedVideoQuality == null) { continue; }
 
                 if (videoQualityList[videoQualityList.IndexOf(selectedVideoQuality)].VideoCodecList.Count == 1)
                 {

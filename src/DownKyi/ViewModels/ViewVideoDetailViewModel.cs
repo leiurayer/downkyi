@@ -18,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -184,7 +185,7 @@ namespace DownKyi.ViewModels
                     if (InputText == null || InputText == string.Empty) { return; }
 
                     LogManager.Debug(Tag, $"InputText: {InputText}");
-
+                    InputText = Regex.Replace(InputText, @"[【]*[^【]*[^】]*[】 ]", "");
                     input = InputText;
 
                     // 更新页面
