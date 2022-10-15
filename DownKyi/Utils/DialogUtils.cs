@@ -37,5 +37,21 @@ namespace DownKyi.Utils
             return showDialog == true ? dialog.FileName : "";
         }
 
+
+        /// <summary>
+        /// 选择多个视频dialog
+        /// </summary>
+        /// <returns></returns>
+        public static string[] SelectMultiVideoFile()
+        {
+            // 选择文件
+            var dialog = new Microsoft.Win32.OpenFileDialog
+            {
+                Filter = "mp4 (*.mp4)|*.mp4",
+                Multiselect = true
+            };
+            var showDialog = dialog.ShowDialog();
+            return showDialog == true ? dialog.FileNames : new string[0];
+        }
     }
 }
