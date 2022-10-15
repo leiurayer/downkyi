@@ -18,11 +18,25 @@ namespace DownKyi.ViewModels.Toolbox
 
         #region 页面属性申明
 
-        private string videoPath;
-        public string VideoPath
+        private string videoPathsStr;
+        public string VideoPathsStr
         {
-            get { return videoPath; }
-            set { SetProperty(ref videoPath, value); }
+            get => videoPathsStr;
+            set
+            {
+                SetProperty(ref videoPathsStr, value);
+            }
+        }
+
+        private string[] videoPaths;
+        public string[] VideoPaths
+        {
+            get => videoPaths;
+            set
+            {
+                videoPaths = value;
+                VideoPathsStr = string.Join(Environment.NewLine, value);
+            }
         }
 
         private string status;
@@ -38,7 +52,7 @@ namespace DownKyi.ViewModels.Toolbox
         {
             #region 属性初始化
 
-            VideoPath = string.Empty;
+            VideoPaths = new string[0];
 
             #endregion
         }
@@ -60,7 +74,7 @@ namespace DownKyi.ViewModels.Toolbox
                 return;
             }
 
-            VideoPath = DialogUtils.SelectVideoFile();
+            VideoPaths = DialogUtils.SelectMultiVideoFile();
         }
 
         // 提取音频事件
@@ -78,24 +92,27 @@ namespace DownKyi.ViewModels.Toolbox
                 return;
             }
 
-            if (VideoPath == "")
+            if (VideoPaths.Length <= 0)
             {
                 eventAggregator.GetEvent<MessageEvent>().Publish(DictionaryResource.GetString("TipNoSeletedVideo"));
                 return;
             }
 
-            // 音频文件名
-            string audioFileName = VideoPath.Remove(VideoPath.Length - 4, 4) + ".aac";
             Status = string.Empty;
 
             await Task.Run(() =>
             {
-                // 执行提取音频程序
                 isExtracting = true;
-                FFmpegHelper.ExtractAudio(VideoPath, audioFileName, new Action<string>((output) =>
+                foreach (var item in VideoPaths)
                 {
-                    Status += output + "\n";
-                }));
+                    // 音频文件名
+                    string audioFileName = item.Remove(item.Length - 4, 4) + ".aac";
+                    // 执行提取音频程序
+                    FFmpegHelper.ExtractAudio(item, audioFileName, new Action<string>((output) =>
+                    {
+                        Status += output + "\n";
+                    }));
+                }
                 isExtracting = false;
             });
         }
@@ -115,30 +132,34 @@ namespace DownKyi.ViewModels.Toolbox
                 return;
             }
 
-            if (VideoPath == "")
+            if (VideoPaths.Length <= 0)
             {
                 eventAggregator.GetEvent<MessageEvent>().Publish(DictionaryResource.GetString("TipNoSeletedVideo"));
                 return;
             }
 
-            // 视频文件名
-            string videoFileName = VideoPath.Remove(VideoPath.Length - 4, 4) + "_onlyVideo.mp4";
             Status = string.Empty;
 
             await Task.Run(() =>
             {
-                // 执行提取视频程序
                 isExtracting = true;
-                FFmpegHelper.ExtractVideo(VideoPath, videoFileName, new Action<string>((output) =>
+                foreach (var item in VideoPaths)
                 {
-                    Status += output + "\n";
-                }));
+                    // 视频文件名
+                    string videoFileName = item.Remove(item.Length - 4, 4) + "_onlyVideo.mp4";
+                    // 执行提取视频程序
+                    FFmpegHelper.ExtractVideo(item, videoFileName, new Action<string>((output) =>
+                    {
+                        Status += output + "\n";
+                    }));
+                }
                 isExtracting = false;
             });
         }
 
         // Status改变事件
         private DelegateCommand<object> statusCommand;
+
         public DelegateCommand<object> StatusCommand => statusCommand ?? (statusCommand = new DelegateCommand<object>(ExecuteStatusCommand));
 
         /// <summary>

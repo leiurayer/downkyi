@@ -9,7 +9,7 @@
     <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled">
         <Grid Margin="50,0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="150" />
+                <RowDefinition Height="200" />
                 <RowDefinition />
             </Grid.RowDefinitions>
 
@@ -28,11 +28,11 @@
                     <TextBlock VerticalAlignment="Center" Text="{DynamicResource VideoFilePath}" />
                     <TextBox
                         Width="300"
-                        Height="20"
+                        Height="50"
                         Margin="0,10,10,10"
                         VerticalContentAlignment="Center"
                         IsReadOnly="True"
-                        Text="{Binding VideoPath, Mode=TwoWay}" />
+                        Text="{Binding VideoPathsStr, Mode=TwoWay}" />
 
                     <Button
                         Width="75"
