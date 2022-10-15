@@ -25,6 +25,7 @@ namespace DownKyi.Core.BiliApi.BiliUtils
             new Quality { Name = "132K", Id = 30232 },
             new Quality { Name = "192K", Id = 30280 },
             new Quality { Name = "Dolby Atmos", Id = 30250 },
+            new Quality { Name = "Hi-Res无损", Id = 30251 },
         };
 
         /// <summary>

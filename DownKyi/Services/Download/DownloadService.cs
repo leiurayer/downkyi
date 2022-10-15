@@ -82,6 +82,11 @@ namespace DownKyi.Services.Download
                 {
                     downloadAudio = downloading.PlayUrl.Dash.Dolby.Audio[0];
                 }
+                // Hi-Res无损
+                if (downloading.AudioCodec.Id == 30251)
+                {
+                    downloadAudio = downloading.PlayUrl.Dash.Flac.Audio;
+                }
             }
             catch (Exception) { }
 

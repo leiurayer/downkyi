@@ -132,15 +132,16 @@ namespace DownKyi.Services
         private static ObservableCollection<string> GetAudioQualityFormatList(PlayUrl playUrl, int defaultAudioQuality)
         {
             List<string> audioQualityFormatList = new List<string>();
+            List<Quality> audioQualities = Constant.GetAudioQualities();
 
             if (playUrl.Dash.Audio != null && playUrl.Dash.Audio.Count > 0)
             {
                 foreach (PlayUrlDashVideo audio in playUrl.Dash.Audio)
                 {
-                    // 音质id大于设置画质时，跳过
+                    // 音质id大于设置音质时，跳过
                     if (audio.Id > defaultAudioQuality) { continue; }
 
-                    Quality audioQuality = Constant.GetAudioQualities().FirstOrDefault(t => { return t.Id == audio.Id; });
+                    Quality audioQuality = audioQualities.FirstOrDefault(t => { return t.Id == audio.Id; });
                     if (audioQuality != null)
                     {
                         ListHelper.AddUnique(audioQualityFormatList, audioQuality.Name);
@@ -148,9 +149,20 @@ namespace DownKyi.Services
                 }
             }
 
-            if (playUrl.Dash.Dolby.Audio != null && playUrl.Dash.Dolby.Audio.Count > 0)
+            if (audioQualities[3].Id <= defaultAudioQuality - 1000 && playUrl.Dash.Dolby != null)
             {
-                ListHelper.AddUnique(audioQualityFormatList, Constant.GetAudioQualities().Last().Name);
+                if (playUrl.Dash.Dolby.Audio != null && playUrl.Dash.Dolby.Audio.Count > 0)
+                {
+                    ListHelper.AddUnique(audioQualityFormatList, audioQualities[3].Name);
+                }
+            }
+
+            if (audioQualities[4].Id <= defaultAudioQuality - 1000 && playUrl.Dash.Flac != null)
+            {
+                if (playUrl.Dash.Flac.Audio != null)
+                {
+                    ListHelper.AddUnique(audioQualityFormatList, audioQualities[4].Name);
+                }
             }
 
             audioQualityFormatList.Sort(new StringLogicalComparer<string>());
