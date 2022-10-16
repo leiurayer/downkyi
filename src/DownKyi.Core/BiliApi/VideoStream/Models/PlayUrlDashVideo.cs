@@ -30,6 +30,7 @@ namespace DownKyi.Core.BiliApi.VideoStream.Models
         // start_with_sap
         // SegmentBase
         // segment_base
-        // codecid
+        [JsonProperty("codecid")]
+        public int CodecId { get; set; }
     }
 }

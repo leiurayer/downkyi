@@ -8,7 +8,7 @@ namespace DownKyi.Core.Settings.Models
     /// </summary>
     public class VideoSettings
     {
-        public VideoCodecs VideoCodecs { get; set; } = VideoCodecs.NONE; // AVC or HEVC
+        public int VideoCodecs { get; set; } = -1; // AVC or HEVC
         public int Quality { get; set; } = -1; // 画质
         public int AudioQuality { get; set; } = -1; // 音质
         public AllowStatus IsTranscodingFlvToMp4 { get; set; } = AllowStatus.NONE; // 是否将flv转为mp4

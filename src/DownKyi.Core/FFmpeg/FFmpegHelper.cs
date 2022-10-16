@@ -34,15 +34,19 @@ namespace DownKyi.Core.FFmpeg
         /// <param name="destVideo"></param>
         public static bool MergeVideo(string video1, string video2, string destVideo)
         {
-            string param = $"-y -i \"{video1}\" -i \"{video2}\" -acodec copy -vcodec copy -f mp4 \"{destVideo}\"";
+            string param = $"-y -i \"{video1}\" -i \"{video2}\" -strict -2 -acodec copy -vcodec copy -f mp4 \"{destVideo}\"";
             if (video1 == null || !File.Exists(video1))
             {
-                param = $"-y -i \"{video2}\" -acodec copy -vcodec copy -f mp4 \"{destVideo}\"";
+                param = $"-y -i \"{video2}\" -strict -2 -acodec copy -vcodec copy -f mp4 \"{destVideo}\"";
             }
             if (video2 == null || !File.Exists(video2))
             {
-                param = $"-y -i \"{video1}\" -acodec copy \"{destVideo}\"";
+                param = $"-y -i \"{video1}\" -strict -2 -acodec copy \"{destVideo}\"";
             }
+
+            // 支持flac格式音频
+            //param += " -strict -2";
+
             if (!File.Exists(video1) && !File.Exists(video2)) { return false; }
 
             // 如果存在

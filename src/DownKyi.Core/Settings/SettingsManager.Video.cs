@@ -9,7 +9,7 @@ namespace DownKyi.Core.Settings
     public partial class SettingsManager
     {
         // 设置优先下载的视频编码
-        private readonly VideoCodecs videoCodecs = VideoCodecs.AVC;
+        private readonly int videoCodecs = 7;
 
         // 设置优先下载画质
         private readonly int quality = 120;
@@ -58,10 +58,10 @@ namespace DownKyi.Core.Settings
         /// 获取优先下载的视频编码
         /// </summary>
         /// <returns></returns>
-        public VideoCodecs GetVideoCodecs()
+        public int GetVideoCodecs()
         {
             appSettings = GetSettings();
-            if (appSettings.Video.VideoCodecs == VideoCodecs.NONE)
+            if (appSettings.Video.VideoCodecs == -1)
             {
                 // 第一次获取，先设置默认值
                 SetVideoCodecs(videoCodecs);
@@ -75,7 +75,7 @@ namespace DownKyi.Core.Settings
         /// </summary>
         /// <param name="videoCodecs"></param>
         /// <returns></returns>
-        public bool SetVideoCodecs(VideoCodecs videoCodecs)
+        public bool SetVideoCodecs(int videoCodecs)
         {
             appSettings.Video.VideoCodecs = videoCodecs;
             return SetSettings();
