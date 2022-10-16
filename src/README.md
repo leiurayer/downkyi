@@ -6,7 +6,11 @@
 
 - [x] 支持视频、番剧、剧集、电影、课程下载
 
-- [x] **支持8K、4K、HDR、杜比视界、杜比全景声下载**
+- [x] **支持8K、4K、HDR、杜比视界**
+
+- [x] **支持AVC、HEVC、AV1视频编码**
+
+- [x] **支持杜比全景声、Hi-Res无损音质**
 
 - [x] **支持用户收藏夹、订阅、稍后再看、历史记录下载**
 
@@ -20,7 +24,7 @@
 
 - [x] 支持断点续传
 
-- [x] 支持Aria2c
+- [x] 内置Aria2c服务器，支持自定义Aria2c服务器
 
 - [x] 支持下载历史记录保存
 
@@ -61,15 +65,15 @@
 
 目前已支持的有：
 
-- [x] av号：av170001，https://www.bilibili.com/video/av170001
-- [x] BV号：BV17x411w7KC，https://www.bilibili.com/video/BV17x411w7KC, https://b23.tv/BV17x411w7KC
-- [x] 番剧（电影、电视剧）ss号：https://www.bilibili.com/bangumi/play/ss32982
-- [x] 番剧（电影、电视剧）ep号：https://www.bilibili.com/bangumi/play/ep317925
-- [x] 番剧（电影、电视剧）md号：https://www.bilibili.com/bangumi/media/md28228367
-- [x] 课程ss号：https://www.bilibili.com/cheese/play/ss205
-- [x] 课程ep号：https://www.bilibili.com/cheese/play/ep3489
-- [x] 收藏夹：ml1329019876，ML1329019876，https://www.bilibili.com/medialist/detail/ml1329019876, https://www.bilibili.com/medialist/play/ml1329019876/
-- [x] 用户空间：uid928123，UID:928123，https://space.bilibili.com/928123
+- [x] av号：av170001，<https://www.bilibili.com/video/av170001>
+- [x] BV号：BV17x411w7KC，<https://www.bilibili.com/video/BV17x411w7KC>, <https://b23.tv/BV17x411w7KC>
+- [x] 番剧（电影、电视剧）ss号：<https://www.bilibili.com/bangumi/play/ss32982>
+- [x] 番剧（电影、电视剧）ep号：<https://www.bilibili.com/bangumi/play/ep317925>
+- [x] 番剧（电影、电视剧）md号：<https://www.bilibili.com/bangumi/media/md28228367>
+- [x] 课程ss号：<https://www.bilibili.com/cheese/play/ss205>
+- [x] 课程ep号：<https://www.bilibili.com/cheese/play/ep3489>
+- [x] 收藏夹：ml1329019876，ML1329019876，<https://www.bilibili.com/medialist/detail/ml1329019876>, <https://www.bilibili.com/medialist/play/ml1329019876/>
+- [x] 用户空间：uid928123，UID:928123，<https://space.bilibili.com/928123>
 
 `注：因为番剧和课程都有ss号和ep号，因此暂时不能直接输入ss号和ep号。`
 
