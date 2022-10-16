@@ -23,6 +23,7 @@
                     Name="nameVideoCodecs"
                     Width="120"
                     VerticalContentAlignment="Center"
+                    DisplayMemberPath="Name"
                     ItemsSource="{Binding VideoCodecs}"
                     SelectedValue="{Binding SelectedVideoCodec}">
                     <i:Interaction.Triggers>

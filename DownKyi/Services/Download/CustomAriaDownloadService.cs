@@ -2,7 +2,6 @@ using DownKyi.Core.Aria2cNet;
 using DownKyi.Core.Aria2cNet.Client;
 using DownKyi.Core.Aria2cNet.Client.Entity;
 using DownKyi.Core.Aria2cNet.Server;
-using DownKyi.Core.BiliApi.Login;
 using DownKyi.Core.BiliApi.VideoStream.Models;
 using DownKyi.Core.Logging;
 using DownKyi.Core.Settings;
@@ -22,9 +21,9 @@ namespace DownKyi.Services.Download
     /// <summary>
     /// 音视频采用Aria下载，其余采用WebClient下载
     /// </summary>
-    public class AriaDownloadService : DownloadService, IDownloadService
+    public class CustomAriaDownloadService : DownloadService, IDownloadService
     {
-        public AriaDownloadService(ObservableCollection<DownloadingItem> downloadingList, ObservableCollection<DownloadedItem> downloadedList) : base(downloadingList, downloadedList)
+        public CustomAriaDownloadService(ObservableCollection<DownloadingItem> downloadingList, ObservableCollection<DownloadedItem> downloadedList) : base(downloadingList, downloadedList)
         {
             Tag = "AriaDownloadService";
         }
@@ -233,14 +232,11 @@ namespace DownKyi.Services.Download
         public void Start()
         {
             // 设置aria token
-            AriaClient.SetToken();
+            AriaClient.SetToken(SettingsManager.GetInstance().GetAriaToken());
             // 设置aria host
-            AriaClient.SetHost();
+            AriaClient.SetHost(SettingsManager.GetInstance().GetAriaHost());
             // 设置aria listenPort
-            AriaClient.SetListenPort();
-
-            // 启动Aria服务器
-            StartAriaServer();
+            AriaClient.SetListenPort(SettingsManager.GetInstance().GetAriaListenPort());
 
             // 启动基本服务
             BaseStart();
@@ -294,49 +290,6 @@ namespace DownKyi.Services.Download
 
                 return false;
             }
-        }
-
-        /// <summary>
-        /// 启动Aria服务器
-        /// </summary>
-        private async void StartAriaServer()
-        {
-            List<string> header = new List<string>
-            {
-                $"Cookie: {LoginHelper.GetLoginInfoCookiesString()}",
-                $"Origin: https://www.bilibili.com",
-                $"Referer: https://www.bilibili.com",
-                $"User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.99 Safari/537.36"
-            };
-
-            AriaConfig config = new AriaConfig()
-            {
-                ListenPort = SettingsManager.GetInstance().GetAriaListenPort(),
-                Token = "downkyi",
-                LogLevel = SettingsManager.GetInstance().GetAriaLogLevel(),
-                MaxConcurrentDownloads = SettingsManager.GetInstance().GetMaxCurrentDownloads(),
-                MaxConnectionPerServer = 8, // 最大取16
-                Split = SettingsManager.GetInstance().GetAriaSplit(),
-                //MaxTries = 5,
-                MinSplitSize = 10, // 10MB
-                MaxOverallDownloadLimit = SettingsManager.GetInstance().GetAriaMaxOverallDownloadLimit() * 1024L, // 输入的单位是KB/s，所以需要乘以1024
-                MaxDownloadLimit = SettingsManager.GetInstance().GetAriaMaxDownloadLimit() * 1024L, // 输入的单位是KB/s，所以需要乘以1024
-                MaxOverallUploadLimit = 0,
-                MaxUploadLimit = 0,
-                ContinueDownload = true,
-                FileAllocation = SettingsManager.GetInstance().GetAriaFileAllocation(),
-                Headers = header
-            };
-            var task = await AriaServer.StartServerAsync(config);
-            if (task) { Console.WriteLine("Start ServerAsync Completed"); }
-            for (int i = 0; i < 10; i++)
-            {
-                var globOpt = await AriaClient.GetGlobalOptionAsync();
-                if (globOpt != null)
-                    break;
-                await Task.Delay(1000);
-            }
-            Console.WriteLine("Start ServerAsync end");
         }
 
         /// <summary>
@@ -397,11 +350,11 @@ namespace DownKyi.Services.Download
                     UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.54 Safari/537.36",
                 };
 
-                // 如果设置了代理，则增加HttpProxy
-                if (SettingsManager.GetInstance().IsAriaHttpProxy() == AllowStatus.YES)
-                {
-                    option.HttpProxy = $"http://{SettingsManager.GetInstance().GetAriaHttpProxy()}:{SettingsManager.GetInstance().GetAriaHttpProxyListenPort()}";
-                }
+                //// 如果设置了代理，则增加HttpProxy
+                //if (SettingsManager.GetInstance().IsAriaHttpProxy() == AllowStatus.YES)
+                //{
+                //    option.HttpProxy = $"http://{SettingsManager.GetInstance().GetAriaHttpProxy()}:{SettingsManager.GetInstance().GetAriaHttpProxyListenPort()}";
+                //}
 
                 // 添加一个下载
                 Task<AriaAddUri> ariaAddUri = AriaClient.AddUriAsync(urls, option);

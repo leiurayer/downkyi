@@ -19,12 +19,20 @@ namespace DownKyi.Core.BiliApi.BiliUtils
             new Quality { Name = "360P 流畅", Id = 16 },
         };
 
+        private static readonly List<Quality> codecIds = new List<Quality>
+        {
+            new Quality { Name = "H.264/AVC", Id = 7 },
+            new Quality { Name = "H.265/HEVC", Id = 12 },
+            new Quality { Name = "AV1", Id = 13 },
+        };
+
         private static readonly List<Quality> qualities = new List<Quality>
         {
             new Quality { Name = "64K", Id = 30216 },
             new Quality { Name = "132K", Id = 30232 },
             new Quality { Name = "192K", Id = 30280 },
             new Quality { Name = "Dolby Atmos", Id = 30250 },
+            new Quality { Name = "Hi-Res无损", Id = 30251 },
         };
 
         /// <summary>
@@ -37,6 +45,18 @@ namespace DownKyi.Core.BiliApi.BiliUtils
             // 保证外部修改list后，
             // 不会影响其他调用处
             return new List<Quality>(resolutions);
+        }
+
+        /// <summary>
+        /// 获取视频编码代码
+        /// </summary>
+        /// <returns></returns>
+        public static List<Quality> GetCodecIds()
+        {
+            // 使用深复制，
+            // 保证外部修改list后，
+            // 不会影响其他调用处
+            return new List<Quality>(codecIds);
         }
 
         /// <summary>

@@ -63,6 +63,7 @@
     <system:String x:Key="AllPublicationZones">全部</system:String>
     <system:String x:Key="Publication">投稿视频</system:String>
     <system:String x:Key="Channel">频道</system:String>
+    <system:String x:Key="SeasonsSeries">合集和列表</system:String>
     <system:String x:Key="UserSpaceWait">请稍等，马上就好~</system:String>
 
     <!--  PublicFavorites  -->
@@ -192,7 +193,10 @@
     <system:String x:Key="SelectDownloader">选择下载器（重启生效）：</system:String>
     <system:String x:Key="BuiltinDownloader">内建下载器（测试）</system:String>
     <system:String x:Key="Aria2cDownloader">Aria2下载器</system:String>
+    <system:String x:Key="CustomAria2cDownloader">自定义Aria2下载器</system:String>
+    <system:String x:Key="AriaServerHost">Aria服务器地址：</system:String>
     <system:String x:Key="AriaServerPort">Aria服务器端口：</system:String>
+    <system:String x:Key="AriaServerToken">Aria服务器Token：</system:String>
     <system:String x:Key="AriaLogLevel">Aria日志等级：</system:String>
     <system:String x:Key="AriaMaxConcurrentDownloads">Aria同时下载数：</system:String>
     <system:String x:Key="AriaSplit">Aria最大线程数：</system:String>

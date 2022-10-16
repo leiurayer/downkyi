@@ -228,11 +228,14 @@ namespace DownKyi.ViewModels
 
             switch (banner.Id)
             {
-                case 0:
+                case 0: // 投稿
                     regionManager.RequestNavigate("UserSpaceContentRegion", ViewArchiveViewModel.Tag, param);
                     break;
-                case 1:
+                case 1: // 频道（弃用）
                     regionManager.RequestNavigate("UserSpaceContentRegion", UserSpace.ViewChannelViewModel.Tag, param);
+                    break;
+                case 2: // 合集和列表
+                    regionManager.RequestNavigate("UserSpaceContentRegion", UserSpace.ViewSeasonsSeriesViewModel.Tag, param);
                     break;
             }
         }
@@ -427,20 +430,38 @@ namespace DownKyi.ViewModels
             }
 
             // 频道
-            List<SpaceChannelList> channelList = null;
+            //List<SpaceChannelList> channelList = null;
+            //await Task.Run(() =>
+            //{
+            //    channelList = Core.BiliApi.Users.UserSpace.GetChannelList(mid);
+            //});
+            //if (channelList != null && channelList.Count > 0)
+            //{
+            //    TabLeftBanners.Add(new TabLeftBanner
+            //    {
+            //        Object = channelList,
+            //        Id = 1,
+            //        Icon = NormalIcon.Instance().Channel,
+            //        IconColor = "#FF23C9ED",
+            //        Title = DictionaryResource.GetString("Channel")
+            //    });
+            //}
+
+            // 合集和列表
+            SpaceSeasonsSeries seasonsSeries = null;
             await Task.Run(() =>
             {
-                channelList = Core.BiliApi.Users.UserSpace.GetChannelList(mid);
+                seasonsSeries = Core.BiliApi.Users.UserSpace.GetSeasonsSeries(mid, 1, 20);
             });
-            if (channelList != null && channelList.Count > 0)
+            if (seasonsSeries != null && seasonsSeries.Page.Total > 0)
             {
                 TabLeftBanners.Add(new TabLeftBanner
                 {
-                    Object = channelList,
-                    Id = 1,
+                    Object = seasonsSeries,
+                    Id = 2,
                     Icon = NormalIcon.Instance().Channel,
                     IconColor = "#FF23C9ED",
-                    Title = DictionaryResource.GetString("Channel")
+                    Title = DictionaryResource.GetString("SeasonsSeries")
                 });
             }
 

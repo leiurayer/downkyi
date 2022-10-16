@@ -117,6 +117,7 @@
     <Compile Include="Models\OrderFormatDisplay.cs" />
     <Compile Include="Services\AlertService.cs" />
     <Compile Include="Services\Download\AddToDownloadService.cs" />
+    <Compile Include="Services\Download\CustomAriaDownloadService.cs" />
     <Compile Include="Services\Download\BuiltinDownloadService.cs" />
     <Compile Include="Services\Download\DownloadStorageService.cs" />
     <Compile Include="Services\SearchService.cs" />
@@ -166,12 +167,15 @@
     <Compile Include="ViewModels\DownloadManager\ViewDownloadingViewModel.cs" />
     <Compile Include="ViewModels\Toolbox\ViewBiliHelperViewModel.cs" />
     <Compile Include="ViewModels\Toolbox\ViewDelogoViewModel.cs" />
+    <Compile Include="ViewModels\UserSpace\SeasonsSeries.cs" />
     <Compile Include="ViewModels\UserSpace\Channel.cs" />
     <Compile Include="ViewModels\UserSpace\PublicationZone.cs" />
+    <Compile Include="ViewModels\UserSpace\ViewSeasonsSeriesViewModel.cs" />
     <Compile Include="ViewModels\UserSpace\ViewChannelViewModel.cs" />
     <Compile Include="ViewModels\UserSpace\ViewArchiveViewModel.cs" />
     <Compile Include="ViewModels\UserSpace\TabLeftBanner.cs" />
     <Compile Include="ViewModels\UserSpace\TabRightBanner.cs" />
+    <Compile Include="ViewModels\ViewSeasonsSeriesViewModel.cs" />
     <Compile Include="ViewModels\ViewChannelViewModel.cs" />
     <Compile Include="ViewModels\ViewDownloadManagerViewModel.cs" />
     <Compile Include="ViewModels\Toolbox\ViewExtractMediaViewModel.cs" />
@@ -243,8 +247,14 @@
     <Compile Include="Views\UserSpace\ViewArchive.xaml.cs">
       <DependentUpon>ViewArchive.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\UserSpace\ViewSeasonsSeries.xaml.cs">
+      <DependentUpon>ViewSeasonsSeries.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\UserSpace\ViewChannel.xaml.cs">
       <DependentUpon>ViewChannel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewSeasonsSeries.xaml.cs">
+      <DependentUpon>ViewSeasonsSeries.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ViewChannel.xaml.cs">
       <DependentUpon>ViewChannel.xaml</DependentUpon>
@@ -446,9 +456,17 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\UserSpace\ViewSeasonsSeries.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\UserSpace\ViewChannel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewSeasonsSeries.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\ViewChannel.xaml">
       <SubType>Designer</SubType>

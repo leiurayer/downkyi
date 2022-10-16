@@ -24,15 +24,15 @@ namespace DownKyi.ViewModels.Settings
 
         #region 页面属性申明
 
-        private List<string> videoCodecs;
-        public List<string> VideoCodecs
+        private List<Quality> videoCodecs;
+        public List<Quality> VideoCodecs
         {
             get => videoCodecs;
             set => SetProperty(ref videoCodecs, value);
         }
 
-        private string selectedVideoCodec;
-        public string SelectedVideoCodec
+        private Quality selectedVideoCodec;
+        public Quality SelectedVideoCodec
         {
             get => selectedVideoCodec;
             set => SetProperty(ref selectedVideoCodec, value);
@@ -186,18 +186,21 @@ namespace DownKyi.ViewModels.Settings
             #region 属性初始化
 
             // 优先下载的视频编码
-            VideoCodecs = new List<string>
-            {
-                "H.264/AVC",
-                "H.265/HEVC",
-            };
+            VideoCodecs = Constant.GetCodecIds();
+            //VideoCodecs = new List<string>
+            //{
+            //    "H.264/AVC",
+            //    "H.265/HEVC",
+            //};
 
             // 优先下载画质
             VideoQualityList = Constant.GetResolutions();
 
             // 优先下载音质
             AudioQualityList = Constant.GetAudioQualities();
-            AudioQualityList.RemoveAt(3);
+            //AudioQualityList.RemoveAt(3);
+            AudioQualityList[3].Id = AudioQualityList[3].Id + 1000;
+            AudioQualityList[4].Id = AudioQualityList[4].Id + 1000;
 
             // 文件命名格式
             SelectedFileName = new ObservableCollection<DisplayFileNamePart>();
@@ -253,8 +256,9 @@ namespace DownKyi.ViewModels.Settings
             isOnNavigatedTo = true;
 
             // 优先下载的视频编码
-            VideoCodecs videoCodecs = SettingsManager.GetInstance().GetVideoCodecs();
-            SelectedVideoCodec = GetVideoCodecsString(videoCodecs);
+            int videoCodecs = SettingsManager.GetInstance().GetVideoCodecs();
+            //SelectedVideoCodec = GetVideoCodecsString(videoCodecs);
+            SelectedVideoCodec = VideoCodecs.FirstOrDefault(t => { return t.Id == videoCodecs; });
 
             // 优先下载画质
             int quality = SettingsManager.GetInstance().GetQuality();
@@ -315,18 +319,20 @@ namespace DownKyi.ViewModels.Settings
         #region 命令申明
 
         // 优先下载的视频编码事件
-        private DelegateCommand<string> videoCodecsCommand;
-        public DelegateCommand<string> VideoCodecsCommand => videoCodecsCommand ?? (videoCodecsCommand = new DelegateCommand<string>(ExecuteVideoCodecsCommand));
+        private DelegateCommand<object> videoCodecsCommand;
+        public DelegateCommand<object> VideoCodecsCommand => videoCodecsCommand ?? (videoCodecsCommand = new DelegateCommand<object>(ExecuteVideoCodecsCommand));
 
         /// <summary>
         /// 优先下载的视频编码事件
         /// </summary>
         /// <param name="parameter"></param>
-        private void ExecuteVideoCodecsCommand(string parameter)
+        private void ExecuteVideoCodecsCommand(object parameter)
         {
-            VideoCodecs videoCodecs = GetVideoCodecs(parameter);
+            //VideoCodecs videoCodecs = GetVideoCodecs(parameter);
 
-            bool isSucceed = SettingsManager.GetInstance().SetVideoCodecs(videoCodecs);
+            if (!(parameter is Quality videoCodecs)) { return; }
+
+            bool isSucceed = SettingsManager.GetInstance().SetVideoCodecs(videoCodecs.Id);
             PublishTip(isSucceed);
         }
 
@@ -674,49 +680,49 @@ namespace DownKyi.ViewModels.Settings
         /// </summary>
         /// <param name="videoCodecs"></param>
         /// <returns></returns>
-        private string GetVideoCodecsString(VideoCodecs videoCodecs)
-        {
-            string codec;
-            switch (videoCodecs)
-            {
-                case Core.Settings.VideoCodecs.NONE:
-                    codec = "";
-                    break;
-                case Core.Settings.VideoCodecs.AVC:
-                    codec = "H.264/AVC";
-                    break;
-                case Core.Settings.VideoCodecs.HEVC:
-                    codec = "H.265/HEVC";
-                    break;
-                default:
-                    codec = "";
-                    break;
-            }
-            return codec;
-        }
+        //private string GetVideoCodecsString(VideoCodecs videoCodecs)
+        //{
+        //    string codec;
+        //    switch (videoCodecs)
+        //    {
+        //        case Core.Settings.VideoCodecs.NONE:
+        //            codec = "";
+        //            break;
+        //        case Core.Settings.VideoCodecs.AVC:
+        //            codec = "H.264/AVC";
+        //            break;
+        //        case Core.Settings.VideoCodecs.HEVC:
+        //            codec = "H.265/HEVC";
+        //            break;
+        //        default:
+        //            codec = "";
+        //            break;
+        //    }
+        //    return codec;
+        //}
 
         /// <summary>
         /// 返回VideoCodecs
         /// </summary>
         /// <param name="str"></param>
         /// <returns></returns>
-        private VideoCodecs GetVideoCodecs(string str)
-        {
-            VideoCodecs videoCodecs;
-            switch (str)
-            {
-                case "H.264/AVC":
-                    videoCodecs = Core.Settings.VideoCodecs.AVC;
-                    break;
-                case "H.265/HEVC":
-                    videoCodecs = Core.Settings.VideoCodecs.HEVC;
-                    break;
-                default:
-                    videoCodecs = Core.Settings.VideoCodecs.NONE;
-                    break;
-            }
-            return videoCodecs;
-        }
+        //private VideoCodecs GetVideoCodecs(string str)
+        //{
+        //    VideoCodecs videoCodecs;
+        //    switch (str)
+        //    {
+        //        case "H.264/AVC":
+        //            videoCodecs = Core.Settings.VideoCodecs.AVC;
+        //            break;
+        //        case "H.265/HEVC":
+        //            videoCodecs = Core.Settings.VideoCodecs.HEVC;
+        //            break;
+        //        default:
+        //            videoCodecs = Core.Settings.VideoCodecs.NONE;
+        //            break;
+        //    }
+        //    return videoCodecs;
+        //}
 
         /// <summary>
         /// 保存下载视频内容到设置

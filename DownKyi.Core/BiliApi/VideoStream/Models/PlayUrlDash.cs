@@ -18,5 +18,7 @@ namespace DownKyi.Core.BiliApi.VideoStream.Models
         public List<PlayUrlDashVideo> Audio { get; set; }
         [JsonProperty("dolby")]
         public PlayUrlDashDolby Dolby { get; set; }
+        [JsonProperty("flac")]
+        public PlayUrlDashFlac Flac { get; set; }
     }
 }

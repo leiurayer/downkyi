@@ -16,7 +16,12 @@ namespace DownKyi.Core.Aria2cNet.Client
     public static class AriaClient
     {
         private static readonly string JSONRPC = "2.0";
-        private static readonly string TOKEN = "downkyi";
+        private const string LOCAL_HOST = "http://localhost";
+        private const string TOKEN = "downkyi";
+        private const int LISTEN_PORT = 6800;
+        private static string host = LOCAL_HOST;
+        private static string token = TOKEN;
+        private static int listenPort = LISTEN_PORT;
 
         /// <summary>
         /// This method adds a new download.
@@ -41,7 +46,7 @@ namespace DownKyi.Core.Aria2cNet.Client
         {
             List<object> ariaParams = new List<object>
             {
-                "token:" + TOKEN,
+                "token:" + token,
                 uris,
                 option
             };
@@ -91,7 +96,7 @@ namespace DownKyi.Core.Aria2cNet.Client
         {
             List<object> ariaParams = new List<object>
             {
-                "token:" + TOKEN,
+                "token:" + token,
                 torrent,
                 uris,
                 option
@@ -136,7 +141,7 @@ namespace DownKyi.Core.Aria2cNet.Client
         {
             List<object> ariaParams = new List<object>
             {
-                "token:" + TOKEN,
+                "token:" + token,
                 metalink,
                 uris,
                 option
@@ -168,7 +173,7 @@ namespace DownKyi.Core.Aria2cNet.Client
         {
             List<object> ariaParams = new List<object>
             {
-                "token:" + TOKEN,
+                "token:" + token,
                 gid
             };
             AriaSendData ariaSend = new AriaSendData
@@ -193,7 +198,7 @@ namespace DownKyi.Core.Aria2cNet.Client
         {
             List<object> ariaParams = new List<object>
             {
-                "token:" + TOKEN,
+                "token:" + token,
                 gid
             };
             AriaSendData ariaSend = new AriaSendData
@@ -220,7 +225,7 @@ namespace DownKyi.Core.Aria2cNet.Client
         {
             List<object> ariaParams = new List<object>
             {
-                "token:" + TOKEN,
+                "token:" + token,
                 gid
             };
             AriaSendData ariaSend = new AriaSendData
@@ -242,7 +247,7 @@ namespace DownKyi.Core.Aria2cNet.Client
         {
             List<object> ariaParams = new List<object>
             {
-                "token:" + TOKEN
+                "token:" + token,
             };
             AriaSendData ariaSend = new AriaSendData
             {
@@ -266,7 +271,7 @@ namespace DownKyi.Core.Aria2cNet.Client
         {
             List<object> ariaParams = new List<object>
             {
-                "token:" + TOKEN,
+                "token:" + token,
                 gid
             };
             AriaSendData ariaSend = new AriaSendData
@@ -288,7 +293,7 @@ namespace DownKyi.Core.Aria2cNet.Client
         {
             List<object> ariaParams = new List<object>
             {
-                "token:" + TOKEN
+                "token:" + token,
             };
             AriaSendData ariaSend = new AriaSendData
             {
@@ -311,7 +316,7 @@ namespace DownKyi.Core.Aria2cNet.Client
         {
             List<object> ariaParams = new List<object>
             {
-                "token:" + TOKEN,
+                "token:" + token,
                 gid
             };
             AriaSendData ariaSend = new AriaSendData
@@ -333,7 +338,7 @@ namespace DownKyi.Core.Aria2cNet.Client
         {
             List<object> ariaParams = new List<object>
             {
-                "token:" + TOKEN
+                "token:" + token,
             };
             AriaSendData ariaSend = new AriaSendData
             {
@@ -360,7 +365,7 @@ namespace DownKyi.Core.Aria2cNet.Client
         {
             List<object> ariaParams = new List<object>
             {
-                "token:" + TOKEN,
+                "token:" + token,
                 gid
             };
             AriaSendData ariaSend = new AriaSendData
@@ -384,7 +389,7 @@ namespace DownKyi.Core.Aria2cNet.Client
         {
             List<object> ariaParams = new List<object>
             {
-                "token:" + TOKEN,
+                "token:" + token,
                 gid
             };
             AriaSendData ariaSend = new AriaSendData
@@ -408,7 +413,7 @@ namespace DownKyi.Core.Aria2cNet.Client
         {
             List<object> ariaParams = new List<object>
             {
-                "token:" + TOKEN,
+                "token:" + token,
                 gid
             };
             AriaSendData ariaSend = new AriaSendData
@@ -433,7 +438,7 @@ namespace DownKyi.Core.Aria2cNet.Client
         {
             List<object> ariaParams = new List<object>
             {
-                "token:" + TOKEN,
+                "token:" + token,
                 gid
             };
             AriaSendData ariaSend = new AriaSendData
@@ -457,7 +462,7 @@ namespace DownKyi.Core.Aria2cNet.Client
         {
             List<object> ariaParams = new List<object>
             {
-                "token:" + TOKEN,
+                "token:" + token,
                 gid
             };
             AriaSendData ariaSend = new AriaSendData
@@ -480,7 +485,7 @@ namespace DownKyi.Core.Aria2cNet.Client
         {
             List<object> ariaParams = new List<object>
             {
-                "token:" + TOKEN
+                "token:" + token,
             };
             AriaSendData ariaSend = new AriaSendData
             {
@@ -520,7 +525,7 @@ namespace DownKyi.Core.Aria2cNet.Client
         {
             List<object> ariaParams = new List<object>
             {
-                "token:" + TOKEN,
+                "token:" + token,
                 offset,
                 num
             };
@@ -552,7 +557,7 @@ namespace DownKyi.Core.Aria2cNet.Client
         {
             List<object> ariaParams = new List<object>
             {
-                "token:" + TOKEN,
+                "token:" + token,
                 offset,
                 num
             };
@@ -591,7 +596,7 @@ namespace DownKyi.Core.Aria2cNet.Client
         {
             List<object> ariaParams = new List<object>
             {
-                "token:" + TOKEN,
+                "token:" + token,
                 gid,
                 pos,
                 how.ToString("G")
@@ -635,7 +640,7 @@ namespace DownKyi.Core.Aria2cNet.Client
         {
             List<object> ariaParams = new List<object>
             {
-                "token:" + TOKEN,
+                "token:" + token,
                 gid,
                 fileIndex,
                 delUris,
@@ -669,7 +674,7 @@ namespace DownKyi.Core.Aria2cNet.Client
         {
             List<object> ariaParams = new List<object>
             {
-                "token:" + TOKEN,
+                "token:" + token,
                 gid
             };
 
@@ -705,7 +710,7 @@ namespace DownKyi.Core.Aria2cNet.Client
         {
             List<object> ariaParams = new List<object>
             {
-                "token:" + TOKEN,
+                "token:" + token,
                 gid,
                 option
             };
@@ -735,7 +740,7 @@ namespace DownKyi.Core.Aria2cNet.Client
         {
             List<object> ariaParams = new List<object>
             {
-                "token:" + TOKEN
+                "token:" + token,
             };
 
             AriaSendData ariaSend = new AriaSendData
@@ -770,7 +775,7 @@ namespace DownKyi.Core.Aria2cNet.Client
         {
             List<object> ariaParams = new List<object>
             {
-                "token:" + TOKEN,
+                "token:" + token,
                 option
             };
 
@@ -793,7 +798,7 @@ namespace DownKyi.Core.Aria2cNet.Client
         {
             List<object> ariaParams = new List<object>
             {
-                "token:" + TOKEN
+                "token:" + token,
             };
             AriaSendData ariaSend = new AriaSendData
             {
@@ -814,7 +819,7 @@ namespace DownKyi.Core.Aria2cNet.Client
         {
             List<object> ariaParams = new List<object>
             {
-                "token:" + TOKEN
+                "token:" + token,
             };
             AriaSendData ariaSend = new AriaSendData
             {
@@ -836,7 +841,7 @@ namespace DownKyi.Core.Aria2cNet.Client
         {
             List<object> ariaParams = new List<object>
             {
-                "token:" + TOKEN,
+                "token:" + token,
                 gid
             };
             AriaSendData ariaSend = new AriaSendData
@@ -858,7 +863,7 @@ namespace DownKyi.Core.Aria2cNet.Client
         {
             List<object> ariaParams = new List<object>
             {
-                "token:" + TOKEN
+                "token:" + token,
             };
             AriaSendData ariaSend = new AriaSendData
             {
@@ -881,7 +886,7 @@ namespace DownKyi.Core.Aria2cNet.Client
         {
             List<object> ariaParams = new List<object>
             {
-                "token:" + TOKEN
+                "token:" + token,
             };
             AriaSendData ariaSend = new AriaSendData
             {
@@ -902,7 +907,7 @@ namespace DownKyi.Core.Aria2cNet.Client
         {
             List<object> ariaParams = new List<object>
             {
-                "token:" + TOKEN
+                "token:" + token,
             };
             AriaSendData ariaSend = new AriaSendData
             {
@@ -926,7 +931,7 @@ namespace DownKyi.Core.Aria2cNet.Client
         {
             List<object> ariaParams = new List<object>
             {
-                "token:" + TOKEN
+                "token:" + token,
             };
             AriaSendData ariaSend = new AriaSendData
             {
@@ -947,7 +952,7 @@ namespace DownKyi.Core.Aria2cNet.Client
         {
             List<object> ariaParams = new List<object>
             {
-                "token:" + TOKEN
+                "token:" + token,
             };
             AriaSendData ariaSend = new AriaSendData
             {
@@ -1019,12 +1024,35 @@ namespace DownKyi.Core.Aria2cNet.Client
         }
 
         /// <summary>
+        /// 设置aria token
+        /// </summary>
+        /// <param name="token"></param>
+        public static void SetToken(string token = TOKEN)
+        {
+            AriaClient.token = token;
+        }
+
+        /// <summary>
+        /// 设置aria host
+        /// </summary>
+        /// <param name="host"></param>
+        public static void SetHost(string host = LOCAL_HOST)
+        {
+            AriaClient.host = host;
+        }
+
+        public static void SetListenPort(int listenPort = LISTEN_PORT)
+        {
+            AriaClient.listenPort = listenPort;
+        }
+
+        /// <summary>
         /// 获取jsonrpc的地址
         /// </summary>
         /// <returns></returns>
-        private static string GetRpcUri(int listenPort = 6800)
+        private static string GetRpcUri()
         {
-            return $"http://localhost:{listenPort}/jsonrpc";
+            return $"{host}:{AriaClient.listenPort}/jsonrpc";
         }
 
         /// <summary>
