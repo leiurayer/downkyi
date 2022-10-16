@@ -4,14 +4,14 @@ using DownKyi.Utils;
 using DownKyi.ViewModels;
 using DownKyi.ViewModels.Dialogs;
 using DownKyi.ViewModels.DownloadManager;
-using DownKyi.ViewModels.Friend;
+using DownKyi.ViewModels.Friends;
 using DownKyi.ViewModels.Settings;
 using DownKyi.ViewModels.Toolbox;
 using DownKyi.ViewModels.UserSpace;
 using DownKyi.Views;
 using DownKyi.Views.Dialogs;
 using DownKyi.Views.DownloadManager;
-using DownKyi.Views.Friend;
+using DownKyi.Views.Friends;
 using DownKyi.Views.Settings;
 using DownKyi.Views.Toolbox;
 using DownKyi.Views.UserSpace;
@@ -186,7 +186,7 @@ namespace DownKyi
             containerRegistry.RegisterForNavigation<ViewPublication>(ViewPublicationViewModel.Tag);
             containerRegistry.RegisterForNavigation<Views.ViewChannel>(ViewModels.ViewChannelViewModel.Tag);
             containerRegistry.RegisterForNavigation<Views.ViewSeasonsSeries>(ViewModels.ViewSeasonsSeriesViewModel.Tag);
-            containerRegistry.RegisterForNavigation<ViewFriend>(ViewFriendViewModel.Tag);
+            containerRegistry.RegisterForNavigation<ViewFriends>(ViewFriendsViewModel.Tag);
 
             containerRegistry.RegisterForNavigation<ViewMySpace>(ViewMySpaceViewModel.Tag);
             containerRegistry.RegisterForNavigation<ViewMyFavorites>(ViewMyFavoritesViewModel.Tag);

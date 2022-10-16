@@ -360,15 +360,15 @@ namespace DownKyi.ViewModels
             {
                 case 0:
                     data["friendId"] = 0;
-                    NavigateToView.NavigationView(eventAggregator, ViewFriendViewModel.Tag, Tag, data);
+                    NavigateToView.NavigationView(eventAggregator, ViewFriendsViewModel.Tag, Tag, data);
                     break;
                 case 1:
                     data["friendId"] = 0;
-                    NavigateToView.NavigationView(eventAggregator, ViewFriendViewModel.Tag, Tag, data);
+                    NavigateToView.NavigationView(eventAggregator, ViewFriendsViewModel.Tag, Tag, data);
                     break;
                 case 2:
                     data["friendId"] = 1;
-                    NavigateToView.NavigationView(eventAggregator, ViewFriendViewModel.Tag, Tag, data);
+                    NavigateToView.NavigationView(eventAggregator, ViewFriendsViewModel.Tag, Tag, data);
                     break;
                 default:
                     break;

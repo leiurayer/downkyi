@@ -1,5 +1,5 @@
 ﻿<UserControl
-    x:Class="DownKyi.Views.ViewFriend"
+    x:Class="DownKyi.Views.ViewFriends"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:custom="clr-namespace:DownKyi.CustomControl"

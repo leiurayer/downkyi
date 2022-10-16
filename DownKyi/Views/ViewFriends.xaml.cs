@@ -18,9 +18,9 @@ namespace DownKyi.Views
     /// <summary>
     /// ViewFriend.xaml 的交互逻辑
     /// </summary>
-    public partial class ViewFriend : UserControl
+    public partial class ViewFriends : UserControl
     {
-        public ViewFriend()
+        public ViewFriends()
         {
             InitializeComponent();
         }

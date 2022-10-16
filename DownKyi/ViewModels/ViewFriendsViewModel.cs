@@ -1,7 +1,7 @@
 ﻿using DownKyi.Events;
 using DownKyi.Images;
 using DownKyi.Utils;
-using DownKyi.ViewModels.Friend;
+using DownKyi.ViewModels.Friends;
 using DownKyi.ViewModels.PageViewModels;
 using Prism.Commands;
 using Prism.Events;
@@ -11,9 +11,9 @@ using System.Collections.ObjectModel;
 
 namespace DownKyi.ViewModels
 {
-    public class ViewFriendViewModel : BaseViewModel
+    public class ViewFriendsViewModel : BaseViewModel
     {
-        public const string Tag = "PageFriend";
+        public const string Tag = "PageFriends";
 
         private readonly IRegionManager regionManager;
 
@@ -44,7 +44,7 @@ namespace DownKyi.ViewModels
 
         #endregion
 
-        public ViewFriendViewModel(IRegionManager regionManager, IEventAggregator eventAggregator) : base(eventAggregator)
+        public ViewFriendsViewModel(IRegionManager regionManager, IEventAggregator eventAggregator) : base(eventAggregator)
         {
             this.regionManager = regionManager;
 

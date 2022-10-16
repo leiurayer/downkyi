@@ -179,7 +179,7 @@
     <Compile Include="ViewModels\ViewChannelViewModel.cs" />
     <Compile Include="ViewModels\ViewDownloadManagerViewModel.cs" />
     <Compile Include="ViewModels\Toolbox\ViewExtractMediaViewModel.cs" />
-    <Compile Include="ViewModels\ViewFriendViewModel.cs" />
+    <Compile Include="ViewModels\ViewFriendsViewModel.cs" />
     <Compile Include="ViewModels\ViewIndexViewModel.cs" />
     <Compile Include="ViewModels\ViewLoginViewModel.cs" />
     <Compile Include="ViewModels\Settings\ViewNetworkViewModel.cs" />
@@ -262,8 +262,8 @@
     <Compile Include="Views\ViewDownloadManager.xaml.cs">
       <DependentUpon>ViewDownloadManager.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ViewFriend.xaml.cs">
-      <DependentUpon>ViewFriend.xaml</DependentUpon>
+    <Compile Include="Views\ViewFriends.xaml.cs">
+      <DependentUpon>ViewFriends.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ViewIndex.xaml.cs">
       <DependentUpon>ViewIndex.xaml</DependentUpon>
@@ -476,7 +476,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ViewFriend.xaml">
+    <Page Include="Views\ViewFriends.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
