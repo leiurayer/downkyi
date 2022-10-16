@@ -4,7 +4,7 @@ using Prism.Events;
 using Prism.Regions;
 using System.Collections.ObjectModel;
 
-namespace DownKyi.ViewModels.Friend
+namespace DownKyi.ViewModels.Friends
 {
     public class ViewFollowerViewModel : BaseViewModel
     {

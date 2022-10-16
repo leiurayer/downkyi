@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace DownKyi.Views.Friend
+namespace DownKyi.Views.Friends
 {
     /// <summary>
     /// ViewFollowing.xaml 的交互逻辑

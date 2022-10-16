@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DownKyi.ViewModels.Friend
+namespace DownKyi.ViewModels.Friends
 {
     public class ViewFollowingViewModel : BaseViewModel
     {
