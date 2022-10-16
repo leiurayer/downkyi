@@ -8,7 +8,7 @@ namespace DownKyi.ViewModels.Friends
 {
     public class ViewFollowerViewModel : BaseViewModel
     {
-        public const string Tag = "PageFriendFollower";
+        public const string Tag = "PageFriendsFollower";
 
         #region 页面属性申明
 

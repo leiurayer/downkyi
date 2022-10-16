@@ -9,7 +9,7 @@ namespace DownKyi.ViewModels.Friends
 {
     public class ViewFollowingViewModel : BaseViewModel
     {
-        public const string Tag = "PageFriendFollowing";
+        public const string Tag = "PageFriendsFollowing";
 
         public ViewFollowingViewModel(IEventAggregator eventAggregator) : base(eventAggregator)
         {
