@@ -235,6 +235,8 @@ namespace DownKyi.Services.Download
             AriaClient.SetToken(SettingsManager.GetInstance().GetAriaToken());
             // 设置aria host
             AriaClient.SetHost(SettingsManager.GetInstance().GetAriaHost());
+            // 设置aria listenPort
+            AriaClient.SetListenPort(SettingsManager.GetInstance().GetAriaListenPort());
 
             // 启动基本服务
             BaseStart();

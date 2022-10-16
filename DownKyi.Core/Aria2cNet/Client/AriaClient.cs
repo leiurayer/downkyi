@@ -18,8 +18,10 @@ namespace DownKyi.Core.Aria2cNet.Client
         private static readonly string JSONRPC = "2.0";
         private const string LOCAL_HOST = "http://localhost";
         private const string TOKEN = "downkyi";
+        private const int LISTEN_PORT = 6800;
         private static string host = LOCAL_HOST;
-        private static  string token = TOKEN;
+        private static string token = TOKEN;
+        private static int listenPort = LISTEN_PORT;
 
         /// <summary>
         /// This method adds a new download.
@@ -1039,13 +1041,18 @@ namespace DownKyi.Core.Aria2cNet.Client
             AriaClient.host = host;
         }
 
+        public static void SetListenPort(int listenPort = LISTEN_PORT)
+        {
+            AriaClient.listenPort = listenPort;
+        }
+
         /// <summary>
         /// 获取jsonrpc的地址
         /// </summary>
         /// <returns></returns>
-        private static string GetRpcUri(int listenPort = 6800)
+        private static string GetRpcUri()
         {
-            return $"{host}:{listenPort}/jsonrpc";
+            return $"{host}:{AriaClient.listenPort}/jsonrpc";
         }
 
         /// <summary>
