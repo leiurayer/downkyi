@@ -1,4 +1,5 @@
-﻿using DownKyi.Core.BiliApi.VideoStream;
+﻿using DownKyi.Core.BiliApi.BiliUtils;
+using DownKyi.Core.BiliApi.VideoStream;
 using DownKyi.Core.BiliApi.VideoStream.Models;
 using DownKyi.Core.Danmaku2Ass;
 using DownKyi.Core.FFmpeg;
@@ -14,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -115,7 +117,8 @@ namespace DownKyi.Services.Download
             PlayUrlDashVideo downloadVideo = null;
             foreach (PlayUrlDashVideo video in downloading.PlayUrl.Dash.Video)
             {
-                if (video.Id == downloading.Resolution.Id && Utils.GetVideoCodecName(video.Codecs) == downloading.VideoCodecName)
+                Quality codecs = Constant.GetCodecIds().FirstOrDefault(t => t.Id == video.CodecId);
+                if (video.Id == downloading.Resolution.Id && codecs.Name == downloading.VideoCodecName)
                 {
                     downloadVideo = video;
                     break;

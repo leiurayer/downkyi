@@ -30,7 +30,7 @@ namespace DownKyi.Services
             // 获取设置
             UserInfoSettings userInfo = SettingsManager.GetInstance().GetUserInfo();
             int defaultQuality = SettingsManager.GetInstance().GetQuality();
-            VideoCodecs videoCodecs = SettingsManager.GetInstance().GetVideoCodecs();
+            int videoCodecs = SettingsManager.GetInstance().GetVideoCodecs();
             int defaultAudioQuality = SettingsManager.GetInstance().GetAudioQuality();
 
             // 未登录时，最高仅720P
@@ -179,9 +179,10 @@ namespace DownKyi.Services
         /// <param name="userInfo"></param>
         /// <param name="videoCodecs"></param>
         /// <returns></returns>
-        private static List<VideoQuality> GetVideoQualityList(PlayUrl playUrl, UserInfoSettings userInfo, int defaultQuality, VideoCodecs videoCodecs)
+        private static List<VideoQuality> GetVideoQualityList(PlayUrl playUrl, UserInfoSettings userInfo, int defaultQuality, int videoCodecs)
         {
             List<VideoQuality> videoQualityList = new List<VideoQuality>();
+            List<Quality> codeIds = Constant.GetCodecIds();
 
             if (playUrl.Dash.Video == null)
             {
@@ -209,7 +210,8 @@ namespace DownKyi.Services
 
                 // 寻找是否已存在这个画质
                 // 不存在则添加，存在则修改
-                string codecName = GetVideoCodecName(video.Codecs);
+                //string codecName = GetVideoCodecName(video.Codecs);
+                string codecName = codeIds.FirstOrDefault(t => t.Id == video.CodecId).Name;
                 VideoQuality videoQualityExist = videoQualityList.FirstOrDefault(t => t.Quality == video.Id);
                 if (videoQualityExist == null)
                 {
@@ -249,24 +251,29 @@ namespace DownKyi.Services
                 }
 
                 // 设置选中的视频编码
-                switch (videoCodecs)
+                //switch (videoCodecs)
+                //{
+                //    case VideoCodecs.AVC:
+                //        if (videoQualityList[videoQualityList.IndexOf(selectedVideoQuality)].VideoCodecList.Contains("H.264/AVC"))
+                //        {
+                //            videoQualityList[videoQualityList.IndexOf(selectedVideoQuality)].SelectedVideoCodec = "H.264/AVC";
+                //        }
+                //        break;
+                //    case VideoCodecs.HEVC:
+                //        if (videoQualityList[videoQualityList.IndexOf(selectedVideoQuality)].VideoCodecList.Contains("H.265/HEVC"))
+                //        {
+                //            videoQualityList[videoQualityList.IndexOf(selectedVideoQuality)].SelectedVideoCodec = "H.265/HEVC";
+                //        }
+                //        break;
+                //    case VideoCodecs.NONE:
+                //        break;
+                //    default:
+                //        break;
+                //}
+                string videoCodecsName = codeIds.FirstOrDefault(t => t.Id == videoCodecs).Name;
+                if (videoQualityList[videoQualityList.IndexOf(selectedVideoQuality)].VideoCodecList.Contains(videoCodecsName))
                 {
-                    case VideoCodecs.AVC:
-                        if (videoQualityList[videoQualityList.IndexOf(selectedVideoQuality)].VideoCodecList.Contains("H.264/AVC"))
-                        {
-                            videoQualityList[videoQualityList.IndexOf(selectedVideoQuality)].SelectedVideoCodec = "H.264/AVC";
-                        }
-                        break;
-                    case VideoCodecs.HEVC:
-                        if (videoQualityList[videoQualityList.IndexOf(selectedVideoQuality)].VideoCodecList.Contains("H.265/HEVC"))
-                        {
-                            videoQualityList[videoQualityList.IndexOf(selectedVideoQuality)].SelectedVideoCodec = "H.265/HEVC";
-                        }
-                        break;
-                    case VideoCodecs.NONE:
-                        break;
-                    default:
-                        break;
+                    videoQualityList[videoQualityList.IndexOf(selectedVideoQuality)].SelectedVideoCodec = videoCodecsName;
                 }
 
             }
@@ -279,10 +286,10 @@ namespace DownKyi.Services
         /// </summary>
         /// <param name="origin"></param>
         /// <returns></returns>
-        internal static string GetVideoCodecName(string origin)
-        {
-            return origin.Contains("avc") ? "H.264/AVC" : origin.Contains("hev") ? "H.265/HEVC" : origin.Contains("dvh") || origin.Contains("hvc") ? "Dolby Vision" : "";
-        }
+        //internal static string GetVideoCodecName(string origin)
+        //{
+        //    return origin.Contains("avc") ? "H.264/AVC" : origin.Contains("hev") ? "H.265/HEVC" : origin.Contains("dvh") || origin.Contains("hvc") ? "Dolby Vision" : "";
+        //}
 
     }
 }
