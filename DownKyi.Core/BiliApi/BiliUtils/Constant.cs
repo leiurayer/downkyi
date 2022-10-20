@@ -6,17 +6,17 @@ namespace DownKyi.Core.BiliApi.BiliUtils
     {
         private static readonly List<Quality> resolutions = new List<Quality>
         {
-            new Quality { Name = "超高清 8K", Id = 127 },
-            new Quality { Name = "杜比视界", Id = 126 },
-            new Quality { Name = "HDR 真彩", Id = 125 },
-            new Quality { Name = "4K 超清", Id = 120 },
-            new Quality { Name = "1080P 60帧", Id = 116 },
-            new Quality { Name = "1080P 高码率", Id = 112 },
-            new Quality { Name = "1080P 高清", Id = 80 },
-            new Quality { Name = "720P 60帧", Id = 74 },
-            new Quality { Name = "720P 高清", Id = 64 },
-            new Quality { Name = "480P 清晰", Id = 32 },
             new Quality { Name = "360P 流畅", Id = 16 },
+            new Quality { Name = "480P 清晰", Id = 32 },
+            new Quality { Name = "720P 高清", Id = 64 },
+            new Quality { Name = "720P 60帧", Id = 74 },
+            new Quality { Name = "1080P 高清", Id = 80 },
+            new Quality { Name = "1080P 高码率", Id = 112 },
+            new Quality { Name = "1080P 60帧", Id = 116 },
+            new Quality { Name = "4K 超清", Id = 120 },
+            new Quality { Name = "HDR 真彩", Id = 125 },
+            new Quality { Name = "杜比视界", Id = 126 },
+            new Quality { Name = "超高清 8K", Id = 127 },
         };
 
         private static readonly List<Quality> codecIds = new List<Quality>
