@@ -304,14 +304,14 @@ namespace DownKyi.Services.Download
 
                     // 文件路径
                     List<FileNamePart> fileNameParts = SettingsManager.GetInstance().GetFileNameParts();
-                    FileName fileName = FileName.Builder(fileNameParts)                        
+                    FileName fileName = FileName.Builder(fileNameParts)
                         .SetSection(Format.FormatFileName(sectionName))
                         .SetMainTitle(Format.FormatFileName(videoInfoView.Title))
                         .SetPageTitle(Format.FormatFileName(page.Name))
                         .SetVideoZone(videoInfoView.VideoZone.Split('>')[0])
                         .SetAudioQuality(page.AudioQualityFormat)
                         .SetVideoQuality(page.VideoQuality == null ? "" : page.VideoQuality.QualityFormat)
-                        .SetVideoCodec(page.VideoQuality == null ? "" : page.VideoQuality.SelectedVideoCodec.Contains("AVC") ? "AVC" : page.VideoQuality.SelectedVideoCodec.Contains("HEVC") ? "HEVC" : page.VideoQuality.SelectedVideoCodec.Contains("Dolby") ? "Dolby Vision" : "")
+                        .SetVideoCodec(page.VideoQuality == null ? "" : page.VideoQuality.SelectedVideoCodec.Contains("AVC") ? "AVC" : page.VideoQuality.SelectedVideoCodec.Contains("HEVC") ? "HEVC" : page.VideoQuality.SelectedVideoCodec.Contains("Dolby") ? "Dolby Vision" : page.VideoQuality.SelectedVideoCodec.Contains("AV1") ? "AV1" : "")
                         .SetVideoPublishTime(page.PublishTime)
                         .SetAvid(page.Avid)
                         .SetBvid(page.Bvid)
