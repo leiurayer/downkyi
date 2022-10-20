@@ -95,40 +95,6 @@ namespace DownKyi.Services
         /// <param name="playUrl"></param>
         /// <param name="defaultAudioQuality"></param>
         /// <returns></returns>
-        private static ObservableCollection<string> GetAudioQualityFormatList_old(PlayUrl playUrl, int defaultAudioQuality)
-        {
-            List<string> audioQualityFormatList = new List<string>();
-
-            if (playUrl.Dash.Audio == null)
-            {
-                return new ObservableCollection<string>();
-            }
-
-            foreach (PlayUrlDashVideo audio in playUrl.Dash.Audio)
-            {
-                // 音质id大于设置画质时，跳过
-                if (audio.Id > defaultAudioQuality) { continue; }
-
-                Quality audioQuality = Constant.GetAudioQualities().FirstOrDefault(t => { return t.Id == audio.Id; });
-                if (audioQuality != null)
-                {
-                    ListHelper.AddUnique(audioQualityFormatList, audioQuality.Name);
-                }
-            }
-
-            audioQualityFormatList.Sort(new StringLogicalComparer<string>());
-            audioQualityFormatList.Reverse();
-
-            return new ObservableCollection<string>(audioQualityFormatList);
-        }
-
-
-        /// <summary>
-        /// 设置音质
-        /// </summary>
-        /// <param name="playUrl"></param>
-        /// <param name="defaultAudioQuality"></param>
-        /// <returns></returns>
         private static ObservableCollection<string> GetAudioQualityFormatList(PlayUrl playUrl, int defaultAudioQuality)
         {
             List<string> audioQualityFormatList = new List<string>();
@@ -244,52 +210,33 @@ namespace DownKyi.Services
                 VideoQuality selectedVideoQuality = videoQualityList.FirstOrDefault(t => t.Quality == video.Id);
                 if (selectedVideoQuality == null) { continue; }
 
-                if (videoQualityList[videoQualityList.IndexOf(selectedVideoQuality)].VideoCodecList.Count == 1)
-                {
-                    // 当获取的视频没有设置的视频编码时，执行
-                    videoQualityList[videoQualityList.IndexOf(selectedVideoQuality)].SelectedVideoCodec = videoQualityList[videoQualityList.IndexOf(selectedVideoQuality)].VideoCodecList[0];
-                }
-
                 // 设置选中的视频编码
-                //switch (videoCodecs)
-                //{
-                //    case VideoCodecs.AVC:
-                //        if (videoQualityList[videoQualityList.IndexOf(selectedVideoQuality)].VideoCodecList.Contains("H.264/AVC"))
-                //        {
-                //            videoQualityList[videoQualityList.IndexOf(selectedVideoQuality)].SelectedVideoCodec = "H.264/AVC";
-                //        }
-                //        break;
-                //    case VideoCodecs.HEVC:
-                //        if (videoQualityList[videoQualityList.IndexOf(selectedVideoQuality)].VideoCodecList.Contains("H.265/HEVC"))
-                //        {
-                //            videoQualityList[videoQualityList.IndexOf(selectedVideoQuality)].SelectedVideoCodec = "H.265/HEVC";
-                //        }
-                //        break;
-                //    case VideoCodecs.NONE:
-                //        break;
-                //    default:
-                //        break;
-                //}
                 string videoCodecsName = codeIds.FirstOrDefault(t => t.Id == videoCodecs).Name;
                 if (videoQualityList[videoQualityList.IndexOf(selectedVideoQuality)].VideoCodecList.Contains(videoCodecsName))
                 {
                     videoQualityList[videoQualityList.IndexOf(selectedVideoQuality)].SelectedVideoCodec = videoCodecsName;
+                }
+                else
+                {
+                    // 当获取的视频没有设置的视频编码时
+                    foreach (Quality codec in codeIds)
+                    {
+                        if (videoQualityList[videoQualityList.IndexOf(selectedVideoQuality)].VideoCodecList.Contains(codec.Name))
+                        {
+                            videoQualityList[videoQualityList.IndexOf(selectedVideoQuality)].SelectedVideoCodec = codec.Name;
+                        }
+
+                        if (codec.Id == videoCodecs)
+                        {
+                            break;
+                        }
+                    }
                 }
 
             }
 
             return videoQualityList;
         }
-
-        /// <summary>
-        /// 根据输入的字符串判断是AVC还是HEVC
-        /// </summary>
-        /// <param name="origin"></param>
-        /// <returns></returns>
-        //internal static string GetVideoCodecName(string origin)
-        //{
-        //    return origin.Contains("avc") ? "H.264/AVC" : origin.Contains("hev") ? "H.265/HEVC" : origin.Contains("dvh") || origin.Contains("hvc") ? "Dolby Vision" : "";
-        //}
 
     }
 }
