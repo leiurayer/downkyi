@@ -52,8 +52,8 @@
     <Reference Include="Brotli.Core, Version=2.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Brotli.NET.2.1.1\lib\net45\Brotli.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Google.Protobuf, Version=3.21.7.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
-      <HintPath>..\packages\Google.Protobuf.3.21.7\lib\net45\Google.Protobuf.dll</HintPath>
+    <Reference Include="Google.Protobuf, Version=3.21.8.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Protobuf.3.21.8\lib\net45\Google.Protobuf.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -388,9 +388,9 @@
     <Error Condition="!Exists('..\packages\Brotli.NET.2.1.1\build\Brotli.NET.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Brotli.NET.2.1.1\build\Brotli.NET.targets'))" />
     <Error Condition="!Exists('..\packages\System.Data.SQLite.Core.1.0.112.2\build\net40\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Data.SQLite.Core.1.0.112.2\build\net40\System.Data.SQLite.Core.targets'))" />
     <Error Condition="!Exists('..\packages\WebPSharp.0.5.1\build\WebPSharp.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\WebPSharp.0.5.1\build\WebPSharp.targets'))" />
-    <Error Condition="!Exists('..\packages\Google.Protobuf.Tools.3.21.7\build\Google.Protobuf.Tools.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Google.Protobuf.Tools.3.21.7\build\Google.Protobuf.Tools.targets'))" />
+    <Error Condition="!Exists('..\packages\Google.Protobuf.Tools.3.21.8\build\Google.Protobuf.Tools.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Google.Protobuf.Tools.3.21.8\build\Google.Protobuf.Tools.targets'))" />
   </Target>
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.112.2\build\net40\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.112.2\build\net40\System.Data.SQLite.Core.targets')" />
   <Import Project="..\packages\WebPSharp.0.5.1\build\WebPSharp.targets" Condition="Exists('..\packages\WebPSharp.0.5.1\build\WebPSharp.targets')" />
-  <Import Project="..\packages\Google.Protobuf.Tools.3.21.7\build\Google.Protobuf.Tools.targets" Condition="Exists('..\packages\Google.Protobuf.Tools.3.21.7\build\Google.Protobuf.Tools.targets')" />
+  <Import Project="..\packages\Google.Protobuf.Tools.3.21.8\build\Google.Protobuf.Tools.targets" Condition="Exists('..\packages\Google.Protobuf.Tools.3.21.8\build\Google.Protobuf.Tools.targets')" />
 </Project>
