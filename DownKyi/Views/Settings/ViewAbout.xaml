@@ -188,7 +188,7 @@
                             Grid.Column="2"
                             FontSize="12"
                             Foreground="{DynamicResource BrushTextDark}"
-                            Text="3.20.1" />
+                            Text="3.21.8" />
                         <TextBlock
                             Grid.Row="2"
                             Grid.Column="3"

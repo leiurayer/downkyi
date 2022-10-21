@@ -127,7 +127,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Prism.DryIoc" Version="8.0.0.1909" />
+    <PackageReference Include="Prism.DryIoc" Version="8.1.97" />
     <PackageReference Include="System.Data.SQLite.Core">
       <Version>1.0.112.2</Version>
     </PackageReference>
