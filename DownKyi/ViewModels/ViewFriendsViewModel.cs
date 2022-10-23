@@ -117,10 +117,10 @@ namespace DownKyi.ViewModels
             switch (id)
             {
                 case 0:
-                    regionManager.RequestNavigate("FriendContentRegion", ViewFollowerViewModel.Tag, param);
+                    regionManager.RequestNavigate("FriendContentRegion", ViewFollowingViewModel.Tag, param);
                     break;
                 case 1:
-                    regionManager.RequestNavigate("FriendContentRegion", ViewFollowingViewModel.Tag, param);
+                    regionManager.RequestNavigate("FriendContentRegion", ViewFollowerViewModel.Tag, param);
                     break;
             }
         }

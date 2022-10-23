@@ -23,7 +23,9 @@ namespace DownKyi.Core.BiliApi.Users.Models
         public string Face { get; set; }
         [JsonProperty("sign")]
         public string Sign { get; set; }
+        // face_nft
         // official_verify
         // vip
+        // nft_icon
     }
 }
