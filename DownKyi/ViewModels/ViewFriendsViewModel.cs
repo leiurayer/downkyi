@@ -98,7 +98,7 @@ namespace DownKyi.ViewModels
         {
             if (!(parameter is TabHeader tabHeader)) { return; }
 
-            NavigationView(tabHeader.Id);
+            NavigationView(tabHeader.Id, false);
         }
 
         #endregion
@@ -107,11 +107,16 @@ namespace DownKyi.ViewModels
         /// 进入子页面
         /// </summary>
         /// <param name="id"></param>
-        private void NavigationView(int id)
+        /// <param name="isFirst"></param>
+        private void NavigationView(int id, bool isFirst)
         {
+            // isFirst参数表示是否是从PageFriends的headerTable的item点击进入的
+            // true表示加载PageFriends后第一次进入
+            // false表示从headerTable的item点击进入
             NavigationParameters param = new NavigationParameters()
             {
                { "mid", mid },
+               { "isFirst", isFirst },
             };
 
             switch (id)
@@ -145,7 +150,7 @@ namespace DownKyi.ViewModels
             mid = (long)parameter["mid"];
             SelectTabId = (int)parameter["friendId"];
 
-            NavigationView(SelectTabId);
+            NavigationView(SelectTabId, true);
         }
 
     }

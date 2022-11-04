@@ -7,12 +7,16 @@ using Prism.Events;
 using Prism.Regions;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 
 namespace DownKyi.ViewModels.Friends
 {
     public class ViewFollowingViewModel : BaseViewModel
     {
         public const string Tag = "PageFriendsFollowing";
+
+        // mid
+        private long mid = -1;
 
         #region 页面属性申明
 
@@ -35,19 +39,8 @@ namespace DownKyi.ViewModels.Friends
         public ViewFollowingViewModel(IEventAggregator eventAggregator) : base(eventAggregator)
         {
             #region 属性初始化
-            List<FollowingGroup> followingGroup = UserRelation.GetFollowingGroup();
 
-            TabHeaders = new ObservableCollection<TabHeader>()
-            {
-                //new TabHeader{Id = 0, Title = DictionaryResource.GetString("FriendFollowing") },
-                new TabHeader{Id = -1, Title = "全部关注" },
-                new TabHeader{Id = -2, Title = "悄悄关注" },
-            };
-
-            foreach (FollowingGroup tag in followingGroup)
-            {
-                TabHeaders.Add(new TabHeader { Id = tag.TagId, Title = tag.Name, SubTitle = tag.Count.ToString() });
-            }
+            TabHeaders = new ObservableCollection<TabHeader>();
 
             #endregion
         }
@@ -85,6 +78,40 @@ namespace DownKyi.ViewModels.Friends
         #endregion
 
         /// <summary>
+        /// 初始化左侧列表
+        /// </summary>
+        private async void InitLeftTable()
+        {
+            TabHeaders.Clear();
+
+            // 用户的关系状态数
+            UserRelationStat relationStat = null;
+            await Task.Run(() =>
+            {
+                relationStat = UserStatus.GetUserRelationStat(mid);
+            });
+            if (relationStat != null)
+            {
+                TabHeaders.Add(new TabHeader { Id = -1, Title = DictionaryResource.GetString("AllFollowing"), SubTitle = relationStat.Following.ToString() });
+                TabHeaders.Add(new TabHeader { Id = -2, Title = DictionaryResource.GetString("WhisperFollowing"), SubTitle = relationStat.Whisper.ToString() });
+            }
+
+            // 用户的关注分组
+            List<FollowingGroup> followingGroup = null;
+            await Task.Run(() =>
+            {
+                followingGroup = UserRelation.GetFollowingGroup();
+            });
+            if (followingGroup != null)
+            {
+                foreach (FollowingGroup tag in followingGroup)
+                {
+                    TabHeaders.Add(new TabHeader { Id = tag.TagId, Title = tag.Name, SubTitle = tag.Count.ToString() });
+                }
+            }
+        }
+
+        /// <summary>
         /// 导航到页面时执行
         /// </summary>
         /// <param name="navigationContext"></param>
@@ -92,9 +119,26 @@ namespace DownKyi.ViewModels.Friends
         {
             base.OnNavigatedTo(navigationContext);
 
-            // 进入设置页面时显示的设置项
-            SelectTabId = 0;
+            // 传入mid
+            long parameter = navigationContext.Parameters.GetValue<long>("mid");
+            if (parameter == 0)
+            {
+                return;
+            }
+            mid = parameter;
 
+            // 是否是从PageFriends的headerTable的item点击进入的
+            // true表示加载PageFriends后第一次进入此页面
+            // false表示从headerTable的item点击进入的
+            bool isFirst = navigationContext.Parameters.GetValue<bool>("isFirst");
+            if (isFirst)
+            {
+                // 初始化左侧列表
+                InitLeftTable();
+
+                // 进入页面时显示的设置项
+                SelectTabId = 0;
+            }
         }
 
     }

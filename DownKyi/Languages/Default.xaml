@@ -102,6 +102,9 @@
     <system:String x:Key="FriendFollowing">关注</system:String>
     <system:String x:Key="FriendFollower">粉丝</system:String>
 
+    <system:String x:Key="AllFollowing">全部关注</system:String>
+    <system:String x:Key="WhisperFollowing">悄悄关注</system:String>
+
     <!--  VideoDetail  -->
     <system:String x:Key="CopyCover">复制封面图片</system:String>
     <system:String x:Key="CopyCoverUrl">复制封面URL</system:String>
