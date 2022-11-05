@@ -129,6 +129,7 @@
     <Compile Include="ViewModels\PageViewModels\Favorites.cs" />
     <Compile Include="ViewModels\PageViewModels\FavoritesMedia.cs" />
     <Compile Include="ViewModels\PageViewModels\ChannelMedia.cs" />
+    <Compile Include="ViewModels\PageViewModels\FriendInfo.cs" />
     <Compile Include="ViewModels\PageViewModels\HistoryMedia.cs" />
     <Compile Include="ViewModels\PageViewModels\PublicationMedia.cs" />
     <Compile Include="ViewModels\PageViewModels\SpaceItem.cs" />

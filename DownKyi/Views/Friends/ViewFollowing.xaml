@@ -9,50 +9,219 @@
     prism:ViewModelLocator.AutoWireViewModel="True">
     <UserControl.Resources>
         <converter:CountConverter x:Key="CountConverter" Count="1" />
+
+        <Style x:Key="ContentListStyle" TargetType="{x:Type ListBoxItem}">
+            <Setter Property="IsSelected" Value="{Binding IsSelected}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                        <Grid
+                            Name="nameUserPanel"
+                            Width="400"
+                            Height="80"
+                            Margin="15,15,10,5"
+                            Cursor="Hand">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="80" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="MouseLeftButtonUp">
+                                    <i:InvokeCommandAction Command="{Binding UserCommand}" CommandParameter="{Binding DataContext.PageName, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+
+                            <Image
+                                Grid.Column="0"
+                                Width="64"
+                                Height="64"
+                                Source="{Binding Header}">
+                                <Image.Clip>
+                                    <EllipseGeometry
+                                        Center="32,32"
+                                        RadiusX="32"
+                                        RadiusY="32" />
+                                </Image.Clip>
+                            </Image>
+
+                            <Grid Grid.Column="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="40" />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <TextBlock
+                                    Grid.Row="0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    FontSize="14"
+                                    Foreground="{DynamicResource BrushTextDark}"
+                                    Text="{Binding Name}"
+                                    TextTrimming="CharacterEllipsis"
+                                    TextWrapping="WrapWithOverflow" />
+                                <TextBlock
+                                    Grid.Row="1"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Top"
+                                    FontSize="12"
+                                    Foreground="{DynamicResource BrushTextGrey2}"
+                                    Text="{Binding Sign}"
+                                    TextTrimming="CharacterEllipsis"
+                                    TextWrapping="WrapWithOverflow"
+                                    ToolTip="{Binding Sign}" />
+                            </Grid>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </UserControl.Resources>
 
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition>
-                <ColumnDefinition.Style>
-                    <Style TargetType="ColumnDefinition">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding TabHeaders}" Value="{x:Null}">
-                                <Setter Property="Width" Value="0" />
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding TabHeaders.Count}" Value="0">
-                                <Setter Property="Width" Value="0" />
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding TabHeaders.Count}" Value="1">
-                                <Setter Property="Width" Value="0" />
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding TabHeaders.Count, Converter={StaticResource CountConverter}}" Value="true">
-                                <Setter Property="Width" Value="200" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </ColumnDefinition.Style>
-            </ColumnDefinition>
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
+        <Grid Visibility="{Binding ContentVisibility}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition>
+                    <ColumnDefinition.Style>
+                        <Style TargetType="ColumnDefinition">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding TabHeaders}" Value="{x:Null}">
+                                    <Setter Property="Width" Value="0" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding TabHeaders.Count}" Value="0">
+                                    <Setter Property="Width" Value="0" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding TabHeaders.Count}" Value="1">
+                                    <Setter Property="Width" Value="0" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding TabHeaders.Count, Converter={StaticResource CountConverter}}" Value="true">
+                                    <Setter Property="Width" Value="200" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ColumnDefinition.Style>
+                </ColumnDefinition>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
 
-        <!--  左侧tab header  -->
-        <ListBox
-            Name="nameLeftTabHeaders"
-            Grid.Column="0"
-            BorderThickness="0"
-            ItemContainerStyle="{StaticResource LeftTabHeaderItemStyle}"
-            ItemsSource="{Binding TabHeaders}"
-            SelectedIndex="{Binding SelectTabId}"
-            Style="{StaticResource LeftTabHeaderStyle}">
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="SelectionChanged">
-                    <i:InvokeCommandAction Command="{Binding LeftTabHeadersCommand}" CommandParameter="{Binding ElementName=nameLeftTabHeaders, Path=SelectedItem}" />
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-        </ListBox>
+            <!--  左侧tab header  -->
+            <ListBox
+                Name="nameLeftTabHeaders"
+                Grid.Column="0"
+                BorderThickness="0"
+                IsEnabled="{Binding IsEnabled}"
+                ItemContainerStyle="{StaticResource LeftTabHeaderItemStyle}"
+                ItemsSource="{Binding TabHeaders}"
+                SelectedIndex="{Binding SelectTabId}"
+                Style="{StaticResource LeftTabHeaderStyle}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction Command="{Binding LeftTabHeadersCommand}" CommandParameter="{Binding ElementName=nameLeftTabHeaders, Path=SelectedItem}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </ListBox>
 
-        <!--  右侧内容区  -->
-        <ListBox Grid.Column="1" />
+            <!--  右侧内容区  -->
+            <Grid Grid.Column="1" Visibility="{Binding InnerContentVisibility}">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition Height="50" />
+                </Grid.RowDefinitions>
+
+                <ListBox
+                    x:Name="nameContents"
+                    Grid.Row="0"
+                    BorderThickness="0"
+                    ItemContainerStyle="{StaticResource ContentListStyle}"
+                    ItemsSource="{Binding Contents}"
+                    ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding ContentsCommand}" CommandParameter="{Binding ElementName=nameContents, Path=SelectedItems}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel IsItemsHost="True" />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.Style>
+                        <Style TargetType="ListBox">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ListBox">
+                                        <Border
+                                            x:Name="Bd"
+                                            Padding="0"
+                                            Background="{TemplateBinding Background}"
+                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                            BorderThickness="{TemplateBinding BorderThickness}">
+                                            <ScrollViewer Focusable="False">
+                                                <ItemsPresenter />
+                                            </ScrollViewer>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListBox.Style>
+                </ListBox>
+
+                <custom:CustomPager
+                    Grid.Row="1"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    DataContext="{Binding Pager}" />
+            </Grid>
+
+            <!--  加载gif  -->
+            <StackPanel
+                Grid.Column="1"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Orientation="Vertical"
+                Visibility="{Binding ContentLoadingVisibility}">
+                <ContentControl
+                    Width="40"
+                    Height="40"
+                    Content="{Binding ContentLoading}" />
+                <TextBlock
+                    Margin="0,10,0,0"
+                    FontSize="14"
+                    Foreground="{DynamicResource BrushTextDark}"
+                    Text="{DynamicResource FollowingWait}" />
+            </StackPanel>
+
+            <!--  没有数据提示  -->
+            <Image
+                Grid.Column="1"
+                Width="256"
+                Height="256"
+                Source="/DownKyi;component/Resources/no-data.png"
+                Visibility="{Binding ContentNoDataVisibility}" />
+        </Grid>
+
+        <!--  加载gif  -->
+        <StackPanel
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Orientation="Vertical"
+            Visibility="{Binding LoadingVisibility}">
+            <ContentControl
+                Width="40"
+                Height="40"
+                Content="{Binding Loading}" />
+            <TextBlock
+                Margin="0,10,0,0"
+                FontSize="14"
+                Foreground="{DynamicResource BrushTextDark}"
+                Text="{DynamicResource FollowingWait}" />
+        </StackPanel>
+
+        <!--  没有数据提示  -->
+        <Image
+            Width="256"
+            Height="256"
+            Source="/DownKyi;component/Resources/no-data.png"
+            Visibility="{Binding NoDataVisibility}" />
+
     </Grid>
 </UserControl>

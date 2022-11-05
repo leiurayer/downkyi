@@ -257,15 +257,25 @@ namespace DownKyi.ViewModels
                 { "friendId", 0 }
             };
 
+            string parentViewName;
+            if (ParentView == ViewFriendsViewModel.Tag)
+            {
+                parentViewName = ViewIndexViewModel.Tag;
+            }
+            else
+            {
+                parentViewName = Tag;
+            }
+
             switch (banner.Id)
             {
                 case 0:
                     data["friendId"] = 0;
-                    NavigateToView.NavigationView(eventAggregator, ViewFriendsViewModel.Tag, Tag, data);
+                    NavigateToView.NavigationView(eventAggregator, ViewFriendsViewModel.Tag, parentViewName, data);
                     break;
                 case 1:
                     data["friendId"] = 1;
-                    NavigateToView.NavigationView(eventAggregator, ViewFriendsViewModel.Tag, Tag, data);
+                    NavigateToView.NavigationView(eventAggregator, ViewFriendsViewModel.Tag, parentViewName, data);
                     break;
             }
 

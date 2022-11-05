@@ -98,7 +98,9 @@ namespace DownKyi.ViewModels
         {
             if (!(parameter is TabHeader tabHeader)) { return; }
 
-            NavigationView(tabHeader.Id, false);
+            // TODO
+            // 此处应该根据具体状态传入true or false
+            NavigationView(tabHeader.Id, true);
         }
 
         #endregion

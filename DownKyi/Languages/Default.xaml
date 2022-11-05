@@ -102,6 +102,7 @@
     <system:String x:Key="FriendFollowing">关注</system:String>
     <system:String x:Key="FriendFollower">粉丝</system:String>
 
+    <system:String x:Key="FollowingWait">请稍等，马上就好~</system:String>
     <system:String x:Key="AllFollowing">全部关注</system:String>
     <system:String x:Key="WhisperFollowing">悄悄关注</system:String>
 
