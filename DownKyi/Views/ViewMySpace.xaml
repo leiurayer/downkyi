@@ -256,8 +256,14 @@
                     BorderBrush="{x:Null}"
                     BorderThickness="0"
                     ItemsSource="{Binding StatusList}"
+                    SelectedIndex="{Binding SelectedStatus}"
                     SelectionMode="Single"
                     Style="{StaticResource SpaceStyle}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding StatusListCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
                     <ListBox.ItemContainerStyle>
                         <Style TargetType="{x:Type ListBoxItem}">
                             <Setter Property="Template">
@@ -266,6 +272,8 @@
                                         <StackPanel
                                             HorizontalAlignment="Center"
                                             VerticalAlignment="Center"
+                                            Cursor="Hand"
+                                            IsEnabled="{Binding IsEnabled}"
                                             Orientation="Vertical">
                                             <TextBlock
                                                 HorizontalAlignment="Center"

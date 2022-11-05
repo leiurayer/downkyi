@@ -11,6 +11,7 @@ using Prism.Commands;
 using Prism.Events;
 using Prism.Regions;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading;
 using System.Threading.Tasks;
@@ -240,6 +241,13 @@ namespace DownKyi.ViewModels
             set => SetProperty(ref packageList, value);
         }
 
+        private int selectedStatus;
+        public int SelectedStatus
+        {
+            get => selectedStatus;
+            set => SetProperty(ref selectedStatus, value);
+        }
+
         private int selectedPackage;
         public int SelectedPackage
         {
@@ -329,6 +337,47 @@ namespace DownKyi.ViewModels
         }
 
         // 页面选择事件
+        private DelegateCommand statusListCommand;
+        public DelegateCommand StatusListCommand => statusListCommand ?? (statusListCommand = new DelegateCommand(ExecuteStatusListCommand));
+
+        /// <summary>
+        /// 页面选择事件
+        /// </summary>
+        private void ExecuteStatusListCommand()
+        {
+            if (SelectedStatus == -1)
+            {
+                return;
+            }
+
+            Dictionary<string, object> data = new Dictionary<string, object>
+            {
+                { "mid", mid },
+                { "friendId", 0 }
+            };
+
+            switch (SelectedStatus)
+            {
+                case 0:
+                    data["friendId"] = 0;
+                    NavigateToView.NavigationView(eventAggregator, ViewFriendsViewModel.Tag, Tag, data);
+                    break;
+                case 1:
+                    data["friendId"] = 0;
+                    NavigateToView.NavigationView(eventAggregator, ViewFriendsViewModel.Tag, Tag, data);
+                    break;
+                case 2:
+                    data["friendId"] = 1;
+                    NavigateToView.NavigationView(eventAggregator, ViewFriendsViewModel.Tag, Tag, data);
+                    break;
+                default:
+                    break;
+            }
+
+            SelectedStatus = -1;
+        }
+
+        // 页面选择事件
         private DelegateCommand packageListCommand;
         public DelegateCommand PackageListCommand => packageListCommand ?? (packageListCommand = new DelegateCommand(ExecutePackageListCommand));
 
@@ -391,23 +440,24 @@ namespace DownKyi.ViewModels
             CurrentExp = "--/--";
 
             StatusList.Clear();
-            StatusList.Add(new SpaceItem { Title = DictionaryResource.GetString("Following"), Subtitle = "--" });
-            StatusList.Add(new SpaceItem { Title = DictionaryResource.GetString("Whisper"), Subtitle = "--" });
-            StatusList.Add(new SpaceItem { Title = DictionaryResource.GetString("Follower"), Subtitle = "--" });
-            StatusList.Add(new SpaceItem { Title = DictionaryResource.GetString("Black"), Subtitle = "--" });
-            StatusList.Add(new SpaceItem { Title = DictionaryResource.GetString("Moral"), Subtitle = "--" });
-            StatusList.Add(new SpaceItem { Title = DictionaryResource.GetString("Silence"), Subtitle = "N/A" });
+            StatusList.Add(new SpaceItem { IsEnabled = true, Title = DictionaryResource.GetString("Following"), Subtitle = "--" });
+            StatusList.Add(new SpaceItem { IsEnabled = true, Title = DictionaryResource.GetString("Whisper"), Subtitle = "--" });
+            StatusList.Add(new SpaceItem { IsEnabled = true, Title = DictionaryResource.GetString("Follower"), Subtitle = "--" });
+            StatusList.Add(new SpaceItem { IsEnabled = false, Title = DictionaryResource.GetString("Black"), Subtitle = "--" });
+            StatusList.Add(new SpaceItem { IsEnabled = false, Title = DictionaryResource.GetString("Moral"), Subtitle = "--" });
+            StatusList.Add(new SpaceItem { IsEnabled = false, Title = DictionaryResource.GetString("Silence"), Subtitle = "N/A" });
 
             PackageList.Clear();
-            PackageList.Add(new SpaceItem { Image = NormalIcon.Instance().FavoriteOutline, Title = DictionaryResource.GetString("Favorites") });
-            PackageList.Add(new SpaceItem { Image = NormalIcon.Instance().Subscription, Title = DictionaryResource.GetString("Subscription") });
-            PackageList.Add(new SpaceItem { Image = NormalIcon.Instance().ToView, Title = DictionaryResource.GetString("ToView") });
-            PackageList.Add(new SpaceItem { Image = NormalIcon.Instance().History, Title = DictionaryResource.GetString("History") });
+            PackageList.Add(new SpaceItem { IsEnabled = true, Image = NormalIcon.Instance().FavoriteOutline, Title = DictionaryResource.GetString("Favorites") });
+            PackageList.Add(new SpaceItem { IsEnabled = true, Image = NormalIcon.Instance().Subscription, Title = DictionaryResource.GetString("Subscription") });
+            PackageList.Add(new SpaceItem { IsEnabled = true, Image = NormalIcon.Instance().ToView, Title = DictionaryResource.GetString("ToView") });
+            PackageList.Add(new SpaceItem { IsEnabled = true, Image = NormalIcon.Instance().History, Title = DictionaryResource.GetString("History") });
             NormalIcon.Instance().FavoriteOutline.Fill = DictionaryResource.GetColor("ColorPrimary");
             NormalIcon.Instance().Subscription.Fill = DictionaryResource.GetColor("ColorPrimary");
             NormalIcon.Instance().ToView.Fill = DictionaryResource.GetColor("ColorPrimary");
             NormalIcon.Instance().History.Fill = DictionaryResource.GetColor("ColorPrimary");
 
+            SelectedStatus = -1;
             SelectedPackage = -1;
 
             ContentVisibility = Visibility.Collapsed;

@@ -121,12 +121,15 @@
     <Compile Include="Services\Download\BuiltinDownloadService.cs" />
     <Compile Include="Services\Download\DownloadStorageService.cs" />
     <Compile Include="Services\SearchService.cs" />
+    <Compile Include="ViewModels\Friends\ViewFollowerViewModel.cs" />
+    <Compile Include="ViewModels\Friends\ViewFollowingViewModel.cs" />
     <Compile Include="Utils\WindowAdaptation.cs" />
     <Compile Include="ViewModels\Dialogs\ViewAlertDialogViewModel.cs" />
     <Compile Include="ViewModels\PageViewModels\BangumiFollowMedia.cs" />
     <Compile Include="ViewModels\PageViewModels\Favorites.cs" />
     <Compile Include="ViewModels\PageViewModels\FavoritesMedia.cs" />
     <Compile Include="ViewModels\PageViewModels\ChannelMedia.cs" />
+    <Compile Include="ViewModels\PageViewModels\FriendInfo.cs" />
     <Compile Include="ViewModels\PageViewModels\HistoryMedia.cs" />
     <Compile Include="ViewModels\PageViewModels\PublicationMedia.cs" />
     <Compile Include="ViewModels\PageViewModels\SpaceItem.cs" />
@@ -177,6 +180,7 @@
     <Compile Include="ViewModels\ViewChannelViewModel.cs" />
     <Compile Include="ViewModels\ViewDownloadManagerViewModel.cs" />
     <Compile Include="ViewModels\Toolbox\ViewExtractMediaViewModel.cs" />
+    <Compile Include="ViewModels\ViewFriendsViewModel.cs" />
     <Compile Include="ViewModels\ViewIndexViewModel.cs" />
     <Compile Include="ViewModels\ViewLoginViewModel.cs" />
     <Compile Include="ViewModels\Settings\ViewNetworkViewModel.cs" />
@@ -207,6 +211,12 @@
     </Compile>
     <Compile Include="Views\DownloadManager\ViewDownloading.xaml.cs">
       <DependentUpon>ViewDownloading.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Friends\ViewFollower.xaml.cs">
+      <DependentUpon>ViewFollower.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Friends\ViewFollowing.xaml.cs">
+      <DependentUpon>ViewFollowing.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Settings\ViewAbout.xaml.cs">
       <DependentUpon>ViewAbout.xaml</DependentUpon>
@@ -252,6 +262,9 @@
     </Compile>
     <Compile Include="Views\ViewDownloadManager.xaml.cs">
       <DependentUpon>ViewDownloadManager.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewFriends.xaml.cs">
+      <DependentUpon>ViewFriends.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ViewIndex.xaml.cs">
       <DependentUpon>ViewIndex.xaml</DependentUpon>
@@ -380,6 +393,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Friends\ViewFollower.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Friends\ViewFollowing.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -453,6 +474,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ViewDownloadManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewFriends.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

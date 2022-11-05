@@ -72,7 +72,7 @@
             <Setter Property="Background" Value="#FFFFFFFF" />
             <Setter Property="BorderBrush" Value="#FFD7DDE4" />
             <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="Width" Value="30" />
+            <Setter Property="MinWidth" Value="30" />
             <Setter Property="Height" Value="30" />
             <Setter Property="Cursor" Value="Hand" />
             <Setter Property="Template">
@@ -136,6 +136,7 @@
             Style="{StaticResource pagerButton}"
             Visibility="{Binding FirstVisibility}">
             <TextBlock
+                Padding="10,0"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 FontSize="14"
@@ -174,6 +175,7 @@
             Style="{StaticResource pagerButton}"
             Visibility="{Binding PreviousSecondVisibility}">
             <TextBlock
+                Padding="10,0"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 FontSize="14"
@@ -200,6 +202,7 @@
             Style="{StaticResource pagerButton}"
             Visibility="{Binding PreviousFirstVisibility}">
             <TextBlock
+                Padding="10,0"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 FontSize="14"
@@ -239,6 +242,7 @@
             Style="{StaticResource pagerButton}"
             Visibility="{Binding NextFirstVisibility}">
             <TextBlock
+                Padding="10,0"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 FontSize="14"
@@ -265,6 +269,7 @@
             Style="{StaticResource pagerButton}"
             Visibility="{Binding NextSecondVisibility}">
             <TextBlock
+                Padding="10,0"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 FontSize="14"
@@ -303,6 +308,7 @@
             Style="{StaticResource pagerButton}"
             Visibility="{Binding LastVisibility}">
             <TextBlock
+                Padding="10,0"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 FontSize="14"

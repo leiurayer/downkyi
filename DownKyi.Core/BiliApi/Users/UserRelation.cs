@@ -139,8 +139,8 @@ namespace DownKyi.Core.BiliApi.Users
             try
             {
                 RelationWhisper relationWhisper = JsonConvert.DeserializeObject<RelationWhisper>(response);
-                if (relationWhisper == null || relationWhisper.Data == null) { return null; }
-                return relationWhisper.Data;
+                if (relationWhisper == null || relationWhisper.Data == null || relationWhisper.Data.List == null) { return null; }
+                return relationWhisper.Data.List;
             }
             catch (Exception e)
             {

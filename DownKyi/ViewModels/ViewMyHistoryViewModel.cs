@@ -28,8 +28,6 @@ namespace DownKyi.ViewModels
     {
         public const string Tag = "PageMyHistory";
 
-        private readonly IDialogService dialogService;
-
         private CancellationTokenSource tokenSource;
 
         // 每页视频数量，暂时在此写死，以后在设置中增加选项
@@ -504,7 +502,7 @@ namespace DownKyi.ViewModels
         }
 
         /// <summary>
-        /// 导航到VideoDetail页面时执行
+        /// 导航到页面时执行
         /// </summary>
         /// <param name="navigationContext"></param>
         public override void OnNavigatedTo(NavigationContext navigationContext)

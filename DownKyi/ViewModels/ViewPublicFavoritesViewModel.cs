@@ -26,8 +26,6 @@ namespace DownKyi.ViewModels
     {
         public const string Tag = "PagePublicFavorites";
 
-        private readonly IDialogService dialogService;
-
         private CancellationTokenSource tokenSource;
 
         #region 页面属性申明

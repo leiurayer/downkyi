@@ -1,6 +1,6 @@
 ﻿using DownKyi.Core.BiliApi.Users.Models;
 using DownKyi.Core.Storage;
-using DownKyi.Events;
+using DownKyi.Utils;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Regions;
@@ -68,13 +68,7 @@ namespace DownKyi.ViewModels.UserSpace
             };
 
             // 进入视频页面
-            NavigationParam param = new NavigationParam
-            {
-                ViewName = ViewModels.ViewChannelViewModel.Tag,
-                ParentViewName = ViewUserSpaceViewModel.Tag,
-                Parameter = data
-            };
-            eventAggregator.GetEvent<NavigationEvent>().Publish(param);
+            NavigateToView.NavigationView(eventAggregator, ViewModels.ViewChannelViewModel.Tag, ViewUserSpaceViewModel.Tag, data);
 
             SelectedItem = -1;
         }

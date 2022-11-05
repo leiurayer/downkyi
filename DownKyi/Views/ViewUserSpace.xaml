@@ -277,10 +277,12 @@
                     </ListBox>
 
                     <ListBox
+                        Name="nameTabRightBanners"
                         Grid.Column="1"
                         ItemContainerStyle="{StaticResource TabRightBannerStyle}"
                         ItemsSource="{Binding TabRightBanners}"
                         ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                        SelectedIndex="{Binding SelectedRightBanner}"
                         Style="{StaticResource TabBannerStyle}">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
@@ -290,6 +292,11 @@
                                     Orientation="Horizontal" />
                             </ItemsPanelTemplate>
                         </ListBox.ItemsPanel>
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding TabRightBannersCommand}" CommandParameter="{Binding ElementName=nameTabRightBanners, Path=SelectedItem}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
                     </ListBox>
                 </Grid>
 

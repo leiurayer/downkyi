@@ -97,6 +97,17 @@
     <system:String x:Key="DownloadAllPublication">下载全部</system:String>
     <system:String x:Key="PublicationWait">请稍等，马上就好~</system:String>
 
+    <!--  Friend  -->
+    <system:String x:Key="Friend">好友</system:String>
+    <system:String x:Key="FriendFollowing">关注</system:String>
+    <system:String x:Key="FriendFollower">粉丝</system:String>
+
+    <system:String x:Key="FollowingWait">请稍等，马上就好~</system:String>
+    <system:String x:Key="FollowerWait">请稍等，马上就好~</system:String>
+
+    <system:String x:Key="AllFollowing">全部关注</system:String>
+    <system:String x:Key="WhisperFollowing">悄悄关注</system:String>
+
     <!--  VideoDetail  -->
     <system:String x:Key="CopyCover">复制封面图片</system:String>
     <system:String x:Key="CopyCoverUrl">复制封面URL</system:String>
