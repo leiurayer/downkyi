@@ -27,8 +27,6 @@ namespace DownKyi.ViewModels
     {
         public const string Tag = "PageMyToView";
 
-        private readonly IDialogService dialogService;
-
         private CancellationTokenSource tokenSource;
 
         #region 页面属性申明

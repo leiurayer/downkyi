@@ -28,8 +28,6 @@ namespace DownKyi.ViewModels
     {
         public const string Tag = "PageSeasonsSeries";
 
-        private readonly IDialogService dialogService;
-
         private CancellationTokenSource tokenSource;
 
         private long mid = -1;

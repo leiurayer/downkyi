@@ -26,7 +26,7 @@ namespace DownKyi.ViewModels
     {
         public const string Tag = "PageMyFavorites";
 
-        private readonly IDialogService dialogService;
+        //private readonly IDialogService dialogService;
 
         private CancellationTokenSource tokenSource1;
         private CancellationTokenSource tokenSource2;
@@ -86,7 +86,6 @@ namespace DownKyi.ViewModels
             get => mediaContentVisibility;
             set => SetProperty(ref mediaContentVisibility, value);
         }
-
 
         private Visibility mediaLoadingVisibility;
         public Visibility MediaLoadingVisibility

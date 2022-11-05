@@ -27,8 +27,6 @@ namespace DownKyi.ViewModels
     {
         public const string Tag = "PageMyBangumiFollow";
 
-        private readonly IDialogService dialogService;
-
         private CancellationTokenSource tokenSource;
 
         private long mid = -1;

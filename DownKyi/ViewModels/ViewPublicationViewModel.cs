@@ -29,8 +29,6 @@ namespace DownKyi.ViewModels
     {
         public const string Tag = "PagePublication";
 
-        private readonly IDialogService dialogService;
-
         private CancellationTokenSource tokenSource;
 
         private long mid = -1;
