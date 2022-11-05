@@ -60,8 +60,9 @@ namespace DownKyi.CustomControl
             }
             set
             {
-                if (value < Current || value < 1)
+                if (value < Current || value < 0)
                 {
+                    Visibility = Visibility.Hidden;
                     //throw new Exception("数值不在允许的范围内。");
                     System.Console.WriteLine(value.ToString());
                 }
@@ -69,7 +70,7 @@ namespace DownKyi.CustomControl
                 {
                     count = value;
 
-                    if (count == 1) { Visibility = Visibility.Hidden; }
+                    if (count <= 1) { Visibility = Visibility.Hidden; }
                     else { Visibility = Visibility.Visible; }
 
                     OnCountChanged(count);
