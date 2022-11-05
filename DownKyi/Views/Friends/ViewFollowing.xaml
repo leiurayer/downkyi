@@ -11,7 +11,6 @@
         <converter:CountConverter x:Key="CountConverter" Count="1" />
 
         <Style x:Key="ContentListStyle" TargetType="{x:Type ListBoxItem}">
-            <Setter Property="IsSelected" Value="{Binding IsSelected}" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ListBoxItem}">
