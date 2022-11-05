@@ -8,7 +8,14 @@ namespace DownKyi.Core.BiliApi.Users.Models
     public class RelationWhisper : BaseModel
     {
         [JsonProperty("data")]
-        public List<RelationFollowInfo> Data { get; set; }
+        public RelationWhisperData Data { get; set; }
+    }
+
+    public class RelationWhisperData : BaseModel
+    {
+        [JsonProperty("list")]
+        public List<RelationFollowInfo> List { get; set; }
+        // re_version
     }
 
 }
