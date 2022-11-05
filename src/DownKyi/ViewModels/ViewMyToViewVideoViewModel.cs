@@ -27,8 +27,6 @@ namespace DownKyi.ViewModels
     {
         public const string Tag = "PageMyToView";
 
-        private readonly IDialogService dialogService;
-
         private CancellationTokenSource tokenSource;
 
         #region 页面属性申明
@@ -400,7 +398,7 @@ namespace DownKyi.ViewModels
         }
 
         /// <summary>
-        /// 导航到VideoDetail页面时执行
+        /// 导航到页面时执行
         /// </summary>
         /// <param name="navigationContext"></param>
         public override void OnNavigatedTo(NavigationContext navigationContext)

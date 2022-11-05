@@ -10,7 +10,7 @@ namespace DownKyi.ViewModels
     public class BaseViewModel : BindableBase, INavigationAware
     {
         protected readonly IEventAggregator eventAggregator;
-        protected readonly IDialogService dialogService;
+        protected IDialogService dialogService;
         protected string ParentView = string.Empty;
 
         public BaseViewModel(IEventAggregator eventAggregator)
