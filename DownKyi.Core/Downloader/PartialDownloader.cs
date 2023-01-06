@@ -29,11 +29,11 @@ namespace DownKyi.Core.Downloader
         public event EventHandler DownloadPartStopped;
 
         private readonly AsyncOperation _aop = AsyncOperationManager.CreateOperation(null);
-        readonly int[] _lastSpeeds;
-        int _counter;
+        private readonly int[] _lastSpeeds;
+        private long _counter;
+        private long _to;
+        private long _totalBytesRead;
         private bool _wait;
-        private int _to;
-        private int _totalBytesRead;
 
         /// <summary>
         /// 下载已停止
@@ -83,7 +83,7 @@ namespace DownKyi.Core.Downloader
         /// <summary>
         /// to
         /// </summary>
-        public int To
+        public long To
         {
             get => _to;
             set
@@ -96,17 +96,17 @@ namespace DownKyi.Core.Downloader
         /// <summary>
         /// from
         /// </summary>
-        public int From { get; }
+        public long From { get; }
 
         /// <summary>
         /// 当前位置
         /// </summary>
-        public int CurrentPosition => From + _totalBytesRead - 1;
+        public long CurrentPosition => From + _totalBytesRead - 1;
 
         /// <summary>
         /// 剩余字节数
         /// </summary>
-        public int RemainingBytes => (int)(ContentLength - _totalBytesRead);
+        public long RemainingBytes => ContentLength - _totalBytesRead;
 
         /// <summary>
         /// 完整路径
@@ -139,7 +139,7 @@ namespace DownKyi.Core.Downloader
         /// <param name="from"></param>
         /// <param name="to"></param>
         /// <param name="rangeAllowed"></param>
-        public PartialDownloader(string url, string dir, string fileGuid, int from, int to, bool rangeAllowed)
+        public PartialDownloader(string url, string dir, string fileGuid, long from, long to, bool rangeAllowed)
         {
             From = from;
             _to = to;
@@ -150,7 +150,7 @@ namespace DownKyi.Core.Downloader
             _lastSpeeds = new int[10];
         }
 
-        void DownloadProcedure(Action<HttpWebRequest> config)
+        private void DownloadProcedure(Action<HttpWebRequest> config)
         {
             using (var file = new FileStream(FullPath, FileMode.Create, FileAccess.ReadWrite, FileShare.Delete))
             {
@@ -163,6 +163,7 @@ namespace DownKyi.Core.Downloader
                     req.ServicePoint.ConnectionLimit += 1;
                     req.ServicePoint.Expect100Continue = true;
                     req.ProtocolVersion = HttpVersion.Version11;
+                    req.Proxy = WebRequest.GetSystemWebProxy();
                     config(req);
                     if (RangeAllowed)
                     {

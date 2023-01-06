@@ -27,7 +27,8 @@ namespace DownKyi.Core.Downloader
         private bool _rangeAllowed;
         private readonly HttpWebRequest _request;
         private Action<HttpWebRequest> _requestConfigure = req => req.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.122 Safari/537.36";
-        #endregion
+
+        #endregion 属性
 
         #region 公共属性
 
@@ -68,11 +69,13 @@ namespace DownKyi.Core.Downloader
             {
                 try
                 {
-                    return PartialDownloaderList.Where(t => t != null).Sum(t => t.TotalBytesRead);
+                    lock (this)
+                    {
+                        return PartialDownloaderList.Where(t => t != null).Sum(t => t.TotalBytesRead);
+                    }
                 }
-                catch (Exception e)
+                catch
                 {
-                    Logging.LogManager.Error(e);
                     return 0;
                 }
             }
@@ -91,7 +94,16 @@ namespace DownKyi.Core.Downloader
         /// <summary>
         /// 下载速度
         /// </summary>
-        public float TotalSpeedInBytes => PartialDownloaderList.Sum(t => t.SpeedInBytes);
+        public float TotalSpeedInBytes
+        {
+            get
+            {
+                lock (this)
+                {
+                    return PartialDownloaderList.Sum(t => t.SpeedInBytes);
+                }
+            }
+        }
 
         /// <summary>
         /// 下载块
@@ -103,7 +115,7 @@ namespace DownKyi.Core.Downloader
         /// </summary>
         public string FilePath { get; set; }
 
-        #endregion
+        #endregion 公共属性
 
         #region 变量
 
@@ -124,7 +136,7 @@ namespace DownKyi.Core.Downloader
 
         private readonly AsyncOperation _aop;
 
-        #endregion
+        #endregion 变量
 
         #region 下载管理器
 
@@ -166,7 +178,7 @@ namespace DownKyi.Core.Downloader
         {
         }
 
-        #endregion
+        #endregion 下载管理器
 
         #region 事件
 
@@ -181,16 +193,16 @@ namespace DownKyi.Core.Downloader
                 return;
             }
 
-            PartialDownloaderList.Sort((x, y) => y.RemainingBytes - x.RemainingBytes);
-            int rem = PartialDownloaderList[0].RemainingBytes;
+            PartialDownloaderList.Sort((x, y) => (int)(y.RemainingBytes - x.RemainingBytes));
+            var rem = PartialDownloaderList[0].RemainingBytes;
             if (rem < 50 * 1024)
             {
                 WaitOrResumeAll(PartialDownloaderList, false);
                 return;
             }
 
-            int from = PartialDownloaderList[0].CurrentPosition + rem / 2;
-            int to = PartialDownloaderList[0].To;
+            var from = PartialDownloaderList[0].CurrentPosition + rem / 2;
+            var to = PartialDownloaderList[0].To;
             if (from > to)
             {
                 WaitOrResumeAll(PartialDownloaderList, false);
@@ -202,16 +214,19 @@ namespace DownKyi.Core.Downloader
             var temp = new PartialDownloader(_url, TempFileDirectory, Guid.NewGuid().ToString(), from, to, true);
             temp.DownloadPartCompleted += temp_DownloadPartCompleted;
             temp.DownloadPartProgressChanged += temp_DownloadPartProgressChanged;
-            PartialDownloaderList.Add(temp);
+            lock (this)
+            {
+                PartialDownloaderList.Add(temp);
+            }
             temp.Start(_requestConfigure);
         }
 
-        void temp_DownloadPartProgressChanged(object sender, EventArgs e)
+        private void temp_DownloadPartProgressChanged(object sender, EventArgs e)
         {
             UpdateProgress();
         }
 
-        void UpdateProgress()
+        private void UpdateProgress()
         {
             int pr = (int)(TotalBytesReceived * 1d / Size * 100);
             if (TotalProgress != pr)
@@ -224,11 +239,11 @@ namespace DownKyi.Core.Downloader
             }
         }
 
-        #endregion
+        #endregion 事件
 
         #region 方法
 
-        void CreateFirstPartitions()
+        private void CreateFirstPartitions()
         {
             Size = GetContentLength(ref _rangeAllowed, ref _url);
             int maximumPart = (int)(Size / (25 * 1024));
@@ -247,16 +262,20 @@ namespace DownKyi.Core.Downloader
                 var temp = CreateNew(i, NumberOfParts, Size);
                 temp.DownloadPartProgressChanged += temp_DownloadPartProgressChanged;
                 temp.DownloadPartCompleted += temp_DownloadPartCompleted;
-                PartialDownloaderList.Add(temp);
+                lock (this)
+                {
+                    PartialDownloaderList.Add(temp);
+                }
                 temp.Start(_requestConfigure);
             }
         }
 
-        void MergeParts()
+        private void MergeParts()
         {
             var mergeOrderedList = PartialDownloaderList.OrderBy(x => x.From);
             var dir = new FileInfo(FilePath).DirectoryName;
             Directory.CreateDirectory(dir);
+
 
             using (var fs = File.OpenWrite(FilePath))
             {
@@ -298,12 +317,12 @@ namespace DownKyi.Core.Downloader
             }
         }
 
-        PartialDownloader CreateNew(int order, int parts, long contentLength)
+        private PartialDownloader CreateNew(int order, int parts, long contentLength)
         {
-            int division = (int)contentLength / parts;
-            int remaining = (int)contentLength % parts;
-            int start = division * order;
-            int end = start + division - 1;
+            var division = contentLength / parts;
+            var remaining = contentLength % parts;
+            var start = division * order;
+            var end = start + division - 1;
             end += order == parts - 1 ? remaining : 0;
             return new PartialDownloader(_url, TempFileDirectory, Guid.NewGuid().ToString("N"), start, end, true);
         }
@@ -315,15 +334,15 @@ namespace DownKyi.Core.Downloader
         /// <param name="wait"></param>
         public static void WaitOrResumeAll(List<PartialDownloader> list, bool wait)
         {
-            foreach (var item in list)
+            for (var index = 0; index < list.Count; index++)
             {
                 if (wait)
                 {
-                    item.Wait();
+                    list[index].Wait();
                 }
                 else
                 {
-                    item.ResumeAfterWait();
+                    list[index].ResumeAfterWait();
                 }
             }
         }
@@ -349,23 +368,21 @@ namespace DownKyi.Core.Downloader
             _request.ServicePoint.ConnectionLimit = 4;
             _requestConfigure(_request);
 
-            long ctl;
             using (var resp = _request.GetResponse() as HttpWebResponse)
             {
                 redirectedUrl = resp.ResponseUri.OriginalString;
-                ctl = resp.ContentLength;
+                var ctl = resp.ContentLength;
                 rangeAllowed = resp.Headers.AllKeys.Select((v, i) => new
                 {
                     HeaderName = v,
                     HeaderValue = resp.Headers[i]
                 }).Any(k => k.HeaderName.ToLower().Contains("range") && k.HeaderValue.ToLower().Contains("byte"));
                 _request.Abort();
+                return ctl;
             }
-
-            return ctl;
         }
 
-        #endregion
+        #endregion 方法
 
         #region 公共方法
 
@@ -374,9 +391,12 @@ namespace DownKyi.Core.Downloader
         /// </summary>
         public void Pause()
         {
-            foreach (var t in PartialDownloaderList.Where(t => !t.Completed))
+            lock (this)
             {
-                t.Stop();
+                foreach (var t in PartialDownloaderList.Where(t => !t.Completed))
+                {
+                    t.Stop();
+                }
             }
 
             Thread.Sleep(200);
@@ -385,34 +405,10 @@ namespace DownKyi.Core.Downloader
         /// <summary>
         /// 开始下载
         /// </summary>
-        public void StartAsync()
-        {
-            //Task th = new Task(CreateFirstPartitions);
-            //th.Start();
-            StartAsync(false);
-        }
-
-        /// <summary>
-        /// 开始下载
-        /// </summary>
-        /// <param name="isWait"></param>
-        public void StartAsync(bool isWait)
+        public void Start()
         {
             Task th = new Task(CreateFirstPartitions);
             th.Start();
-
-            if (isWait)
-            {
-                th.Wait();
-            }
-        }
-
-        /// <summary>
-        /// 开始下载
-        /// </summary>
-        public void Start()
-        {
-            CreateFirstPartitions();
         }
 
         /// <summary>
@@ -425,8 +421,8 @@ namespace DownKyi.Core.Downloader
             {
                 if (PartialDownloaderList[i].Stopped)
                 {
-                    int from = PartialDownloaderList[i].CurrentPosition + 1;
-                    int to = PartialDownloaderList[i].To;
+                    var from = PartialDownloaderList[i].CurrentPosition + 1;
+                    var to = PartialDownloaderList[i].To;
                     if (from > to)
                     {
                         continue;
@@ -435,13 +431,16 @@ namespace DownKyi.Core.Downloader
                     var temp = new PartialDownloader(_url, TempFileDirectory, Guid.NewGuid().ToString(), from, to, _rangeAllowed);
                     temp.DownloadPartProgressChanged += temp_DownloadPartProgressChanged;
                     temp.DownloadPartCompleted += temp_DownloadPartCompleted;
-                    PartialDownloaderList.Add(temp);
+                    lock (this)
+                    {
+                        PartialDownloaderList.Add(temp);
+                    }
                     PartialDownloaderList[i].To = PartialDownloaderList[i].CurrentPosition;
                     temp.Start(_requestConfigure);
                 }
             }
         }
 
-        #endregion
+        #endregion 公共方法
     }
 }

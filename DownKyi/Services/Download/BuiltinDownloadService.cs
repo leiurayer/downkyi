@@ -356,7 +356,7 @@ namespace DownKyi.Services.Download
                 };
 
                 // 开始下载
-                mtd.StartAsync();
+                mtd.Start();
 
                 // 阻塞当前任务，监听暂停事件
                 while (!isComplete)
