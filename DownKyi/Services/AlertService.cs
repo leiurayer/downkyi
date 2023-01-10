@@ -50,7 +50,7 @@ namespace DownKyi.Services
             return ShowMessage(image, title, message);
         }
 
-        private ButtonResult ShowMessage(VectorImage image, string type, string message)
+        public ButtonResult ShowMessage(VectorImage image, string type, string message)
         {
             ButtonResult result = ButtonResult.None;
             if (dialogService == null)

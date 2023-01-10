@@ -109,7 +109,19 @@
                     TextTrimming="CharacterEllipsis"
                     TextWrapping="WrapWithOverflow" />
 
-                <Grid Grid.Row="1">
+                <Button
+                    Grid.Row="1"
+                    Width="75"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Bottom"
+                    Command="{Binding AllowCommand}"
+                    Content="{DynamicResource Allow}"
+                    FontSize="12"
+                    Foreground="{DynamicResource BrushText}"
+                    Style="{StaticResource BtnStyle}"
+                    Visibility="{Binding AloneButton}" />
+
+                <Grid Grid.Row="1" Visibility="{Binding TwoButton}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition MinWidth="100" />
                         <ColumnDefinition MinWidth="100" />
