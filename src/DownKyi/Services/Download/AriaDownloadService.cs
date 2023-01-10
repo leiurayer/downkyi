@@ -7,9 +7,11 @@ using DownKyi.Core.BiliApi.VideoStream.Models;
 using DownKyi.Core.Logging;
 using DownKyi.Core.Settings;
 using DownKyi.Core.Utils;
+using DownKyi.Images;
 using DownKyi.Models;
 using DownKyi.Utils;
 using DownKyi.ViewModels.DownloadManager;
+using Prism.Services.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -24,9 +26,16 @@ namespace DownKyi.Services.Download
     /// </summary>
     public class AriaDownloadService : DownloadService, IDownloadService
     {
-        public AriaDownloadService(ObservableCollection<DownloadingItem> downloadingList, ObservableCollection<DownloadedItem> downloadedList) : base(downloadingList, downloadedList)
+        private readonly IDialogService dialogService;
+
+        public AriaDownloadService(
+            ObservableCollection<DownloadingItem> downloadingList,
+            ObservableCollection<DownloadedItem> downloadedList,
+            IDialogService dialogService = null) :
+            base(downloadingList, downloadedList)
         {
             Tag = "AriaDownloadService";
+            this.dialogService = dialogService;
         }
 
         #region 音视频
@@ -327,8 +336,24 @@ namespace DownKyi.Services.Download
                 FileAllocation = SettingsManager.GetInstance().GetAriaFileAllocation(),
                 Headers = header
             };
-            var task = await AriaServer.StartServerAsync(config);
+
+            string errorMessage = null;
+            var task = await AriaServer.StartServerAsync(config, new Action<string>((output) =>
+            {
+                errorMessage += output + "\n";
+            }));
             if (task) { Console.WriteLine("Start ServerAsync Completed"); }
+
+            // 显示错误信息
+            if (dialogService != null && errorMessage != null && errorMessage.Contains("ERROR"))
+            {
+                AlertService alertService = new AlertService(dialogService);
+                ButtonResult result = alertService.ShowMessage(SystemIcon.Instance().Error,
+                    $"Aria2 {DictionaryResource.GetString("Error")}",
+                    errorMessage);
+                return;
+            }
+
             for (int i = 0; i < 10; i++)
             {
                 var globOpt = await AriaClient.GetGlobalOptionAsync();

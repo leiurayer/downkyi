@@ -1,6 +1,7 @@
 ﻿using DownKyi.Images;
 using Prism.Commands;
 using Prism.Services.Dialogs;
+using System.Windows;
 
 namespace DownKyi.ViewModels.Dialogs
 {
@@ -20,8 +21,23 @@ namespace DownKyi.ViewModels.Dialogs
         private string message;
         public string Message
         {
-            get { return message; }
-            set { SetProperty(ref message, value); }
+            get => message;
+            set => SetProperty(ref message, value);
+        }
+
+
+        private Visibility aloneButton;
+        public Visibility AloneButton
+        {
+            get => aloneButton;
+            set => SetProperty(ref aloneButton, value);
+        }
+
+        private Visibility twoButton;
+        public Visibility TwoButton
+        {
+            get => twoButton;
+            set => SetProperty(ref twoButton, value);
         }
 
         #endregion
@@ -57,6 +73,17 @@ namespace DownKyi.ViewModels.Dialogs
             Image = parameters.GetValue<VectorImage>("image");
             Title = parameters.GetValue<string>("title");
             Message = parameters.GetValue<string>("message");
+
+            if (Image == SystemIcon.Instance().Error)
+            {
+                AloneButton = Visibility.Visible;
+                TwoButton = Visibility.Collapsed;
+            }
+            else
+            {
+                AloneButton = Visibility.Collapsed;
+                TwoButton = Visibility.Visible;
+            }
         }
 
         #endregion
