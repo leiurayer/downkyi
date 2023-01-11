@@ -27,6 +27,13 @@ namespace DownKyi.ViewModels.Settings
             set => SetProperty(ref useSSL, value);
         }
 
+        private string userAgent;
+        public string UserAgent
+        {
+            get => userAgent;
+            set => SetProperty(ref userAgent, value);
+        }
+
         private bool builtin;
         public bool Builtin
         {
@@ -268,6 +275,9 @@ namespace DownKyi.ViewModels.Settings
             AllowStatus useSSL = SettingsManager.GetInstance().UseSSL();
             UseSSL = useSSL == AllowStatus.YES;
 
+            // UserAgent
+            UserAgent = SettingsManager.GetInstance().GetUserAgent();
+
             // 选择下载器
             var downloader = SettingsManager.GetInstance().GetDownloader();
             switch (downloader)
@@ -357,6 +367,19 @@ namespace DownKyi.ViewModels.Settings
             AllowStatus useSSL = UseSSL ? AllowStatus.YES : AllowStatus.NO;
 
             bool isSucceed = SettingsManager.GetInstance().UseSSL(useSSL);
+            PublishTip(isSucceed);
+        }
+
+        // 设置UserAgent事件
+        private DelegateCommand userAgentCommand;
+        public DelegateCommand UserAgentCommand => userAgentCommand ?? (userAgentCommand = new DelegateCommand(ExecuteUserAgentCommand));
+
+        /// <summary>
+        /// 设置UserAgent事件
+        /// </summary>
+        private void ExecuteUserAgentCommand()
+        {
+            bool isSucceed = SettingsManager.GetInstance().SetUserAgent(UserAgent);
             PublishTip(isSucceed);
         }
 

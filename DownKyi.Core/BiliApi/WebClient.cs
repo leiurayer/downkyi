@@ -1,5 +1,6 @@
 ﻿using Brotli;
 using DownKyi.Core.BiliApi.Login;
+using DownKyi.Core.Settings;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -50,11 +51,7 @@ namespace DownKyi.Core.BiliApi
                 request.Method = method;
                 request.Timeout = 30 * 1000;
 
-                // MacOS Safari
-                //string safari = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.1.1 Safari/605.1.15";
-                // Windows 10 Chrome
-                string chrome = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.99 Safari/537.36";
-                request.UserAgent = chrome;
+                request.UserAgent = SettingsManager.GetInstance().GetUserAgent();
 
                 //request.ContentType = "application/json,text/html,application/xhtml+xml,application/xml;charset=UTF-8";
                 request.Headers["accept-language"] = "zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7";
