@@ -28,6 +28,26 @@
                 IsChecked="{Binding UseSSL, Mode=TwoWay}"
                 Style="{StaticResource CheckBoxStyle}" />
 
+            <TextBlock
+                Margin="0,20,0,0"
+                FontSize="12"
+                Foreground="{DynamicResource BrushTextDark}"
+                Text="{DynamicResource UserAgent}" />
+
+            <TextBox
+                Name="nameUserAgent"
+                Height="20"
+                Margin="0,10,0,0"
+                HorizontalAlignment="Stretch"
+                Text="{Binding UserAgent}">
+                <TextBox.InputBindings>
+                    <KeyBinding
+                        Key="Enter"
+                        Command="{Binding UserAgentCommand}"
+                        CommandParameter="{Binding ElementName=nameUserAgent, Path=Text}" />
+                </TextBox.InputBindings>
+            </TextBox>
+
             <StackPanel Margin="0,20,0,0" Orientation="Vertical">
                 <TextBlock
                     FontSize="12"

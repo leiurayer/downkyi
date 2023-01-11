@@ -10,6 +10,9 @@ namespace DownKyi.Core.Settings
         // 启用https
         private readonly AllowStatus useSSL = AllowStatus.YES;
 
+        // UserAgent
+        private readonly string userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36";
+
         // 下载器
         private readonly Downloader downloader = Downloader.ARIA;
 
@@ -21,7 +24,7 @@ namespace DownKyi.Core.Settings
 
         // HttpProxy代理
         private readonly AllowStatus isHttpProxy = AllowStatus.NO;
-        private readonly string httpProxy = "";
+        private readonly string httpProxy = string.Empty;
         private readonly int httpProxyListenPort = 0;
 
         // Aria服务器token
@@ -50,7 +53,7 @@ namespace DownKyi.Core.Settings
 
         // Aria HttpProxy代理
         private readonly AllowStatus isAriaHttpProxy = AllowStatus.NO;
-        private readonly string ariaHttpProxy = "";
+        private readonly string ariaHttpProxy = string.Empty;
         private readonly int ariaHttpProxyListenPort = 0;
 
         /// <summary>
@@ -104,6 +107,33 @@ namespace DownKyi.Core.Settings
         public bool UseSSL(AllowStatus useSSL)
         {
             appSettings.Network.UseSSL = useSSL;
+            return SetSettings();
+        }
+
+        /// <summary>
+        /// 获取UserAgent
+        /// </summary>
+        /// <returns></returns>
+        public string GetUserAgent()
+        {
+            appSettings = GetSettings();
+            if (appSettings.Network.UserAgent == string.Empty)
+            {
+                // 第一次获取，先设置默认值
+                SetUserAgent(userAgent);
+                return userAgent;
+            }
+            return appSettings.Network.UserAgent;
+        }
+
+        /// <summary>
+        /// 设置UserAgent
+        /// </summary>
+        /// <param name="userAgent"></param>
+        /// <returns></returns>
+        public bool SetUserAgent(string userAgent)
+        {
+            appSettings.Network.UserAgent = userAgent;
             return SetSettings();
         }
 
