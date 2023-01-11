@@ -134,15 +134,25 @@ namespace DownKyi.Services.Download
             }
 
             // 开始下载
-            var downloadStatus = DownloadByBuiltin(downloading, urls, path, fileName);
-            if (downloadStatus)
+            try
             {
-                downloading.Downloading.DownloadedFiles.Add(key);
-                downloading.Downloading.Gid = null;
-                return Path.Combine(path, fileName);
+                var downloadStatus = DownloadByBuiltin(downloading, urls, path, fileName);
+                if (downloadStatus)
+                {
+                    downloading.Downloading.DownloadedFiles.Add(key);
+                    downloading.Downloading.Gid = null;
+                    return Path.Combine(path, fileName);
+                }
+                else
+                {
+                    return nullMark;
+                }
             }
-            else
+            catch (FileNotFoundException e)
             {
+                Core.Utils.Debugging.Console.PrintLine("BuiltinDownloadService.DownloadVideo()发生异常: {0}", e);
+                LogManager.Error("BuiltinDownloadService.DownloadVideo()", e);
+
                 return nullMark;
             }
         }
