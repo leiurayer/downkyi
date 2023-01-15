@@ -35,6 +35,12 @@
     </a>
 </p>
 
+## 问题
+
+- Aria下载失败：检查aria2c.exe可以正常工作和是否允许通过防火墙；或者尝试切换端口号。
+- 内建下载器失败：请提issue，也欢迎pr。
+- 下载时卡在“混流中”：检查ffmpeg.exe是否可以正常工作。
+
 ## 赞助
 
 如果这个项目对您有很大帮助，并且您希望支持该项目的开发和维护，请随时扫描一下二维码进行捐赠。非常感谢您的捐款，谢谢！
@@ -47,15 +53,15 @@
 
 发布的压缩包中aria2c.exe和ffmpeg.exe均为32位，如果需要请用下面链接中的文件替换。
 
-* [aria2-1.36.0-win-32bit](third_party/aria2-1.36.0-win-32bit-build1.zip)
-* [aria2-1.36.0-win-64bit](third_party/aria2-1.36.0-win-64bit-build1.zip)
-* [FFmpeg](https://github.com/leiurayer/FFmpeg-Builds/releases/tag/latest)
+- [aria2-1.36.0-win-32bit](third_party/aria2-1.36.0-win-32bit-build1.zip)
+- [aria2-1.36.0-win-64bit](third_party/aria2-1.36.0-win-64bit-build1.zip)
+- [FFmpeg](https://github.com/leiurayer/FFmpeg-Builds/releases/tag/latest)
 
 ### 相关项目
 
-* [哔哩哔哩-API收集整理](https://github.com/SocialSisterYi/bilibili-API-collect)：B站API归档
-* [Prism](https://github.com/PrismLibrary/Prism)：MVVM框架
-* [WebPSharp](https://github.com/leiurayer/WebPSharp)：WebP格式图片支持，[NuGet程序包](third_party/WebPSharp.0.5.1.nupkg)
+- [哔哩哔哩-API收集整理](https://github.com/SocialSisterYi/bilibili-API-collect)：B站API归档
+- [Prism](https://github.com/PrismLibrary/Prism)：MVVM框架
+- [WebPSharp](https://github.com/leiurayer/WebPSharp)：WebP格式图片支持，[NuGet程序包](third_party/WebPSharp.0.5.1.nupkg)
 
 ## 免责申明
 
