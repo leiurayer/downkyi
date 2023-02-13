@@ -7,6 +7,7 @@ using DownKyi.Core.Utils;
 using DownKyi.Models;
 using DownKyi.Utils;
 using DownKyi.ViewModels.DownloadManager;
+using Prism.Services.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -19,7 +20,10 @@ namespace DownKyi.Services.Download
 {
     public class BuiltinDownloadService : DownloadService, IDownloadService
     {
-        public BuiltinDownloadService(ObservableCollection<DownloadingItem> downloadingList, ObservableCollection<DownloadedItem> downloadedList) : base(downloadingList, downloadedList)
+        public BuiltinDownloadService(ObservableCollection<DownloadingItem> downloadingList, 
+            ObservableCollection<DownloadedItem> downloadedList,
+            IDialogService dialogService
+            ) : base(downloadingList, downloadedList, dialogService)
         {
             Tag = "BuiltinDownloadService";
         }

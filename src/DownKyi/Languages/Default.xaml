@@ -326,6 +326,8 @@
     <system:String x:Key="ConfirmDelete">您确定要删除吗？</system:String>
     <system:String x:Key="SelectDirectory">请选择文件夹</system:String>
 
+    <system:String x:Key="DirectoryError">路径错误！</system:String>
+
     <!--  ViewDownloadSetter  -->
     <system:String x:Key="DownloadSetter">下载设置</system:String>
     <system:String x:Key="Location">位置：</system:String>
