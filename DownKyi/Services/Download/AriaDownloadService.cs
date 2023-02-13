@@ -26,16 +26,13 @@ namespace DownKyi.Services.Download
     /// </summary>
     public class AriaDownloadService : DownloadService, IDownloadService
     {
-        private readonly IDialogService dialogService;
-
         public AriaDownloadService(
             ObservableCollection<DownloadingItem> downloadingList,
             ObservableCollection<DownloadedItem> downloadedList,
-            IDialogService dialogService = null) :
-            base(downloadingList, downloadedList)
+            IDialogService dialogService) :
+            base(downloadingList, downloadedList, dialogService)
         {
             Tag = "AriaDownloadService";
-            this.dialogService = dialogService;
         }
 
         #region 音视频
@@ -345,7 +342,7 @@ namespace DownKyi.Services.Download
             if (task) { Console.WriteLine("Start ServerAsync Completed"); }
 
             // 显示错误信息
-            if (dialogService != null && errorMessage != null && errorMessage.Contains("ERROR"))
+            if (errorMessage != null && errorMessage.Contains("ERROR"))
             {
                 AlertService alertService = new AlertService(dialogService);
                 ButtonResult result = alertService.ShowMessage(SystemIcon.Instance().Error,
