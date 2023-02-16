@@ -561,6 +561,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>13.0.2</Version>
+    </PackageReference>
     <PackageReference Include="Prism.DryIoc" Version="8.1.97" />
     <PackageReference Include="System.Data.SQLite.Core">
       <Version>1.0.112.2</Version>
@@ -573,6 +576,10 @@
     <Resource Include="Resources\default_header.jpg" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Brotli.Core\Brotli.Core.csproj">
+      <Project>{3107CD63-E257-455E-AE81-1FD3582B067A}</Project>
+      <Name>Brotli.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DownKyi.Core\DownKyi.Core.csproj">
       <Project>{4fde0364-f65b-4812-bfe8-34e886624fbd}</Project>
       <Name>DownKyi.Core</Name>

@@ -5,6 +5,7 @@ using DownKyi.Utils;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Regions;
+using Prism.Services.Dialogs;
 
 namespace DownKyi.ViewModels.Settings
 {
@@ -46,7 +47,7 @@ namespace DownKyi.ViewModels.Settings
 
         #endregion
 
-        public ViewAboutViewModel(IEventAggregator eventAggregator) : base(eventAggregator)
+        public ViewAboutViewModel(IEventAggregator eventAggregator, IDialogService dialogService) : base(eventAggregator, dialogService)
         {
 
             #region 属性初始化
