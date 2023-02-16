@@ -5,6 +5,7 @@ using DownKyi.Utils;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Regions;
+using Prism.Services.Dialogs;
 
 namespace DownKyi.ViewModels.Settings
 {
