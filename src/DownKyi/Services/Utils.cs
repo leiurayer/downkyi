@@ -231,6 +231,17 @@ namespace DownKyi.Services
                             break;
                         }
                     }
+
+                    // 若默认编码为AVC，但画质为杜比视界时，
+                    // 上面的foreach不会选中HEVC编码，
+                    // 而杜比视界只有HEVC编码，
+                    // 因此这里再判断并设置一次
+                    if (videoQualityList[videoQualityList.IndexOf(selectedVideoQuality)].SelectedVideoCodec == null &&
+                        videoQualityList[videoQualityList.IndexOf(selectedVideoQuality)].VideoCodecList.Count() > 0)
+                    {
+                        videoQualityList[videoQualityList.IndexOf(selectedVideoQuality)].SelectedVideoCodec =
+                            videoQualityList[videoQualityList.IndexOf(selectedVideoQuality)].VideoCodecList[0];
+                    }
                 }
 
             }
