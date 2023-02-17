@@ -98,6 +98,7 @@ namespace DownKyi.Services
         private static ObservableCollection<string> GetAudioQualityFormatList(PlayUrl playUrl, int defaultAudioQuality)
         {
             List<string> audioQualityFormatList = new List<string>();
+            List<string> sortList = new List<string>();
             List<Quality> audioQualities = Constant.GetAudioQualities();
 
             if (playUrl.Dash.Audio != null && playUrl.Dash.Audio.Count > 0)
@@ -131,10 +132,19 @@ namespace DownKyi.Services
                 }
             }
 
-            audioQualityFormatList.Sort(new StringLogicalComparer<string>());
-            audioQualityFormatList.Reverse();
+            //audioQualityFormatList.Sort(new StringLogicalComparer<string>());
+            //audioQualityFormatList.Reverse();
 
-            return new ObservableCollection<string>(audioQualityFormatList);
+            foreach (var item in audioQualities)
+            {
+                if (audioQualityFormatList.Contains(item.Name))
+                {
+                    sortList.Add(item.Name);
+                }
+            }
+            sortList.Reverse();
+
+            return new ObservableCollection<string>(sortList);
         }
 
         /// <summary>
