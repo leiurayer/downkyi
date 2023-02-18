@@ -73,16 +73,22 @@ namespace DownKyi.ViewModels.Dialogs
             Image = parameters.GetValue<VectorImage>("image");
             Title = parameters.GetValue<string>("title");
             Message = parameters.GetValue<string>("message");
+            int number = parameters.GetValue<int>("button_number");
 
-            if (Image == SystemIcon.Instance().Error)
+            switch (number)
             {
-                AloneButton = Visibility.Visible;
-                TwoButton = Visibility.Collapsed;
-            }
-            else
-            {
-                AloneButton = Visibility.Collapsed;
-                TwoButton = Visibility.Visible;
+                case 1:
+                    AloneButton = Visibility.Visible;
+                    TwoButton = Visibility.Collapsed;
+                    break;
+                case 2:
+                    AloneButton = Visibility.Collapsed;
+                    TwoButton = Visibility.Visible;
+                    break;
+                default:
+                    AloneButton = Visibility.Collapsed;
+                    TwoButton = Visibility.Visible;
+                    break;
             }
         }
 

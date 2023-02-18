@@ -18,12 +18,13 @@ namespace DownKyi.Services
         /// 显示一个信息弹窗
         /// </summary>
         /// <param name="message"></param>
+        /// <param name="buttonNumber"></param>
         /// <returns></returns>
-        public ButtonResult ShowInfo(string message)
+        public ButtonResult ShowInfo(string message, int buttonNumber = 2)
         {
             VectorImage image = SystemIcon.Instance().Info;
             string title = DictionaryResource.GetString("Info");
-            return ShowMessage(image, title, message);
+            return ShowMessage(image, title, message, buttonNumber);
         }
 
         /// <summary>
@@ -35,7 +36,7 @@ namespace DownKyi.Services
         {
             VectorImage image = SystemIcon.Instance().Warning;
             string title = DictionaryResource.GetString("Warning");
-            return ShowMessage(image, title, message);
+            return ShowMessage(image, title, message, 1);
         }
 
         /// <summary>
@@ -47,10 +48,10 @@ namespace DownKyi.Services
         {
             VectorImage image = SystemIcon.Instance().Error;
             string title = DictionaryResource.GetString("Error");
-            return ShowMessage(image, title, message);
+            return ShowMessage(image, title, message, 1);
         }
 
-        public ButtonResult ShowMessage(VectorImage image, string type, string message)
+        public ButtonResult ShowMessage(VectorImage image, string type, string message, int buttonNumber)
         {
             ButtonResult result = ButtonResult.None;
             if (dialogService == null)
@@ -62,7 +63,8 @@ namespace DownKyi.Services
             {
                 { "image", image },
                 { "title", type },
-                { "message", message }
+                { "message", message },
+                { "button_number", buttonNumber }
             };
             dialogService.ShowDialog(ViewAlertDialogViewModel.Tag, param, buttonResult =>
             {
