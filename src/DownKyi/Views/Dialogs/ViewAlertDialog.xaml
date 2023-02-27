@@ -90,24 +90,28 @@
                 </Button>
             </Grid>
 
-            <Grid Grid.Row="1" Margin="15,10,15,20">
+            <Grid Grid.Row="1" Margin="0,10,0,20">
                 <Grid.RowDefinitions>
                     <RowDefinition />
                     <RowDefinition />
                 </Grid.RowDefinitions>
 
-                <TextBlock
+                <ScrollViewer
                     Grid.Row="0"
                     MaxWidth="500"
-                    MaxHeight="180"
+                    MaxHeight="190"
                     Margin="0,10,0,30"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    FontSize="14"
-                    Foreground="{DynamicResource BrushTextDark}"
-                    Text="{Binding Message}"
-                    TextTrimming="CharacterEllipsis"
-                    TextWrapping="WrapWithOverflow" />
+                    Padding="15,0"
+                    VerticalScrollBarVisibility="Auto">
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        FontSize="14"
+                        Foreground="{DynamicResource BrushTextDark}"
+                        Text="{Binding Message}"
+                        TextTrimming="CharacterEllipsis"
+                        TextWrapping="WrapWithOverflow" />
+                </ScrollViewer>
 
                 <Button
                     Grid.Row="1"

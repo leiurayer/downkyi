@@ -347,7 +347,8 @@ namespace DownKyi.Services.Download
                 AlertService alertService = new AlertService(dialogService);
                 ButtonResult result = alertService.ShowMessage(SystemIcon.Instance().Error,
                     $"Aria2 {DictionaryResource.GetString("Error")}",
-                    errorMessage);
+                    errorMessage,
+                    1);
                 return;
             }
 
