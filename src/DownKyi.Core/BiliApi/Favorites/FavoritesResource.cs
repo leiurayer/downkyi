@@ -18,7 +18,7 @@ namespace DownKyi.Core.BiliApi.Favorites
         /// <returns></returns>
         public static List<FavoritesMedia> GetFavoritesMedia(long mediaId, int pn, int ps)
         {
-            string url = $"https://api.bilibili.com/x/v3/fav/resource/list?media_id={mediaId}&pn={pn}&ps={ps}";
+            string url = $"https://api.bilibili.com/x/v3/fav/resource/list?media_id={mediaId}&pn={pn}&ps={ps}&platform=web";
             string referer = "https://www.bilibili.com";
             string response = WebClient.RequestWeb(url, referer);
 

@@ -305,7 +305,7 @@ namespace DownKyi.ViewModels.Friends
             return true;
         }
 
-        private async Task<bool> LoadFollowingGroupContent(int tagId, int pn, int ps)
+        private async Task<bool> LoadFollowingGroupContent(long tagId, int pn, int ps)
         {
             List<RelationFollowInfo> contents = null;
             await Task.Run(() =>

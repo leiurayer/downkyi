@@ -110,7 +110,7 @@ namespace DownKyi.ViewModels
         /// </summary>
         /// <param name="id"></param>
         /// <param name="isFirst"></param>
-        private void NavigationView(int id, bool isFirst)
+        private void NavigationView(long id, bool isFirst)
         {
             // isFirst参数表示是否是从PageFriends的headerTable的item点击进入的
             // true表示加载PageFriends后第一次进入
