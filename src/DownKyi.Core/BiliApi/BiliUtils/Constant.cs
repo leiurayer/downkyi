@@ -28,9 +28,12 @@ namespace DownKyi.Core.BiliApi.BiliUtils
 
         private static readonly List<Quality> qualities = new List<Quality>
         {
-            new Quality { Name = "64K", Id = 30216 },
-            new Quality { Name = "132K", Id = 30232 },
-            new Quality { Name = "192K", Id = 30280 },
+            //new Quality { Name = "64K", Id = 30216 },
+            //new Quality { Name = "132K", Id = 30232 },
+            //new Quality { Name = "192K", Id = 30280 },
+            new Quality { Name = "低质量", Id = 30216 },
+            new Quality { Name = "中质量", Id = 30232 },
+            new Quality { Name = "高质量", Id = 30280 },
             new Quality { Name = "Dolby Atmos", Id = 30250 },
             new Quality { Name = "Hi-Res无损", Id = 30251 },
         };
