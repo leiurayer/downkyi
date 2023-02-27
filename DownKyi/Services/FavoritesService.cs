@@ -198,7 +198,7 @@ namespace DownKyi.Services
 
                 App.PropertyChangeAsync(new Action(() =>
                 {
-                    tabHeaders.Add(new TabHeader { Id = (int)item.Id, Title = item.Title, SubTitle = item.MediaCount.ToString() });
+                    tabHeaders.Add(new TabHeader { Id = item.Id, Title = item.Title, SubTitle = item.MediaCount.ToString() });
                 }));
             }
         }
@@ -223,7 +223,7 @@ namespace DownKyi.Services
 
                 App.PropertyChangeAsync(new Action(() =>
                 {
-                    tabHeaders.Add(new TabHeader { Id = (int)item.Id, Title = item.Title, SubTitle = item.MediaCount.ToString() });
+                    tabHeaders.Add(new TabHeader { Id = item.Id, Title = item.Title, SubTitle = item.MediaCount.ToString() });
                 }));
             }
         }

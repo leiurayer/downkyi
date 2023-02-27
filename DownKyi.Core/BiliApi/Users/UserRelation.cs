@@ -210,7 +210,7 @@ namespace DownKyi.Core.BiliApi.Users
         /// <param name="ps">每页项数</param>
         /// <param name="order">排序方式</param>
         /// <returns></returns>
-        public static List<RelationFollowInfo> GetFollowingGroupContent(int tagId, int pn, int ps, FollowingOrder order = FollowingOrder.DEFAULT)
+        public static List<RelationFollowInfo> GetFollowingGroupContent(long tagId, int pn, int ps, FollowingOrder order = FollowingOrder.DEFAULT)
         {
             string orderType = "";
             if (order == FollowingOrder.ATTENTION)

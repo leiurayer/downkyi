@@ -112,7 +112,7 @@ namespace DownKyi.Core.BiliApi.Users
         /// <param name="tid">视频分区</param>
         /// <param name="keyword">搜索关键词</param>
         /// <returns></returns>
-        public static SpacePublicationList GetPublication(long mid, int pn, int ps, int tid = 0, PublicationOrder order = PublicationOrder.PUBDATE, string keyword = "")
+        public static SpacePublicationList GetPublication(long mid, int pn, int ps, long tid = 0, PublicationOrder order = PublicationOrder.PUBDATE, string keyword = "")
         {
             string url = $"https://api.bilibili.com/x/space/arc/search?mid={mid}&pn={pn}&ps={ps}&order={order.ToString("G").ToLower()}&tid={tid}&keyword={keyword}";
             string referer = "https://www.bilibili.com";

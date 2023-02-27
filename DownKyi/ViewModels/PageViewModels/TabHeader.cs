@@ -5,8 +5,8 @@ namespace DownKyi.ViewModels.PageViewModels
 {
     public class TabHeader : BindableBase
     {
-        private int id;
-        public int Id
+        private long id;
+        public long Id
         {
             get => id;
             set => SetProperty(ref id, value);
