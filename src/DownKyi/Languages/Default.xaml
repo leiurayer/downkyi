@@ -345,6 +345,7 @@
     <system:String x:Key="IsDefaultDownloadDirectoryTip">选中后下次将不会弹出此窗口</system:String>
     <system:String x:Key="Download">下载</system:String>
     <system:String x:Key="WarningNullDirectory">文件夹路径不能为空</system:String>
+    <system:String x:Key="DriveNotFound">该磁盘不存在</system:String>
 
     <!--  ViewParsingSelector  -->
     <system:String x:Key="ParsingSelector">选择解析项</system:String>

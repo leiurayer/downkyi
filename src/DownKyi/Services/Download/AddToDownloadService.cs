@@ -191,6 +191,14 @@ namespace DownKyi.Services.Download
                 });
             }
 
+            if (!Directory.Exists(Directory.GetDirectoryRoot(directory)))
+            {
+                var alert = new AlertService(dialogService);
+                alert.ShowError(DictionaryResource.GetString("DriveNotFound"));
+
+                directory = string.Empty;
+            }
+
             // 下载设置dialog中如果点击取消或者关闭窗口，
             // 会返回空字符串，
             // 这时直接退出
