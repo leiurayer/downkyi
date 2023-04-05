@@ -46,7 +46,13 @@ namespace DownKyi.ViewModels
             get => inputText;
             set => SetProperty(ref inputText, value);
         }
+        private string inputSearchText;
 
+        public string InputSearchText
+        {
+            get => inputSearchText;
+            set => SetProperty(ref inputSearchText, value);
+        }
         private GifImage loading;
         public GifImage Loading
         {
@@ -172,6 +178,19 @@ namespace DownKyi.ViewModels
         private DelegateCommand inputCommand;
         public DelegateCommand InputCommand => inputCommand ?? (inputCommand = new DelegateCommand(ExecuteInputCommand, CanExecuteInputCommand));
 
+
+        private DelegateCommand inputSearchCommand;
+
+        public DelegateCommand InputSearchCommand => inputSearchCommand ?? (inputSearchCommand = new DelegateCommand(ExcuteInputSearchCommand));
+        /// <summary>
+        /// 搜索视频输入时间
+        /// </summary>
+        private async void ExcuteInputSearchCommand() {
+            await Task.Run(() =>
+            {
+                if (InputSearchText == null || InputSearchText == string.Empty) { return; }
+            });
+        }
         /// <summary>
         /// 处理输入事件
         /// </summary>

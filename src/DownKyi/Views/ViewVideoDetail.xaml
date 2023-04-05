@@ -694,9 +694,10 @@
                     <!--  考虑将下列两个选项移入设置页面  -->
                     <!--<CheckBox Grid.Column="1" Content="自动解析" IsChecked="False" Foreground="{DynamicResource BrushTextDark}" Style="{StaticResource CheckBoxStyle}" Margin="0 10 0 0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
                     <CheckBox Grid.Column="2" Content="解析后自动下载所有" IsChecked="False" Foreground="{DynamicResource BrushTextDark}" Style="{StaticResource CheckBoxStyle}" Margin="0 10 0 0" VerticalAlignment="Top" HorizontalAlignment="Left"/>-->
-                    <TextBox Grid.Column="3" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" Margin="48,0,0,0">
+                    <TextBox Grid.Column="3" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" Margin="48,0,0,0"
+                              Text="{Binding Path=InputSearchText, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                         <TextBox.InputBindings>
-                            <KeyBinding Key="Enter" Command="{Binding InputCommand}" />
+                            <KeyBinding Key="Enter" Command="{Binding InputSearchCommand}" />
                         </TextBox.InputBindings>
                         <TextBox.Resources>
                             <VisualBrush
@@ -706,7 +707,7 @@
                             Stretch="None"
                             TileMode="None">
                                 <VisualBrush.Visual>
-                                    <TextBlock Text="{DynamicResource IndexHintTextSimple}" />
+                                    <TextBlock Text="{DynamicResource SearchVideoByName}" />
                                 </VisualBrush.Visual>
                             </VisualBrush>
                         </TextBox.Resources>
