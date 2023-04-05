@@ -694,7 +694,35 @@
                     <!--  考虑将下列两个选项移入设置页面  -->
                     <!--<CheckBox Grid.Column="1" Content="自动解析" IsChecked="False" Foreground="{DynamicResource BrushTextDark}" Style="{StaticResource CheckBoxStyle}" Margin="0 10 0 0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
                     <CheckBox Grid.Column="2" Content="解析后自动下载所有" IsChecked="False" Foreground="{DynamicResource BrushTextDark}" Style="{StaticResource CheckBoxStyle}" Margin="0 10 0 0" VerticalAlignment="Top" HorizontalAlignment="Left"/>-->
-
+                    <TextBox Grid.Column="3" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" Margin="48,0,0,0">
+                        <TextBox.InputBindings>
+                            <KeyBinding Key="Enter" Command="{Binding InputCommand}" />
+                        </TextBox.InputBindings>
+                        <TextBox.Resources>
+                            <VisualBrush
+                            x:Key="HintText"
+                            AlignmentX="Left"
+                            Opacity="0.5"
+                            Stretch="None"
+                            TileMode="None">
+                                <VisualBrush.Visual>
+                                    <TextBlock Text="{DynamicResource IndexHintTextSimple}" />
+                                </VisualBrush.Visual>
+                            </VisualBrush>
+                        </TextBox.Resources>
+                        <TextBox.Style>
+                            <Style TargetType="TextBox">
+                                <Style.Triggers>
+                                    <Trigger Property="Text" Value="{x:Null}">
+                                        <Setter Property="Background" Value="{StaticResource HintText}" />
+                                    </Trigger>
+                                    <Trigger Property="Text" Value="">
+                                        <Setter Property="Background" Value="{StaticResource HintText}" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBox.Style>
+                    </TextBox>
                     <Button
                         Grid.Column="4"
                         HorizontalAlignment="Right"
@@ -713,6 +741,7 @@
                         FontSize="12"
                         Foreground="{DynamicResource BrushText}"
                         Style="{StaticResource BtnStyle}" />
+                    <Label Content="{DynamicResource Search}" Grid.Column="3" HorizontalAlignment="Left" Margin="9,-2,0,0" VerticalAlignment="Top"/>
                 </Grid>
             </Grid>
 
