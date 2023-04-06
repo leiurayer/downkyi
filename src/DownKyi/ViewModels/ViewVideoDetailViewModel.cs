@@ -188,7 +188,20 @@ namespace DownKyi.ViewModels
         private async void ExcuteInputSearchCommand() {
             await Task.Run(() =>
             {
-                if (InputSearchText == null || InputSearchText == string.Empty) { return; }
+                if (InputSearchText == null || InputSearchText == string.Empty) {
+                    PropertyChangeAsync(new Action(() =>
+                    {
+                        VideoSections = CaCheVideoSections;
+                    }));
+                }
+                else
+                {
+                    foreach (VideoSection section in VideoSections)
+                    {
+                        var pages= section.VideoPages.Where(e=>e.Name.Contains(InputSearchText)).ToList();
+                        section.VideoPages = pages;
+                    }
+                }
             });
         }
         /// <summary>
@@ -689,7 +702,7 @@ namespace DownKyi.ViewModels
                 PropertyChangeAsync(new Action(() =>
                 {
                     VideoSections.AddRange(videoSections);
-                    CaCheVideoSections = VideoSections;
+                    CaCheVideoSections.AddRange(videoSections);
                 }));
             }
         }
