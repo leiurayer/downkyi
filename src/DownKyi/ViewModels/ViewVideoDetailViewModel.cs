@@ -188,18 +188,27 @@ namespace DownKyi.ViewModels
         private async void ExcuteInputSearchCommand() {
             await Task.Run(() =>
             {
-                if (InputSearchText == null || InputSearchText == string.Empty) {
-                    PropertyChangeAsync(new Action(() =>
-                    {
-                        VideoSections = CaCheVideoSections;
-                    }));
+                if (InputSearchText == null || InputSearchText == string.Empty)
+                {
+                    foreach (VideoSection section in VideoSections) {
+                        var cache= CaCheVideoSections.FirstOrDefault(e=>e.Id==section.Id);
+                        if (cache!=null)
+                        {
+                            section.VideoPages=cache.VideoPages;
+                        }
+                    }
                 }
                 else
                 {
                     foreach (VideoSection section in VideoSections)
                     {
-                        var pages= section.VideoPages.Where(e=>e.Name.Contains(InputSearchText)).ToList();
-                        section.VideoPages = pages;
+                        var cache = CaCheVideoSections.FirstOrDefault(e => e.Id == section.Id);
+                        if (cache != null)
+                        {
+                            var pages = cache.VideoPages.Where(e => e.Name.Contains(InputSearchText)).ToList();
+                            section.VideoPages = pages;
+                        }
+                       
                     }
                 }
             });
@@ -694,7 +703,13 @@ namespace DownKyi.ViewModels
                         IsSelected = true,
                         VideoPages = pages
                     });
-                    CaCheVideoSections = VideoSections;
+                    CaCheVideoSections.Add(new VideoSection
+                    {
+                        Id = 0,
+                        Title = "default",
+                        IsSelected = true,
+                        VideoPages = pages
+                    });
                 }));
             }
             else
