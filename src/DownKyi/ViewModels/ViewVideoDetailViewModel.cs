@@ -87,7 +87,7 @@ namespace DownKyi.ViewModels
             get => videoSections;
             set => SetProperty(ref videoSections, value);
         }
-
+        public ObservableCollection<VideoSection> CaCheVideoSections { get; set; }
         private bool isSelectAll;
         public bool IsSelectAll
         {
@@ -131,7 +131,7 @@ namespace DownKyi.ViewModels
             DownloadManage.Fill = DictionaryResource.GetColor("ColorPrimary");
 
             VideoSections = new ObservableCollection<VideoSection>();
-
+            CaCheVideoSections = new ObservableCollection<VideoSection>();
             #endregion
         }
 
@@ -601,6 +601,7 @@ namespace DownKyi.ViewModels
             NoDataVisibility = Visibility.Collapsed;
 
             VideoSections.Clear();
+            CaCheVideoSections.Clear();
         }
 
         /// <summary>
@@ -661,6 +662,7 @@ namespace DownKyi.ViewModels
             PropertyChangeAsync(new Action(() =>
             {
                 VideoSections.Clear();
+                CaCheVideoSections.Clear();
             }));
 
             // 添加新数据
@@ -679,6 +681,7 @@ namespace DownKyi.ViewModels
                         IsSelected = true,
                         VideoPages = pages
                     });
+                    CaCheVideoSections = VideoSections;
                 }));
             }
             else
@@ -686,6 +689,7 @@ namespace DownKyi.ViewModels
                 PropertyChangeAsync(new Action(() =>
                 {
                     VideoSections.AddRange(videoSections);
+                    CaCheVideoSections = VideoSections;
                 }));
             }
         }
