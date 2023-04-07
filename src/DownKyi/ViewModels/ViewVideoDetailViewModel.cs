@@ -10,6 +10,7 @@ using DownKyi.Services.Download;
 using DownKyi.Utils;
 using DownKyi.ViewModels.Dialogs;
 using DownKyi.ViewModels.PageViewModels;
+using Newtonsoft.Json;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Regions;
@@ -17,7 +18,9 @@ using Prism.Services.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
@@ -714,14 +717,16 @@ namespace DownKyi.ViewModels
             }
             else
             {
+                //这里如果浅拷贝会导致用于查询的CaCheVideoSections数据变化，所以这样处理
+                var videoSectionsStr = JsonConvert.SerializeObject(videoSections);
+                var videoSectionsData = JsonConvert.DeserializeObject<List<VideoSection>>(videoSectionsStr);
                 PropertyChangeAsync(new Action(() =>
                 {
                     VideoSections.AddRange(videoSections);
-                    CaCheVideoSections.AddRange(videoSections);
+                    CaCheVideoSections.AddRange(videoSectionsData);
                 }));
             }
         }
-
         /// <summary>
         /// 解析视频流
         /// </summary>
