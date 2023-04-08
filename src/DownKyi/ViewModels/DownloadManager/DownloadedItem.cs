@@ -91,16 +91,22 @@ namespace DownKyi.ViewModels.DownloadManager
         private void ExecuteOpenFolderCommand()
         {
             if (DownloadBase == null) { return; }
-
-            string videoPath = $"{DownloadBase.FilePath}.mp4";
-            FileInfo fileInfo = new FileInfo(videoPath);
-            if (File.Exists(fileInfo.FullName))
+            //TODO:这里不光有mp4视频文件，也可能存在音频文件.aac这里需要将所有文件的后缀名枚举出来
+            //fix bug:Issues #709
+            string[] fileType = new string[] {".mp4",".aac" };
+            foreach (string type in fileType)
             {
-                System.Diagnostics.Process.Start("Explorer", "/select," + fileInfo.FullName);
-            }
-            else
-            {
-                //eventAggregator.GetEvent<MessageEvent>().Publish("没有找到视频文件，可能被删除或移动！");
+                string videoPath = $"{DownloadBase.FilePath}{type}";
+                FileInfo fileInfo = new FileInfo(videoPath);
+                if (File.Exists(fileInfo.FullName))
+                {
+                    System.Diagnostics.Process.Start("Explorer", "/select," + fileInfo.FullName);
+                    break;
+                }
+                else
+                {
+                    //eventAggregator.GetEvent<MessageEvent>().Publish("没有找到视频文件，可能被删除或移动！");
+                }
             }
         }
 
