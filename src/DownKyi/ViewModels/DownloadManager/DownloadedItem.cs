@@ -94,7 +94,7 @@ namespace DownKyi.ViewModels.DownloadManager
             if (DownloadBase == null) { return; }
             //TODO:这里不光有mp4视频文件，也可能存在音频文件、字幕，或者其他文件类型
             //fix bug:Issues #709
-            //这里根据需要下载的类型判断，具体对应的文件后缀名，存在多个则只取其中一个
+            //这里根据需要下载的类型判断，具体对应的文件后缀名
             var downLoadContents = DownloadBase.NeedDownloadContent.Where(e => e.Value == true).Select(e => e.Key);
             string fileSuffix = string.Empty;
             if (downLoadContents.Contains("downloadVideo"))
