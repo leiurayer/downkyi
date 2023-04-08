@@ -5,6 +5,7 @@ using DownKyi.Utils;
 using Prism.Commands;
 using Prism.Services.Dialogs;
 using System.IO;
+using System.Linq;
 
 namespace DownKyi.ViewModels.DownloadManager
 {
@@ -91,22 +92,32 @@ namespace DownKyi.ViewModels.DownloadManager
         private void ExecuteOpenFolderCommand()
         {
             if (DownloadBase == null) { return; }
-            //TODO:这里不光有mp4视频文件，也可能存在音频文件.aac这里需要将所有文件的后缀名枚举出来
+            //TODO:这里不光有mp4视频文件，也可能存在音频文件、字幕，或者其他文件类型
             //fix bug:Issues #709
-            string[] fileType = new string[] {".mp4",".aac" };
-            foreach (string type in fileType)
+            //这里根据需要下载的类型判断，具体对应的文件后缀名，存在多个则只取其中一个
+            var downLoadContents = DownloadBase.NeedDownloadContent.Where(e => e.Value == true).Select(e => e.Key);
+            string fileSuffix = string.Empty;
+            if (downLoadContents.Contains("downloadVideo"))
             {
-                string videoPath = $"{DownloadBase.FilePath}{type}";
-                FileInfo fileInfo = new FileInfo(videoPath);
-                if (File.Exists(fileInfo.FullName))
-                {
-                    System.Diagnostics.Process.Start("Explorer", "/select," + fileInfo.FullName);
-                    break;
-                }
-                else
-                {
-                    //eventAggregator.GetEvent<MessageEvent>().Publish("没有找到视频文件，可能被删除或移动！");
-                }
+                fileSuffix = ".mp4";
+            }
+            else if (downLoadContents.Contains("downloadAudio"))
+            {
+                fileSuffix = ".aac";
+            }
+            else if (downLoadContents.Contains("downloadCover"))
+            {
+                fileSuffix = ".jpg";
+            }
+            string videoPath = $"{DownloadBase.FilePath}{fileSuffix}";
+            FileInfo fileInfo = new FileInfo(videoPath);
+            if (File.Exists(fileInfo.FullName))
+            {
+                System.Diagnostics.Process.Start("Explorer", "/select," + fileInfo.FullName);
+            }
+            else
+            {
+                //eventAggregator.GetEvent<MessageEvent>().Publish("没有找到视频文件，可能被删除或移动！");
             }
         }
 
