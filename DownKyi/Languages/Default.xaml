@@ -135,6 +135,8 @@
     <system:String x:Key="VideoCodec">视频编码</system:String>
 
     <system:String x:Key="SelectAll">全选</system:String>
+    <system:String x:Key="Search">搜索</system:String>
+    <system:String x:Key="SearchVideoByName">搜索视频名称</system:String>
     <system:String x:Key="Parse">解析</system:String>
     <system:String x:Key="ParseVideo">解析视频</system:String>
     <system:String x:Key="DownloadSelected">下载选中项</system:String>
