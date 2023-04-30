@@ -41,7 +41,6 @@ namespace DownKyi.ViewModels
 
         #endregion
 
-
         public ViewSettingsViewModel(IRegionManager regionManager, IEventAggregator eventAggregator) : base(eventAggregator)
         {
             this.regionManager = regionManager;

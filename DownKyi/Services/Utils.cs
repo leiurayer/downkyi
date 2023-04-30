@@ -86,6 +86,8 @@ namespace DownKyi.Services
 
                 // 时长
                 page.Duration = Format.FormatDuration(playUrl.Dash.Duration);
+
+                return;
             }
         }
 
