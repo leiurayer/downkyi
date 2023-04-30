@@ -43,7 +43,7 @@ namespace DownKyi.Core.BiliApi.Users
         /// <returns></returns>
         public static UserInfoForSpace GetUserInfoForSpace(long mid)
         {
-            string url = $"https://api.bilibili.com/x/space/acc/info?mid={mid}";
+            string url = $"https://api.bilibili.com/x/space/wbi/acc/info?mid={mid}";
             string referer = "https://www.bilibili.com";
             string response = WebClient.RequestWeb(url, referer);
 
