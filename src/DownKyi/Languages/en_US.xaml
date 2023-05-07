@@ -67,7 +67,7 @@
     <!--  DownloadManager  -->
     <system:String x:Key="Downloading">正在下载</system:String>
     <system:String x:Key="DownloadFinished">已下载</system:String>
-
+    <system:String x:Key="DownloadSuccess">下载完成</system:String>
     <!--  Settings  -->
     <system:String x:Key="PressEnterToApplySettingTip">按回车键应用设置</system:String>
 

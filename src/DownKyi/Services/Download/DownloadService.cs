@@ -11,6 +11,7 @@ using DownKyi.Images;
 using DownKyi.Models;
 using DownKyi.Utils;
 using DownKyi.ViewModels.DownloadManager;
+using Hardcodet.Wpf.TaskbarNotification;
 using Prism.Services.Dialogs;
 using System;
 using System.Collections.Generic;
@@ -19,15 +20,15 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace DownKyi.Services.Download
 {
     public abstract class DownloadService
     {
         protected string Tag = "DownloadService";
-
+        protected  TaskbarIcon _notifyIcon;
         protected IDialogService dialogService;
-
         protected ObservableCollection<DownloadingItem> downloadingList;
         protected ObservableCollection<DownloadedItem> downloadedList;
 
@@ -673,6 +674,7 @@ namespace DownKyi.Services.Download
                         DownloadFinishedSort finishedSort = SettingsManager.GetInstance().GetDownloadFinishedSort();
                         App.SortDownloadedList(finishedSort);
                     }));
+                    _notifyIcon.ShowBalloonTip("下载完成",$"{downloadedItem.DownloadBase.Name}", BalloonIcon.Info);
                 }));
             }
             catch (OperationCanceledException e)
@@ -795,7 +797,6 @@ namespace DownKyi.Services.Download
                 downloadStorageService.UpdateDownloaded(item);
             }
         }
-
         /// <summary>
         /// 启动基本下载服务
         /// </summary>
@@ -803,6 +804,7 @@ namespace DownKyi.Services.Download
         {
             tokenSource = new CancellationTokenSource();
             cancellationToken = tokenSource.Token;
+            _notifyIcon = new TaskbarIcon();
             workTask = Task.Run(DoWork);
         }
 

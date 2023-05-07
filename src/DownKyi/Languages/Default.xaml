@@ -151,7 +151,7 @@
     <!--  DownloadManager  -->
     <system:String x:Key="Downloading">正在下载</system:String>
     <system:String x:Key="DownloadFinished">已下载</system:String>
-
+    <system:String x:Key="DownloadSuccess">下载完成</system:String>
     <system:String x:Key="DownloadingAudio">音频</system:String>
     <system:String x:Key="DownloadingVideo">视频</system:String>
     <system:String x:Key="DownloadingDanmaku">弹幕</system:String>
