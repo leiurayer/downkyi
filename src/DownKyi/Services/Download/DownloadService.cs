@@ -674,7 +674,7 @@ namespace DownKyi.Services.Download
                         DownloadFinishedSort finishedSort = SettingsManager.GetInstance().GetDownloadFinishedSort();
                         App.SortDownloadedList(finishedSort);
                     }));
-                    _notifyIcon.ShowBalloonTip("下载完成",$"{downloadedItem.DownloadBase.Name}", BalloonIcon.Info);
+                    _notifyIcon.ShowBalloonTip(DictionaryResource.GetString("DownloadSuccess"), $"{downloadedItem.DownloadBase.Name}", BalloonIcon.Info);
                 }));
             }
             catch (OperationCanceledException e)
