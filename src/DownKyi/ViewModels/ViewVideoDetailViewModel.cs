@@ -186,7 +186,7 @@ namespace DownKyi.ViewModels
 
         public DelegateCommand InputSearchCommand => inputSearchCommand ?? (inputSearchCommand = new DelegateCommand(ExcuteInputSearchCommand));
         /// <summary>
-        /// 搜索视频输入时间
+        /// 搜索视频输入事件
         /// </summary>
         private async void ExcuteInputSearchCommand() {
             await Task.Run(() =>
