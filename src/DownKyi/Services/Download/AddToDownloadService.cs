@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace DownKyi.Services.Download
 {
@@ -132,21 +133,24 @@ namespace DownKyi.Services.Download
         }
 
         /// <summary>
-        /// 解析视频流
+        /// 并行解析视频流
         /// </summary>
         /// <param name="videoInfoService"></param>
         public void ParseVideo(IInfoService videoInfoService)
         {
             if (videoSections == null) { return; }
 
+            List<Task> parsingTasks = new List<Task>();
             foreach (VideoSection section in videoSections)
             {
                 foreach (VideoPage page in section.VideoPages)
                 {
-                    // 执行解析任务
-                    videoInfoService.GetVideoStream(page);
+                    // 并行执行解析任务
+                    parsingTasks.Add(Task.Factory.StartNew(() => videoInfoService.GetVideoStream(page)));
                 }
             }
+
+            Task.WaitAll();
         }
 
         /// <summary>

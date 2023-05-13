@@ -473,41 +473,20 @@ namespace DownKyi.ViewModels
                     {
                         case ParseScope.NONE:
                             break;
+                        // 以下三个case共享一套代码逻辑
                         case ParseScope.SELECTED_ITEM:
-                            foreach (VideoSection section in VideoSections)
-                            {
-                                foreach (VideoPage page in section.VideoPages)
-                                {
-                                    if (page.IsSelected)
-                                    {
-                                        // 执行解析任务
-                                        UnityUpdateView(ParseVideo, input, page);
-                                    }
-                                }
-                            }
-                            break;
                         case ParseScope.CURRENT_SECTION:
-                            foreach (VideoSection section in VideoSections)
-                            {
-                                if (section.IsSelected)
-                                {
-                                    foreach (VideoPage page in section.VideoPages)
-                                    {
-                                        // 执行解析任务
-                                        UnityUpdateView(ParseVideo, input, page);
-                                    }
-                                }
-                            }
-                            break;
                         case ParseScope.ALL:
+                            var tasks = new List<Task>();
                             foreach (VideoSection section in VideoSections)
                             {
                                 foreach (VideoPage page in section.VideoPages)
                                 {
-                                    // 执行解析任务
-                                    UnityUpdateView(ParseVideo, input, page);
+                                    // 并行执行解析任务
+                                    tasks.Add(Task.Factory.StartNew(() => UnityUpdateView(ParseVideo, input, page)));
                                 }
                             }
+                            Task.WaitAll(tasks.ToArray());
                             break;
                         default:
                             break;
