@@ -53,6 +53,9 @@ namespace DownKyi.Core.BiliApi.Users.Models
         //public int vip_theme_type { get; set; }
         [JsonProperty("wallet")]
         public UserInfoWallet Wallet { get; set; }
+
+        [JsonProperty("wbi_img")]
+        public Wbi Wbi { get; set; }
     }
 
     //public class NavDataLevelInfo
@@ -105,4 +108,14 @@ namespace DownKyi.Core.BiliApi.Users.Models
         [JsonProperty("mid")]
         public long Mid { get; set; }
     }
+
+    [JsonObject]
+    public class Wbi
+    {
+        [JsonProperty("img_url")]
+        public string ImgUrl { get; set; }
+        [JsonProperty("sub_url")]
+        public string SubUrl { get; set; }
+    }
+
 }

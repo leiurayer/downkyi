@@ -20,14 +20,13 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
 
 namespace DownKyi.Services.Download
 {
     public abstract class DownloadService
     {
         protected string Tag = "DownloadService";
-        protected  TaskbarIcon _notifyIcon;
+        protected TaskbarIcon _notifyIcon;
         protected IDialogService dialogService;
         protected ObservableCollection<DownloadingItem> downloadingList;
         protected ObservableCollection<DownloadedItem> downloadedList;

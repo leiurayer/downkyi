@@ -186,6 +186,7 @@
     <Compile Include="BiliApi\Login\LoginQR.cs" />
     <Compile Include="BiliApi\Login\Models\LoginStatus.cs" />
     <Compile Include="BiliApi\Login\Models\LoginUrl.cs" />
+    <Compile Include="BiliApi\Sign\WbiSign.cs" />
     <Compile Include="BiliApi\Users\Models\BangumiFollow.cs" />
     <Compile Include="BiliApi\Users\Models\BangumiFollowAreas.cs" />
     <Compile Include="BiliApi\Users\Models\BangumiFollowNewEp.cs" />
