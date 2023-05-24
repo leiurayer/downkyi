@@ -27,8 +27,7 @@ namespace DownKyi.Core.BiliApi.Users
                 UserInfoForNavigationOrigin userInfo = JsonConvert.DeserializeObject<UserInfoForNavigationOrigin>(response);
                 if (userInfo == null || userInfo.Data == null) { return null; }
 
-                if (userInfo.Data.IsLogin) { return userInfo.Data; }
-                else { return null; }
+                return userInfo.Data;
             }
             catch (Exception e)
             {
