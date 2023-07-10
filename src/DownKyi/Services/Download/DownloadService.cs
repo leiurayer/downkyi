@@ -20,6 +20,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 
 namespace DownKyi.Services.Download
 {
@@ -804,6 +805,8 @@ namespace DownKyi.Services.Download
             tokenSource = new CancellationTokenSource();
             cancellationToken = tokenSource.Token;
             _notifyIcon = new TaskbarIcon();
+            _notifyIcon.IconSource = new BitmapImage(new Uri("pack://application:,,,/Resources/favicon.ico"));
+
             workTask = Task.Run(DoWork);
         }
 
