@@ -1,0 +1,42 @@
+﻿<Styles xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Design.PreviewWith>
+        <Border Padding="20">
+            <!--  Add Controls for Previewer Here  -->
+        </Border>
+    </Design.PreviewWith>
+
+    <!--  FontFamily  -->
+    <Style Selector="TextElement">
+        <Setter Property="FontFamily" Value="/Assets/Fonts/SourceHanSansCN-*.otf#Source Han Sans CN" />
+        <Setter Property="FontWeight" Value="Normal" />
+    </Style>
+    <Style Selector="TextBox">
+        <Setter Property="FontFamily" Value="/Assets/Fonts/SourceHanSansCN-*.otf#Source Han Sans CN" />
+        <Setter Property="FontWeight" Value="Normal" />
+    </Style>
+    <Style Selector="TextBlock">
+        <Setter Property="FontFamily" Value="/Assets/Fonts/SourceHanSansCN-*.otf#Source Han Sans CN" />
+        <Setter Property="FontWeight" Value="Normal" />
+    </Style>
+    <Style Selector="CheckBox">
+        <Setter Property="FontFamily" Value="/Assets/Fonts/SourceHanSansCN-*.otf#Source Han Sans CN" />
+        <Setter Property="FontWeight" Value="Normal" />
+    </Style>
+    <Style Selector="RadioButton">
+        <Setter Property="FontFamily" Value="/Assets/Fonts/SourceHanSansCN-*.otf#Source Han Sans CN" />
+        <Setter Property="FontWeight" Value="Normal" />
+    </Style>
+
+    <!--  每个主题都相同  -->
+    <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml" />
+    <StyleInclude Source="avares://Downkyi/Themes/Default/Styles/Button.axaml" />
+    <StyleInclude Source="avares://Downkyi/Themes/Default/Styles/CheckBox.axaml" />
+    <StyleInclude Source="avares://Downkyi/Themes/Default/Styles/ComboBox.axaml" />
+    <StyleInclude Source="avares://Downkyi/Themes/Default/Styles/DataGrid.axaml" />
+    <StyleInclude Source="avares://Downkyi/Themes/Default/Styles/ItemsControl.axaml" />
+    <StyleInclude Source="avares://Downkyi/Themes/Default/Styles/ItemsRepeater.axaml" />
+    <StyleInclude Source="avares://Downkyi/Themes/Default/Styles/ListBox.axaml" />
+    <StyleInclude Source="avares://Downkyi/Themes/Default/Styles/RadioButton.axaml" />
+    <StyleInclude Source="avares://Downkyi/Themes/Default/Styles/TextBox.axaml" />
+
+</Styles>

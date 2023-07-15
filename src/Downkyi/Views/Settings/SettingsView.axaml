@@ -1,0 +1,62 @@
+<UserControl
+    x:Class="Downkyi.Views.Settings.SettingsView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:Downkyi"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:Downkyi.UI.ViewModels.Settings"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    x:CompileBindings="True"
+    x:DataType="vm:SettingsViewModel"
+    Design.DataContext="{x:Static local:ServiceLocator.SettingsViewModel}"
+    mc:Ignorable="d">
+
+    <Grid RowDefinitions="50,1,*">
+        <Grid Grid.Row="0" Height="50">
+            <Button
+                Margin="0,5,0,5"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Classes="transparent"
+                Command="{Binding BackwardCommand}">
+                <StackPanel Orientation="Horizontal">
+                    <Image
+                        Width="24"
+                        Height="24"
+                        Source="{StaticResource ArrowBackDrawingImage}" />
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        FontSize="16"
+                        Text="{DynamicResource Settings}" />
+                </StackPanel>
+            </Button>
+        </Grid>
+        <TextBlock Grid.Row="1" Background="{DynamicResource BrushBorder}" />
+
+        <SplitView
+            Grid.Row="2"
+            DisplayMode="Inline"
+            IsPaneOpen="True"
+            OpenPaneLength="200">
+            <SplitView.Pane>
+                <ListBox
+                    Name="tabHeaders"
+                    Classes="tabHeader"
+                    ItemsSource="{Binding TabHeaders}"
+                    SelectedIndex="{Binding SelectedTabId, Mode=TwoWay}"
+                    SelectionMode="AlwaysSelected" />
+            </SplitView.Pane>
+
+            <Grid>
+                <TransitioningContentControl Content="{x:Static local:ServiceLocator.BasicViewModel}" IsVisible="{Binding SelectedTabId, Converter={StaticResource intEquealConverter}, ConverterParameter=0}" />
+                <TransitioningContentControl Content="{x:Static local:ServiceLocator.NetworkViewModel}" IsVisible="{Binding SelectedTabId, Converter={StaticResource intEquealConverter}, ConverterParameter=1}" />
+                <TransitioningContentControl Content="{x:Static local:ServiceLocator.VideoViewModel}" IsVisible="{Binding SelectedTabId, Converter={StaticResource intEquealConverter}, ConverterParameter=2}" />
+                <TransitioningContentControl Content="{x:Static local:ServiceLocator.DanmakuViewModel}" IsVisible="{Binding SelectedTabId, Converter={StaticResource intEquealConverter}, ConverterParameter=3}" />
+                <TransitioningContentControl Content="{x:Static local:ServiceLocator.AboutViewModel}" IsVisible="{Binding SelectedTabId, Converter={StaticResource intEquealConverter}, ConverterParameter=4}" />
+            </Grid>
+        </SplitView>
+
+    </Grid>
+</UserControl>

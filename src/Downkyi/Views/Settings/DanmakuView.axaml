@@ -1,0 +1,177 @@
+<UserControl
+    x:Class="Downkyi.Views.Settings.DanmakuView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
+    xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions.Core;assembly=Avalonia.Xaml.Interactions"
+    xmlns:iac="clr-namespace:Avalonia.Xaml.Interactions.Custom;assembly=Avalonia.Xaml.Interactions.Custom"
+    xmlns:local="using:Downkyi"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:Downkyi.ViewModels.Settings"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    x:CompileBindings="True"
+    x:DataType="vm:DanmakuViewModelProxy"
+    Design.DataContext="{x:Static local:ServiceLocator.DanmakuViewModel}"
+    mc:Ignorable="d">
+    <i:Interaction.Behaviors>
+        <ia:EventTriggerBehavior EventName="Loaded">
+            <ia:InvokeCommandAction Command="{Binding LoadedCommand}" />
+        </ia:EventTriggerBehavior>
+    </i:Interaction.Behaviors>
+
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="50,0" Orientation="Vertical">
+            <StackPanel Margin="0,20,0,0" Orientation="Horizontal">
+                <TextBlock FontSize="20" Text="{DynamicResource SettingDanmaku}" />
+            </StackPanel>
+
+            <TextBlock Margin="0,20,0,0" Text="{DynamicResource FilterType}" />
+
+            <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
+                <CheckBox
+                    Margin="0,0,0,0"
+                    Classes="normal"
+                    Command="{Binding SetTopFilterCommand}"
+                    Content="{DynamicResource TopFilter}"
+                    IsChecked="{Binding TopFilter, Mode=TwoWay}" />
+                <CheckBox
+                    Margin="40,0,0,0"
+                    Classes="normal"
+                    Command="{Binding SetBottomFilterCommand}"
+                    Content="{DynamicResource BottomFilter}"
+                    IsChecked="{Binding BottomFilter, Mode=TwoWay}" />
+                <CheckBox
+                    Margin="40,0,0,0"
+                    Classes="normal"
+                    Command="{Binding SetScrollFilterCommand}"
+                    Content="{DynamicResource ScrollFilter}"
+                    IsChecked="{Binding ScrollFilter, Mode=TwoWay}" />
+            </StackPanel>
+
+            <StackPanel
+                Margin="0,20,0,0"
+                Orientation="Horizontal"
+                ToolTip.Tip="{DynamicResource PressEnterToApplySettingTip}">
+                <TextBlock VerticalAlignment="Center" Text="{DynamicResource Resolution}" />
+                <TextBox
+                    Name="screenWidth"
+                    Width="95"
+                    Height="20"
+                    VerticalContentAlignment="Center"
+                    Classes="normal"
+                    Text="{Binding ScreenWidth, Mode=TwoWay}">
+                    <TextBox.KeyBindings>
+                        <KeyBinding
+                            Command="{Binding SetScreenWidthCommand}"
+                            CommandParameter="{Binding ElementName=screenWidth, Path=Text}"
+                            Gesture="Enter" />
+                    </TextBox.KeyBindings>
+                </TextBox>
+                <TextBlock
+                    Margin="5,0"
+                    VerticalAlignment="Center"
+                    Text="×" />
+                <TextBox
+                    Name="screenHeight"
+                    Width="95"
+                    Height="20"
+                    VerticalContentAlignment="Center"
+                    Classes="normal"
+                    Text="{Binding ScreenHeight, Mode=TwoWay}">
+                    <TextBox.KeyBindings>
+                        <KeyBinding
+                            Command="{Binding SetScreenHeightCommand}"
+                            CommandParameter="{Binding ElementName=screenHeight, Path=Text}"
+                            Gesture="Enter" />
+                    </TextBox.KeyBindings>
+                </TextBox>
+            </StackPanel>
+
+            <StackPanel Margin="0,20,0,0" Orientation="Horizontal">
+                <TextBlock VerticalAlignment="Center" Text="{DynamicResource FontName}" />
+                <ComboBox
+                    Name="fonts"
+                    Width="200"
+                    VerticalContentAlignment="Center"
+                    Classes="normal"
+                    ItemsSource="{Binding Fonts}"
+                    SelectedValue="{Binding SelectedFont}">
+                    <i:Interaction.Behaviors>
+                        <iac:ValueChangedTriggerBehavior Binding="{Binding SelectedFont}">
+                            <ia:InvokeCommandAction Command="{Binding FontSelectedCommand}" CommandParameter="{Binding ElementName=fonts, Path=SelectedValue}" />
+                        </iac:ValueChangedTriggerBehavior>
+                    </i:Interaction.Behaviors>
+                </ComboBox>
+            </StackPanel>
+
+            <StackPanel
+                Margin="0,20,0,0"
+                Orientation="Horizontal"
+                ToolTip.Tip="{DynamicResource PressEnterToApplySettingTip}">
+                <TextBlock VerticalAlignment="Center" Text="{DynamicResource FontSize}" />
+                <TextBox
+                    x:Name="fontSize"
+                    Width="200"
+                    Height="20"
+                    VerticalContentAlignment="Center"
+                    Classes="normal"
+                    Text="{Binding FontSize}">
+                    <TextBox.KeyBindings>
+                        <KeyBinding
+                            Command="{Binding SetFontSizeCommand}"
+                            CommandParameter="{Binding ElementName=fontSize, Path=Text}"
+                            Gesture="Enter" />
+                    </TextBox.KeyBindings>
+                </TextBox>
+            </StackPanel>
+
+            <StackPanel
+                Margin="0,20,0,0"
+                Orientation="Horizontal"
+                ToolTip.Tip="{DynamicResource PressEnterToApplySettingTip}">
+                <TextBlock VerticalAlignment="Center" Text="{DynamicResource LineCount}" />
+                <TextBox
+                    Name="lineCount"
+                    Width="200"
+                    Height="20"
+                    VerticalContentAlignment="Center"
+                    Classes="normal"
+                    Text="{Binding LineCount}">
+                    <TextBox.KeyBindings>
+                        <KeyBinding
+                            Command="{Binding SetLineCountCommand}"
+                            CommandParameter="{Binding ElementName=lineCount, Path=Text}"
+                            Gesture="Enter" />
+                    </TextBox.KeyBindings>
+                </TextBox>
+            </StackPanel>
+
+            <StackPanel Margin="0,20,0,0" Orientation="Horizontal">
+                <TextBlock VerticalAlignment="Center" Text="{DynamicResource LayoutAlgorithm}" />
+                <CheckBox
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Classes="normal"
+                    Command="{Binding SetLayoutAlgorithmCommand}"
+                    CommandParameter="Sync"
+                    Content="{DynamicResource LayoutAlgorithmSync}"
+                    IsChecked="{Binding Sync, Mode=TwoWay}"
+                    ToolTip.Tip="{DynamicResource LayoutAlgorithmSyncTip}" />
+                <CheckBox
+                    Margin="20,0,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Classes="normal"
+                    Command="{Binding SetLayoutAlgorithmCommand}"
+                    CommandParameter="Async"
+                    Content="{DynamicResource LayoutAlgorithmAsync}"
+                    IsChecked="{Binding Async, Mode=TwoWay}"
+                    ToolTip.Tip="{DynamicResource LayoutAlgorithmAsyncTip}" />
+            </StackPanel>
+
+            <StackPanel Margin="10" />
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

@@ -1,0 +1,170 @@
+<UserControl
+    x:Class="Downkyi.Views.Settings.AboutView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
+    xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions.Core;assembly=Avalonia.Xaml.Interactions"
+    xmlns:local="using:Downkyi"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:model="using:Downkyi.UI.Models"
+    xmlns:vm="using:Downkyi.ViewModels.Settings"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    x:CompileBindings="True"
+    x:DataType="vm:AboutViewModelProxy"
+    Design.DataContext="{x:Static local:ServiceLocator.AboutViewModel}"
+    mc:Ignorable="d">
+    <i:Interaction.Behaviors>
+        <ia:EventTriggerBehavior EventName="Loaded">
+            <ia:InvokeCommandAction Command="{Binding LoadedCommand}" />
+        </ia:EventTriggerBehavior>
+    </i:Interaction.Behaviors>
+
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="50,0" Orientation="Vertical">
+            <StackPanel Margin="0,20,0,0" Orientation="Horizontal">
+                <TextBlock FontSize="20" Text="{DynamicResource About}" />
+                <TextBlock
+                    Cursor="Hand"
+                    FontSize="20"
+                    Foreground="{DynamicResource BrushPrimary}"
+                    Text="{Binding AppName}"
+                    ToolTip.Tip="{DynamicResource GotoHomepage}">
+                    <i:Interaction.Behaviors>
+                        <ia:EventTriggerBehavior EventName="Tapped">
+                            <ia:InvokeCommandAction Command="{Binding VisitHomepageCommand}" />
+                        </ia:EventTriggerBehavior>
+                    </i:Interaction.Behaviors>
+                </TextBlock>
+            </StackPanel>
+
+            <StackPanel Margin="0,20,0,0" Orientation="Horizontal">
+                <TextBlock VerticalAlignment="Center" Text="{DynamicResource CurrentAppVersion}" />
+                <TextBlock VerticalAlignment="Center" Text="{Binding AppVersion}" />
+
+                <Button
+                    Margin="30,0,0,0"
+                    Classes="normal"
+                    Command="{Binding CheckUpdateCommand}"
+                    Content="{DynamicResource CheckUpdate}" />
+                <Button
+                    Margin="20,0,0,0"
+                    Classes="normal"
+                    Command="{Binding FeedbackCommand}"
+                    Content="{DynamicResource Feedback}" />
+            </StackPanel>
+
+            <CheckBox
+                Margin="0,20,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Classes="normal"
+                Command="{Binding ReceiveBetaVersionCommand}"
+                Content="{DynamicResource ReceiveBetaVersion}"
+                IsChecked="{Binding IsReceiveBetaVersion, Mode=TwoWay}" />
+
+            <CheckBox
+                Margin="0,20,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Classes="normal"
+                Command="{Binding AutoUpdateWhenLaunchCommand}"
+                Content="{DynamicResource AutoUpdateWhenLaunch}"
+                IsChecked="{Binding IsAutoUpdateWhenLaunch, Mode=TwoWay}" />
+
+            <StackPanel Margin="0,20,0,0" Orientation="Vertical">
+                <TextBlock
+                    Margin="0,0,0,10"
+                    FontSize="14"
+                    FontWeight="Bold"
+                    Text="{DynamicResource ThirdParty}" />
+                <DataGrid
+                    HorizontalAlignment="Left"
+                    AutoGenerateColumns="False"
+                    CanUserSortColumns="False"
+                    Classes="normal"
+                    IsReadOnly="True"
+                    ItemsSource="{Binding ThirdParties}">
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn Header="{DynamicResource ThirdPartyName}">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate DataType="model:ThirdParty">
+                                    <TextBlock
+                                        Margin="15,0"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Cursor="Hand"
+                                        Text="{Binding Name}">
+                                        <i:Interaction.Behaviors>
+                                            <ia:EventTriggerBehavior EventName="Tapped">
+                                                <ia:InvokeCommandAction Command="{Binding VisitHomepageCommand}" />
+                                            </ia:EventTriggerBehavior>
+                                        </i:Interaction.Behaviors>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                        <DataGridTextColumn Binding="{Binding Author}" Header="{DynamicResource ThirdPartyAuthor}" />
+                        <DataGridTextColumn Binding="{Binding Version}" Header="{DynamicResource ThirdPartyVersion}" />
+
+                        <DataGridTemplateColumn Header="{DynamicResource ThirdPartyLicense}">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate DataType="model:ThirdParty">
+                                    <TextBlock
+                                        Margin="15,0"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Cursor="Hand"
+                                        Text="{Binding License}">
+                                        <i:Interaction.Behaviors>
+                                            <ia:EventTriggerBehavior EventName="Tapped">
+                                                <ia:InvokeCommandAction Command="{Binding GetLicenseCommand}" />
+                                            </ia:EventTriggerBehavior>
+                                        </i:Interaction.Behaviors>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+
+            <!--  免责申明  -->
+            <StackPanel Margin="0,20,0,0" Orientation="Vertical">
+                <TextBlock
+                    Margin="0,0,0,10"
+                    FontSize="14"
+                    FontWeight="Bold"
+                    Text="{DynamicResource Disclaimer}" />
+                <TextBlock
+                    FontSize="12"
+                    Text="{DynamicResource Disclaimer1}"
+                    TextWrapping="Wrap" />
+                <TextBlock
+                    FontSize="12"
+                    Text="{DynamicResource Disclaimer2}"
+                    TextWrapping="Wrap" />
+                <TextBlock
+                    FontSize="12"
+                    Text="{DynamicResource Disclaimer3}"
+                    TextWrapping="Wrap" />
+                <TextBlock
+                    FontSize="12"
+                    Text="{DynamicResource Disclaimer4}"
+                    TextWrapping="Wrap" />
+                <TextBlock
+                    FontSize="12"
+                    Text="{DynamicResource Disclaimer5}"
+                    TextWrapping="Wrap" />
+                <TextBlock
+                    FontSize="12"
+                    Text="{DynamicResource Disclaimer6}"
+                    TextWrapping="Wrap" />
+            </StackPanel>
+
+            <StackPanel Margin="10" />
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

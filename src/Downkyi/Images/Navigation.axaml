@@ -1,0 +1,10 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <DrawingImage x:Key="ArrowBackDrawingImage">
+        <DrawingImage.Drawing>
+            <DrawingGroup ClipGeometry="M0,0 V24 H24 V0 H0 Z">
+                <GeometryDrawing Brush="#FF000000" Geometry="F1 M24,24z M0,0z M16.62,2.99C16.13,2.5,15.34,2.5,14.85,2.99L6.54,11.3C6.15,11.69,6.15,12.32,6.54,12.71L14.85,21.02C15.34,21.51 16.13,21.51 16.62,21.02 17.11,20.53 17.11,19.74 16.62,19.25L9.38,12 16.63,4.75C17.11,4.27,17.11,3.47,16.62,2.99z" />
+            </DrawingGroup>
+        </DrawingImage.Drawing>
+    </DrawingImage>
+
+</ResourceDictionary>

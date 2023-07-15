@@ -1,0 +1,126 @@
+<UserControl
+    x:Class="Downkyi.Views.Login.QRCodeView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
+    xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions.Core;assembly=Avalonia.Xaml.Interactions"
+    xmlns:local="using:Downkyi"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:Downkyi.ViewModels.Login"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    x:CompileBindings="True"
+    x:DataType="vm:QRCodeViewModelProxy"
+    Design.DataContext="{x:Static local:ServiceLocator.QRCodeViewModel}"
+    mc:Ignorable="d">
+    <i:Interaction.Behaviors>
+        <ia:EventTriggerBehavior EventName="Loaded">
+            <ia:InvokeCommandAction Command="{Binding LoadedCommand}" />
+        </ia:EventTriggerBehavior>
+        <ia:EventTriggerBehavior EventName="Unloaded">
+            <ia:InvokeCommandAction Command="{Binding UnloadedCommand}" />
+        </ia:EventTriggerBehavior>
+    </i:Interaction.Behaviors>
+
+    <Grid RowDefinitions="106,3*,2*">
+
+        <!--  Background必须是#FF00A0D8，因为与login_top_bar.png的背景一致  -->
+        <StackPanel
+            Grid.Row="0"
+            Height="86"
+            VerticalAlignment="Top"
+            Background="#FF00A0D8" />
+        <Image
+            Grid.Row="0"
+            Width="980"
+            Height="106"
+            Source="/Assets/bili/login/login_top_bar.png" />
+
+        <Image
+            Grid.Row="1"
+            Width="200"
+            Height="200"
+            Margin="0,10,0,0"
+            Opacity="{Binding QRCodeOpacity}"
+            Source="{Binding QRCode}"
+            Stretch="Fill">
+            <i:Interaction.Behaviors>
+                <ia:EventTriggerBehavior EventName="PointerEntered">
+                    <ia:ChangePropertyAction
+                        PropertyName="IsVisible"
+                        TargetObject="{Binding #tip}"
+                        Value="True" />
+                </ia:EventTriggerBehavior>
+                <ia:EventTriggerBehavior EventName="PointerExited">
+                    <ia:ChangePropertyAction
+                        PropertyName="IsVisible"
+                        TargetObject="{Binding #tip}"
+                        Value="False" />
+                </ia:EventTriggerBehavior>
+            </i:Interaction.Behaviors>
+        </Image>
+
+        <StackPanel
+            Grid.Row="1"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            IsVisible="{Binding QRCodeStatus}">
+            <Border
+                Width="56"
+                Height="56"
+                Background="White"
+                CornerRadius="28">
+                <Image
+                    Width="24"
+                    Height="24"
+                    Source="/Assets/bili/login/scan_succeed.png" />
+            </Border>
+            <TextBlock
+                Margin="0,10,0,0"
+                Text="{DynamicResource ScanSuccessful}"
+                TextAlignment="Center" />
+        </StackPanel>
+
+        <Image
+            Name="tip"
+            Grid.Row="1"
+            Height="300"
+            IsVisible="False"
+            Source="/Assets/bili/login/qrcode_login_tip.png">
+            <i:Interaction.Behaviors>
+                <ia:EventTriggerBehavior EventName="PointerEntered">
+                    <ia:ChangePropertyAction
+                        PropertyName="IsVisible"
+                        TargetObject="{Binding #tip}"
+                        Value="True" />
+                </ia:EventTriggerBehavior>
+                <ia:EventTriggerBehavior EventName="PointerExited">
+                    <ia:ChangePropertyAction
+                        PropertyName="IsVisible"
+                        TargetObject="{Binding #tip}"
+                        Value="False" />
+                </ia:EventTriggerBehavior>
+            </i:Interaction.Behaviors>
+        </Image>
+
+        <Image
+            Grid.Row="2"
+            MaxHeight="160"
+            Margin="0,0,0,10"
+            Source="/Assets/bili/login/qrcode_login_2233.png" />
+        <StackPanel Grid.Row="2" Margin="0,30,0,0">
+            <TextBlock
+                FontSize="18"
+                Foreground="{DynamicResource BrushTextDark}"
+                Text="{DynamicResource ScanToLogin}"
+                TextAlignment="Center" />
+            <TextBlock
+                Margin="0,10,0,0"
+                FontSize="14"
+                Foreground="{DynamicResource BrushTextDark}"
+                Text="{DynamicResource ScanLoginTip}"
+                TextAlignment="Center" />
+        </StackPanel>
+    </Grid>
+</UserControl>

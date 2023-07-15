@@ -1,0 +1,259 @@
+<UserControl
+    x:Class="Downkyi.Views.IndexView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:asyncImageLoader="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
+    xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions.Core;assembly=Avalonia.Xaml.Interactions"
+    xmlns:local="using:Downkyi"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:Downkyi.UI.ViewModels"
+    d:DesignHeight="700"
+    d:DesignWidth="1100"
+    x:CompileBindings="True"
+    x:DataType="vm:IndexViewModel"
+    Design.DataContext="{x:Static local:ServiceLocator.IndexViewModel}"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <DrawingImage x:Key="TextLogoDrawingImage">
+            <DrawingImage.Drawing>
+                <DrawingGroup ClipGeometry="M0,0 V1024 H3444 V0 H0 Z">
+                    <GeometryDrawing Brush="{DynamicResource BrushPrimary}" Geometry="F1 M3444,1024z M0,0z M602.247902,495.326917Q602.247902,349.281801,662.472692,275.506433A198.13956,198.13956,0,0,1,971.425866,275.506433Q1033.156276,349.582925 1033.4574,489.304438 1033.4574,639.866414 973.23261,714.846278A198.13956,198.13956,0,0,1,663.978312,714.846278Q602.247902,640.468662,602.247902,495.326917z M682.346873,495.326917A273.721671,273.721671,0,0,0,722.697482,657.331603A120.44958,120.44958,0,0,0,821.165014,710.630542A115.029349,115.029349,0,0,0,915.416811,656.729355A273.420548,273.420548,0,0,0,954.864049,495.025793A271.011556,271.011556,0,0,0,915.115687,333.021108A120.44958,120.44958,0,0,0,816.648155,279.722168A114.125977,114.125977,0,0,0,722.697482,333.322232A271.011556,271.011556,0,0,0,682.949121,495.025793z M1212.023903,776.275564L1070.194522,214.077147 1150.895741,214.077147 1224.369985,538.688766 1251.47114,659.138347 1275.862181,542.302254 1349.035301,214.077147 1429.736519,214.077147 1498.39278,540.194386 1521.579325,647.695637 1548.078232,538.98989 1626.069336,214.077147 1702.253695,214.077147 1558.918694,776.275564 1477.615228,776.275564 1404.140984,439.618986 1386.675794,343.86157 1294.832989,776.275564z M1768.500964,776.275564L1768.500964,214.077147 1838.963969,214.077147 1838.963969,293.57387A180.674371,180.674371,0,0,1,1900.995503,224.315361A154.476587,154.476587,0,0,1,1985.310209,201.429941A161.703562,161.703562,0,0,1,2053.665346,215.883891A140.624885,140.624885,0,0,1,2104.25417,254.126633A153.874339,153.874339,0,0,1,2134.366565,314.351423A509.802849,509.802849,0,0,1,2144.002531,429.681896L2144.002531,776.275564 2064.806932,776.275564 2064.806932,433.897631A279.141903,279.141903,0,0,0,2054.267594,343.560446A87.62707,87.62707,0,0,0,1969.049516,283.335656A109.00687,109.00687,0,0,0,1878.71233,325.191885Q1845.287571,367.349238,1845.287572,468.82801L1845.287572,776.275564z M2270.775715,776.275564L2270.775715,0.279142 2355.090421,0.279142 2355.090421,385.115551 2670.969446,0.279142 2785.396547,0.279142 2518.299602,314.953671 2796.839257,776.275564 2685.724519,776.275564 2459.881556,384.814427 2355.090421,508.275247 2355.090421,777.178936z M2853.149436,993.98818L2844.416841,903.650995A146.34624,146.34624,0,0,0,2888.983186,912.082466A78.292227,78.292227,0,0,0,2930.237167,902.145375A76.786608,76.786608,0,0,0,2956.736075,872.03298C2959.446191,866.913873,2969.684405,835.898106,2986.84847,778.684555L2812.196579,214.077147 2896.511285,214.077147 2992.870949,539.592138C3004.915907,579.942747 3015.756369,623.304596 3025.994584,669.677685 3035.028303,626.014712 3045.567641,583.255111 3057.913723,541.700006L3156.381255,214.077147 3234.673482,214.077147 3059.720466,786.212654A1012.679847,1012.679847,0,0,1,3005.518155,933.76339A141.227133,141.227133,0,0,1,2960.349563,987.363453A103.285515,103.285515,0,0,1,2903.437136,1003.925271A132.494538,132.494538,0,0,1,2853.149436,993.98818z M3300.318503,109.88826L3300.318503,0.279142 3378.008483,0.279142 3378.008483,109.88826z M3300.318503,776.275564L3300.318503,214.077147 3378.008483,214.077147 3378.008483,776.275564z M0,776.275564L0,0.279142 219.51936,0.279142A417.357796,417.357796,0,0,1,343.582428,14.431968A210.786766,210.786766,0,0,1,439.942092,82.184857A358.337502,358.337502,0,0,1,503.479246,206.549048A616.400728,616.400728,0,0,1,526.063542,383.911056A579.663606,579.663606,0,0,1,487.519677,607.646151A273.420548,273.420548,0,0,1,388.148773,738.032822A294.1981,294.1981,0,0,1,229.757575,776.275564z M463.730885,391.740278Q474.571347,384.212179,463.730885,375.479585L411.937565,345.36719Q275.528415,262.859227,135.505778,194.805214L122.256324,188.180487A22.283172,22.283172,0,0,0,105.694507,188.180487L105.694507,593.794449A18.669685,18.669685,0,0,0,120.44958,588.976466Q268.602564,512.189858,417.056672,424.562789C432.413994,414.324575,448.072439,403.182988,463.730885,391.740278z" />
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+
+        <DrawingImage x:Key="SearchDrawingImage">
+            <DrawingImage.Drawing>
+                <DrawingGroup ClipGeometry="M0,0 V1024 H1024 V0 H0 Z">
+                    <DrawingGroup.Transform>
+                        <TranslateTransform X="0.0019274960504844785" Y="0.0047413362190127373" />
+                    </DrawingGroup.Transform>
+                    <GeometryDrawing Brush="{DynamicResource BrushPrimary}" Geometry="F1 M1024,1024z M0,0z M697.91,755.7Q565.55,859.18 407.32,853.76 249.09,848.35 128.76,732.84 1.21999999999998,599.28 0.00999999999999091,428.41 -1.20000000000001,257.55 120.34,123.98 247.89,-2.35999999999999 417.55,0.0400000000000205 587.21,2.45000000000002 720.77,123.98 831.48,238.29 842.91,387.5 854.34,536.71 767.7,663.05L1005.95,902.5Q1024,920.55 1024,944.62 1024,968.68 1005.95,986.13 987.9,1003.58 963.83,1003.58 939.76,1003.58 921.71,986.73L697.9,755.7z M643.76,647.41Q736.42,551.15 736.42,428.41 736.42,305.68 643.76,209.42 547.5,116.76 424.76,116.76 302.02,116.76 205.77,209.42 113.12,305.68 113.12,428.41 113.12,551.15 205.77,647.41 302.03,740.06 424.76,737.66 547.5,735.26 643.76,647.41z" />
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+
+        <DrawingImage x:Key="SettingsDrawingImage">
+            <DrawingImage.Drawing>
+                <DrawingGroup ClipGeometry="M0,0 V20.1 H19.6 V0 H0 Z">
+                    <DrawingGroup.Transform>
+                        <TranslateTransform X="0.039230484515428543" Y="0" />
+                    </DrawingGroup.Transform>
+                    <DrawingGroup Opacity="1">
+                        <DrawingGroup Opacity="1">
+                            <GeometryDrawing Brush="{DynamicResource BrushPrimary}" Geometry="F1 M19.6,20.1z M0,0z M17.14,11C17.14,10.7,17.24,10.4,17.24,10A3.08,3.08,0,0,0,17.14,9L19.24,7.3A0.47,0.47,0,0,0,19.34,6.7L17.34,3.2C17.24,3,17.04,3,16.74,3L14.24,4A9.5,9.5,0,0,0,12.54,3L12.14,0.3C12.24,0.2,12.04,0,11.74,0L7.74,0C7.54,0,7.24,0.2,7.24,0.4L6.84,3.1A14,14,0,0,0,5.14,4L2.74,3C2.44,3,2.24,3,2.04,3.3L0,6.8C-0.1,7,0,7.2,0.2,7.4L2.34,9C2.34,9.3,2.24,9.6,2.24,10A3.08,3.08,0,0,0,2.34,11L0.24,12.7C0.04,12.8,0.04,13.1,0.14,13.3L2.14,16.8C2.24,17,2.44,17,2.74,17L5.24,16A9.5,9.5,0,0,0,6.94,17L7.34,19.7A0.46,0.46,0,0,0,7.84,20.1L11.84,20.1A0.46,0.46,0,0,0,12.34,19.7L12.74,17A9.5,9.5,0,0,0,14.44,16L16.94,17A0.48,0.48,0,0,0,17.54,16.8L19.54,13.3C19.64,13.1,19.64,12.8,19.44,12.7z M9.74,13.5A3.5,3.5,0,1,1,13.24,10A3.54,3.54,0,0,1,9.74,13.5z" />
+                        </DrawingGroup>
+                    </DrawingGroup>
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+        <DrawingImage x:Key="DownloadManagerDrawingImage">
+            <DrawingImage.Drawing>
+                <DrawingGroup ClipGeometry="M0,0 V20.01 H24.15 V0 H0 Z">
+                    <DrawingGroup.Transform>
+                        <TranslateTransform X="0.012936355546116829" Y="0.0082860654219985" />
+                    </DrawingGroup.Transform>
+                    <DrawingGroup Opacity="1">
+                        <DrawingGroup Opacity="1">
+                            <GeometryDrawing Brush="{DynamicResource BrushPrimary}" Geometry="F1 M24.15,20.01z M0,0z M11.9,19.91L4.6,19.91A4.38,4.38,0,0,1,0,15.21L0,4.71A4.38,4.38,0,0,1,4.6,0L8.5,0A3,3,0,0,1,11.2,1.3A4.45,4.45,0,0,0,15.8,3.4A17.83,17.83,0,0,1,19.8,3.4A4.25,4.25,0,0,1,24,7.71A57.48,57.48,0,0,1,24,16A4.2,4.2,0,0,1,19.7,20C16.9,19.9,14.4,19.9,11.9,19.9z M11.8,18.51L19.3,18.51A2.76,2.76,0,0,0,22.3,15.81A60.28,60.28,0,0,0,22.3,7.31A2.7,2.7,0,0,0,19.8,4.71A25.41,25.41,0,0,0,15.9,4.61C11.8,4.51,12.9,5.11,9.9,2.01A2.29,2.29,0,0,0,8.2,1.21L4.4,1.21A3.07,3.07,0,0,0,1.1,4.41L1.1,15.11A2.94,2.94,0,0,0,4.3,18.31C6.9,18.51,9.4,18.51,11.8,18.51z" />
+                            <GeometryDrawing Brush="{DynamicResource BrushPrimary}" Geometry="F1 M24.15,20.01z M0,0z M17.8,0.11L21.1,0.11C21.6,0.11 22,0.11 22,0.81 22,1.51 21.6,1.61 21.1,1.61L14.4,1.61C13.9,1.61 13.5,1.51 13.5,0.91 13.5,0.31 13.9,0.21 14.4,0.21 15.5,0.11 16.6,0.11 17.8,0.11z M11.2,13.51L11.2,8.11C11.2,7.61 11.2,7.01 11.9,7.01 12.6,7.01 12.5,7.61 12.5,8.01L12.5,13.21 14.2,11.51C14.5,11.11 14.9,10.81 15.4,11.31 15.9,11.81 15.5,12.21 15.2,12.51 14.3,13.51 13.4,14.41 12.5,15.31 12.1,15.81 11.7,15.81 11.2,15.41 10.2,14.41 9.2,13.31 8.2,12.31A0.68,0.68,0,0,1,8.1,11.31C8.4,10.91,8.8,11.01,9.1,11.41A10.43,10.43,0,0,1,11.2,13.51z" />
+                        </DrawingGroup>
+                    </DrawingGroup>
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+        <DrawingImage x:Key="ToolboxDrawingImage">
+            <DrawingImage.Drawing>
+                <DrawingGroup ClipGeometry="M0,0 V21 H24 V0 H0 Z">
+                    <DrawingGroup Opacity="1">
+                        <DrawingGroup Opacity="1">
+                            <GeometryDrawing Brush="{DynamicResource BrushPrimary}" Geometry="F1 M24,21z M0,0z M16.2,9A4.41,4.41,0,0,1,10.5,11.7A4.5,4.5,0,0,1,7.8,9L1.5,9 1.5,7.5 22.5,7.5 22.5,9z M14.6,9L9.4,9A3.06,3.06,0,0,0,13.5,10.1A2.91,2.91,0,0,0,14.6,9z M6,3L6,1.5A1.54,1.54,0,0,1,7.5,0L16.5,0A1.54,1.54,0,0,1,18,1.5L18,3 22.5,3A1.54,1.54,0,0,1,24,4.5L24,19.5A1.54,1.54,0,0,1,22.5,21L1.5,21A1.54,1.54,0,0,1,0,19.5L0,19.5 0,4.5A1.54,1.54,0,0,1,1.5,3z M7.5,3L16.5,3 16.5,1.5 7.5,1.5z M1.5,4.5L1.5,19.5 22.5,19.5 22.5,4.5z" />
+                        </DrawingGroup>
+                    </DrawingGroup>
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+    </UserControl.Resources>
+
+    <Grid RowDefinitions="60,200,100,230,*,50">
+
+        <Grid Grid.Row="0" ColumnDefinitions="*,*,20">
+            <Grid
+                Grid.Column="1"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom"
+                ColumnDefinitions="auto,auto"
+                Cursor="Hand"
+                IsVisible="{Binding LoginPanelVisibility}">
+                <i:Interaction.Behaviors>
+                    <ia:EventTriggerBehavior EventName="Tapped">
+                        <ia:InvokeCommandAction Command="{Binding LoginCommand}" />
+                    </ia:EventTriggerBehavior>
+                </i:Interaction.Behaviors>
+
+                <Image
+                    Grid.Column="0"
+                    Width="36"
+                    Height="36"
+                    asyncImageLoader:ImageLoader.Source="{Binding Header}"
+                    ToolTip.Tip="{Binding UserName}">
+                    <Image.Clip>
+                        <!--  设置图像如何显示  -->
+                        <EllipseGeometry
+                            Center="18,18"
+                            RadiusX="18"
+                            RadiusY="18" />
+                    </Image.Clip>
+                </Image>
+                <!--  添加一个圆框在头像上，做边框  -->
+                <Ellipse
+                    Grid.Column="0"
+                    Width="38"
+                    Height="38"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Stroke="{DynamicResource BrushImageBorder}"
+                    StrokeThickness="2" />
+
+                <TextBlock
+                    Grid.Column="1"
+                    Margin="5,0,0,0"
+                    VerticalAlignment="Center"
+                    FontSize="14"
+                    Foreground="{DynamicResource BrushPrimary}"
+                    IsVisible="{Binding UserName, Converter={x:Static StringConverters.IsNullOrEmpty}}"
+                    Text="{DynamicResource Login}" />
+            </Grid>
+        </Grid>
+
+        <Image
+            Grid.Row="1"
+            Height="100"
+            Margin="0,30,0,0"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Bottom"
+            Source="{StaticResource TextLogoDrawingImage}" />
+
+        <Grid Grid.Row="2" ColumnDefinitions="*,4*,*">
+            <TextBox
+                Grid.Column="1"
+                VerticalContentAlignment="Center"
+                Classes="main"
+                Text="{Binding Path=InputText, Mode=TwoWay}"
+                Watermark="{DynamicResource IndexHintText}">
+                <TextBox.KeyBindings>
+                    <KeyBinding Command="{Binding InputCommand}" Gesture="Enter" />
+                </TextBox.KeyBindings>
+                <TextBox.InnerRightContent>
+                    <Button
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Classes="transparent"
+                        Command="{Binding InputCommand}"
+                        Cursor="Hand">
+                        <Image
+                            Width="20"
+                            Height="20"
+                            Source="{StaticResource SearchDrawingImage}" />
+                    </Button>
+                </TextBox.InnerRightContent>
+            </TextBox>
+        </Grid>
+
+        <Grid
+            Grid.Row="3"
+            ColumnDefinitions="3*,4*,4*,4*,3*"
+            RowDefinitions="*,*">
+
+            <Button
+                Grid.Row="0"
+                Grid.Column="1"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Classes="transparent"
+                Command="{Binding SettingsCommand}">
+                <StackPanel Orientation="Vertical">
+                    <Border
+                        Width="64"
+                        Height="64"
+                        Margin="0,0,0,5"
+                        Background="{DynamicResource BrushImageBackground}"
+                        CornerRadius="32">
+                        <Image
+                            Width="32"
+                            Height="32"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Source="{StaticResource SettingsDrawingImage}" />
+                    </Border>
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        FontSize="14"
+                        Foreground="{DynamicResource BrushPrimary}"
+                        Text="{DynamicResource Settings}" />
+                </StackPanel>
+            </Button>
+
+            <Button
+                Grid.Row="0"
+                Grid.Column="2"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Classes="transparent"
+                Command="{Binding DownloadManagerCommand}">
+                <StackPanel Orientation="Vertical">
+                    <Border
+                        Width="64"
+                        Height="64"
+                        Margin="0,0,0,5"
+                        Background="{DynamicResource BrushImageBackground}"
+                        CornerRadius="32">
+                        <Image
+                            Width="32"
+                            Height="32"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Source="{StaticResource DownloadManagerDrawingImage}" />
+                    </Border>
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        FontSize="14"
+                        Foreground="{DynamicResource BrushPrimary}"
+                        Text="{DynamicResource DownloadManager}" />
+                </StackPanel>
+            </Button>
+
+            <Button
+                Grid.Row="0"
+                Grid.Column="3"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Classes="transparent"
+                Command="{Binding ToolboxCommand}">
+                <StackPanel Orientation="Vertical">
+                    <Border
+                        Width="64"
+                        Height="64"
+                        Margin="0,0,0,5"
+                        Background="{DynamicResource BrushImageBackground}"
+                        CornerRadius="32">
+                        <Image
+                            Width="32"
+                            Height="32"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Source="{StaticResource ToolboxDrawingImage}" />
+                    </Border>
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        FontSize="14"
+                        Foreground="{DynamicResource BrushPrimary}"
+                        Text="{DynamicResource Toolbox}" />
+                </StackPanel>
+            </Button>
+        </Grid>
+
+    </Grid>
+</UserControl>

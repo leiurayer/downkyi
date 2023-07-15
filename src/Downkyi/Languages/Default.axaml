@@ -1,0 +1,370 @@
+<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:space="preserve"
+    xmlns:sys="using:System">
+
+    <sys:String x:Key="Culture">zh-cn</sys:String>
+
+    <!--  App  -->
+    <sys:String x:Key="AppName">哔哩下载姬</sys:String>
+    <sys:String x:Key="Unknown">未知</sys:String>
+
+    <!--  系统  -->
+    <sys:String x:Key="Close">关闭</sys:String>
+    <sys:String x:Key="Maximize">最大化</sys:String>
+    <sys:String x:Key="Minimize">最小化</sys:String>
+    <sys:String x:Key="Restore">还原</sys:String>
+    <sys:String x:Key="Skin">皮肤</sys:String>
+
+    <!--  Index  -->
+    <sys:String x:Key="Login">登录</sys:String>
+    <sys:String x:Key="IndexHintText">请输入B站网址链接或av、BV号等……</sys:String>
+    <sys:String x:Key="IndexHintTextSimple">请输入B站视频播放地址……</sys:String>
+    <sys:String x:Key="Settings">设置</sys:String>
+    <sys:String x:Key="DownloadManager">下载管理</sys:String>
+    <sys:String x:Key="Toolbox">工具箱</sys:String>
+
+    <!--  Login  -->
+    <sys:String x:Key="QRCodeLogin">二维码</sys:String>
+    <sys:String x:Key="CookiesLogin">Cookies</sys:String>
+
+    <sys:String x:Key="ScanSuccessful">扫码成功&#x000A;请在手机上确认</sys:String>
+    <sys:String x:Key="ScanToLogin">扫描二维码登录</sys:String>
+    <sys:String x:Key="ScanLoginTip">请使用哔哩哔哩客户端&#x000A;扫码登录&#x000A;或扫码下载APP</sys:String>
+    <sys:String x:Key="GetLoginUrlFailed">获取登录链接失败！</sys:String>
+    <sys:String x:Key="LoginKeyError">密钥错误！尝试重新获取！</sys:String>
+    <sys:String x:Key="LoginTimeOut">已超时！尝试重新获取二维码！</sys:String>
+    <sys:String x:Key="LoginSuccessful">登录成功！(3秒后自动回到主页)</sys:String>
+    <sys:String x:Key="LoginFailed">未保存登录信息！(3秒后自动回到主页)</sys:String>
+
+    <sys:String x:Key="CookiesHint">请输入Cookies</sys:String>
+    <sys:String x:Key="SaveCookies">保存</sys:String>
+    <sys:String x:Key="CookiesLoginSuccessful">登录成功！</sys:String>
+    <sys:String x:Key="CookiesLoginFailed">未保存登录信息！</sys:String>
+
+    <!--  MySpace  -->
+    <sys:String x:Key="MySpace">我的个人空间</sys:String>
+    <sys:String x:Key="Logout">退出登录</sys:String>
+    <sys:String x:Key="MySpaceWait">请稍等，马上就好~</sys:String>
+    <sys:String x:Key="Level">等级</sys:String>
+    <sys:String x:Key="Following">关注数</sys:String>
+    <sys:String x:Key="Whisper">悄悄关注数</sys:String>
+    <sys:String x:Key="Follower">粉丝数</sys:String>
+    <sys:String x:Key="Black">黑名单数</sys:String>
+    <sys:String x:Key="Moral">节操值</sys:String>
+    <sys:String x:Key="Silence">封禁状态</sys:String>
+    <sys:String x:Key="Favorites">收藏夹</sys:String>
+    <sys:String x:Key="Subscription">我的订阅</sys:String>
+    <sys:String x:Key="ToView">稍后再看</sys:String>
+    <sys:String x:Key="History">历史记录</sys:String>
+
+    <sys:String x:Key="Normal">正常</sys:String>
+    <sys:String x:Key="Ban">封停</sys:String>
+
+    <!--  UserSpace  -->
+    <sys:String x:Key="UserSpace">个人空间</sys:String>
+    <sys:String x:Key="Followed">已关注</sys:String>
+    <sys:String x:Key="NotFollowed">未关注</sys:String>
+    <sys:String x:Key="FollowingCount">关注数</sys:String>
+    <sys:String x:Key="FollowerCount">粉丝数</sys:String>
+    <sys:String x:Key="LikesCount">获赞数</sys:String>
+    <sys:String x:Key="ArchiveViewCount">播放数</sys:String>
+    <sys:String x:Key="ArticleViewCount">阅读数</sys:String>
+    <sys:String x:Key="AllPublicationZones">全部</sys:String>
+    <sys:String x:Key="Publication">投稿视频</sys:String>
+    <sys:String x:Key="Channel">频道</sys:String>
+    <sys:String x:Key="SeasonsSeries">合集和列表</sys:String>
+    <sys:String x:Key="UserSpaceWait">请稍等，马上就好~</sys:String>
+
+    <!--  PublicFavorites  -->
+    <sys:String x:Key="PublicFavorites">收藏夹</sys:String>
+    <sys:String x:Key="FavoritesMediaCount">个内容</sys:String>
+
+    <!--  MyFavorites  -->
+    <sys:String x:Key="FavoritesPlayNumber">播放：</sys:String>
+    <sys:String x:Key="FavoritesFavoriteNumber">收藏：</sys:String>
+    <sys:String x:Key="FavoritesUpName">UP主：</sys:String>
+    <sys:String x:Key="FavoritesCreateTime">投稿：</sys:String>
+    <sys:String x:Key="FavoritesFavTime">收藏于：</sys:String>
+
+    <!--  MyBangumiFollow  -->
+    <sys:String x:Key="MyBangumiFollow">我的订阅</sys:String>
+    <sys:String x:Key="FollowAnime">追番</sys:String>
+    <sys:String x:Key="FollowMovie">追剧</sys:String>
+    <sys:String x:Key="BangumiNotWatched">尚未观看</sys:String>
+
+    <!--  MyHistory  -->
+    <sys:String x:Key="MyHistory">历史记录</sys:String>
+    <sys:String x:Key="HistoryFinished">已看完</sys:String>
+    <sys:String x:Key="HistoryStarted">刚开始</sys:String>
+    <sys:String x:Key="HistoryWatch">看到</sys:String>
+
+    <!--  MyToView  -->
+    <sys:String x:Key="MyToView">稍后再看</sys:String>
+
+    <!--  Publication  -->
+    <sys:String x:Key="DownloadSelectedPublication">下载选中项</sys:String>
+    <sys:String x:Key="DownloadAllPublication">下载全部</sys:String>
+    <sys:String x:Key="PublicationWait">请稍等，马上就好~</sys:String>
+
+    <!--  Friend  -->
+    <sys:String x:Key="Friend">好友</sys:String>
+    <sys:String x:Key="FriendFollowing">关注</sys:String>
+    <sys:String x:Key="FriendFollower">粉丝</sys:String>
+
+    <sys:String x:Key="FollowingWait">请稍等，马上就好~</sys:String>
+    <sys:String x:Key="FollowerWait">请稍等，马上就好~</sys:String>
+
+    <sys:String x:Key="AllFollowing">全部关注</sys:String>
+    <sys:String x:Key="WhisperFollowing">悄悄关注</sys:String>
+
+    <!--  VideoDetail  -->
+    <sys:String x:Key="CopyCover">复制封面图片</sys:String>
+    <sys:String x:Key="CopyCoverUrl">复制封面URL</sys:String>
+    <sys:String x:Key="Play">播放</sys:String>
+    <sys:String x:Key="Danmaku">弹幕</sys:String>
+    <sys:String x:Key="Like">点赞</sys:String>
+    <sys:String x:Key="Coin">投币</sys:String>
+    <sys:String x:Key="Favorite">收藏</sys:String>
+    <sys:String x:Key="Share">分享</sys:String>
+    <sys:String x:Key="Reply">评论</sys:String>
+
+    <sys:String x:Key="Anime">番剧</sys:String>
+    <sys:String x:Key="Movie">电影</sys:String>
+    <sys:String x:Key="Documentary">纪录片</sys:String>
+    <sys:String x:Key="Guochuang">国创</sys:String>
+    <sys:String x:Key="TV">电视剧</sys:String>
+    <sys:String x:Key="Entertainment">综艺</sys:String>
+    <sys:String x:Key="Cheese">课程</sys:String>
+
+    <sys:String x:Key="Order">序号</sys:String>
+    <sys:String x:Key="Name">名称</sys:String>
+    <sys:String x:Key="Duration">时长</sys:String>
+    <sys:String x:Key="AudioQuality">音质</sys:String>
+    <sys:String x:Key="VideoQuality">画质</sys:String>
+    <sys:String x:Key="VideoCodec">视频编码</sys:String>
+
+    <sys:String x:Key="SelectAll">全选</sys:String>
+    <sys:String x:Key="Parse">解析</sys:String>
+    <sys:String x:Key="ParseVideo">解析视频</sys:String>
+    <sys:String x:Key="DownloadSelected">下载选中项</sys:String>
+    <sys:String x:Key="AddAllToDownload">下载全部</sys:String>
+
+    <sys:String x:Key="TipAlreadyToAddDownloading">已经添加到下载列表~</sys:String>
+    <sys:String x:Key="TipAlreadyToAddDownloaded">已经下载完成~</sys:String>
+    <sys:String x:Key="TipAddDownloadingZero">没有选中项符合下载要求！</sys:String>
+    <sys:String x:Key="TipAddDownloadingFinished1">成功添加了</sys:String>
+    <sys:String x:Key="TipAddDownloadingFinished2">项~</sys:String>
+
+    <!--  DownloadManager  -->
+    <sys:String x:Key="Downloading">正在下载</sys:String>
+    <sys:String x:Key="DownloadFinished">已下载</sys:String>
+
+    <sys:String x:Key="DownloadingAudio">音频</sys:String>
+    <sys:String x:Key="DownloadingVideo">视频</sys:String>
+    <sys:String x:Key="DownloadingDanmaku">弹幕</sys:String>
+    <sys:String x:Key="DownloadingSubtitle">字幕</sys:String>
+    <sys:String x:Key="DownloadingCover">封面</sys:String>
+    <sys:String x:Key="Parsing">正在解析……</sys:String>
+    <sys:String x:Key="WhileDownloading">下载中……</sys:String>
+    <sys:String x:Key="MixedFlow">混流中……</sys:String>
+    <sys:String x:Key="Pausing">暂停中……</sys:String>
+    <sys:String x:Key="Waiting">等待中……</sys:String>
+    <sys:String x:Key="DownloadFailed">下载失败</sys:String>
+
+    <sys:String x:Key="TotalDownloading1">正在下载</sys:String>
+    <sys:String x:Key="TotalDownloading2">个视频！</sys:String>
+    <sys:String x:Key="PauseAllDownloading">全部暂停</sys:String>
+    <sys:String x:Key="ContinueAllDownloading">全部开始</sys:String>
+    <sys:String x:Key="DeleteAllDownloading">全部删除</sys:String>
+
+    <sys:String x:Key="TotalDownloaded1">已下载</sys:String>
+    <sys:String x:Key="TotalDownloaded2">个视频！</sys:String>
+    <sys:String x:Key="DownloadedSortByTime">按下载先后排序</sys:String>
+    <sys:String x:Key="DownloadedSortByOrder">按序号排序</sys:String>
+    <sys:String x:Key="ClearAllDownloaded">清空所有记录</sys:String>
+
+    <sys:String x:Key="StartDownload">开始</sys:String>
+    <sys:String x:Key="PauseDownload">暂停</sys:String>
+    <sys:String x:Key="RetryDownload">重试</sys:String>
+    <sys:String x:Key="DeleteDownload">移除</sys:String>
+    <sys:String x:Key="OpenFolder">打开文件夹</sys:String>
+    <sys:String x:Key="OpenVideo">播放</sys:String>
+
+    <!--  Settings  -->
+    <sys:String x:Key="PressEnterToApplySettingTip">按回车键应用设置</sys:String>
+
+    <sys:String x:Key="Basic">基本</sys:String>
+    <sys:String x:Key="AfterDownloadOperation">下载完成后的动作：</sys:String>
+    <sys:String x:Key="AfterDownloadOperationNone">无</sys:String>
+    <sys:String x:Key="AfterDownloadOperationCloseApp">关闭程序</sys:String>
+    <sys:String x:Key="AfterDownloadOperationCloseSystem">关闭计算机</sys:String>
+    <sys:String x:Key="ListenClipboard">监听剪贴板</sys:String>
+    <sys:String x:Key="VideoAutoParse">视频自动解析</sys:String>
+    <sys:String x:Key="VideoParseScope">视频解析范围：</sys:String>
+    <sys:String x:Key="AutoDownloadAll">解析后自动下载已解析视频</sys:String>
+
+    <sys:String x:Key="Network">网络</sys:String>
+    <sys:String x:Key="UseSSL">启用https（若下载器提示SSL错误，则关闭此项）</sys:String>
+    <sys:String x:Key="UserAgent">UserAgent：</sys:String>
+    <sys:String x:Key="SelectDownloader">选择下载器（重启生效）：</sys:String>
+    <sys:String x:Key="BuiltinDownloader">内建下载器</sys:String>
+    <sys:String x:Key="Aria2cDownloader">Aria2下载器</sys:String>
+    <sys:String x:Key="CustomAria2cDownloader">自定义Aria2下载器</sys:String>
+    <sys:String x:Key="AriaServerHost">Aria服务器地址：</sys:String>
+    <sys:String x:Key="AriaServerPort">Aria服务器端口：</sys:String>
+    <sys:String x:Key="AriaServerToken">Aria服务器Token：</sys:String>
+    <sys:String x:Key="AriaLogLevel">Aria日志等级：</sys:String>
+    <sys:String x:Key="AriaMaxConcurrentDownloads">Aria同时下载数：</sys:String>
+    <sys:String x:Key="AriaSplit">Aria最大线程数：</sys:String>
+    <sys:String x:Key="AriaDownloadLimit">Aria下载速度限制(KB/s)</sys:String>
+    <sys:String x:Key="AriaMaxOverallDownloadLimit">全局下载速度限制[0: 无限制]</sys:String>
+    <sys:String x:Key="AriaMaxDownloadLimit">单任务下载速度限制[0: 无限制]</sys:String>
+    <sys:String x:Key="AriaFileAllocation">Aria文件预分配：</sys:String>
+    <sys:String x:Key="IsHttpProxy">使用Http代理</sys:String>
+    <sys:String x:Key="HttpProxy">代理地址：</sys:String>
+    <sys:String x:Key="HttpProxyPort">端口：</sys:String>
+    <sys:String x:Key="MaxCurrentDownloads">同时下载数：</sys:String>
+    <sys:String x:Key="Split">最大线程数：</sys:String>
+
+    <sys:String x:Key="Video">视频</sys:String>
+    <sys:String x:Key="FirstVideoCodecs">优先下载的视频编码：</sys:String>
+    <sys:String x:Key="FirstVideoQuality">优先下载的视频画质：</sys:String>
+    <sys:String x:Key="FirstAudioQuality">优先下载的视频音质：</sys:String>
+    <sys:String x:Key="IsTranscodingFlvToMp4">下载FLV视频后转码为mp4</sys:String>
+    <sys:String x:Key="IsUseDefaultDirectory">使用默认下载目录</sys:String>
+    <sys:String x:Key="DefaultDirectory">默认下载目录：</sys:String>
+    <sys:String x:Key="DefaultDirectoryTip">默认将文件下载到该文件夹中</sys:String>
+    <sys:String x:Key="ChangeDirectory">更改目录</sys:String>
+    <sys:String x:Key="FileNameParts">文件命名格式</sys:String>
+    <sys:String x:Key="FileName">文件名：</sys:String>
+    <sys:String x:Key="OptionalFields">可选字段：</sys:String>
+    <sys:String x:Key="DisplayOrder">序号</sys:String>
+    <sys:String x:Key="DisplaySection">视频章节</sys:String>
+    <sys:String x:Key="DisplayMainTitle">视频标题</sys:String>
+    <sys:String x:Key="DisplayPageTitle">分P标题</sys:String>
+    <sys:String x:Key="DisplayVideoZone">视频分区</sys:String>
+    <sys:String x:Key="DisplayAudioQuality">音质</sys:String>
+    <sys:String x:Key="DisplayVideoQuality">画质</sys:String>
+    <sys:String x:Key="DisplayVideoCodec">视频编码</sys:String>
+    <sys:String x:Key="DisplayVideoPublishTime">发布时间</sys:String>
+    <sys:String x:Key="DisplaySpace">空格</sys:String>
+    <sys:String x:Key="DisplayUpMid">UP主ID</sys:String>
+    <sys:String x:Key="DisplayUpName">UP主昵称</sys:String>
+    <sys:String x:Key="Reset">恢复默认</sys:String>
+    <sys:String x:Key="FileNameTimeFormat">时间格式：</sys:String>
+    <sys:String x:Key="OrderFormat">序号格式：</sys:String>
+    <sys:String x:Key="OrderFormatNatural">自然数</sys:String>
+    <sys:String x:Key="OrderFormatLeadingZeros">前导零填充</sys:String>
+
+    <sys:String x:Key="SettingDanmaku">弹幕</sys:String>
+    <sys:String x:Key="FilterType">按类型屏蔽</sys:String>
+    <sys:String x:Key="TopFilter">顶部</sys:String>
+    <sys:String x:Key="BottomFilter">底部</sys:String>
+    <sys:String x:Key="ScrollFilter">滚动</sys:String>
+    <sys:String x:Key="Resolution">分辨率：</sys:String>
+    <sys:String x:Key="FontName">字体名称：</sys:String>
+    <sys:String x:Key="FontSize">字体大小：</sys:String>
+    <sys:String x:Key="LineCount">限制行数：</sys:String>
+    <sys:String x:Key="LayoutAlgorithm">布局算法：</sys:String>
+    <sys:String x:Key="LayoutAlgorithmSync">速度同步</sys:String>
+    <sys:String x:Key="LayoutAlgorithmSyncTip">每一条滚动弹幕的移动速度都是相同的</sys:String>
+    <sys:String x:Key="LayoutAlgorithmAsync">速度异步</sys:String>
+    <sys:String x:Key="LayoutAlgorithmAsyncTip">弹幕滚动速度取决于它的文本长度</sys:String>
+
+    <sys:String x:Key="About">关于</sys:String>
+    <sys:String x:Key="GotoHomepage">访问主页</sys:String>
+    <sys:String x:Key="CurrentAppVersion">当前版本：</sys:String>
+    <sys:String x:Key="CheckUpdate">检查更新</sys:String>
+    <sys:String x:Key="Feedback">意见反馈</sys:String>
+    <sys:String x:Key="ReceiveBetaVersion">接收测试版更新</sys:String>
+    <sys:String x:Key="AutoUpdateWhenLaunch">启动时检查更新</sys:String>
+    <sys:String x:Key="TipSettingUpdated">设置已更新~</sys:String>
+    <sys:String x:Key="TipSettingFailed">设置失败！</sys:String>
+    <sys:String x:Key="ThirdParty">第三方组件</sys:String>
+    <sys:String x:Key="ThirdPartyName">名称</sys:String>
+    <sys:String x:Key="ThirdPartyAuthor">作者</sys:String>
+    <sys:String x:Key="ThirdPartyVersion">版本</sys:String>
+    <sys:String x:Key="ThirdPartyLicense">许可证</sys:String>
+    <sys:String x:Key="Disclaimer">免责申明</sys:String>
+    <sys:String x:Key="Disclaimer1">1.本软件只提供视频解析，不提供任何资源上传、存储到服务器的功能。</sys:String>
+    <sys:String x:Key="Disclaimer2">2.本软件仅解析来自B站的内容，不会对解析到的音视频进行二次编码，部分视频会进行有限的格式转换、拼接等操作。</sys:String>
+    <sys:String x:Key="Disclaimer3">3.本软件解析得到的所有内容均来自B站UP主上传、分享，其版权均归原作者所有。内容提供者、上传者（UP主）应对其提供、上传的内容承担全部责任。</sys:String>
+    <sys:String x:Key="Disclaimer4">4.本软件提供的所有资源，仅可用作学习交流使用，未经原作者授权，禁止用于其他用途。请在下载24小时内删除。为尊重作者版权，请前往资源的原始发布网站观看，支持原创，谢谢。</sys:String>
+    <sys:String x:Key="Disclaimer5">5.任何涉及商业盈利目的均不得使用，否则产生的一切后果将由您自己承担。</sys:String>
+    <sys:String x:Key="Disclaimer6">6.因使用本软件产生的版权问题，软件作者概不负责。</sys:String>
+
+    <!--  Toolbox  -->
+    <sys:String x:Key="BiliHelper">B站助手</sys:String>
+    <sys:String x:Key="AvidAndBvidConversion">AV和BV互转</sys:String>
+    <sys:String x:Key="AvidAndBvidConversionTip">AV号形如&quot;av123&quot;，BV号形如&quot;BVxxx&quot;。</sys:String>
+    <sys:String x:Key="Avid">AVID:</sys:String>
+    <sys:String x:Key="Bvid">BVID:</sys:String>
+    <sys:String x:Key="GotoWeb">访问网页</sys:String>
+    <sys:String x:Key="DanmakuUserID">弹幕中的userID:</sys:String>
+    <sys:String x:Key="FindDanmakuSender">查询弹幕发送者-&gt;</sys:String>
+
+    <sys:String x:Key="Delogo">去水印</sys:String>
+    <sys:String x:Key="VideoFilePath">视频地址：</sys:String>
+    <sys:String x:Key="SelectVideo">选择视频</sys:String>
+    <sys:String x:Key="LogoSizeAndLocation">水印尺寸与位置（左上角为原点，单位：像素）</sys:String>
+    <sys:String x:Key="LogoWidth">宽：</sys:String>
+    <sys:String x:Key="LogoHeight">高：</sys:String>
+    <sys:String x:Key="LogoX">X：</sys:String>
+    <sys:String x:Key="LogoY">Y：</sys:String>
+    <sys:String x:Key="TipWaitTaskFinished">请等待当前任务完成！</sys:String>
+    <sys:String x:Key="TipNoSeletedVideo">没有选择视频！</sys:String>
+    <sys:String x:Key="TipInputRightLogoWidth">请输入正确的宽度（正整数）！</sys:String>
+    <sys:String x:Key="TipInputRightLogoHeight">请输入正确的高度（正整数）！</sys:String>
+    <sys:String x:Key="TipInputRightLogoX">请输入正确的X（正整数）！</sys:String>
+    <sys:String x:Key="TipInputRightLogoY">请输入正确的Y（正整数）！</sys:String>
+    <sys:String x:Key="OutputInfo">输出信息：</sys:String>
+
+    <sys:String x:Key="ExtractMedia">音视频分离</sys:String>
+    <sys:String x:Key="ExtractAudio">提取音频</sys:String>
+    <sys:String x:Key="ExtractVideo">提取视频</sys:String>
+
+    <!--  Dialog  -->
+    <sys:String x:Key="Info">信息</sys:String>
+    <sys:String x:Key="Warning">警告</sys:String>
+    <sys:String x:Key="Error">错误</sys:String>
+
+    <sys:String x:Key="Allow">确定</sys:String>
+    <sys:String x:Key="Cancel">取消</sys:String>
+
+    <sys:String x:Key="ConfirmReboot">此项需重启生效，您确定要重新启动吗？</sys:String>
+    <sys:String x:Key="ConfirmDelete">您确定要删除吗？</sys:String>
+    <sys:String x:Key="SelectDirectory">选择文件夹</sys:String>
+    <sys:String x:Key="SelectVideoFile">选择视频</sys:String>
+
+    <sys:String x:Key="DirectoryError">路径错误！</sys:String>
+
+    <!--  ViewDownloadSetter  -->
+    <sys:String x:Key="DownloadSetter">下载设置</sys:String>
+    <sys:String x:Key="Location">位置：</sys:String>
+    <sys:String x:Key="Browse">浏览</sys:String>
+    <sys:String x:Key="HardDiskFreeSpace">盘剩余空间：</sys:String>
+    <sys:String x:Key="DownloadContent">下载内容：</sys:String>
+    <sys:String x:Key="DownloadContent2">下载内容</sys:String>
+    <sys:String x:Key="DownloadAll">所有</sys:String>
+    <sys:String x:Key="DownloadAudio">音频</sys:String>
+    <sys:String x:Key="DownloadVideo">视频</sys:String>
+    <sys:String x:Key="DownloadDanmaku">弹幕</sys:String>
+    <sys:String x:Key="DownloadSubtitle">字幕</sys:String>
+    <sys:String x:Key="DownloadCover">封面</sys:String>
+    <sys:String x:Key="IsDefaultDownloadDirectory">设此文件夹为默认下载文件夹</sys:String>
+    <sys:String x:Key="IsDefaultDownloadDirectoryTip">选中后下次将不会弹出此窗口</sys:String>
+    <sys:String x:Key="Download">下载</sys:String>
+    <sys:String x:Key="WarningNullDirectory">文件夹路径不能为空</sys:String>
+    <sys:String x:Key="DriveNotFound">该磁盘不存在</sys:String>
+
+    <!--  ViewParsingSelector  -->
+    <sys:String x:Key="ParsingSelector">选择解析项</sys:String>
+    <sys:String x:Key="ParseNone">无</sys:String>
+    <sys:String x:Key="ParseSelectedItem">解析选中项</sys:String>
+    <sys:String x:Key="ParseCurrentSection">解析当前页视频</sys:String>
+    <sys:String x:Key="ParseAll">解析所有视频</sys:String>
+    <sys:String x:Key="SetParseDefault">设为默认，下次不再弹出</sys:String>
+
+</ResourceDictionary>

@@ -1,0 +1,37 @@
+﻿<Styles xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!--  Button.normal  -->
+    <Style Selector="Button.normal">
+        <Setter Property="Height" Value="30" />
+        <Setter Property="Width" Value="80" />
+        <Setter Property="CornerRadius" Value="5" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="TextBlock.Foreground" Value="White" />
+        <Setter Property="Background" Value="{DynamicResource BrushPrimary}" />
+        <Setter Property="Cursor" Value="Hand" />
+    </Style>
+    <Style Selector="Button.normal:pointerover /template/ ContentPresenter">
+        <Setter Property="TextBlock.Foreground" Value="White" />
+        <Setter Property="Background" Value="{DynamicResource BrushPrimaryTranslucent}" />
+    </Style>
+    <Style Selector="Button.normal:pressed /template/ ContentPresenter">
+        <Setter Property="TextBlock.Foreground" Value="White" />
+        <Setter Property="Background" Value="{DynamicResource BrushPrimaryTranslucent}" />
+    </Style>
+
+    <!--  Button.transparent  -->
+    <Style Selector="Button.transparent">
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Cursor" Value="Hand" />
+    </Style>
+    <Style Selector="Button.transparent:pointerover /template/ ContentPresenter">
+        <Setter Property="Background" Value="Transparent" />
+    </Style>
+    <Style Selector="Button.transparent:pressed /template/ ContentPresenter">
+        <Setter Property="Background" Value="Transparent" />
+    </Style>
+
+</Styles>

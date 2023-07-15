@@ -1,0 +1,73 @@
+<UserControl
+    x:Class="Downkyi.Views.Login.CookiesView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
+    xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions.Core;assembly=Avalonia.Xaml.Interactions"
+    xmlns:local="using:Downkyi"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:Downkyi.UI.ViewModels.Login"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    x:CompileBindings="True"
+    x:DataType="vm:CookiesViewModel"
+    Design.DataContext="{x:Static local:ServiceLocator.CookiesViewModel}"
+    mc:Ignorable="d">
+
+    <Grid RowDefinitions="106,150,*,100">
+        <!--  Background必须是#FF00A0D8，因为与login_top_bar.png的背景一致  -->
+        <StackPanel
+            Grid.Row="0"
+            Height="86"
+            VerticalAlignment="Top"
+            Background="#FF00A0D8" />
+        <Image
+            Grid.Row="0"
+            Width="980"
+            Height="106"
+            Source="/Assets/bili/login/login_top_bar.png" />
+
+        <StackPanel
+            Grid.Row="1"
+            Width="600"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center">
+            <TextBox
+                Height="120"
+                Classes="mutiline"
+                LineHeight="20"
+                Text="{Binding CookiesStr}"
+                Watermark="{DynamicResource CookiesHint}">
+                <i:Interaction.Behaviors>
+                    <ia:EventTriggerBehavior EventName="TextChanged">
+                        <ia:InvokeCommandAction Command="{Binding TextChangedCommand}" />
+                    </ia:EventTriggerBehavior>
+                </i:Interaction.Behaviors>
+            </TextBox>
+        </StackPanel>
+
+        <DataGrid
+            Grid.Row="2"
+            Width="600"
+            AutoGenerateColumns="False"
+            CanUserSortColumns="True"
+            Classes="normal"
+            IsReadOnly="True"
+            ItemsSource="{Binding Cookies}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Key}" Header="Key" />
+                <DataGridTextColumn Binding="{Binding Value}" Header="Value" />
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Button
+            Grid.Row="3"
+            Width="120"
+            Height="35"
+            HorizontalAlignment="Center"
+            Classes="normal"
+            Command="{Binding SaveCookiesCommand}"
+            Content="{DynamicResource SaveCookies}" />
+    </Grid>
+</UserControl>

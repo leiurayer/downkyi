@@ -1,0 +1,119 @@
+<UserControl
+    x:Class="Downkyi.Views.Settings.BasicView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
+    xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions.Core;assembly=Avalonia.Xaml.Interactions"
+    xmlns:iac="clr-namespace:Avalonia.Xaml.Interactions.Custom;assembly=Avalonia.Xaml.Interactions.Custom"
+    xmlns:local="using:Downkyi"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:Downkyi.UI.ViewModels.Settings"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    x:CompileBindings="True"
+    x:DataType="vm:BasicViewModel"
+    Design.DataContext="{x:Static local:ServiceLocator.BasicViewModel}"
+    mc:Ignorable="d">
+    <i:Interaction.Behaviors>
+        <ia:EventTriggerBehavior EventName="Loaded">
+            <ia:InvokeCommandAction Command="{Binding LoadedCommand}" />
+        </ia:EventTriggerBehavior>
+    </i:Interaction.Behaviors>
+
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="50,0" Orientation="Vertical">
+            <StackPanel Margin="0,20,0,0" Orientation="Horizontal">
+                <TextBlock FontSize="20" Text="{DynamicResource Basic}" />
+            </StackPanel>
+
+            <StackPanel Margin="0,20,0,0" Orientation="Vertical">
+                <TextBlock Text="{DynamicResource AfterDownloadOperation}" />
+
+                <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
+                    <RadioButton
+                        Classes="normal"
+                        Command="{Binding AfterDownloadCommand}"
+                        CommandParameter="None"
+                        Content="{DynamicResource AfterDownloadOperationNone}"
+                        GroupName="First Group"
+                        IsChecked="{Binding None}" />
+                    <RadioButton
+                        Margin="20,0,0,0"
+                        Classes="normal"
+                        Command="{Binding AfterDownloadCommand}"
+                        CommandParameter="CloseApp"
+                        Content="{DynamicResource AfterDownloadOperationCloseApp}"
+                        GroupName="First Group"
+                        IsChecked="{Binding CloseApp}" />
+                    <RadioButton
+                        Margin="20,0,0,0"
+                        Classes="normal"
+                        Command="{Binding AfterDownloadCommand}"
+                        CommandParameter="CloseSystem"
+                        Content="{DynamicResource AfterDownloadOperationCloseSystem}"
+                        GroupName="First Group"
+                        IsChecked="{Binding CloseSystem}" />
+                </StackPanel>
+            </StackPanel>
+
+            <TextBlock
+                Height="1"
+                Margin="0,20,0,0"
+                Background="{DynamicResource BrushBorder}" />
+
+            <CheckBox
+                Margin="0,20,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Classes="normal"
+                Command="{Binding ListenClipboardCommand}"
+                Content="{DynamicResource ListenClipboard}"
+                IsChecked="{Binding IsListenClipboard, Mode=TwoWay}" />
+
+            <CheckBox
+                Margin="0,20,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Classes="normal"
+                Command="{Binding AutoParseVideoCommand}"
+                Content="{DynamicResource VideoAutoParse}"
+                IsChecked="{Binding IsAutoParseVideo, Mode=TwoWay}" />
+
+            <StackPanel
+                Margin="0,20,0,0"
+                IsVisible="{Binding IsAutoParseVideo}"
+                Orientation="Horizontal">
+                <TextBlock VerticalAlignment="Center" Text="{DynamicResource VideoParseScope}" />
+                <ComboBox
+                    Width="200"
+                    VerticalContentAlignment="Center"
+                    Classes="normal"
+                    ItemsSource="{Binding ParseScopes}"
+                    SelectedItem="{Binding SelectedParseScope}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                    <i:Interaction.Behaviors>
+                        <iac:ValueChangedTriggerBehavior Binding="{Binding SelectedParseScope}">
+                            <ia:InvokeCommandAction Command="{Binding SetParseScopesCommand}" />
+                        </iac:ValueChangedTriggerBehavior>
+                    </i:Interaction.Behaviors>
+                </ComboBox>
+            </StackPanel>
+
+            <CheckBox
+                Margin="0,20,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Classes="normal"
+                Command="{Binding AutoDownloadAllCommand}"
+                Content="{DynamicResource AutoDownloadAll}"
+                IsChecked="{Binding IsAutoDownloadAll, Mode=TwoWay}" />
+
+            <StackPanel Margin="10" />
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

@@ -1,0 +1,54 @@
+﻿<Styles xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!--  ListBox.tabHeader  -->
+    <Style Selector="ListBox.tabHeader">
+        <Setter Property="ItemTemplate">
+            <DataTemplate>
+                <Border>
+                    <Grid Height="60" ColumnDefinitions="2*,*">
+                        <StackPanel
+                            Grid.Column="0"
+                            Margin="10,0,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Orientation="Horizontal">
+                            <Image
+                                Width="24"
+                                Height="24"
+                                IsVisible="{Binding Icon, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+                                Source="{Binding Icon, Converter={StaticResource stringToResource}}" />
+                            <TextBlock
+                                Margin="5,0,0,0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Foreground="{DynamicResource BrushTextDark}"
+                                Text="{Binding Title}"
+                                TextTrimming="CharacterEllipsis" />
+                        </StackPanel>
+                        <TextBlock
+                            Grid.Column="1"
+                            Margin="10,0,10,0"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            Foreground="{DynamicResource BrushTextGrey2}"
+                            Text="{Binding Description}" />
+                    </Grid>
+                </Border>
+            </DataTemplate>
+        </Setter>
+    </Style>
+    <Style Selector="ListBox.tabHeader > ListBoxItem /template/ ContentPresenter">
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="Padding" Value="0" />
+    </Style>
+    <Style Selector="ListBox.tabHeader > ListBoxItem:pointerover /template/ ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource BrushBackgroundGreyTranslucent2}" />
+    </Style>
+    <Style Selector="ListBox.tabHeader > ListBoxItem:selected /template/ ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource BrushPrimaryTranslucent2}" />
+    </Style>
+    <Style Selector="ListBox.tabHeader > ListBoxItem[IsSelected=true]:pointerover /template/ ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource BrushPrimaryTranslucent}" />
+    </Style>
+
+</Styles>

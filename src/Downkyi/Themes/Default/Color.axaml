@@ -1,0 +1,60 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Color x:Key="ColorWindowBorder">Black</Color>
+    <Color x:Key="ColorCaptionForeground">Black</Color>
+    <Color x:Key="ColorCaptionBackground">white</Color>
+
+    <Color x:Key="ColorSystemBtnTint">white</Color>
+    <Color x:Key="ColorSystemBtnTintDark">black</Color>
+    <Color x:Key="ColorSystemBtnHover">#FF6ECEF8</Color>
+    <Color x:Key="ColorSystemBtnPressed">#FF30B8F6</Color>
+    <Color x:Key="ColorCloseBtnHover">#FFE81123</Color>
+    <Color x:Key="ColorCloseBtnPressed">#FFF1707A</Color>
+
+    <Color x:Key="ColorWarning">#FFFF4D3C</Color>
+
+    <Color x:Key="ColorPrimary">#FF00A1D6</Color>
+    <Color x:Key="ColorPrimaryTranslucent">#C800A1D6</Color>
+    <Color x:Key="ColorPrimaryTranslucent2">#7F00A1D6</Color>
+    <Color x:Key="ColorPrimaryTranslucent3">#3300A1D6</Color>
+
+    <Color x:Key="ColorSecond">#FFFB7299</Color>
+
+    <Color x:Key="ColorForeground">#FF00A1D6</Color>
+    <Color x:Key="ColorBackground">#FFFFFFFF</Color>
+    <Color x:Key="ColorForegroundDark">#FFFFFFFF</Color>
+    <Color x:Key="ColorBackgroundDark">#FF00A1D6</Color>
+    <Color x:Key="ColorForegroundGrey">#FFBDBDBD</Color>
+    <Color x:Key="ColorForegroundGrey2">#FFE4E4E4</Color>
+    <Color x:Key="ColorBackgroundGrey">#FFBDBDBD</Color>
+    <Color x:Key="ColorBackgroundGreyTranslucent">#C8BDBDBD</Color>
+    <Color x:Key="ColorBackgroundGreyTranslucent2">#7FBDBDBD</Color>
+    <Color x:Key="ColorBackgroundGreyTranslucent3">#33BDBDBD</Color>
+
+    <Color x:Key="ColorMask">#7F000000</Color>
+    <Color x:Key="ColorMask100">#33999999</Color>
+
+    <Color x:Key="ColorTabHeaderGrey">#FFF4F4F4</Color>
+
+    <Color x:Key="ColorHeaderGrey">#FFF4F4F4</Color>
+
+    <Color x:Key="ColorBorder">#FF999999</Color>
+    <Color x:Key="ColorBorderTranslucent">#7F999999</Color>
+    <Color x:Key="ColorBorderTranslucent100">#99000000</Color>
+
+    <Color x:Key="ColorImageBorder">#7FD0D0D0</Color>
+    <Color x:Key="ColorImageBorder2">#7FFFFFFF</Color>
+    <Color x:Key="ColorImageBackground">#7FD0D0D0</Color>
+
+    <Color x:Key="ColorProgressTrack">#FFE4E4E4</Color>
+    <Color x:Key="ColorProgressIndicator">#FFF3CB85</Color>
+
+    <Color x:Key="ColorText">white</Color>
+    <Color x:Key="ColorTextDark">black</Color>
+    <Color x:Key="ColorTextGrey">#FF999999</Color>
+    <Color x:Key="ColorTextGrey2">#FF757575</Color>
+
+    <Color x:Key="ColorMoney">#FFFFAE00</Color>
+    <Color x:Key="ColorPublication">#FF02B5DA</Color>
+
+</ResourceDictionary>

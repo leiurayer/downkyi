@@ -1,0 +1,147 @@
+<UserControl
+    x:Class="Downkyi.Views.Toolbox.DelogoView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
+    xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions.Core;assembly=Avalonia.Xaml.Interactions"
+    xmlns:local="using:Downkyi"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:Downkyi.ViewModels.Toolbox"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    x:CompileBindings="True"
+    x:DataType="vm:DelogoViewModelProxy"
+    Design.DataContext="{x:Static local:ServiceLocator.DelogoViewModel}"
+    mc:Ignorable="d">
+
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled">
+
+        <Grid Margin="50,0" RowDefinitions="auto,*">
+            <StackPanel Grid.Row="0" Orientation="Vertical">
+                <StackPanel Margin="0,20,0,0" Orientation="Horizontal">
+                    <TextBlock FontSize="20" Text="{DynamicResource Delogo}" />
+                </StackPanel>
+
+                <Grid Margin="0,20,0,0" ColumnDefinitions="auto,*,auto">
+                    <TextBlock
+                        Grid.Column="0"
+                        VerticalAlignment="Center"
+                        Text="{DynamicResource VideoFilePath}" />
+                    <TextBox
+                        Grid.Column="1"
+                        Height="20"
+                        Margin="0,10,20,10"
+                        VerticalContentAlignment="Center"
+                        Classes="normal"
+                        IsReadOnly="True"
+                        Text="{Binding VideoPath}" />
+                    <Button
+                        Grid.Column="2"
+                        VerticalAlignment="Center"
+                        Classes="normal"
+                        Command="{Binding SelectVideoCommand}"
+                        Content="{DynamicResource SelectVideo}" />
+                </Grid>
+
+                <Grid
+                    Margin="0,20,0,0"
+                    VerticalAlignment="Center"
+                    ColumnDefinitions="*,auto"
+                    RowDefinitions="auto,auto">
+
+                    <TextBlock
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Margin="0,0,0,10"
+                        Text="{DynamicResource LogoSizeAndLocation}" />
+
+                    <Grid
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        ColumnDefinitions="auto,*,auto,*,auto,*,auto,*">
+                        <TextBlock
+                            Grid.Column="0"
+                            VerticalAlignment="Center"
+                            Text="{DynamicResource LogoWidth}" />
+                        <TextBox
+                            Grid.Column="1"
+                            Height="20"
+                            Margin="0,0,20,0"
+                            VerticalContentAlignment="Center"
+                            Classes="normal"
+                            Text="{Binding LogoWidth}" />
+
+                        <TextBlock
+                            Grid.Column="2"
+                            VerticalAlignment="Center"
+                            Text="{DynamicResource LogoHeight}" />
+                        <TextBox
+                            Grid.Column="3"
+                            Height="20"
+                            Margin="0,0,20,0"
+                            VerticalContentAlignment="Center"
+                            Classes="normal"
+                            Text="{Binding LogoHeight}" />
+
+                        <TextBlock
+                            Grid.Column="4"
+                            VerticalAlignment="Center"
+                            Text="{DynamicResource LogoX}" />
+                        <TextBox
+                            Grid.Column="5"
+                            Height="20"
+                            Margin="0,0,20,0"
+                            VerticalContentAlignment="Center"
+                            Classes="normal"
+                            Text="{Binding LogoX}" />
+
+                        <TextBlock
+                            Grid.Column="6"
+                            VerticalAlignment="Center"
+                            Text="{DynamicResource LogoY}" />
+                        <TextBox
+                            Grid.Column="7"
+                            Height="20"
+                            Margin="0,0,20,0"
+                            VerticalContentAlignment="Center"
+                            Classes="normal"
+                            Text="{Binding LogoY}" />
+                    </Grid>
+
+                    <Button
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        VerticalAlignment="Center"
+                        Classes="normal"
+                        Command="{Binding DelogoCommand}"
+                        Content="{DynamicResource Delogo}" />
+                </Grid>
+            </StackPanel>
+
+            <Grid
+                Grid.Row="1"
+                Margin="0,20,0,10"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                RowDefinitions="20,*">
+                <TextBlock
+                    Grid.Row="0"
+                    VerticalAlignment="Bottom"
+                    Text="{DynamicResource OutputInfo}" />
+                <TextBox
+                    Name="nameStatus"
+                    Grid.Row="1"
+                    Classes="console"
+                    Text="{Binding Status}">
+                    <i:Interaction.Behaviors>
+                        <ia:EventTriggerBehavior EventName="TextChanged">
+                            <ia:InvokeCommandAction Command="{Binding SetStatusCommand}" CommandParameter="{ReflectionBinding ElementName=nameStatus}" />
+                        </ia:EventTriggerBehavior>
+                    </i:Interaction.Behaviors>
+                </TextBox>
+            </Grid>
+
+        </Grid>
+    </ScrollViewer>
+</UserControl>

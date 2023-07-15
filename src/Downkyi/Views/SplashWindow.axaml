@@ -1,0 +1,37 @@
+<Window
+    x:Class="Downkyi.Views.SplashWindow"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="SplashScreen"
+    Width="500"
+    Height="300"
+    d:DesignHeight="300"
+    d:DesignWidth="500"
+    Icon="/Assets/logo.ico"
+    SystemDecorations="None"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
+
+    <Border Background="#FF00A1D6" CornerRadius="20">
+        <Grid>
+            <TextBlock
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="30"
+                Foreground="White"
+                Text="Welcome to DownKyi!" />
+
+            <TextBlock
+                x:Name="nameVersion"
+                Grid.Row="0"
+                Margin="10"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom"
+                FontSize="14"
+                Foreground="White" />
+        </Grid>
+    </Border>
+
+</Window>

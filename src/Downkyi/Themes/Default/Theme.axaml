@@ -1,0 +1,14 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ResourceDictionary.MergedDictionaries>
+        <!--  每个主题都相同  -->
+        <ResourceInclude Source="avares://Downkyi/Images/Navigation.axaml" />
+        <ResourceInclude Source="avares://Downkyi/Images/Normal.axaml" />
+
+        <!--  根据实际需要调整  -->
+        <ResourceInclude Source="avares://Downkyi/Themes/Default/ColorBrush.axaml" />
+        <ResourceInclude Source="avares://Downkyi/Themes/Default/Color.axaml" />
+
+    </ResourceDictionary.MergedDictionaries>
+
+</ResourceDictionary>

@@ -1,0 +1,64 @@
+<UserControl
+    x:Class="Downkyi.Views.Login.LoginView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:Downkyi"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:Downkyi.UI.ViewModels.Login"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    x:CompileBindings="True"
+    x:DataType="vm:LoginViewModel"
+    Design.DataContext="{x:Static local:ServiceLocator.LoginViewModel}"
+    mc:Ignorable="d">
+
+    <Grid RowDefinitions="auto,*">
+        <Grid Grid.Row="0" Height="50">
+            <Button
+                Margin="0,5,0,5"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Classes="transparent"
+                Command="{Binding BackwardCommand}">
+                <StackPanel Orientation="Horizontal">
+                    <Image
+                        Width="24"
+                        Height="24"
+                        Source="{StaticResource ArrowBackDrawingImage}" />
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        FontSize="16"
+                        Text="{DynamicResource Login}" />
+                </StackPanel>
+            </Button>
+        </Grid>
+
+        <TabStrip
+            Grid.Row="0"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center">
+            <TabStripItem
+                Name="tab1"
+                Content="{DynamicResource QRCodeLogin}"
+                Cursor="Hand"
+                FocusAdorner=""
+                FontSize="16" />
+            <TabStripItem
+                Name="tab2"
+                Content="{DynamicResource CookiesLogin}"
+                Cursor="Hand"
+                FontSize="16" />
+        </TabStrip>
+
+        <ContentControl
+            Grid.Row="1"
+            Content="{x:Static local:ServiceLocator.QRCodeViewModel}"
+            IsVisible="{Binding IsSelected, ElementName=tab1}" />
+        <ContentControl
+            Grid.Row="1"
+            Content="{x:Static local:ServiceLocator.CookiesViewModel}"
+            IsVisible="{Binding IsSelected, ElementName=tab2}" />
+
+    </Grid>
+</UserControl>

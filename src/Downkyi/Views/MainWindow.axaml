@@ -1,0 +1,42 @@
+<Window
+    x:Class="Downkyi.Views.MainWindow"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Downkyi"
+    xmlns:vm="using:Downkyi.ViewModels"
+    Title="{DynamicResource AppName}"
+    Width="1100"
+    Height="700"
+    MinWidth="800"
+    MinHeight="550"
+    x:CompileBindings="True"
+    x:DataType="vm:MainWindowViewModel"
+    Design.DataContext="{x:Static local:ServiceLocator.MainWindowViewModel}"
+    Icon="/Assets/logo.ico"
+    WindowStartupLocation="CenterScreen">
+
+    <Grid>
+        <ContentControl Content="{Binding Content}" />
+
+        <Border
+            Grid.Row="1"
+            MinHeight="30"
+            Margin="0,0,0,20"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Bottom"
+            Background="{DynamicResource BrushBackgroundDark}"
+            CornerRadius="15"
+            IsVisible="{Binding MessageVisibility}">
+            <TextBlock
+                Margin="15,5,15,5"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Background="{x:Null}"
+                FontSize="12"
+                Foreground="{DynamicResource BrushForegroundDark}"
+                Text="{Binding Message}"
+                TextAlignment="Center" />
+        </Border>
+    </Grid>
+
+</Window>

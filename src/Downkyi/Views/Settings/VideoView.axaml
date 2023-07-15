@@ -1,0 +1,342 @@
+<UserControl
+    x:Class="Downkyi.Views.Settings.VideoView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:b="using:Downkyi.Behaviors"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
+    xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions.Core;assembly=Avalonia.Xaml.Interactions"
+    xmlns:iac="clr-namespace:Avalonia.Xaml.Interactions.Custom;assembly=Avalonia.Xaml.Interactions.Custom"
+    xmlns:idd="clr-namespace:Avalonia.Xaml.Interactions.DragAndDrop;assembly=Avalonia.Xaml.Interactions.DragAndDrop"
+    xmlns:local="using:Downkyi"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:Downkyi.ViewModels.Settings"
+    d:DesignHeight="850"
+    d:DesignWidth="800"
+    x:CompileBindings="True"
+    x:DataType="vm:VideoViewModelProxy"
+    Design.DataContext="{x:Static local:ServiceLocator.VideoViewModel}"
+    mc:Ignorable="d">
+    <UserControl.Styles>
+        <Style Selector="ItemsControl.dragAndDrop">
+            <Style.Resources>
+                <b:FileNamePartDropHandler x:Key="FileNamePartDropHandler" />
+            </Style.Resources>
+            <Setter Property="(i:Interaction.Behaviors)">
+                <i:BehaviorCollectionTemplate>
+                    <i:BehaviorCollection>
+                        <idd:ContextDropBehavior Handler="{StaticResource FileNamePartDropHandler}" />
+                        <ia:EventTriggerBehavior EventName="PointerReleased">
+                            <ia:InvokeCommandAction Command="{Binding SetSelectedFileNameCommand}" PassEventArgsToCommand="True" />
+                        </ia:EventTriggerBehavior>
+                    </i:BehaviorCollection>
+                </i:BehaviorCollectionTemplate>
+            </Setter>
+        </Style>
+        <Style Selector="ItemsControl.dragAndDrop Border">
+            <Setter Property="(i:Interaction.Behaviors)">
+                <i:BehaviorCollectionTemplate>
+                    <i:BehaviorCollection>
+                        <idd:ContextDragBehavior HorizontalDragThreshold="3" VerticalDragThreshold="3" />
+                    </i:BehaviorCollection>
+                </i:BehaviorCollectionTemplate>
+            </Setter>
+        </Style>
+    </UserControl.Styles>
+
+    <i:Interaction.Behaviors>
+        <ia:EventTriggerBehavior EventName="Loaded">
+            <ia:InvokeCommandAction Command="{Binding LoadedCommand}" />
+        </ia:EventTriggerBehavior>
+    </i:Interaction.Behaviors>
+
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="50,0" Orientation="Vertical">
+            <StackPanel Margin="0,20,0,0" Orientation="Horizontal">
+                <TextBlock FontSize="20" Text="{DynamicResource Video}" />
+            </StackPanel>
+
+            <StackPanel Margin="0,20,0,0" Orientation="Horizontal">
+                <TextBlock VerticalAlignment="Center" Text="{DynamicResource FirstVideoCodecs}" />
+                <ComboBox
+                    Name="videoCodecs"
+                    Width="150"
+                    VerticalContentAlignment="Center"
+                    Classes="normal simpleItem"
+                    ItemsSource="{Binding VideoCodecs}"
+                    SelectedItem="{Binding SelectedVideoCodec}">
+                    <i:Interaction.Behaviors>
+                        <iac:ValueChangedTriggerBehavior Binding="{Binding SelectedVideoCodec}">
+                            <ia:InvokeCommandAction Command="{Binding SetVideoCodecsCommand}" />
+                        </iac:ValueChangedTriggerBehavior>
+                    </i:Interaction.Behaviors>
+                </ComboBox>
+            </StackPanel>
+
+            <StackPanel Margin="0,20,0,0" Orientation="Horizontal">
+                <TextBlock VerticalAlignment="Center" Text="{DynamicResource FirstVideoQuality}" />
+                <ComboBox
+                    Name="videoQualityList"
+                    Width="150"
+                    VerticalContentAlignment="Center"
+                    Classes="normal simpleItem"
+                    ItemsSource="{Binding VideoQualityList}"
+                    SelectedItem="{Binding SelectedVideoQuality}">
+                    <i:Interaction.Behaviors>
+                        <iac:ValueChangedTriggerBehavior Binding="{Binding SelectedVideoQuality}">
+                            <ia:InvokeCommandAction Command="{Binding SetVideoQualityCommand}" />
+                        </iac:ValueChangedTriggerBehavior>
+                    </i:Interaction.Behaviors>
+                </ComboBox>
+            </StackPanel>
+
+            <StackPanel Margin="0,20,0,0" Orientation="Horizontal">
+                <TextBlock VerticalAlignment="Center" Text="{DynamicResource FirstAudioQuality}" />
+                <ComboBox
+                    Name="audioQualityList"
+                    Width="150"
+                    VerticalContentAlignment="Center"
+                    Classes="normal simpleItem"
+                    ItemsSource="{Binding AudioQualityList}"
+                    SelectedItem="{Binding SelectedAudioQuality}">
+                    <i:Interaction.Behaviors>
+                        <iac:ValueChangedTriggerBehavior Binding="{Binding SelectedAudioQuality}">
+                            <ia:InvokeCommandAction Command="{Binding SetAudioQualityCommand}" />
+                        </iac:ValueChangedTriggerBehavior>
+                    </i:Interaction.Behaviors>
+                </ComboBox>
+            </StackPanel>
+
+            <CheckBox
+                Margin="0,20,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Classes="normal"
+                Command="{Binding SetIsTranscodingFlvToMp4Command}"
+                Content="{DynamicResource IsTranscodingFlvToMp4}"
+                IsChecked="{Binding IsTranscodingFlvToMp4}"
+                IsVisible="False" />
+
+            <TextBlock
+                Height="1"
+                Margin="0,20,0,0"
+                Background="{DynamicResource BrushBorder}" />
+
+            <CheckBox
+                Margin="0,20,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Classes="normal"
+                Command="{Binding SetIsUseDefaultDirectoryCommand}"
+                Content="{DynamicResource IsUseDefaultDirectory}"
+                IsChecked="{Binding IsUseDefaultDirectory}" />
+
+            <StackPanel
+                Margin="0,20,0,0"
+                IsVisible="{Binding IsUseDefaultDirectory}"
+                Orientation="Vertical">
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Text="{DynamicResource DefaultDirectory}" />
+                    <TextBlock
+                        Margin="10,0,0,0"
+                        VerticalAlignment="Center"
+                        Foreground="{DynamicResource BrushTextGrey}"
+                        Text="{DynamicResource DefaultDirectoryTip}" />
+                </StackPanel>
+
+                <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
+                    <TextBlock
+                        MaxWidth="600"
+                        VerticalAlignment="Center"
+                        Text="{Binding SaveVideoDirectory}"
+                        TextTrimming="CharacterEllipsis"
+                        ToolTip.Tip="{Binding SaveVideoDirectory}" />
+                    <Button
+                        Width="75"
+                        Margin="30,0,0,0"
+                        Classes="normal"
+                        Command="{Binding ChangeSaveVideoDirectoryCommand}"
+                        Content="{DynamicResource ChangeDirectory}" />
+                </StackPanel>
+            </StackPanel>
+
+            <Grid Margin="0,20,0,0">
+                <Border
+                    Margin="0,10,0,0"
+                    Padding="20,10"
+                    HorizontalAlignment="Stretch"
+                    BorderBrush="{DynamicResource BrushPrimary}"
+                    BorderThickness="2"
+                    CornerRadius="10">
+                    <WrapPanel Margin="0,10,0,0" Orientation="Horizontal">
+                        <CheckBox
+                            Margin="0,0,40,0"
+                            Classes="normal"
+                            Command="{Binding SetDownloadAllCommand}"
+                            Content="{DynamicResource DownloadAll}"
+                            IsChecked="{Binding DownloadAll}" />
+                        <CheckBox
+                            Margin="0,0,40,0"
+                            Classes="normal"
+                            Command="{Binding SetDownloadAudioCommand}"
+                            Content="{DynamicResource DownloadAudio}"
+                            IsChecked="{Binding DownloadAudio}" />
+                        <CheckBox
+                            Margin="0,0,40,0"
+                            Classes="normal"
+                            Command="{Binding SetDownloadVideoCommand}"
+                            Content="{DynamicResource DownloadVideo}"
+                            IsChecked="{Binding DownloadVideo}" />
+                        <CheckBox
+                            Margin="0,0,40,0"
+                            Classes="normal"
+                            Command="{Binding SetDownloadDanmakuCommand}"
+                            Content="{DynamicResource DownloadDanmaku}"
+                            IsChecked="{Binding DownloadDanmaku}" />
+                        <CheckBox
+                            Margin="0,0,40,0"
+                            Classes="normal"
+                            Command="{Binding SetDownloadSubtitleCommand}"
+                            Content="{DynamicResource DownloadSubtitle}"
+                            IsChecked="{Binding DownloadSubtitle}" />
+                        <CheckBox
+                            Margin="0,0,0,0"
+                            Classes="normal"
+                            Command="{Binding SetDownloadCoverCommand}"
+                            Content="{DynamicResource DownloadCover}"
+                            IsChecked="{Binding DownloadCover}" />
+                    </WrapPanel>
+                </Border>
+                <TextBlock
+                    Margin="10,0,0,0"
+                    Padding="5,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Background="White"
+                    Text="{DynamicResource DownloadContent2}" />
+            </Grid>
+
+            <Grid Margin="0,20,0,0">
+                <Border
+                    Margin="0,10,0,0"
+                    Padding="20,10"
+                    HorizontalAlignment="Left"
+                    BorderBrush="{DynamicResource BrushPrimary}"
+                    BorderThickness="2"
+                    CornerRadius="10">
+                    <Grid
+                        Margin="0,10,0,0"
+                        ColumnDefinitions="100,*"
+                        RowDefinitions="*,*,*">
+
+                        <TextBlock
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Text="{DynamicResource OptionalFields}" />
+                        <Border
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Margin="0,0,0,20"
+                            Padding="5"
+                            BorderBrush="{DynamicResource BrushBorder}"
+                            BorderThickness="1"
+                            CornerRadius="10">
+                            <ItemsControl Classes="chips" ItemsSource="{Binding OptionalFields}">
+                                <i:Interaction.Behaviors>
+                                    <ia:EventTriggerBehavior EventName="PointerReleased">
+                                        <ia:InvokeCommandAction Command="{Binding SelectOptionalFieldsCommand}" PassEventArgsToCommand="True" />
+                                    </ia:EventTriggerBehavior>
+                                </i:Interaction.Behaviors>
+                            </ItemsControl>
+                        </Border>
+
+                        <TextBlock
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Text="{DynamicResource FileName}" />
+                        <Border
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            MinHeight="30"
+                            Padding="5"
+                            BorderBrush="{DynamicResource BrushBorder}"
+                            BorderThickness="1"
+                            CornerRadius="10">
+                            <ItemsControl Classes="chips dragAndDrop" ItemsSource="{Binding SelectedFileName}" />
+                        </Border>
+
+                        <DockPanel
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            Margin="0,20,0,0">
+
+                            <WrapPanel DockPanel.Dock="Left" Orientation="Horizontal">
+                                <StackPanel
+                                    Margin="0,5,40,5"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Bottom"
+                                    Orientation="Horizontal">
+                                    <TextBlock VerticalAlignment="Center" Text="{DynamicResource FileNameTimeFormat}" />
+                                    <ComboBox
+                                        Width="140"
+                                        VerticalAlignment="Center"
+                                        VerticalContentAlignment="Center"
+                                        Classes="normal"
+                                        ItemsSource="{Binding TimeFormatList}"
+                                        SelectedItem="{Binding SelectedTimeFormat}">
+                                        <i:Interaction.Behaviors>
+                                            <iac:ValueChangedTriggerBehavior Binding="{Binding SelectedTimeFormat}">
+                                                <ia:InvokeCommandAction Command="{Binding TimeFormatCommand}" />
+                                            </iac:ValueChangedTriggerBehavior>
+                                        </i:Interaction.Behaviors>
+                                    </ComboBox>
+                                </StackPanel>
+
+                                <StackPanel
+                                    Margin="0,5,80,5"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Bottom"
+                                    Orientation="Horizontal">
+                                    <TextBlock VerticalAlignment="Center" Text="{DynamicResource OrderFormat}" />
+                                    <ComboBox
+                                        Width="140"
+                                        VerticalAlignment="Center"
+                                        VerticalContentAlignment="Center"
+                                        Classes="normal simpleItem"
+                                        ItemsSource="{Binding OrderFormatList}"
+                                        SelectedItem="{Binding SelectedOrderFormat}">
+                                        <i:Interaction.Behaviors>
+                                            <iac:ValueChangedTriggerBehavior Binding="{Binding SelectedOrderFormat}">
+                                                <ia:InvokeCommandAction Command="{Binding OrderFormatCommand}" />
+                                            </iac:ValueChangedTriggerBehavior>
+                                        </i:Interaction.Behaviors>
+                                    </ComboBox>
+                                </StackPanel>
+                            </WrapPanel>
+
+                            <Button
+                                Width="75"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
+                                Classes="normal"
+                                Command="{Binding ResetCommand}"
+                                Content="{DynamicResource Reset}"
+                                DockPanel.Dock="Right" />
+                        </DockPanel>
+
+                    </Grid>
+                </Border>
+                <TextBlock
+                    Margin="10,0,0,0"
+                    Padding="5,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Background="White"
+                    Text="{DynamicResource FileNameParts}" />
+            </Grid>
+
+            <StackPanel Margin="10" />
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

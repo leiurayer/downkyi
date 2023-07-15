@@ -1,0 +1,474 @@
+<UserControl
+    x:Class="Downkyi.Views.Settings.NetworkView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
+    xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions.Core;assembly=Avalonia.Xaml.Interactions"
+    xmlns:iac="clr-namespace:Avalonia.Xaml.Interactions.Custom;assembly=Avalonia.Xaml.Interactions.Custom"
+    xmlns:local="using:Downkyi"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:Downkyi.UI.ViewModels.Settings"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    x:CompileBindings="True"
+    x:DataType="vm:NetworkViewModel"
+    Design.DataContext="{x:Static local:ServiceLocator.NetworkViewModel}"
+    mc:Ignorable="d">
+    <i:Interaction.Behaviors>
+        <ia:EventTriggerBehavior EventName="Loaded">
+            <ia:InvokeCommandAction Command="{Binding LoadedCommand}" />
+        </ia:EventTriggerBehavior>
+    </i:Interaction.Behaviors>
+
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="50,0" Orientation="Vertical">
+            <StackPanel Margin="0,20,0,0" Orientation="Horizontal">
+                <TextBlock FontSize="20" Text="{DynamicResource Network}" />
+            </StackPanel>
+
+            <CheckBox
+                Margin="0,20,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Classes="normal"
+                Command="{Binding SetUseSSLCommand}"
+                Content="{DynamicResource UseSSL}"
+                IsChecked="{Binding UseSSL}" />
+
+            <TextBlock Margin="0,20,0,0" Text="{DynamicResource UserAgent}" />
+
+            <TextBox
+                Height="20"
+                Margin="0,10,0,0"
+                HorizontalAlignment="Stretch"
+                Classes="normal"
+                Text="{Binding UserAgent}">
+                <TextBox.KeyBindings>
+                    <KeyBinding Command="{Binding SetUserAgentCommand}" Gesture="Enter" />
+                </TextBox.KeyBindings>
+            </TextBox>
+
+            <TextBlock Margin="0,20,0,0" Text="{DynamicResource SelectDownloader}" />
+
+            <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
+                <RadioButton
+                    Classes="normal"
+                    Command="{Binding SelectDownloaderCommand}"
+                    CommandParameter="Builtin"
+                    Content="{DynamicResource BuiltinDownloader}"
+                    IsChecked="{Binding Builtin}" />
+                <RadioButton
+                    Margin="20,0,0,0"
+                    Classes="normal"
+                    Command="{Binding SelectDownloaderCommand}"
+                    CommandParameter="Aria2c"
+                    Content="{DynamicResource Aria2cDownloader}"
+                    IsChecked="{Binding Aria2c}" />
+                <RadioButton
+                    Margin="20,0,0,0"
+                    Classes="normal"
+                    Command="{Binding SelectDownloaderCommand}"
+                    CommandParameter="CustomAria2c"
+                    Content="{DynamicResource CustomAria2cDownloader}"
+                    IsChecked="{Binding CustomAria2c}" />
+            </StackPanel>
+
+            <TextBlock
+                Height="1"
+                Margin="0,20,0,0"
+                Background="{DynamicResource BrushBorder}" />
+
+            <StackPanel IsVisible="{Binding Builtin}">
+
+                <StackPanel Margin="0,20,0,0" Orientation="Horizontal">
+                    <TextBlock
+                        Width="100"
+                        VerticalAlignment="Center"
+                        Text="{DynamicResource MaxCurrentDownloads}" />
+                    <ComboBox
+                        Name="maxCurrentDownloads"
+                        Width="100"
+                        VerticalContentAlignment="Center"
+                        Classes="normal"
+                        ItemsSource="{Binding MaxCurrentDownloads}"
+                        SelectedValue="{Binding SelectedMaxCurrentDownload}">
+                        <i:Interaction.Behaviors>
+                            <iac:ValueChangedTriggerBehavior Binding="{Binding SelectedMaxCurrentDownload}">
+                                <ia:InvokeCommandAction Command="{Binding SetMaxCurrentDownloadsCommand}" CommandParameter="{Binding ElementName=maxCurrentDownloads, Path=SelectedValue}" />
+                            </iac:ValueChangedTriggerBehavior>
+                        </i:Interaction.Behaviors>
+                    </ComboBox>
+                </StackPanel>
+
+                <StackPanel Margin="0,20,0,0" Orientation="Horizontal">
+                    <TextBlock
+                        Width="100"
+                        VerticalAlignment="Center"
+                        Text="{DynamicResource Split}" />
+                    <ComboBox
+                        Name="splits"
+                        Width="100"
+                        VerticalContentAlignment="Center"
+                        Classes="normal"
+                        ItemsSource="{Binding Splits}"
+                        SelectedValue="{Binding SelectedSplit}">
+                        <i:Interaction.Behaviors>
+                            <iac:ValueChangedTriggerBehavior Binding="{Binding SelectedSplit}">
+                                <ia:InvokeCommandAction Command="{Binding SetSplitsCommand}" CommandParameter="{Binding ElementName=splits, Path=SelectedValue}" />
+                            </iac:ValueChangedTriggerBehavior>
+                        </i:Interaction.Behaviors>
+                    </ComboBox>
+                </StackPanel>
+
+                <CheckBox
+                    Margin="0,20,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Classes="normal"
+                    Command="{Binding SetIsHttpProxyCommand}"
+                    Content="{DynamicResource IsHttpProxy}"
+                    IsChecked="{Binding IsHttpProxy}" />
+
+                <StackPanel
+                    Margin="0,20,0,0"
+                    IsVisible="{Binding IsHttpProxy}"
+                    Orientation="Horizontal"
+                    ToolTip.Tip="{DynamicResource PressEnterToApplySettingTip}">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock VerticalAlignment="Center" Text="{DynamicResource HttpProxy}" />
+                        <TextBox
+                            Name="httpProxy"
+                            Width="200"
+                            Height="20"
+                            VerticalContentAlignment="Center"
+                            Text="{Binding HttpProxy}">
+                            <TextBox.KeyBindings>
+                                <KeyBinding
+                                    Command="{Binding SetHttpProxyCommand}"
+                                    CommandParameter="{Binding ElementName=httpProxy, Path=Text}"
+                                    Gesture="Enter" />
+                            </TextBox.KeyBindings>
+                        </TextBox>
+                    </StackPanel>
+                    <StackPanel Margin="30,0,0,0" Orientation="Horizontal">
+                        <TextBlock VerticalAlignment="Center" Text="{DynamicResource HttpProxyPort}" />
+                        <TextBox
+                            Name="httpProxyPort"
+                            Width="100"
+                            Height="20"
+                            VerticalContentAlignment="Center"
+                            Text="{Binding HttpProxyPort}">
+                            <TextBox.KeyBindings>
+                                <KeyBinding
+                                    Command="{Binding SetHttpProxyPortCommand}"
+                                    CommandParameter="{Binding ElementName=httpProxyPort, Path=Text}"
+                                    Gesture="Enter" />
+                            </TextBox.KeyBindings>
+                        </TextBox>
+                    </StackPanel>
+                </StackPanel>
+
+            </StackPanel>
+
+            <StackPanel IsVisible="{Binding Aria2c}">
+
+                <StackPanel
+                    Margin="0,20,0,0"
+                    Orientation="Horizontal"
+                    ToolTip.Tip="{DynamicResource PressEnterToApplySettingTip}">
+                    <TextBlock
+                        Width="120"
+                        VerticalAlignment="Center"
+                        Text="{DynamicResource AriaServerPort}" />
+                    <TextBox
+                        Name="ariaListenPort"
+                        Width="100"
+                        Height="20"
+                        VerticalContentAlignment="Center"
+                        Classes="normal"
+                        Text="{Binding AriaListenPort}">
+                        <TextBox.KeyBindings>
+                            <KeyBinding
+                                Command="{Binding SetAriaListenPortCommand}"
+                                CommandParameter="{Binding ElementName=ariaListenPort, Path=Text}"
+                                Gesture="Enter" />
+                        </TextBox.KeyBindings>
+                    </TextBox>
+                </StackPanel>
+
+                <StackPanel Margin="0,20,0,0" Orientation="Horizontal">
+                    <TextBlock
+                        Width="120"
+                        VerticalAlignment="Center"
+                        Text="{DynamicResource AriaLogLevel}" />
+                    <ComboBox
+                        Name="ariaLogLevels"
+                        Width="100"
+                        VerticalContentAlignment="Center"
+                        Classes="normal"
+                        ItemsSource="{Binding AriaLogLevels}"
+                        SelectedValue="{Binding SelectedAriaLogLevel}">
+                        <i:Interaction.Behaviors>
+                            <iac:ValueChangedTriggerBehavior Binding="{Binding SelectedAriaLogLevel}">
+                                <ia:InvokeCommandAction Command="{Binding SetAriaLogLevelsCommand}" CommandParameter="{Binding ElementName=ariaLogLevels, Path=SelectedValue}" />
+                            </iac:ValueChangedTriggerBehavior>
+                        </i:Interaction.Behaviors>
+                    </ComboBox>
+                </StackPanel>
+
+                <StackPanel Margin="0,20,0,0" Orientation="Horizontal">
+                    <TextBlock
+                        Width="120"
+                        VerticalAlignment="Center"
+                        Text="{DynamicResource AriaMaxConcurrentDownloads}" />
+                    <ComboBox
+                        Name="ariaMaxConcurrentDownloads"
+                        Width="100"
+                        VerticalContentAlignment="Center"
+                        Classes="normal"
+                        ItemsSource="{Binding AriaMaxConcurrentDownloads}"
+                        SelectedValue="{Binding SelectedAriaMaxConcurrentDownload}">
+                        <i:Interaction.Behaviors>
+                            <iac:ValueChangedTriggerBehavior Binding="{Binding SelectedAriaMaxConcurrentDownload}">
+                                <ia:InvokeCommandAction Command="{Binding SetAriaMaxConcurrentDownloadsCommand}" CommandParameter="{Binding ElementName=ariaMaxConcurrentDownloads, Path=SelectedValue}" />
+                            </iac:ValueChangedTriggerBehavior>
+                        </i:Interaction.Behaviors>
+                    </ComboBox>
+                </StackPanel>
+
+                <StackPanel Margin="0,20,0,0" Orientation="Horizontal">
+                    <TextBlock
+                        Width="120"
+                        VerticalAlignment="Center"
+                        Text="{DynamicResource AriaSplit}" />
+                    <ComboBox
+                        Name="ariaSplits"
+                        Width="100"
+                        VerticalContentAlignment="Center"
+                        Classes="normal"
+                        ItemsSource="{Binding AriaSplits}"
+                        SelectedValue="{Binding SelectedAriaSplit}">
+                        <i:Interaction.Behaviors>
+                            <iac:ValueChangedTriggerBehavior Binding="{Binding SelectedAriaSplit}">
+                                <ia:InvokeCommandAction Command="{Binding SetAriaSplitsCommand}" CommandParameter="{Binding ElementName=ariaSplits, Path=SelectedValue}" />
+                            </iac:ValueChangedTriggerBehavior>
+                        </i:Interaction.Behaviors>
+                    </ComboBox>
+                </StackPanel>
+
+                <Grid Margin="0,20,0,0">
+                    <Border
+                        Margin="0,10,0,0"
+                        Padding="10,5"
+                        HorizontalAlignment="Left"
+                        BorderBrush="{DynamicResource BrushPrimary}"
+                        BorderThickness="2"
+                        CornerRadius="10">
+                        <StackPanel>
+                            <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
+                                <TextBlock
+                                    Width="300"
+                                    VerticalAlignment="Center"
+                                    Text="{DynamicResource AriaMaxOverallDownloadLimit}" />
+                                <TextBox
+                                    Name="ariaMaxOverallDownloadLimit"
+                                    Width="100"
+                                    Height="20"
+                                    VerticalContentAlignment="Center"
+                                    Classes="normal"
+                                    Text="{Binding AriaMaxOverallDownloadLimit}"
+                                    ToolTip.Tip="{DynamicResource PressEnterToApplySettingTip}">
+                                    <TextBox.KeyBindings>
+                                        <KeyBinding
+                                            Command="{Binding SetAriaMaxOverallDownloadLimitCommand}"
+                                            CommandParameter="{Binding ElementName=ariaMaxOverallDownloadLimit, Path=Text}"
+                                            Gesture="Enter" />
+                                    </TextBox.KeyBindings>
+                                </TextBox>
+                            </StackPanel>
+                            <StackPanel Margin="0,10,0,5" Orientation="Horizontal">
+                                <TextBlock
+                                    Width="300"
+                                    VerticalAlignment="Center"
+                                    Text="{DynamicResource AriaMaxDownloadLimit}" />
+                                <TextBox
+                                    Name="ariaMaxDownloadLimit"
+                                    Width="100"
+                                    Height="20"
+                                    VerticalContentAlignment="Center"
+                                    Classes="normal"
+                                    Text="{Binding AriaMaxDownloadLimit}"
+                                    ToolTip.Tip="{DynamicResource PressEnterToApplySettingTip}">
+                                    <TextBox.KeyBindings>
+                                        <KeyBinding
+                                            Command="{Binding SetAriaMaxDownloadLimitCommand}"
+                                            CommandParameter="{Binding ElementName=ariaMaxDownloadLimit, Path=Text}"
+                                            Gesture="Enter" />
+                                    </TextBox.KeyBindings>
+                                </TextBox>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                    <TextBlock
+                        Margin="10,0,0,0"
+                        Padding="5,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Background="White"
+                        Text="{DynamicResource AriaDownloadLimit}" />
+                </Grid>
+
+                <CheckBox
+                    Margin="0,20,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Classes="normal"
+                    Command="{Binding SetIsAriaHttpProxyCommand}"
+                    Content="{DynamicResource IsHttpProxy}"
+                    IsChecked="{Binding IsAriaHttpProxy}" />
+
+                <StackPanel
+                    Margin="0,20,0,0"
+                    IsVisible="{Binding IsAriaHttpProxy}"
+                    Orientation="Horizontal"
+                    ToolTip.Tip="{DynamicResource PressEnterToApplySettingTip}">
+
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock VerticalAlignment="Center" Text="{DynamicResource HttpProxy}" />
+                        <TextBox
+                            Name="ariaHttpProxy"
+                            Width="200"
+                            Height="20"
+                            VerticalContentAlignment="Center"
+                            Classes="normal"
+                            Text="{Binding AriaHttpProxy}">
+                            <TextBox.KeyBindings>
+                                <KeyBinding
+                                    Command="{Binding SetAriaHttpProxyCommand}"
+                                    CommandParameter="{Binding ElementName=ariaHttpProxy, Path=Text}"
+                                    Gesture="Enter" />
+                            </TextBox.KeyBindings>
+                        </TextBox>
+                    </StackPanel>
+                    <StackPanel Margin="30,0,0,0" Orientation="Horizontal">
+                        <TextBlock VerticalAlignment="Center" Text="{DynamicResource HttpProxyPort}" />
+                        <TextBox
+                            Name="ariaHttpProxyPort"
+                            Width="100"
+                            Height="20"
+                            VerticalContentAlignment="Center"
+                            Classes="normal"
+                            Text="{Binding AriaHttpProxyPort}">
+                            <TextBox.KeyBindings>
+                                <KeyBinding
+                                    Command="{Binding SetAriaHttpProxyPortCommand}"
+                                    CommandParameter="{Binding ElementName=ariaHttpProxyPort, Path=Text}"
+                                    Gesture="Enter" />
+                            </TextBox.KeyBindings>
+                        </TextBox>
+                    </StackPanel>
+                </StackPanel>
+
+                <StackPanel Margin="0,20,0,0" Orientation="Horizontal">
+                    <TextBlock
+                        Width="120"
+                        VerticalAlignment="Center"
+                        Text="{DynamicResource AriaFileAllocation}" />
+                    <ComboBox
+                        Name="ariaFileAllocations"
+                        Width="100"
+                        VerticalContentAlignment="Center"
+                        Classes="normal"
+                        ItemsSource="{Binding AriaFileAllocations}"
+                        SelectedValue="{Binding SelectedAriaFileAllocation}">
+                        <i:Interaction.Behaviors>
+                            <iac:ValueChangedTriggerBehavior Binding="{Binding SelectedAriaFileAllocation}">
+                                <ia:InvokeCommandAction Command="{Binding SetAriaFileAllocationsCommand}" CommandParameter="{Binding ElementName=ariaFileAllocations, Path=SelectedValue}" />
+                            </iac:ValueChangedTriggerBehavior>
+                        </i:Interaction.Behaviors>
+                    </ComboBox>
+                </StackPanel>
+
+            </StackPanel>
+
+            <StackPanel IsVisible="{Binding CustomAria2c}">
+
+                <StackPanel
+                    Margin="0,20,0,0"
+                    Orientation="Horizontal"
+                    ToolTip.Tip="{DynamicResource PressEnterToApplySettingTip}">
+                    <TextBlock
+                        Width="120"
+                        VerticalAlignment="Center"
+                        Text="{DynamicResource AriaServerHost}" />
+                    <TextBox
+                        Name="ariaHost"
+                        Width="300"
+                        Height="20"
+                        VerticalContentAlignment="Center"
+                        Classes="normal"
+                        Text="{Binding AriaHost}">
+                        <TextBox.KeyBindings>
+                            <KeyBinding
+                                Command="{Binding SetAriaHostCommand}"
+                                CommandParameter="{Binding ElementName=ariaHost, Path=Text}"
+                                Gesture="Enter" />
+                        </TextBox.KeyBindings>
+                    </TextBox>
+                </StackPanel>
+
+                <StackPanel
+                    Margin="0,20,0,0"
+                    Orientation="Horizontal"
+                    ToolTip.Tip="{DynamicResource PressEnterToApplySettingTip}">
+                    <TextBlock
+                        Width="120"
+                        VerticalAlignment="Center"
+                        Text="{DynamicResource AriaServerPort}" />
+                    <TextBox
+                        Name="ariaPort"
+                        Width="100"
+                        Height="20"
+                        VerticalContentAlignment="Center"
+                        Classes="normal"
+                        Text="{Binding AriaListenPort}">
+                        <TextBox.KeyBindings>
+                            <KeyBinding
+                                Command="{Binding SetAriaListenPortCommand}"
+                                CommandParameter="{Binding ElementName=ariaPort, Path=Text}"
+                                Gesture="Enter" />
+                        </TextBox.KeyBindings>
+                    </TextBox>
+                </StackPanel>
+
+                <StackPanel
+                    Margin="0,20,0,0"
+                    Orientation="Horizontal"
+                    ToolTip.Tip="{DynamicResource PressEnterToApplySettingTip}">
+                    <TextBlock
+                        Width="120"
+                        VerticalAlignment="Center"
+                        Text="{DynamicResource AriaServerToken}" />
+                    <TextBox
+                        Name="ariaToken"
+                        Width="100"
+                        Height="20"
+                        VerticalContentAlignment="Center"
+                        Classes="normal"
+                        Text="{Binding AriaToken}">
+                        <TextBox.KeyBindings>
+                            <KeyBinding
+                                Command="{Binding SetAriaTokenCommand}"
+                                CommandParameter="{Binding ElementName=ariaToken, Path=Text}"
+                                Gesture="Enter" />
+                        </TextBox.KeyBindings>
+                    </TextBox>
+                </StackPanel>
+
+            </StackPanel>
+
+            <StackPanel Margin="10" />
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

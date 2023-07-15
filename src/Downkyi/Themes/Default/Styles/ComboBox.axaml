@@ -1,0 +1,26 @@
+﻿<Styles xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!--  ComboBox.normal  -->
+    <Style Selector="ComboBox.normal">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="5" />
+        <Setter Property="BorderBrush" Value="{DynamicResource BrushPrimary}" />
+    </Style>
+    <Style Selector="ComboBox.normal:pointerover /template/ Border">
+        <Setter Property="BorderBrush" Value="{DynamicResource BrushPrimary}" />
+    </Style>
+    <Style Selector="ComboBox.normal:focus /template/ Border">
+        <Setter Property="BorderBrush" Value="{DynamicResource BrushPrimary}" />
+    </Style>
+
+    <!--  ComboBox.simpleItem  -->
+    <Style Selector="ComboBox.simpleItem">
+        <Setter Property="ItemTemplate">
+            <DataTemplate>
+                <TextBlock Text="{Binding Name}" />
+            </DataTemplate>
+        </Setter>
+    </Style>
+
+</Styles>

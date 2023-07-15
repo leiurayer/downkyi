@@ -1,0 +1,29 @@
+﻿<Styles
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:b="using:Downkyi.Behaviors"
+    xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
+    xmlns:idd="clr-namespace:Avalonia.Xaml.Interactions.DragAndDrop;assembly=Avalonia.Xaml.Interactions.DragAndDrop">
+
+    <!--  ItemsRepeater.chips  -->
+    <Style Selector="ItemsRepeater.chips">
+        <Setter Property="Layout">
+            <WrapLayout />
+        </Setter>
+        <Setter Property="ItemTemplate">
+            <DataTemplate>
+                <Border
+                    Margin="5,3"
+                    Background="{DynamicResource BrushPrimary}"
+                    CornerRadius="10"
+                    Cursor="Hand">
+                    <TextBlock
+                        Padding="8,2"
+                        Foreground="{DynamicResource BrushText}"
+                        Text="{Binding Title}" />
+                </Border>
+            </DataTemplate>
+        </Setter>
+    </Style>
+
+</Styles>

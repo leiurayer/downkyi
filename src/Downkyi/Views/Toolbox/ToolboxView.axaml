@@ -1,0 +1,60 @@
+<UserControl
+    x:Class="Downkyi.Views.Toolbox.ToolboxView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:Downkyi"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:Downkyi.UI.ViewModels.Toolbox"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    x:CompileBindings="True"
+    x:DataType="vm:ToolboxViewModel"
+    Design.DataContext="{x:Static local:ServiceLocator.ToolboxViewModel}"
+    mc:Ignorable="d">
+
+    <Grid RowDefinitions="50,1,*">
+        <Grid Grid.Row="0" Height="50">
+            <Button
+                Margin="0,5,0,5"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Classes="transparent"
+                Command="{Binding BackwardCommand}">
+                <StackPanel Orientation="Horizontal">
+                    <Image
+                        Width="24"
+                        Height="24"
+                        Source="{StaticResource ArrowBackDrawingImage}" />
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        FontSize="16"
+                        Text="{DynamicResource Toolbox}" />
+                </StackPanel>
+            </Button>
+        </Grid>
+        <TextBlock Grid.Row="1" Background="{DynamicResource BrushBorder}" />
+
+        <SplitView
+            Grid.Row="2"
+            DisplayMode="Inline"
+            IsPaneOpen="True"
+            OpenPaneLength="200">
+            <SplitView.Pane>
+                <ListBox
+                    Name="tabHeaders"
+                    Classes="tabHeader"
+                    ItemsSource="{Binding TabHeaders}"
+                    SelectedIndex="{Binding SelectedTabId, Mode=TwoWay}"
+                    SelectionMode="AlwaysSelected" />
+            </SplitView.Pane>
+
+            <Grid>
+                <ContentControl Content="{x:Static local:ServiceLocator.BiliHelperViewModel}" IsVisible="{Binding SelectedTabId, Converter={StaticResource intEquealConverter}, ConverterParameter=0}" />
+                <ContentControl Content="{x:Static local:ServiceLocator.DelogoViewModel}" IsVisible="{Binding SelectedTabId, Converter={StaticResource intEquealConverter}, ConverterParameter=1}" />
+                <ContentControl Content="{x:Static local:ServiceLocator.ExtractMediaViewModel}" IsVisible="{Binding SelectedTabId, Converter={StaticResource intEquealConverter}, ConverterParameter=2}" />
+            </Grid>
+        </SplitView>
+
+    </Grid>
+</UserControl>

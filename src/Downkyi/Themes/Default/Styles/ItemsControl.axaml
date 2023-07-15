@@ -1,0 +1,24 @@
+﻿<Styles xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!--  ItemsControl.chips  -->
+    <Style Selector="ItemsControl.chips">
+        <Setter Property="ItemsPanel">
+            <ItemsPanelTemplate>
+                <WrapPanel Orientation="Horizontal" />
+            </ItemsPanelTemplate>
+        </Setter>
+        <Setter Property="ItemTemplate">
+            <DataTemplate>
+                <Border
+                    Margin="5,3"
+                    Padding="8,2"
+                    Background="{DynamicResource BrushPrimary}"
+                    CornerRadius="10"
+                    Cursor="Hand">
+                    <TextBlock Foreground="{DynamicResource BrushText}" Text="{Binding Title}" />
+                </Border>
+            </DataTemplate>
+        </Setter>
+    </Style>
+
+</Styles>
