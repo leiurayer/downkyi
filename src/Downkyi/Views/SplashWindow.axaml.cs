@@ -33,7 +33,7 @@ public partial class SplashWindow : Window
         // Do some background stuff here.
         //Task.Delay(1000);
 
-        await Dispatcher.UIThread.InvokeAsync(async () =>
+        await Dispatcher.UIThread.InvokeAsync(() =>
         {
             _mainAction?.Invoke();
             Close();
