@@ -1,15 +1,18 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Downkyi.Core.Bili;
+using Downkyi.Core.Log;
 using Downkyi.Core.Settings;
 using Downkyi.Core.Settings.Models;
 using Downkyi.Core.Storage;
 using Downkyi.UI.Mvvm;
+using Downkyi.UI.Services;
 using Downkyi.UI.ViewModels.DownloadManager;
 using Downkyi.UI.ViewModels.Login;
 using Downkyi.UI.ViewModels.Settings;
 using Downkyi.UI.ViewModels.Toolbox;
 using Downkyi.UI.ViewModels.User;
+using System.Text.RegularExpressions;
 
 namespace Downkyi.UI.ViewModels;
 
@@ -115,9 +118,29 @@ public partial class IndexViewModel : ViewModelBase
 
     #region 业务逻辑
 
+    /// <summary>
+    /// 进入B站链接的处理逻辑，
+    /// 只负责处理输入，并跳转到视频详情页。<para/>
+    /// 不是支持的格式，则进入搜索页面。
+    /// </summary>
     private void EnterBili()
     {
-        NotificationEvent.Publish("Enter Bili!");
+        if (InputText == string.Empty)
+        {
+            return;
+        }
+        Log.Logger.Debug(InputText);
+
+        InputText = Regex.Replace(InputText, @"[【]*[^【]*[^】]*[】 ]", "");
+
+        bool isSupport = MainSearchService.BiliInput(InputText);
+        if (!isSupport)
+        {
+            // 关键词搜索
+            MainSearchService.SearchKey(InputText);
+        }
+
+        InputText = string.Empty;
     }
 
     private async Task UpdateUserInfo()

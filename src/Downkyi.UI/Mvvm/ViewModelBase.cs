@@ -11,7 +11,9 @@ public abstract class ViewModelBase : ObservableObject, INavigationAware
 
     protected IBroadcastEvent BroadcastEvent => _baseServices.BroadcastEvent;
     protected INotificationEvent NotificationEvent => _baseServices.NotificationEvent;
+    protected IClipboardService ClipboardService => _baseServices.ClipboardService;
     protected IDictionaryResource DictionaryResource => _baseServices.DictionaryResource;
+    protected IMainSearchService MainSearchService => _baseServices.MainSearchService;
     protected INavigationService NavigationService => _baseServices.NavigationService;
     protected IStoragePicker StoragePicker => _baseServices.StoragePicker;
     protected IStorageService StorageService => _baseServices.StorageService;

@@ -9,7 +9,11 @@ public class BaseServices
 
     public INotificationEvent NotificationEvent { get; }
 
+    public IClipboardService ClipboardService { get; }
+
     public IDictionaryResource DictionaryResource { get; }
+
+    public IMainSearchService MainSearchService { get; }
 
     public INavigationService NavigationService { get; }
 
@@ -19,14 +23,18 @@ public class BaseServices
 
     public BaseServices(IBroadcastEvent broadcastEvent,
         INotificationEvent notificationEvent,
+        IClipboardService clipboardService,
         IDictionaryResource dictionaryResource,
+        IMainSearchService mainSearchService,
         INavigationService navigationService,
         IStoragePicker storagePicker,
         IStorageService storageService)
     {
         BroadcastEvent = broadcastEvent;
         NotificationEvent = notificationEvent;
+        ClipboardService = clipboardService;
         DictionaryResource = dictionaryResource;
+        MainSearchService = mainSearchService;
         NavigationService = navigationService;
         StoragePicker = storagePicker;
         StorageService = storageService;

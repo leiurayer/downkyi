@@ -87,15 +87,14 @@
                         VerticalAlignment="Center"
                         Text="{DynamicResource MaxCurrentDownloads}" />
                     <ComboBox
-                        Name="maxCurrentDownloads"
                         Width="100"
                         VerticalContentAlignment="Center"
                         Classes="normal"
                         ItemsSource="{Binding MaxCurrentDownloads}"
-                        SelectedValue="{Binding SelectedMaxCurrentDownload}">
+                        SelectedItem="{Binding SelectedMaxCurrentDownload}">
                         <i:Interaction.Behaviors>
                             <iac:ValueChangedTriggerBehavior Binding="{Binding SelectedMaxCurrentDownload}">
-                                <ia:InvokeCommandAction Command="{Binding SetMaxCurrentDownloadsCommand}" CommandParameter="{Binding ElementName=maxCurrentDownloads, Path=SelectedValue}" />
+                                <ia:InvokeCommandAction Command="{Binding SetMaxCurrentDownloadsCommand}" />
                             </iac:ValueChangedTriggerBehavior>
                         </i:Interaction.Behaviors>
                     </ComboBox>
@@ -107,15 +106,14 @@
                         VerticalAlignment="Center"
                         Text="{DynamicResource Split}" />
                     <ComboBox
-                        Name="splits"
                         Width="100"
                         VerticalContentAlignment="Center"
                         Classes="normal"
                         ItemsSource="{Binding Splits}"
-                        SelectedValue="{Binding SelectedSplit}">
+                        SelectedItem="{Binding SelectedSplit}">
                         <i:Interaction.Behaviors>
                             <iac:ValueChangedTriggerBehavior Binding="{Binding SelectedSplit}">
-                                <ia:InvokeCommandAction Command="{Binding SetSplitsCommand}" CommandParameter="{Binding ElementName=splits, Path=SelectedValue}" />
+                                <ia:InvokeCommandAction Command="{Binding SetSplitsCommand}" />
                             </iac:ValueChangedTriggerBehavior>
                         </i:Interaction.Behaviors>
                     </ComboBox>
@@ -203,15 +201,14 @@
                         VerticalAlignment="Center"
                         Text="{DynamicResource AriaLogLevel}" />
                     <ComboBox
-                        Name="ariaLogLevels"
                         Width="100"
                         VerticalContentAlignment="Center"
                         Classes="normal"
                         ItemsSource="{Binding AriaLogLevels}"
-                        SelectedValue="{Binding SelectedAriaLogLevel}">
+                        SelectedItem="{Binding SelectedAriaLogLevel}">
                         <i:Interaction.Behaviors>
                             <iac:ValueChangedTriggerBehavior Binding="{Binding SelectedAriaLogLevel}">
-                                <ia:InvokeCommandAction Command="{Binding SetAriaLogLevelsCommand}" CommandParameter="{Binding ElementName=ariaLogLevels, Path=SelectedValue}" />
+                                <ia:InvokeCommandAction Command="{Binding SetAriaLogLevelsCommand}" />
                             </iac:ValueChangedTriggerBehavior>
                         </i:Interaction.Behaviors>
                     </ComboBox>
@@ -223,15 +220,14 @@
                         VerticalAlignment="Center"
                         Text="{DynamicResource AriaMaxConcurrentDownloads}" />
                     <ComboBox
-                        Name="ariaMaxConcurrentDownloads"
                         Width="100"
                         VerticalContentAlignment="Center"
                         Classes="normal"
                         ItemsSource="{Binding AriaMaxConcurrentDownloads}"
-                        SelectedValue="{Binding SelectedAriaMaxConcurrentDownload}">
+                        SelectedItem="{Binding SelectedAriaMaxConcurrentDownload}">
                         <i:Interaction.Behaviors>
                             <iac:ValueChangedTriggerBehavior Binding="{Binding SelectedAriaMaxConcurrentDownload}">
-                                <ia:InvokeCommandAction Command="{Binding SetAriaMaxConcurrentDownloadsCommand}" CommandParameter="{Binding ElementName=ariaMaxConcurrentDownloads, Path=SelectedValue}" />
+                                <ia:InvokeCommandAction Command="{Binding SetAriaMaxConcurrentDownloadsCommand}" />
                             </iac:ValueChangedTriggerBehavior>
                         </i:Interaction.Behaviors>
                     </ComboBox>
@@ -243,15 +239,14 @@
                         VerticalAlignment="Center"
                         Text="{DynamicResource AriaSplit}" />
                     <ComboBox
-                        Name="ariaSplits"
                         Width="100"
                         VerticalContentAlignment="Center"
                         Classes="normal"
                         ItemsSource="{Binding AriaSplits}"
-                        SelectedValue="{Binding SelectedAriaSplit}">
+                        SelectedItem="{Binding SelectedAriaSplit}">
                         <i:Interaction.Behaviors>
                             <iac:ValueChangedTriggerBehavior Binding="{Binding SelectedAriaSplit}">
-                                <ia:InvokeCommandAction Command="{Binding SetAriaSplitsCommand}" CommandParameter="{Binding ElementName=ariaSplits, Path=SelectedValue}" />
+                                <ia:InvokeCommandAction Command="{Binding SetAriaSplitsCommand}" />
                             </iac:ValueChangedTriggerBehavior>
                         </i:Interaction.Behaviors>
                     </ComboBox>
@@ -376,7 +371,6 @@
                         VerticalAlignment="Center"
                         Text="{DynamicResource AriaFileAllocation}" />
                     <ComboBox
-                        Name="ariaFileAllocations"
                         Width="100"
                         VerticalContentAlignment="Center"
                         Classes="normal"
@@ -384,7 +378,7 @@
                         SelectedValue="{Binding SelectedAriaFileAllocation}">
                         <i:Interaction.Behaviors>
                             <iac:ValueChangedTriggerBehavior Binding="{Binding SelectedAriaFileAllocation}">
-                                <ia:InvokeCommandAction Command="{Binding SetAriaFileAllocationsCommand}" CommandParameter="{Binding ElementName=ariaFileAllocations, Path=SelectedValue}" />
+                                <ia:InvokeCommandAction Command="{Binding SetAriaFileAllocationsCommand}" />
                             </iac:ValueChangedTriggerBehavior>
                         </i:Interaction.Behaviors>
                     </ComboBox>

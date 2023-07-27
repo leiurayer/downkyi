@@ -9,6 +9,7 @@ using Downkyi.UI.ViewModels.Login;
 using Downkyi.UI.ViewModels.Settings;
 using Downkyi.UI.ViewModels.Toolbox;
 using Downkyi.UI.ViewModels.User;
+using Downkyi.UI.ViewModels.Video;
 using Downkyi.ViewModels;
 using Downkyi.ViewModels.Login;
 using Downkyi.ViewModels.Settings;
@@ -92,31 +93,41 @@ public static class ServiceLocator
                 .AddScoped<BaseServices>()
                 .AddSingleton<IBroadcastEvent, BroadcastEvent>()
                 .AddSingleton<INotificationEvent, NotificationEvent>()
+                .AddSingleton<IClipboardService, ClipboardService>()
                 .AddSingleton<IDictionaryResource, DictionaryResource>()
+                .AddSingleton<IMainSearchService, MainSearchService>()
                 .AddSingleton<INavigationService, NavigationService>()
                 .AddSingleton<IStoragePicker, StoragePicker>()
                 .AddSingleton<IStorageService, StorageService>()
                 //ViewModels
                 .AddSingleton<MainWindowViewModel>()
                 .AddSingleton<IndexViewModel>()
+                //
+                .AddSingleton<DownloadManagerViewModel>()
+                .AddSingleton<DownloadingViewModel>()
+                .AddSingleton<DownloadFinishedViewModel>()
+                //
                 .AddSingleton<LoginViewModel>()
                 .AddSingleton<QRCodeViewModelProxy>()
                 .AddSingleton<CookiesViewModel>()
-                .AddSingleton<MySpaceViewModel>()
-                .AddSingleton<UserSpaceViewModel>()
+                //
                 .AddSingleton<SettingsViewModel>()
                 .AddSingleton<BasicViewModel>()
                 .AddSingleton<NetworkViewModel>()
                 .AddSingleton<VideoViewModelProxy>()
                 .AddSingleton<DanmakuViewModelProxy>()
                 .AddSingleton<AboutViewModelProxy>()
-                .AddSingleton<DownloadManagerViewModel>()
-                .AddSingleton<DownloadingViewModel>()
-                .AddSingleton<DownloadFinishedViewModel>()
+                //
                 .AddSingleton<ToolboxViewModel>()
                 .AddSingleton<BiliHelperViewModel>()
                 .AddSingleton<DelogoViewModelProxy>()
                 .AddSingleton<ExtractMediaViewModelProxy>()
+                //
+                .AddSingleton<MySpaceViewModel>()
+                .AddSingleton<UserSpaceViewModel>()
+                //
+                .AddSingleton<VideoDetailViewModel>()
+                .AddSingleton<PublicFavoritesViewModel>()
                 .BuildServiceProvider());
         }
     }

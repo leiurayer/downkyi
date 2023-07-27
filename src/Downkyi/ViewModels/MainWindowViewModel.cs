@@ -1,5 +1,10 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using Avalonia;
+using Avalonia.Controls.ApplicationLifetimes;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using CommunityToolkit.Mvvm.Input;
+using Downkyi.Core.Settings;
+using Downkyi.Core.Settings.Enum;
 using Downkyi.Core.Utils;
 using Downkyi.UI.Mvvm;
 using Downkyi.UI.ViewModels;
@@ -8,8 +13,10 @@ using Downkyi.UI.ViewModels.Login;
 using Downkyi.UI.ViewModels.Settings;
 using Downkyi.UI.ViewModels.Toolbox;
 using Downkyi.UI.ViewModels.User;
+using System;
 using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Downkyi.ViewModels;
 
@@ -18,6 +25,8 @@ public partial class MainWindowViewModel : ViewModelBase
     public const string Key = "Main";
 
     private readonly LinkStack<string> _pages = new();
+
+    private readonly CancellationTokenSource? tokenSource;
 
     #region 页面属性申明
 
@@ -55,7 +64,60 @@ public partial class MainWindowViewModel : ViewModelBase
             MessageVisibility = false;
         });
 
+        // 监听剪贴板线程
+        string oldClip = string.Empty;
+        Task.Run(async () =>
+        {
+            CancellationToken cancellationToken = tokenSource!.Token;
+
+            if (Application.Current?.ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime desktop ||
+            desktop.MainWindow?.Clipboard is not { } provider)
+                throw new NullReferenceException("Missing Clipboard instance.");
+            await provider.SetTextAsync(oldClip);
+
+            while (true)
+            {
+                AllowStatus isListenClipboard = SettingsManager.GetInstance().IsListenClipboard();
+                if (isListenClipboard != AllowStatus.YES)
+                {
+                    continue;
+                }
+
+                // 判断是否该结束线程，若为true，跳出while循环
+                if (cancellationToken.IsCancellationRequested)
+                {
+                    break;
+                }
+                else
+                {
+                    string clip = await ClipboardService.GetTextAsync();
+                    if (clip.Equals(oldClip))
+                    {
+                        await Task.Delay(100);
+                        continue;
+                    }
+
+                    oldClip = clip;
+                    MainSearchService.BiliInput(clip);
+                }
+            }
+        }, (tokenSource = new CancellationTokenSource()).Token);
+
     }
+
+    #region 命令申明
+
+    /// <summary>
+    /// 退出窗口时执行
+    /// </summary>
+    [RelayCommand]
+    private void OnClosing()
+    {
+        // 取消任务
+        tokenSource?.Cancel();
+    }
+
+    #endregion
 
     public void Forward(string viewKey, Dictionary<string, object>? parameter = null)
     {

@@ -114,14 +114,11 @@ public partial class NetworkViewModel : BaseSettingsViewModel
         for (int i = 1; i <= 10; i++) { Splits.Add(i); }
 
         // Aria的日志等级
-        AriaLogLevels = new List<string>
-        {
-            "DEBUG",
-            "INFO",
-            "NOTICE",
-            "WARN",
-            "ERROR"
-        };
+        AriaLogLevels.Add("DEBUG");
+        AriaLogLevels.Add("INFO");
+        AriaLogLevels.Add("NOTICE");
+        AriaLogLevels.Add("WARN");
+        AriaLogLevels.Add("ERROR");
 
         // Aria同时下载数
         for (int i = 1; i <= 10; i++) { AriaMaxConcurrentDownloads.Add(i); }
@@ -130,12 +127,9 @@ public partial class NetworkViewModel : BaseSettingsViewModel
         for (int i = 1; i <= 10; i++) { AriaSplits.Add(i); }
 
         // Aria文件预分配
-        AriaFileAllocations = new List<string>
-        {
-            "NONE",
-            "PREALLOC",
-            "FALLOC"
-        };
+        AriaFileAllocations.Add("NONE");
+        AriaFileAllocations.Add("PREALLOC");
+        AriaFileAllocations.Add("FALLOC");
 
         #endregion
     }
@@ -288,10 +282,8 @@ public partial class NetworkViewModel : BaseSettingsViewModel
     /// </summary>
     /// <param name="parameter"></param>
     [RelayCommand]
-    private void SetMaxCurrentDownloads(object parameter)
+    private void SetMaxCurrentDownloads()
     {
-        SelectedMaxCurrentDownload = (int)parameter;
-
         bool isSucceed = SettingsManager.GetInstance().SetMaxCurrentDownloads(SelectedMaxCurrentDownload);
         PublishTip(Key, isSucceed);
     }
@@ -301,10 +293,8 @@ public partial class NetworkViewModel : BaseSettingsViewModel
     /// </summary>
     /// <param name="parameter"></param>
     [RelayCommand]
-    private void SetSplits(object parameter)
+    private void SetSplits()
     {
-        SelectedSplit = (int)parameter;
-
         bool isSucceed = SettingsManager.GetInstance().SetSplit(SelectedSplit);
         PublishTip(Key, isSucceed);
     }
@@ -389,9 +379,9 @@ public partial class NetworkViewModel : BaseSettingsViewModel
     /// </summary>
     /// <param name="parameter"></param>
     [RelayCommand]
-    private void SetAriaLogLevels(string parameter)
+    private void SetAriaLogLevels()
     {
-        var ariaLogLevel = parameter switch
+        var ariaLogLevel = SelectedAriaLogLevel switch
         {
             "DEBUG" => AriaConfigLogLevel.DEBUG,
             "INFO" => AriaConfigLogLevel.INFO,
@@ -409,10 +399,8 @@ public partial class NetworkViewModel : BaseSettingsViewModel
     /// </summary>
     /// <param name="parameter"></param>
     [RelayCommand]
-    private void SetAriaMaxConcurrentDownloads(object parameter)
+    private void SetAriaMaxConcurrentDownloads()
     {
-        SelectedAriaMaxConcurrentDownload = (int)parameter;
-
         bool isSucceed = SettingsManager.GetInstance().SetMaxCurrentDownloads(SelectedAriaMaxConcurrentDownload);
         PublishTip(Key, isSucceed);
     }
@@ -422,10 +410,8 @@ public partial class NetworkViewModel : BaseSettingsViewModel
     /// </summary>
     /// <param name="parameter"></param>
     [RelayCommand]
-    private void SetAriaSplits(object parameter)
+    private void SetAriaSplits()
     {
-        SelectedAriaSplit = (int)parameter;
-
         bool isSucceed = SettingsManager.GetInstance().SetAriaSplit(SelectedAriaSplit);
         PublishTip(Key, isSucceed);
     }
@@ -498,11 +484,10 @@ public partial class NetworkViewModel : BaseSettingsViewModel
     /// <summary>
     /// Aria文件预分配事件
     /// </summary>
-    /// <param name="parameter"></param>
     [RelayCommand]
-    private void SetAriaFileAllocations(string parameter)
+    private void SetAriaFileAllocations()
     {
-        var ariaFileAllocation = parameter switch
+        var ariaFileAllocation = SelectedAriaFileAllocation switch
         {
             "NONE" => AriaConfigFileAllocation.NONE,
             "PREALLOC" => AriaConfigFileAllocation.PREALLOC,

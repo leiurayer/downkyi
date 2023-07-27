@@ -50,13 +50,16 @@ public partial class SettingsManager
     /// <returns></returns>
     private AppSettings GetSettings()
     {
+        if (appSettings != null) { return appSettings; }
+
         try
         {
-            var fileStream = new FileStream(settingsName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-            var streamReader = new StreamReader(fileStream, System.Text.Encoding.UTF8);
-            string jsonWordTemplate = streamReader.ReadToEnd();
-            streamReader.Close();
-            fileStream.Close();
+            string jsonWordTemplate = string.Empty;
+            using (var stream = new FileStream(settingsName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite | FileShare.Delete))
+            {
+                using var reader = new StreamReader(stream, System.Text.Encoding.UTF8);
+                jsonWordTemplate = reader.ReadToEnd();
+            }
 
 #if DEBUG
 #else

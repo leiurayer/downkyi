@@ -2,6 +2,8 @@
     x:Class="Downkyi.Views.MainWindow"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
+    xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions.Core;assembly=Avalonia.Xaml.Interactions"
     xmlns:local="using:Downkyi"
     xmlns:vm="using:Downkyi.ViewModels"
     Title="{DynamicResource AppName}"
@@ -14,6 +16,11 @@
     Design.DataContext="{x:Static local:ServiceLocator.MainWindowViewModel}"
     Icon="/Assets/logo.ico"
     WindowStartupLocation="CenterScreen">
+    <i:Interaction.Behaviors>
+        <ia:EventTriggerBehavior EventName="Closing">
+            <ia:InvokeCommandAction Command="{Binding ClosingCommand}" />
+        </ia:EventTriggerBehavior>
+    </i:Interaction.Behaviors>
 
     <Grid>
         <ContentControl Content="{Binding Content}" />
