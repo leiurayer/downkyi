@@ -198,6 +198,12 @@ namespace DownKyi.Core.Utils
             // 控制字符
             destName = Regex.Replace(destName, @"\p{C}+", string.Empty);
 
+            // 如果只有空白字符、dot符
+            if (destName == " " || destName == ".")
+            {
+                return "[empty title]";
+            }
+
             // 移除前导和尾部的空白字符、dot符
             int i, j;
             for (i = 0; i < destName.Length; i++)

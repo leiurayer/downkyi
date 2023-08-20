@@ -1,4 +1,5 @@
 ﻿using DownKyi.Core.BiliApi.Users;
+using DownKyi.Core.BiliApi.Users.Models;
 using DownKyi.Core.Logging;
 using DownKyi.Core.Settings;
 using DownKyi.Core.Settings.Models;
@@ -12,6 +13,7 @@ using Prism.Regions;
 using Prism.Services.Dialogs;
 using System;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
@@ -227,14 +229,58 @@ namespace DownKyi.ViewModels
             InputText = string.Empty;
         }
 
+        private async Task<UserInfoForNavigation> GetUserInfo()
+        {
+            UserInfoForNavigation userInfo = null;
+            await Task.Run(new Action(() =>
+            {
+                // 获取用户信息
+                userInfo = UserInfo.GetUserInfoForNavigation();
+                if (userInfo != null)
+                {
+                    SettingsManager.GetInstance().SetUserInfo(new UserInfoSettings
+                    {
+                        Mid = userInfo.Mid,
+                        Name = userInfo.Name,
+                        IsLogin = userInfo.IsLogin,
+                        IsVip = userInfo.VipStatus == 1,
+                        ImgKey = userInfo.Wbi.ImgUrl.Split('/').ToList().Last().Split('.')[0],
+                        SubKey = userInfo.Wbi.SubUrl.Split('/').ToList().Last().Split('.')[0],
+                    });
+                }
+                else
+                {
+                    SettingsManager.GetInstance().SetUserInfo(new UserInfoSettings
+                    {
+                        Mid = -1,
+                        Name = "",
+                        IsLogin = false,
+                        IsVip = false,
+                    });
+                }
+
+            }));
+            return userInfo;
+        }
+
         /// <summary>
         /// 更新用户登录信息
         /// </summary>
-        private async void UpdateUserInfo()
+        private async void UpdateUserInfo(bool isBackgroud = false)
         {
             try
             {
+                if (isBackgroud)
+                {
+                    // 获取用户信息
+                    await GetUserInfo();
+                    return;
+                }
+
                 LoginPanelVisibility = Visibility.Hidden;
+
+                // 获取用户信息
+                var userInfo = await GetUserInfo();
 
                 // 检查本地是否存在login文件，没有则说明未登录
                 if (!File.Exists(StorageManager.GetLogin()))
@@ -245,54 +291,26 @@ namespace DownKyi.ViewModels
                     return;
                 }
 
-                await Task.Run(new Action(() =>
+                LoginPanelVisibility = Visibility.Visible;
+
+                if (userInfo != null)
                 {
-                    // 获取用户信息
-                    var userInfo = UserInfo.GetUserInfoForNavigation();
-                    if (userInfo != null)
+                    if (userInfo.Face != null)
                     {
-                        SettingsManager.GetInstance().SetUserInfo(new UserInfoSettings
-                        {
-                            Mid = userInfo.Mid,
-                            Name = userInfo.Name,
-                            IsLogin = userInfo.IsLogin,
-                            IsVip = userInfo.VipStatus == 1
-                        });
+                        Header = new StorageHeader().GetHeaderThumbnail(userInfo.Mid, userInfo.Name, userInfo.Face, 36, 36);
                     }
                     else
                     {
-                        SettingsManager.GetInstance().SetUserInfo(new UserInfoSettings
-                        {
-                            Mid = -1,
-                            Name = "",
-                            IsLogin = false,
-                            IsVip = false
-                        });
+                        Header = new BitmapImage(new Uri("pack://application:,,,/Resources/default_header.jpg"));
                     }
+                    UserName = userInfo.Name;
+                }
+                else
+                {
+                    Header = new BitmapImage(new Uri("pack://application:,,,/Resources/default_header.jpg"));
+                    UserName = null;
+                }
 
-                    PropertyChangeAsync(new Action(() =>
-                    {
-                        LoginPanelVisibility = Visibility.Visible;
-
-                        if (userInfo != null)
-                        {
-                            if (userInfo.Face != null)
-                            {
-                                Header = new StorageHeader().GetHeaderThumbnail(userInfo.Mid, userInfo.Name, userInfo.Face, 36, 36);
-                            }
-                            else
-                            {
-                                Header = new BitmapImage(new Uri("pack://application:,,,/Resources/default_header.jpg"));
-                            }
-                            UserName = userInfo.Name;
-                        }
-                        else
-                        {
-                            Header = new BitmapImage(new Uri("pack://application:,,,/Resources/default_header.jpg"));
-                            UserName = null;
-                        }
-                    }));
-                }));
             }
             catch (Exception e)
             {
@@ -316,22 +334,30 @@ namespace DownKyi.ViewModels
             string parameter = navigationContext.Parameters.GetValue<string>("Parameter");
             if (parameter == null)
             {
+                // 其他情况只更新设置的用户信息，不更新UI
+                UpdateUserInfo(true);
                 return;
             }
+
             // 启动
             if (parameter == "start")
             {
                 UpdateUserInfo();
             }
             // 从登录页面返回
-            if (parameter == "login")
+            else if (parameter == "login")
             {
                 UpdateUserInfo();
             }
             // 注销
-            if (parameter == "logout")
+            else if (parameter == "logout")
             {
                 UpdateUserInfo();
+            }
+            else
+            {
+                // 其他情况只更新设置的用户信息，不更新UI
+                UpdateUserInfo(true);
             }
 
         }

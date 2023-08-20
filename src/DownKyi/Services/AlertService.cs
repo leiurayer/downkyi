@@ -31,12 +31,13 @@ namespace DownKyi.Services
         /// 显示一个警告弹窗
         /// </summary>
         /// <param name="message"></param>
+        /// <param name="buttonNumber"></param>
         /// <returns></returns>
-        public ButtonResult ShowWarning(string message)
+        public ButtonResult ShowWarning(string message, int buttonNumber = 1)
         {
             VectorImage image = SystemIcon.Instance().Warning;
             string title = DictionaryResource.GetString("Warning");
-            return ShowMessage(image, title, message, 1);
+            return ShowMessage(image, title, message, buttonNumber);
         }
 
         /// <summary>

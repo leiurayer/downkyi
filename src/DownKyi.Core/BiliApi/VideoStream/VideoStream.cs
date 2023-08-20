@@ -1,4 +1,5 @@
 ﻿using DownKyi.Core.BiliApi.Models.Json;
+using DownKyi.Core.BiliApi.Sign;
 using DownKyi.Core.BiliApi.VideoStream.Models;
 using DownKyi.Core.Logging;
 using Newtonsoft.Json;
@@ -19,7 +20,14 @@ namespace DownKyi.Core.BiliApi.VideoStream
         /// <returns></returns>
         public static PlayerV2 PlayerV2(long avid, string bvid, long cid)
         {
-            string url = $"https://api.bilibili.com/x/player/v2?cid={cid}&aid={avid}&bvid={bvid}";
+            var parameters = new Dictionary<string, object>
+            {
+                { "avid", avid },
+                { "bvid", bvid },
+                { "cid", cid },
+            };
+            string query = WbiSign.ParametersToQuery(WbiSign.EncodeWbi(parameters));
+            string url = $"https://api.bilibili.com/x/player/wbi/v2?{query}";
             string referer = "https://www.bilibili.com";
             string response = WebClient.RequestWeb(url, referer);
 
@@ -93,11 +101,30 @@ namespace DownKyi.Core.BiliApi.VideoStream
         /// <returns></returns>
         public static PlayUrl GetVideoPlayUrl(long avid, string bvid, long cid, int quality = 125)
         {
-            string baseUrl = $"https://api.bilibili.com/x/player/playurl?cid={cid}&qn={quality}&fourk=1&fnver=0&fnval=4048";
-            string url;
-            if (bvid != null) { url = $"{baseUrl}&bvid={bvid}"; }
-            else if (avid > -1) { url = $"{baseUrl}&aid={avid}"; }
-            else { return null; }
+            var parameters = new Dictionary<string, object>
+            {
+                { "fourk", 1 },
+                { "fnver", 0 },
+                { "fnval", 4048 },
+                { "cid", cid },
+                { "qn", quality },
+            };
+
+            if (bvid != null)
+            {
+                parameters.Add("bvid", bvid);
+            }
+            else if (avid > -1)
+            {
+                parameters.Add("aid", avid);
+            }
+            else
+            {
+                return null;
+            }
+
+            string query = WbiSign.ParametersToQuery(WbiSign.EncodeWbi(parameters));
+            string url = $"https://api.bilibili.com/x/player/wbi/playurl?{query}";
 
             return GetPlayUrl(url);
         }

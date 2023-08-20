@@ -155,7 +155,7 @@ namespace DownKyi.ViewModels.DownloadManager
         private void ExecuteRemoveVideoCommand()
         {
             AlertService alertService = new AlertService(DialogService);
-            ButtonResult result = alertService.ShowWarning(DictionaryResource.GetString("ConfirmDelete"));
+            ButtonResult result = alertService.ShowWarning(DictionaryResource.GetString("ConfirmDelete"), 2);
             if (result != ButtonResult.OK)
             {
                 return;

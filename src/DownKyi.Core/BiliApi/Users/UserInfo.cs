@@ -1,7 +1,9 @@
-﻿using DownKyi.Core.BiliApi.Users.Models;
+﻿using DownKyi.Core.BiliApi.Sign;
+using DownKyi.Core.BiliApi.Users.Models;
 using DownKyi.Core.Logging;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 
 namespace DownKyi.Core.BiliApi.Users
 {
@@ -25,8 +27,7 @@ namespace DownKyi.Core.BiliApi.Users
                 UserInfoForNavigationOrigin userInfo = JsonConvert.DeserializeObject<UserInfoForNavigationOrigin>(response);
                 if (userInfo == null || userInfo.Data == null) { return null; }
 
-                if (userInfo.Data.IsLogin) { return userInfo.Data; }
-                else { return null; }
+                return userInfo.Data;
             }
             catch (Exception e)
             {
@@ -43,7 +44,12 @@ namespace DownKyi.Core.BiliApi.Users
         /// <returns></returns>
         public static UserInfoForSpace GetUserInfoForSpace(long mid)
         {
-            string url = $"https://api.bilibili.com/x/space/wbi/acc/info?mid={mid}";
+            var parameters = new Dictionary<string, object>
+            {
+                { "mid", mid }
+            };
+            string query = WbiSign.ParametersToQuery(WbiSign.EncodeWbi(parameters));
+            string url = $"https://api.bilibili.com/x/space/wbi/acc/info?{query}";
             string referer = "https://www.bilibili.com";
             string response = WebClient.RequestWeb(url, referer);
 
