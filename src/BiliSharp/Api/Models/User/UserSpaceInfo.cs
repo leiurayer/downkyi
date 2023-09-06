@@ -583,13 +583,13 @@ namespace BiliSharp.Api.Models.User
     /// 
     /// </summary>
     public class UserSpaceInfoDataTheme
-    {    }
+    { }
 
     /// <summary>
     /// 
     /// </summary>
     public class UserSpaceInfoDataSysNotice
-    {    }
+    { }
 
     /// <summary>
     /// 
