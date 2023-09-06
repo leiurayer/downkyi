@@ -9,9 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Downkyi.UI", "Downkyi.UI\Do
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Downkyi.Core", "Downkyi.Core\Downkyi.Core.csproj", "{5CED42DB-2155-45D0-B195-57BB894CB97B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BiliSharp", "BiliSharp\BiliSharp.csproj", "{199B3491-51F0-460D-AB90-191B7DD377D6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BiliSharp", "BiliSharp\BiliSharp.csproj", "{199B3491-51F0-460D-AB90-191B7DD377D6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BiliSharp.UnitTest", "BiliSharp.UnitTest\BiliSharp.UnitTest.csproj", "{107D1B61-6936-45A0-B4AF-3776C736649A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BiliSharp.UnitTest", "BiliSharp.UnitTest\BiliSharp.UnitTest.csproj", "{107D1B61-6936-45A0-B4AF-3776C736649A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Avalonia.Gif", "Avalonia.Gif\Avalonia.Gif.csproj", "{0E32DD42-C1C8-45A4-9572-8D963D85B0EF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{107D1B61-6936-45A0-B4AF-3776C736649A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{107D1B61-6936-45A0-B4AF-3776C736649A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{107D1B61-6936-45A0-B4AF-3776C736649A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E32DD42-C1C8-45A4-9572-8D963D85B0EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E32DD42-C1C8-45A4-9572-8D963D85B0EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E32DD42-C1C8-45A4-9572-8D963D85B0EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E32DD42-C1C8-45A4-9572-8D963D85B0EF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
