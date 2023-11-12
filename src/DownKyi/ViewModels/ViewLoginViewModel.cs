@@ -1,4 +1,4 @@
-﻿using DownKyi.Core.BiliApi.Login;
+﻿
 using DownKyi.Core.Logging;
 using DownKyi.Events;
 using DownKyi.Images;
@@ -11,6 +11,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Imaging;
+using DownKyi.Core.BiliApi.Login;
+using LoginQR = DownKyi.Core.BiliApi.LoginNew.LoginQR;
 
 namespace DownKyi.ViewModels
 {
@@ -103,7 +105,7 @@ namespace DownKyi.ViewModels
                 var loginUrl = LoginQR.GetLoginUrl();
                 if (loginUrl == null) { return; }
 
-                if (loginUrl.Status != true)
+                if (loginUrl.Code != 0)
                 {
                     ExecuteBackSpace();
                     return;
@@ -119,7 +121,7 @@ namespace DownKyi.ViewModels
                 Core.Utils.Debugging.Console.PrintLine(loginUrl.Data.Url + "\n");
                 LogManager.Debug(Tag, loginUrl.Data.Url);
 
-                GetLoginStatus(loginUrl.Data.OauthKey);
+                GetLoginStatus(loginUrl.Data.QrcodeKey);
             }
             catch (Exception e)
             {
@@ -141,24 +143,24 @@ namespace DownKyi.ViewModels
                 var loginStatus = LoginQR.GetLoginStatus(oauthKey);
                 if (loginStatus == null) { continue; }
 
-                Core.Utils.Debugging.Console.PrintLine(loginStatus.Code + "\n" + loginStatus.Message + "\n" + loginStatus.Url + "\n");
+                Core.Utils.Debugging.Console.PrintLine(loginStatus.Data.Code + "\n" + loginStatus.Data.Message + "\n" + loginStatus.Data.Url + "\n");
 
-                switch (loginStatus.Code)
+                switch (loginStatus.Data.Code)
                 {
-                    case -1:
-                        // 没有这个oauthKey
-
-                        // 发送通知
-                        eventAggregator.GetEvent<MessageEvent>().Publish(DictionaryResource.GetString("LoginKeyError"));
-                        LogManager.Info(Tag, DictionaryResource.GetString("LoginKeyError"));
-
-                        // 取消任务
-                        tokenSource.Cancel();
-
-                        // 创建新任务
-                        PropertyChangeAsync(new Action(() => { Task.Run(Login, (tokenSource = new CancellationTokenSource()).Token); }));
-                        break;
-                    case -2:
+                    // case -1:
+                    //     // 没有这个oauthKey
+                    //
+                    //     // 发送通知
+                    //     eventAggregator.GetEvent<MessageEvent>().Publish(DictionaryResource.GetString("LoginKeyError"));
+                    //     LogManager.Info(Tag, DictionaryResource.GetString("LoginKeyError"));
+                    //
+                    //     // 取消任务
+                    //     tokenSource.Cancel();
+                    //
+                    //     // 创建新任务
+                    //     PropertyChangeAsync(new Action(() => { Task.Run(Login, (tokenSource = new CancellationTokenSource()).Token); }));
+                    //     break;
+                    case 86038:
                         // 不匹配的oauthKey，超时或已确认的oauthKey
 
                         // 发送通知
@@ -171,10 +173,10 @@ namespace DownKyi.ViewModels
                         // 创建新任务
                         PropertyChangeAsync(new Action(() => { Task.Run(Login, (tokenSource = new CancellationTokenSource()).Token); }));
                         break;
-                    case -4:
+                    case 86010:
                         // 未扫码
                         break;
-                    case -5:
+                    case 86090:
                         // 已扫码，未确认
                         PropertyChangeAsync(new Action(() =>
                         {
@@ -192,7 +194,7 @@ namespace DownKyi.ViewModels
                         // 保存登录信息
                         try
                         {
-                            bool isSucceed = LoginHelper.SaveLoginInfoCookies(loginStatus.Url);
+                            bool isSucceed = LoginHelper.SaveLoginInfoCookies(loginStatus.Data.Url);
                             if (!isSucceed)
                             {
                                 eventAggregator.GetEvent<MessageEvent>().Publish(DictionaryResource.GetString("LoginFailed"));

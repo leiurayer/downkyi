@@ -179,6 +179,9 @@
     <Compile Include="BiliApi\History\Models\ToViewData.cs" />
     <Compile Include="BiliApi\History\Models\ToViewList.cs" />
     <Compile Include="BiliApi\History\ToView.cs" />
+    <Compile Include="BiliApi\LoginNew\LoginQR.cs" />
+    <Compile Include="BiliApi\LoginNew\Models\LoginStatus.cs" />
+    <Compile Include="BiliApi\LoginNew\Models\LoginUrl.cs" />
     <Compile Include="BiliApi\Login\LoginHelper.cs" />
     <Compile Include="BiliApi\Models\BaseModel.cs" />
     <Compile Include="BiliApi\BiliUtils\BvId.cs" />
