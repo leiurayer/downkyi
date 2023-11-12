@@ -23,7 +23,7 @@ namespace DownKyi.Core.BiliApi.Login
             string getLoginUrl = "https://passport.bilibili.com/qrcode/getLoginUrl";
             string referer = "https://passport.bilibili.com/login";
             string response = WebClient.RequestWeb(getLoginUrl, referer);
-            Console.Out.WriteLine(response);
+
             try
             {
                 var loginUrl = JsonConvert.DeserializeObject<LoginUrlOrigin>(response);
@@ -56,7 +56,7 @@ namespace DownKyi.Core.BiliApi.Login
 
             string response = WebClient.RequestWeb(url, referer, "POST", parameters);
             var loginInfo = new LoginStatus();
-            Console.Out.WriteLine(response);
+
             try
             {
                 if (response.Contains("\"code\":0") || response.Contains("\"code\": 0"))
