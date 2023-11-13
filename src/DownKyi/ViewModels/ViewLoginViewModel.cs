@@ -173,7 +173,7 @@ namespace DownKyi.ViewModels
                         // 创建新任务
                         PropertyChangeAsync(new Action(() => { Task.Run(Login, (tokenSource = new CancellationTokenSource()).Token); }));
                         break;
-                    case 86010:
+                    case 86101:
                         // 未扫码
                         break;
                     case 86090:
