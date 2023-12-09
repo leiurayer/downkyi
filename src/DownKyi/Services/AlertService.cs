@@ -67,10 +67,15 @@ namespace DownKyi.Services
                 { "message", message },
                 { "button_number", buttonNumber }
             };
-            dialogService.ShowDialog(ViewAlertDialogViewModel.Tag, param, buttonResult =>
+
+            App.PropertyChangeAsync(() =>
             {
-                result = buttonResult.Result;
+                dialogService.ShowDialog(ViewAlertDialogViewModel.Tag, param, buttonResult =>
+                {
+                    result = buttonResult.Result;
+                });
             });
+
             return result;
         }
 

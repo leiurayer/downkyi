@@ -144,7 +144,8 @@
 
     <system:String x:Key="TipAlreadyToAddDownloading">已经添加到下载列表~</system:String>
     <system:String x:Key="TipAlreadyToAddDownloaded">已经下载完成~</system:String>
-    <system:String x:Key="TipAddDownloadingZero">没有选中项符合下载要求！</system:String>
+    <system:String x:Key="TipAlreadyToAddDownloaded2">该视频已经下载完成，是否重新下载？</system:String>
+    <system:String x:Key="TipAddDownloadingZero">没有添加任何视频~</system:String>
     <system:String x:Key="TipAddDownloadingFinished1">成功添加了</system:String>
     <system:String x:Key="TipAddDownloadingFinished2">项~</system:String>
 

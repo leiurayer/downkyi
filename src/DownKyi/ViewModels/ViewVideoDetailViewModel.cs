@@ -773,7 +773,7 @@ namespace DownKyi.ViewModels
                 // 传递video对象
                 addToDownloadService.GetVideo(VideoInfoView, VideoSections.ToList());
                 // 下载
-                i = addToDownloadService.AddToDownload(eventAggregator, directory, isAll);
+                i = addToDownloadService.AddToDownload(eventAggregator, dialogService, directory, isAll);
             });
 
             if (directory == null)
