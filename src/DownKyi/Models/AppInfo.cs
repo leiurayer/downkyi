@@ -10,8 +10,8 @@ namespace DownKyi.Models
         public string VersionName { get; }
 
         const int a = 1;
-        const int b = 5;
-        const int c = 9;
+        const int b = 6;
+        const int c = 0;
 
         public AppInfo()
         {
