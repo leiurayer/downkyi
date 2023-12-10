@@ -11,7 +11,7 @@ namespace DownKyi.Models
 
         const int a = 1;
         const int b = 6;
-        const int c = 0;
+        const int c = 1;
 
         public AppInfo()
         {
