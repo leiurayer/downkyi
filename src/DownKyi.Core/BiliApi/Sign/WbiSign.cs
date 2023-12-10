@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -39,7 +40,7 @@ namespace DownKyi.Core.BiliApi.Sign
         /// </summary>
         /// <param name="parameters"></param>
         /// <returns></returns>
-        public static string ParametersToQuery(Dictionary<string, object> parameters)
+        public static string ParametersToQuery(Dictionary<string, string> parameters)
         {
             var keys = parameters.Keys.ToList();
             var queryList = new List<string>();
@@ -56,9 +57,51 @@ namespace DownKyi.Core.BiliApi.Sign
         /// </summary>
         /// <param name="parameters"></param>
         /// <returns></returns>
-        public static Dictionary<string, object> EncodeWbi(Dictionary<string, object> parameters)
+        public static Dictionary<string, string> EncodeWbi(Dictionary<string, object> parameters)
         {
-            return EncodeWbi(parameters, GetKey().Item1, GetKey().Item2);
+            return EncWbi(parameters, GetKey().Item1, GetKey().Item2);
+        }
+
+        /// <summary>
+        /// Wbi签名，返回所有参数字典
+        /// </summary>
+        /// <param name="parameters"></param>
+        /// <param name="imgKey"></param>
+        /// <param name="subKey"></param>
+        /// <returns></returns>
+        private static Dictionary<string, string> EncWbi(Dictionary<string, object> parameters, string imgKey, string subKey)
+        {
+            Dictionary<string, string> paraStr = new Dictionary<string, string>();
+            foreach (var para in parameters)
+            {
+                var key = para.Key;
+                var value = para.Value.ToString();
+                paraStr.Add(key, value);
+            }
+
+            string mixinKey = GetMixinKey(imgKey + subKey);
+            string currTime = DateTimeOffset.Now.ToUnixTimeSeconds().ToString();
+            //添加 wts 字段
+            paraStr["wts"] = currTime;
+            // 按照 key 重排参数
+            paraStr = paraStr.OrderBy(p => p.Key).ToDictionary(p => p.Key, p => p.Value);
+            //过滤 value 中的 "!'()*" 字符
+            paraStr = paraStr.ToDictionary(
+                kvp => kvp.Key,
+                kvp => new string(kvp.Value.Where(chr => !"!'()*".Contains(chr)).ToArray())
+            );
+            // 序列化参数
+            string query = new FormUrlEncodedContent(paraStr).ReadAsStringAsync().Result;
+            //计算 w_rid
+            using (MD5 md5 = MD5.Create())
+            {
+                //using MD5 md5 = MD5.Create();
+                byte[] hashBytes = md5.ComputeHash(Encoding.UTF8.GetBytes(query + mixinKey));
+                string wbiSign = BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
+                paraStr["w_rid"] = wbiSign;
+            }
+
+            return paraStr;
         }
 
         /// <summary>
@@ -76,7 +119,7 @@ namespace DownKyi.Core.BiliApi.Sign
 
             var newParameters = new Dictionary<string, object>
             {
-                { "wts", (long)(DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalSeconds }
+                { "wts", DateTimeOffset.Now.ToUnixTimeSeconds().ToString() }
             };
 
             foreach (var para in parameters)

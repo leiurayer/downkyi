@@ -103,6 +103,7 @@ namespace DownKyi.Core.BiliApi.VideoStream
         {
             var parameters = new Dictionary<string, object>
             {
+                { "from_client", "BROWSER" },
                 { "fourk", 1 },
                 { "fnver", 0 },
                 { "fnval", 4048 },
