@@ -34,6 +34,9 @@ namespace DownKyi.ViewModels
         // 保存输入字符串，避免被用户修改
         private string input = null;
 
+        // 保存当前页面服务，减少new的开销和接口调用次数
+        private IInfoService infoService;
+
         #region 页面属性申明
 
         private VectorImage arrowBack;
@@ -233,7 +236,7 @@ namespace DownKyi.ViewModels
                     input = InputText;
 
                     // 更新页面
-                    UnityUpdateView(UpdateView, input, null);
+                    UnityUpdateView(UpdateView, input, null, true);
 
                     // 是否自动解析视频
                     if (SettingsManager.GetInstance().IsAutoParseVideo() == AllowStatus.YES)
@@ -410,7 +413,7 @@ namespace DownKyi.ViewModels
                 {
                     LogManager.Debug(Tag, $"Video Page: {videoPage.Cid}");
 
-                    UnityUpdateView(ParseVideo, input, videoPage);
+                    UnityUpdateView(ParseVideo, input, videoPage, true);
                 });
             }
             catch (Exception e)
@@ -635,25 +638,34 @@ namespace DownKyi.ViewModels
         /// <param name="action"></param>
         /// <param name="input"></param>
         /// <param name="page"></param>
-        private void UnityUpdateView(Action<IInfoService, VideoPage> action, string input, VideoPage page)
+        /// <param name="force">强制new</param>
+        private void UnityUpdateView(Action<IInfoService, VideoPage> action, string input, VideoPage page,bool force = false)
         {
-            // 视频
-            if (ParseEntrance.IsAvUrl(input) || ParseEntrance.IsBvUrl(input))
+            if (infoService == null || force)
             {
-                action(new VideoInfoService(input), page);
-            }
+                // 视频
+                if (ParseEntrance.IsAvUrl(input) || ParseEntrance.IsBvUrl(input))
+                {
+                    infoService = new VideoInfoService(input);
+                }
 
-            // 番剧（电影、电视剧）
-            if (ParseEntrance.IsBangumiSeasonUrl(input) || ParseEntrance.IsBangumiEpisodeUrl(input) || ParseEntrance.IsBangumiMediaUrl(input))
-            {
-                action(new BangumiInfoService(input), page);
-            }
+                // 番剧（电影、电视剧）
+                if (ParseEntrance.IsBangumiSeasonUrl(input) || ParseEntrance.IsBangumiEpisodeUrl(input) || ParseEntrance.IsBangumiMediaUrl(input))
+                {
+                    infoService = new BangumiInfoService(input);
+                }
 
-            // 课程
-            if (ParseEntrance.IsCheeseSeasonUrl(input) || ParseEntrance.IsCheeseEpisodeUrl(input))
-            {
-                action(new CheeseInfoService(input), page);
+                // 课程
+                if (ParseEntrance.IsCheeseSeasonUrl(input) || ParseEntrance.IsCheeseEpisodeUrl(input))
+                {
+                    infoService = new CheeseInfoService(input);
+                }
             }
+            if (infoService == null)
+            {
+                return;
+            }
+            action(infoService, page);
         }
 
         /// <summary>
