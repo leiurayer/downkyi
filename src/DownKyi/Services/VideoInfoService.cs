@@ -151,7 +151,7 @@ namespace DownKyi.Services
                         Bvid = episode.Bvid,
                         Cid = episode.Cid,
                         EpisodeId = -1,
-                        FirstFrame = episode.Page.FirstFrame,
+                        FirstFrame = episode.Arc.Pic,
                         Order = order,
                         Name = episode.Title,
                         Duration = "N/A"
