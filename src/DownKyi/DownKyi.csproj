@@ -116,6 +116,7 @@
     <Compile Include="Models\Downloading.cs" />
     <Compile Include="Models\DownloadStatus.cs" />
     <Compile Include="Models\OrderFormatDisplay.cs" />
+    <Compile Include="Models\RepeatDownloadStrategyDisplay.cs" />
     <Compile Include="Services\AlertService.cs" />
     <Compile Include="Services\Download\AddToDownloadService.cs" />
     <Compile Include="Services\Download\CustomAriaDownloadService.cs" />
