@@ -73,6 +73,22 @@ namespace DownKyi.ViewModels.Settings
             get => autoDownloadAll;
             set => SetProperty(ref autoDownloadAll, value);
         }
+        
+        private List<RepeatDownloadStrategyDisplay> _repeatDownloadStrategy;
+
+        public List<RepeatDownloadStrategyDisplay> RepeatDownloadStrategy
+        {
+            get => _repeatDownloadStrategy;
+            set => SetProperty(ref _repeatDownloadStrategy, value);
+        }
+
+        private RepeatDownloadStrategyDisplay _selectedRepeatDownloadStrategy;
+
+        public RepeatDownloadStrategyDisplay SelectedRepeatDownloadStrategy
+        {
+            get => _selectedRepeatDownloadStrategy;
+            set => SetProperty(ref _selectedRepeatDownloadStrategy, value);
+        }
 
         #endregion
 
@@ -88,6 +104,14 @@ namespace DownKyi.ViewModels.Settings
                 new ParseScopeDisplay{ Name = DictionaryResource.GetString("ParseSelectedItem"), ParseScope = ParseScope.SELECTED_ITEM },
                 new ParseScopeDisplay{ Name = DictionaryResource.GetString("ParseCurrentSection"), ParseScope = ParseScope.CURRENT_SECTION },
                 new ParseScopeDisplay{ Name = DictionaryResource.GetString("ParseAll"), ParseScope = ParseScope.ALL }
+            };
+            
+            // 重复下载策略
+            RepeatDownloadStrategy = new List<RepeatDownloadStrategyDisplay>
+            {
+                new RepeatDownloadStrategyDisplay { Name = DictionaryResource.GetString("RepeatDownloadAsk"), RepeatDownloadStrategy = Core.Settings.RepeatDownloadStrategy.Ask },
+                new RepeatDownloadStrategyDisplay { Name = DictionaryResource.GetString("RepeatDownloadReDownload"), RepeatDownloadStrategy = Core.Settings.RepeatDownloadStrategy.ReDownload },
+                new RepeatDownloadStrategyDisplay { Name = DictionaryResource.GetString("RepeatDownloadReJumpOver"), RepeatDownloadStrategy = Core.Settings.RepeatDownloadStrategy.JumpOver }
             };
 
             #endregion
@@ -123,6 +147,10 @@ namespace DownKyi.ViewModels.Settings
             // 解析后是否自动下载解析视频
             AllowStatus isAutoDownloadAll = SettingsManager.GetInstance().IsAutoDownloadAll();
             AutoDownloadAll = isAutoDownloadAll == AllowStatus.YES;
+            
+            // 重复下载策略
+            var repeatDownloadStrategy = SettingsManager.GetInstance().GetRepeatDownloadStrategy();
+            SelectedRepeatDownloadStrategy = RepeatDownloadStrategy.FirstOrDefault(t => t.RepeatDownloadStrategy == repeatDownloadStrategy);
 
             isOnNavigatedTo = false;
         }
@@ -216,6 +244,26 @@ namespace DownKyi.ViewModels.Settings
             AllowStatus isAutoDownloadAll = AutoDownloadAll ? AllowStatus.YES : AllowStatus.NO;
 
             bool isSucceed = SettingsManager.GetInstance().IsAutoDownloadAll(isAutoDownloadAll);
+            PublishTip(isSucceed);
+        }
+        
+        // 解析范围事件
+        private DelegateCommand<object> _repeatDownloadStrategyCommand;
+
+        public DelegateCommand<object> RepeatDownloadStrategyCommand => _repeatDownloadStrategyCommand ?? (_repeatDownloadStrategyCommand = new DelegateCommand<object>(ExecuteRepeatDownloadStrategyCommand));
+
+        /// <summary>
+        /// 解析范围事件
+        /// </summary>
+        /// <param name="parameter"></param>
+        private void ExecuteRepeatDownloadStrategyCommand(object parameter)
+        {
+            if (!(parameter is RepeatDownloadStrategyDisplay repeatDownloadStrategy))
+            {
+                return;
+            }
+
+            var isSucceed = SettingsManager.GetInstance().SetRepeatDownloadStrategy(repeatDownloadStrategy.RepeatDownloadStrategy);
             PublishTip(isSucceed);
         }
 

@@ -279,21 +279,37 @@ namespace DownKyi.Services.Download
                         {
                             //eventAggregator.GetEvent<MessageEvent>().Publish($"{page.Name}{DictionaryResource.GetString("TipAlreadyToAddDownloaded")}");
                             //isDownloaded = true;
-
-                            AlertService alertService = new AlertService(dialogService);
-                            ButtonResult result = alertService.ShowInfo(DictionaryResource.GetString("TipAlreadyToAddDownloaded2"));
-                            if (result == ButtonResult.OK)
+                            var repeatDownloadStrategy = SettingsManager.GetInstance().GetRepeatDownloadStrategy();
+                            switch (repeatDownloadStrategy)
                             {
-                                App.PropertyChangeAsync(() =>
+                                case RepeatDownloadStrategy.Ask:
                                 {
-                                    App.DownloadedList.Remove(item);
-                                });
+                                    AlertService alertService = new AlertService(dialogService);
+                                    ButtonResult result = alertService.ShowInfo(DictionaryResource.GetString("TipAlreadyToAddDownloaded2"));
+                                    if (result == ButtonResult.OK)
+                                    {
+                                        App.PropertyChangeAsync(() =>
+                                        {
+                                            App.DownloadedList.Remove(item);
+                                        });
 
-                                isDownloaded = false;
-                            }
-                            else
-                            {
-                                isDownloaded = true;
+                                        isDownloaded = false;
+                                    }
+                                    else
+                                    {
+                                        isDownloaded = true;
+                                    }
+                                    break;
+                                }
+                                case RepeatDownloadStrategy.ReDownload:
+                                    isDownloaded = false;
+                                    break;
+                                case RepeatDownloadStrategy.JumpOver:
+                                    isDownloaded = true;
+                                    break;
+                                default:
+                                    isDownloaded = true;
+                                    break;
                             }
 
                             break;

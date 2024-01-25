@@ -19,6 +19,9 @@
 
         // 下载完成列表排序
         private readonly DownloadFinishedSort finishedSort = DownloadFinishedSort.DOWNLOAD;
+        
+        // 重复下载策略
+        private readonly RepeatDownloadStrategy _repeatDownloadStrategy = RepeatDownloadStrategy.Ask;
 
         /// <summary>
         /// 获取下载完成后的操作
@@ -182,5 +185,32 @@
             return SetSettings();
         }
 
+        /// <summary>
+        /// 获取重复下载策略
+        /// </summary>
+        /// <returns></returns>
+        public RepeatDownloadStrategy GetRepeatDownloadStrategy()
+        {
+            appSettings = GetSettings();
+            if (appSettings.Basic.RepeatDownloadStrategy == RepeatDownloadStrategy.Ask)
+            {
+                // 第一次获取，先设置默认值
+                SetRepeatDownloadStrategy(_repeatDownloadStrategy);
+                return _repeatDownloadStrategy;
+            }
+
+            return appSettings.Basic.RepeatDownloadStrategy;
+        }
+
+        /// <summary>
+        /// 设置重复下载策略
+        /// </summary>
+        /// <param name="repeatDownloadStrategy"></param>
+        /// <returns></returns>
+        public bool SetRepeatDownloadStrategy(RepeatDownloadStrategy repeatDownloadStrategy)
+        {
+            appSettings.Basic.RepeatDownloadStrategy = repeatDownloadStrategy;
+            return SetSettings();
+        }
     }
 }
