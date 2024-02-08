@@ -150,7 +150,7 @@ namespace DownKyi.Services.Download
                 }
             }
 
-            Task.WaitAll();
+            Task.WaitAll(parsingTasks.ToArray());
         }
 
         /// <summary>
