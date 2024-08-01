@@ -125,10 +125,15 @@ public partial class MainWindowViewModel : ViewModelBase
         var viewModel = SetContent(viewKey);
         if (viewModel == null) { return; }
 
+        // 如果前往的页面与当前页面相同，
+        // 则不添加新的页面到页面栈中
+        if (viewModel != Content)
+        {
+            _pages.Push(viewKey);
+        }
+
         viewModel.OnNavigatedTo(parameter);
         Content = viewModel;
-
-        _pages.Push(viewKey);
     }
 
     public void Backward(Dictionary<string, object>? parameter = null)

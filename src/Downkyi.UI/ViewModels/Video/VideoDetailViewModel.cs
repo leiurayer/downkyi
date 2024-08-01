@@ -11,7 +11,7 @@ public partial class VideoDetailViewModel : ViewModelBase
     public const string Key = "VideoDetail";
 
     // 保存输入字符串，避免被用户修改
-    private string? input = null;
+    private string? _input = null;
 
     #region 页面属性申明
 
@@ -85,6 +85,12 @@ public partial class VideoDetailViewModel : ViewModelBase
     {
         base.OnNavigatedTo(parameter);
 
+        if (parameter!.ContainsKey("value"))
+        {
+            _input = (string)parameter["value"];
+            InputText = _input;
+        }
+       
     }
 
 }
