@@ -23,9 +23,9 @@ public static class Cookies
     /// </summary>
     /// <param name="file"></param>
     /// <returns></returns>
-    public static CookieContainer ReadCookiesFromDisk(string file)
+    public static CookieContainer? ReadCookiesFromDisk(string file)
     {
-        return (CookieContainer)ObjectHelper.ReadObjectFromDisk(file);
+        return (CookieContainer?)ObjectHelper.ReadObjectFromDisk(file);
     }
 
     /// <summary>
@@ -37,16 +37,16 @@ public static class Cookies
     {
         var lstCookies = new List<Cookie>();
 
-        Hashtable table = (Hashtable)cc.GetType().InvokeMember("m_domainTable",
+        var table = (Hashtable?)cc.GetType().InvokeMember("m_domainTable",
             System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.GetField |
             System.Reflection.BindingFlags.Instance, null, cc, Array.Empty<object>());
 
-        foreach (object pathList in table.Values)
+        foreach (object pathList in table!.Values)
         {
-            SortedList lstCookieCol = (SortedList)pathList.GetType().InvokeMember("m_list",
+            var lstCookieCol = (SortedList?)pathList.GetType().InvokeMember("m_list",
                 System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.GetField
                 | System.Reflection.BindingFlags.Instance, null, pathList, Array.Empty<object>());
-            foreach (CookieCollection colCookies in lstCookieCol.Values)
+            foreach (CookieCollection colCookies in lstCookieCol!.Values)
             {
                 foreach (Cookie c in colCookies.Cast<Cookie>())
                 {
@@ -92,7 +92,7 @@ public static class Cookies
         if (strList2.Length == 0) { return cookieContainer; }
 
         // 获取expires
-        string expires = strList2.FirstOrDefault(it => it.Contains("Expires")).Split('=')[1];
+        string expires = strList2.FirstOrDefault(it => it.Contains("Expires"))!.Split('=')[1];
         DateTime dateTime = DateTime.Now;
         dateTime = dateTime.AddSeconds(int.Parse(expires));
 

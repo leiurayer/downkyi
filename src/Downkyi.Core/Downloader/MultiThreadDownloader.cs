@@ -3,6 +3,13 @@ using System.Net;
 
 namespace Downkyi.Core.Downloader;
 
+#pragma warning disable CS8601 // 引用类型赋值可能为 null。
+#pragma warning disable CS8602 // 解引用可能出现空引用。
+#pragma warning disable CS8604 // 引用类型参数可能为 null。
+#pragma warning disable CS8618 // 在退出构造函数时，不可为 null 的字段必须包含非 null 值。请考虑声明为可以为 null。
+#pragma warning disable CS8622 // 参数类型中引用类型的为 Null 性与目标委托不匹配(可能是由于为 Null 性特性)。
+#pragma warning disable CS8625 // 无法将 null 字面量转换为非 null 的引用类型。
+
 /// <summary>
 /// 文件合并改变事件
 /// </summary>
@@ -170,7 +177,7 @@ public class MultiThreadDownloader
     /// </summary>
     /// <param name="sourceUrl"></param>
     /// <param name="numOfParts"></param>
-    public MultiThreadDownloader(string sourceUrl, int numOfParts) : this(sourceUrl, null, numOfParts)
+        public MultiThreadDownloader(string sourceUrl, int numOfParts) : this(sourceUrl, null, numOfParts)
     {
     }
 
@@ -361,6 +368,7 @@ public class MultiThreadDownloader
     public long GetContentLength(ref bool rangeAllowed, ref string redirectedUrl)
     {
         _request.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.122 Safari/537.36";
+
         _request.ServicePoint.ConnectionLimit = 4;
         _requestConfigure(_request);
 
@@ -439,3 +447,10 @@ public class MultiThreadDownloader
 
     #endregion 公共方法
 }
+
+#pragma warning restore CS8625 // 无法将 null 字面量转换为非 null 的引用类型。
+#pragma warning restore CS8622 // 参数类型中引用类型的为 Null 性与目标委托不匹配(可能是由于为 Null 性特性)。
+#pragma warning restore CS8618 // 在退出构造函数时，不可为 null 的字段必须包含非 null 值。请考虑声明为可以为 null。
+#pragma warning restore CS8604 // 引用类型参数可能为 null。
+#pragma warning restore CS8602 // 解引用可能出现空引用。
+#pragma warning restore CS8601 // 引用类型赋值可能为 null。

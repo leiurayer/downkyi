@@ -19,7 +19,7 @@ public class MainSearchService : IMainSearchService
     {
         // 移除剪贴板id
         //string validId = input.Replace(AppConstant.ClipboardId, "");
-        
+
         string validId = input;
 
         // 参数

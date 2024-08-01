@@ -6,7 +6,6 @@ using Downkyi.Core.Settings;
 using Downkyi.Core.Settings.Models;
 using Downkyi.Core.Storage;
 using Downkyi.UI.Mvvm;
-using Downkyi.UI.Services;
 using Downkyi.UI.ViewModels.DownloadManager;
 using Downkyi.UI.ViewModels.Login;
 using Downkyi.UI.ViewModels.Settings;

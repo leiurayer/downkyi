@@ -4,7 +4,7 @@
 public class LinkStack<T>
 {
     //栈顶指示器
-    public Node<T> Top { get; set; }
+    public Node<T>? Top { get; set; }
 
     //栈中结点的个数
     public int NCount { get; set; }
@@ -49,36 +49,36 @@ public class LinkStack<T>
     }
 
     //出栈
-    public T Pop()
+    public T? Pop()
     {
         if (IsEmpty())
         {
             return default;
         }
-        Node<T> p = Top;
-        Top = Top.Next;
+        Node<T>? p = Top;
+        Top = Top!.Next;
         --NCount;
-        return p.Data;
+        return p!.Data;
     }
 
     //
-    public T Peek()
+    public T? Peek()
     {
         if (IsEmpty())
         {
             return default;
         }
 
-        return Top.Data;
+        return Top!.Data;
     }
 }
 
 //结点定义
 public class Node<T>
 {
-    public T Data;
+    public T? Data;
 
-    public Node<T> Next;
+    public Node<T>? Next;
 
     public Node(T item)
     {

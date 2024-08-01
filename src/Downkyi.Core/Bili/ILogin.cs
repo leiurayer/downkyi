@@ -8,18 +8,18 @@ public interface ILogin
     /// 申请二维码
     /// </summary>
     /// <returns>(url, key)</returns>
-    Tuple<string, string> GetQRCodeUrl();
+    Tuple<string, string>? GetQRCodeUrl();
 
     /// <summary>
     /// 扫码登录
     /// </summary>
     /// <param name="qrcodeKey"></param>
     /// <returns></returns>
-    QRCodeStatus PollQRCode(string qrcodeKey);
+    QRCodeStatus? PollQRCode(string qrcodeKey);
 
     /// <summary>
     /// 导航栏用户信息
     /// </summary>
     /// <returns></returns>
-    NavigationInfo GetNavigationInfo();
+    NavigationInfo? GetNavigationInfo();
 }

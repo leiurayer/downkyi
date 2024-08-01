@@ -27,7 +27,7 @@ public static class ListHelper
     /// <param name="item"></param>
     public static void AddUnique<T>(List<T> list, T item)
     {
-        if (!list.Exists(t => t.Equals(item)))
+        if (!list.Exists(t => t!.Equals(item)))
         {
             list.Add(item);
         }
@@ -42,7 +42,7 @@ public static class ListHelper
     /// <param name="index"></param>
     public static void InsertUnique<T>(List<T> list, T item, int index)
     {
-        if (!list.Exists(t => t.Equals(item)))
+        if (!list.Exists(t => t!.Equals(item)))
         {
             list.Insert(index, item);
         }

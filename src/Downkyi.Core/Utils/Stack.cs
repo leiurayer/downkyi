@@ -25,7 +25,7 @@ public class Stack<T>
         _data[++_top] = value;
     }
 
-    public T Pop()
+    public T? Pop()
     {
         if (IsEmpty)
         {
@@ -35,7 +35,7 @@ public class Stack<T>
         return _data[_top--];
     }
 
-    public T Peek()
+    public T? Peek()
     {
         if (IsEmpty)
         {

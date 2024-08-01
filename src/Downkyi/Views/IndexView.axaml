@@ -139,7 +139,6 @@
         <Grid Grid.Row="2" ColumnDefinitions="*,4*,*">
             <TextBox
                 Grid.Column="1"
-                VerticalContentAlignment="Center"
                 Classes="main"
                 Text="{Binding Path=InputText, Mode=TwoWay}"
                 Watermark="{DynamicResource IndexHintText}">

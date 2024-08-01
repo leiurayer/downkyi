@@ -19,13 +19,13 @@ public class NetworkSettings
     #region built-in
     public int Split { get; set; } = -1;
     public AllowStatus IsHttpProxy { get; set; } = AllowStatus.NONE;
-    public string HttpProxy { get; set; } = null;
+    public string? HttpProxy { get; set; } = null;
     public int HttpProxyListenPort { get; set; } = -1;
     #endregion
 
     #region Aria
-    public string AriaToken { get; set; } = null;
-    public string AriaHost { get; set; } = null;
+    public string? AriaToken { get; set; } = null;
+    public string? AriaHost { get; set; } = null;
     public int AriaListenPort { get; set; } = -1;
     public AriaConfigLogLevel AriaLogLevel { get; set; } = AriaConfigLogLevel.NOT_SET;
     public int AriaSplit { get; set; } = -1;
@@ -34,7 +34,7 @@ public class NetworkSettings
     public AriaConfigFileAllocation AriaFileAllocation { get; set; } = AriaConfigFileAllocation.NOT_SET;
 
     public AllowStatus IsAriaHttpProxy { get; set; } = AllowStatus.NONE;
-    public string AriaHttpProxy { get; set; } = null;
+    public string? AriaHttpProxy { get; set; } = null;
     public int AriaHttpProxyListenPort { get; set; } = -1;
     #endregion
 }

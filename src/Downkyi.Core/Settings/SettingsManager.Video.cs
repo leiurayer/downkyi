@@ -289,7 +289,7 @@ public partial class SettingsManager
     /// </summary>
     /// <param name="historyPaths"></param>
     /// <returns></returns>
-    public bool SetFileNameParts(List<FileNamePart> fileNameParts)
+    public bool SetFileNameParts(List<FileNamePart>? fileNameParts)
     {
         appSettings.Video.FileNameParts = fileNameParts;
         return SetSettings();

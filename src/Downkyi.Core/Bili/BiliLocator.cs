@@ -2,7 +2,7 @@
 
 public static class BiliLocator
 {
-    private static ILogin _login;
+    private static ILogin? _login;
     public static ILogin Login
     {
         get
@@ -12,7 +12,7 @@ public static class BiliLocator
         }
     }
 
-    private static IUser _user;
+    private static IUser? _user;
     public static IUser User
     {
         get
@@ -21,4 +21,18 @@ public static class BiliLocator
             return _user;
         }
     }
+
+    private static IVideo? _video;
+    public static IVideo Video(string input)
+    {
+        _video ??= new Web.Video(input);
+
+        if (_video.Input() != input)
+        {
+            _video = new Web.Video(input);
+        }
+
+        return _video;
+    }
+
 }

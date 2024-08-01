@@ -459,7 +459,7 @@ public static class ParseEntrance
     /// <returns></returns>
     private static string EnableHttps(string url)
     {
-        if (!IsUrl(url)) { return null; }
+        if (!IsUrl(url)) { return string.Empty; }
 
         return url.Replace("http://", "https://");
     }

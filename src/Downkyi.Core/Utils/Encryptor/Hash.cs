@@ -10,7 +10,7 @@ public static class Hash
     /// </summary>
     /// <param name="input"></param>
     /// <returns></returns>
-    public static string GetMd5Hash(string input)
+    public static string? GetMd5Hash(string input)
     {
         if (input == null)
         {

@@ -13,6 +13,7 @@ using Downkyi.UI.ViewModels.Login;
 using Downkyi.UI.ViewModels.Settings;
 using Downkyi.UI.ViewModels.Toolbox;
 using Downkyi.UI.ViewModels.User;
+using Downkyi.UI.ViewModels.Video;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -167,6 +168,12 @@ public partial class MainWindowViewModel : ViewModelBase
                 break;
             case ToolboxViewModel.Key:
                 viewModel = Ioc.Default.GetRequiredService<ToolboxViewModel>();
+                break;
+            case VideoDetailViewModel.Key:
+                viewModel = Ioc.Default.GetRequiredService<VideoDetailViewModel>();
+                break;
+            case PublicFavoritesViewModel.Key:
+                viewModel = Ioc.Default.GetRequiredService<PublicFavoritesViewModel>();
                 break;
             default:
                 break;

@@ -1,0 +1,385 @@
+<UserControl
+    x:Class="Downkyi.Views.Video.VideoDetailView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:asyncImageLoader="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:gif="clr-namespace:Avalonia.Gif;assembly=Avalonia.Gif"
+    xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
+    xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions.Core;assembly=Avalonia.Xaml.Interactions"
+    xmlns:local="using:Downkyi"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:Downkyi.UI.ViewModels.Video"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    x:CompileBindings="True"
+    x:DataType="vm:VideoDetailViewModel"
+    Design.DataContext="{x:Static local:ServiceLocator.VideoDetailViewModel}"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <DrawingImage x:Key="DownloadManagerDrawingImage">
+            <DrawingImage.Drawing>
+                <DrawingGroup ClipGeometry="M0,0 V20.01 H24.15 V0 H0 Z">
+                    <DrawingGroup.Transform>
+                        <TranslateTransform X="0.012936355546116829" Y="0.0082860654219985" />
+                    </DrawingGroup.Transform>
+                    <DrawingGroup Opacity="1">
+                        <DrawingGroup Opacity="1">
+                            <GeometryDrawing Brush="{DynamicResource BrushPrimary}" Geometry="F1 M24.15,20.01z M0,0z M11.9,19.91L4.6,19.91A4.38,4.38,0,0,1,0,15.21L0,4.71A4.38,4.38,0,0,1,4.6,0L8.5,0A3,3,0,0,1,11.2,1.3A4.45,4.45,0,0,0,15.8,3.4A17.83,17.83,0,0,1,19.8,3.4A4.25,4.25,0,0,1,24,7.71A57.48,57.48,0,0,1,24,16A4.2,4.2,0,0,1,19.7,20C16.9,19.9,14.4,19.9,11.9,19.9z M11.8,18.51L19.3,18.51A2.76,2.76,0,0,0,22.3,15.81A60.28,60.28,0,0,0,22.3,7.31A2.7,2.7,0,0,0,19.8,4.71A25.41,25.41,0,0,0,15.9,4.61C11.8,4.51,12.9,5.11,9.9,2.01A2.29,2.29,0,0,0,8.2,1.21L4.4,1.21A3.07,3.07,0,0,0,1.1,4.41L1.1,15.11A2.94,2.94,0,0,0,4.3,18.31C6.9,18.51,9.4,18.51,11.8,18.51z" />
+                            <GeometryDrawing Brush="{DynamicResource BrushPrimary}" Geometry="F1 M24.15,20.01z M0,0z M17.8,0.11L21.1,0.11C21.6,0.11 22,0.11 22,0.81 22,1.51 21.6,1.61 21.1,1.61L14.4,1.61C13.9,1.61 13.5,1.51 13.5,0.91 13.5,0.31 13.9,0.21 14.4,0.21 15.5,0.11 16.6,0.11 17.8,0.11z M11.2,13.51L11.2,8.11C11.2,7.61 11.2,7.01 11.9,7.01 12.6,7.01 12.5,7.61 12.5,8.01L12.5,13.21 14.2,11.51C14.5,11.11 14.9,10.81 15.4,11.31 15.9,11.81 15.5,12.21 15.2,12.51 14.3,13.51 13.4,14.41 12.5,15.31 12.1,15.81 11.7,15.81 11.2,15.41 10.2,14.41 9.2,13.31 8.2,12.31A0.68,0.68,0,0,1,8.1,11.31C8.4,10.91,8.8,11.01,9.1,11.41A10.43,10.43,0,0,1,11.2,13.51z" />
+                        </DrawingGroup>
+                    </DrawingGroup>
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+    </UserControl.Resources>
+
+    <Grid RowDefinitions="50,10,*">
+        <Grid
+            Grid.Row="0"
+            Height="50"
+            ColumnDefinitions="40,*,50">
+            <Button
+                Grid.Column="0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Classes="transparent"
+                Command="{Binding BackwardCommand}">
+                <Image
+                    Width="24"
+                    Height="24"
+                    Source="{StaticResource ArrowBackDrawingImage}" />
+            </Button>
+
+            <TextBox
+                Grid.Column="1"
+                Classes="main2"
+                Text="{Binding Path=InputText, Mode=TwoWay}"
+                Watermark="{DynamicResource HintText}">
+                <TextBox.KeyBindings>
+                    <KeyBinding Command="{Binding InputCommand}" Gesture="Enter" />
+                </TextBox.KeyBindings>
+                <TextBox.InnerRightContent>
+                    <gif:GifImage
+                        Width="20"
+                        Height="20"
+                        Margin="8"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        IsVisible="{Binding LoadingVisibility}"
+                        SourceUri="avares://Downkyi/Assets/bili/loading/loading.gif"
+                        Stretch="Uniform" />
+                </TextBox.InnerRightContent>
+            </TextBox>
+
+            <Button
+                Grid.Column="2"
+                Width="24"
+                Height="24"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Classes="transparent"
+                Command="{Binding DownloadManagerCommand}"
+                Cursor="Hand">
+                <Image
+                    Width="24"
+                    Height="24"
+                    Source="{StaticResource DownloadManagerDrawingImage}" />
+            </Button>
+        </Grid>
+
+        <Image
+            Grid.Row="1"
+            Opacity="0.3"
+            Source="/Assets/gradient.png"
+            Stretch="Fill" />
+
+        <Grid Grid.Row="2" IsVisible="{Binding ContentVisibility}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100*" MaxHeight="180" />
+                <RowDefinition Height="200*" />
+            </Grid.RowDefinitions>
+
+            <DockPanel Grid.Row="0" Margin="10,0">
+                <Image
+                    MinWidth="150"
+                    MaxWidth="300"
+                    VerticalAlignment="Top"
+                    asyncImageLoader:ImageLoader.Source="{Binding VideoInfoView.Cover}"
+                    DockPanel.Dock="Left">
+                    <Image.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Command="{Binding CopyCoverCommand}" Header="{DynamicResource CopyCover}" />
+                            <MenuItem Command="{Binding CopyCoverUrlCommand}" Header="{DynamicResource CopyCoverUrl}" />
+                            <!--  TODO 复制封面到文件  -->
+                        </ContextMenu>
+                    </Image.ContextMenu>
+                </Image>
+
+                <Grid
+                    Margin="10,0,0,0"
+                    VerticalAlignment="Stretch"
+                    DockPanel.Dock="Left"
+                    RowDefinitions="70,*">
+
+                    <Grid Grid.Row="0" ColumnDefinitions="*,120">
+                        <!--  标题、分区、发布时间（番剧不显示）、播放量、弹幕数量、up主  -->
+                        <Grid Grid.Column="0" RowDefinitions="3*,2*,2*">
+                            <TextBlock
+                                Grid.Row="0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                FontSize="16"
+                                FontWeight="Bold"
+                                Text="{Binding VideoInfoView.Title}"
+                                TextTrimming="CharacterEllipsis"
+                                ToolTip.Tip="{Binding VideoInfoView.Title}" />
+
+                            <StackPanel
+                                Grid.Row="1"
+                                VerticalAlignment="Center"
+                                Orientation="Horizontal">
+                                <TextBlock
+                                    Margin="0,0,10,0"
+                                    Foreground="{DynamicResource BrushTextGrey}"
+                                    Text="{Binding VideoInfoView.VideoZone}" />
+                                <TextBlock Foreground="{DynamicResource BrushTextGrey}" Text="{Binding VideoInfoView.CreateTime}" />
+                            </StackPanel>
+
+                            <StackPanel
+                                Grid.Row="2"
+                                VerticalAlignment="Center"
+                                Orientation="Horizontal">
+                                <StackPanel
+                                    Name="PlayNumber"
+                                    Margin="0,0,10,0"
+                                    Orientation="Horizontal">
+                                    <TextBlock
+                                        FontSize="12"
+                                        Foreground="{DynamicResource BrushTextGrey}"
+                                        Text="{Binding VideoInfoView.PlayNumber}" />
+                                    <TextBlock
+                                        FontSize="12"
+                                        Foreground="{DynamicResource BrushTextGrey}"
+                                        Text="{DynamicResource Play}" />
+                                    <i:Interaction.Behaviors>
+                                        <ia:DataTriggerBehavior
+                                            Binding="{Binding VideoInfoView.PlayNumber}"
+                                            ComparisonCondition="LessThanOrEqual"
+                                            Value="0">
+                                            <ia:ChangePropertyAction
+                                                PropertyName="IsVisible"
+                                                TargetObject="{Binding #PlayNumber}"
+                                                Value="False" />
+                                        </ia:DataTriggerBehavior>
+                                    </i:Interaction.Behaviors>
+                                </StackPanel>
+
+                                <StackPanel
+                                    Name="DanmakuNumber"
+                                    Margin="0,0,10,0"
+                                    Orientation="Horizontal">
+                                    <TextBlock
+                                        FontSize="12"
+                                        Foreground="{DynamicResource BrushTextGrey}"
+                                        Text="{Binding VideoInfoView.DanmakuNumber}" />
+                                    <TextBlock
+                                        FontSize="12"
+                                        Foreground="{DynamicResource BrushTextGrey}"
+                                        Text="{DynamicResource Danmaku}" />
+                                    <i:Interaction.Behaviors>
+                                        <ia:DataTriggerBehavior
+                                            Binding="{Binding VideoInfoView.DanmakuNumber}"
+                                            ComparisonCondition="LessThanOrEqual"
+                                            Value="0">
+                                            <ia:ChangePropertyAction
+                                                PropertyName="IsVisible"
+                                                TargetObject="{Binding #DanmakuNumber}"
+                                                Value="False" />
+                                        </ia:DataTriggerBehavior>
+                                    </i:Interaction.Behaviors>
+                                </StackPanel>
+
+                                <StackPanel
+                                    Name="LikeNumber"
+                                    Margin="0,0,10,0"
+                                    Orientation="Horizontal">
+                                    <TextBlock
+                                        FontSize="12"
+                                        Foreground="{DynamicResource BrushTextGrey}"
+                                        Text="{Binding VideoInfoView.LikeNumber}" />
+                                    <TextBlock
+                                        FontSize="12"
+                                        Foreground="{DynamicResource BrushTextGrey}"
+                                        Text="{DynamicResource Like}" />
+                                    <i:Interaction.Behaviors>
+                                        <ia:DataTriggerBehavior
+                                            Binding="{Binding VideoInfoView.LikeNumber}"
+                                            ComparisonCondition="LessThanOrEqual"
+                                            Value="0">
+                                            <ia:ChangePropertyAction
+                                                PropertyName="IsVisible"
+                                                TargetObject="{Binding #LikeNumber}"
+                                                Value="False" />
+                                        </ia:DataTriggerBehavior>
+                                    </i:Interaction.Behaviors>
+                                </StackPanel>
+
+                                <StackPanel
+                                    Name="CoinNumber"
+                                    Margin="0,0,10,0"
+                                    Orientation="Horizontal">
+                                    <TextBlock
+                                        FontSize="12"
+                                        Foreground="{DynamicResource BrushTextGrey}"
+                                        Text="{Binding VideoInfoView.CoinNumber}" />
+                                    <TextBlock
+                                        FontSize="12"
+                                        Foreground="{DynamicResource BrushTextGrey}"
+                                        Text="{DynamicResource Coin}" />
+                                    <i:Interaction.Behaviors>
+                                        <ia:DataTriggerBehavior
+                                            Binding="{Binding VideoInfoView.CoinNumber}"
+                                            ComparisonCondition="LessThanOrEqual"
+                                            Value="0">
+                                            <ia:ChangePropertyAction
+                                                PropertyName="IsVisible"
+                                                TargetObject="{Binding #CoinNumber}"
+                                                Value="False" />
+                                        </ia:DataTriggerBehavior>
+                                    </i:Interaction.Behaviors>
+                                </StackPanel>
+
+                                <StackPanel
+                                    Name="FavoriteNumber"
+                                    Margin="0,0,10,0"
+                                    Orientation="Horizontal">
+                                    <TextBlock
+                                        FontSize="12"
+                                        Foreground="{DynamicResource BrushTextGrey}"
+                                        Text="{Binding VideoInfoView.FavoriteNumber}" />
+                                    <TextBlock
+                                        FontSize="12"
+                                        Foreground="{DynamicResource BrushTextGrey}"
+                                        Text="{DynamicResource Favorite}" />
+                                    <i:Interaction.Behaviors>
+                                        <ia:DataTriggerBehavior
+                                            Binding="{Binding VideoInfoView.FavoriteNumber}"
+                                            ComparisonCondition="LessThanOrEqual"
+                                            Value="0">
+                                            <ia:ChangePropertyAction
+                                                PropertyName="IsVisible"
+                                                TargetObject="{Binding #FavoriteNumber}"
+                                                Value="False" />
+                                        </ia:DataTriggerBehavior>
+                                    </i:Interaction.Behaviors>
+                                </StackPanel>
+
+                                <StackPanel
+                                    Name="ShareNumber"
+                                    Margin="0,0,10,0"
+                                    Orientation="Horizontal">
+                                    <TextBlock
+                                        FontSize="12"
+                                        Foreground="{DynamicResource BrushTextGrey}"
+                                        Text="{Binding VideoInfoView.ShareNumber}" />
+                                    <TextBlock
+                                        FontSize="12"
+                                        Foreground="{DynamicResource BrushTextGrey}"
+                                        Text="{DynamicResource Share}" />
+                                    <i:Interaction.Behaviors>
+                                        <ia:DataTriggerBehavior
+                                            Binding="{Binding VideoInfoView.ShareNumber}"
+                                            ComparisonCondition="LessThanOrEqual"
+                                            Value="0">
+                                            <ia:ChangePropertyAction
+                                                PropertyName="IsVisible"
+                                                TargetObject="{Binding #ShareNumber}"
+                                                Value="False" />
+                                        </ia:DataTriggerBehavior>
+                                    </i:Interaction.Behaviors>
+                                </StackPanel>
+
+                                <StackPanel
+                                    Name="ReplyNumber"
+                                    Margin="0,0,10,0"
+                                    Orientation="Horizontal">
+                                    <TextBlock
+                                        FontSize="12"
+                                        Foreground="{DynamicResource BrushTextGrey}"
+                                        Text="{Binding VideoInfoView.ReplyNumber}" />
+                                    <TextBlock
+                                        FontSize="12"
+                                        Foreground="{DynamicResource BrushTextGrey}"
+                                        Text="{DynamicResource Reply}" />
+                                    <i:Interaction.Behaviors>
+                                        <ia:DataTriggerBehavior
+                                            Binding="{Binding VideoInfoView.ReplyNumber}"
+                                            ComparisonCondition="LessThanOrEqual"
+                                            Value="0">
+                                            <ia:ChangePropertyAction
+                                                PropertyName="IsVisible"
+                                                TargetObject="{Binding #ReplyNumber}"
+                                                Value="False" />
+                                        </ia:DataTriggerBehavior>
+                                    </i:Interaction.Behaviors>
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+
+                        <StackPanel
+                            Name="nameUp"
+                            Grid.Column="1"
+                            Cursor="Hand"
+                            ToolTip.Tip="{Binding VideoInfoView.UpName}">
+                            <i:Interaction.Behaviors>
+                                <ia:EventTriggerBehavior EventName="Tapped">
+                                    <ia:InvokeCommandAction Command="{Binding UpperCommand}" />
+                                </ia:EventTriggerBehavior>
+                            </i:Interaction.Behaviors>
+
+                            <Image
+                                Width="48"
+                                Height="48"
+                                asyncImageLoader:ImageLoader.Source="{Binding VideoInfoView.UpHeader}">
+                                <Image.Clip>
+                                    <EllipseGeometry
+                                        Center="24,24"
+                                        RadiusX="24"
+                                        RadiusY="24" />
+                                </Image.Clip>
+                            </Image>
+                            <TextBlock
+                                Margin="0,2,0,0"
+                                HorizontalAlignment="Center"
+                                FontSize="12"
+                                Foreground="{DynamicResource BrushTextDark}"
+                                Text="{Binding VideoInfoView.UpName}"
+                                TextTrimming="CharacterEllipsis" />
+                        </StackPanel>
+                    </Grid>
+
+                    <ScrollViewer
+                        Grid.Row="1"
+                        Margin="0,5,0,0"
+                        VerticalScrollBarVisibility="Auto">
+                        <TextBox
+                            Background="{x:Null}"
+                            BorderBrush="{x:Null}"
+                            BorderThickness="0"
+                            IsReadOnly="True"
+                            Text="{Binding VideoInfoView.Description}"
+                            TextWrapping="WrapWithOverflow" />
+                    </ScrollViewer>
+                </Grid>
+            </DockPanel>
+
+            <Grid
+                Grid.Row="1"
+                Margin="10"
+                RowDefinitions="*,40" />
+
+        </Grid>
+
+    </Grid>
+</UserControl>

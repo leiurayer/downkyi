@@ -210,7 +210,7 @@ public static class FFmpegHelper
     /// <param name="arg">参数</param>
     /// <param name="workingDirectory">工作路径</param>
     /// <param name="output">输出重定向</param>
-    private static void ExcuteProcess(string exe, string arg, string workingDirectory, DataReceivedEventHandler output)
+    private static void ExcuteProcess(string exe, string arg, string? workingDirectory, DataReceivedEventHandler output)
     {
         using var p = new Process();
         p.StartInfo.FileName = exe;

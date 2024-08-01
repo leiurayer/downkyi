@@ -28,12 +28,12 @@ public class BaseSettingsViewModel : ViewModelBase
         // 发送通知
         if (isSucceed)
         {
-            NotificationEvent.Publish(TipSettingUpdated);
+            //NotificationEvent.Publish(TipSettingUpdated);
             Log.Logger.Info($"{key}: {TipSettingUpdated}");
         }
         else
         {
-            NotificationEvent.Publish(TipSettingFailed);
+            //NotificationEvent.Publish(TipSettingFailed);
             Log.Logger.Info($"{key}: {TipSettingFailed}");
         }
     }

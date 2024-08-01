@@ -19,8 +19,8 @@
 
     <!--  Index  -->
     <sys:String x:Key="Login">登录</sys:String>
-    <sys:String x:Key="IndexHintText">请输入B站网址链接或av、BV号等……</sys:String>
-    <sys:String x:Key="IndexHintTextSimple">请输入B站视频播放地址……</sys:String>
+    <sys:String x:Key="IndexHintText">请输入B站网址链接或av、BV号等......</sys:String>
+    <sys:String x:Key="IndexHintTextSimple">请输入B站视频播放地址......</sys:String>
     <sys:String x:Key="Settings">设置</sys:String>
     <sys:String x:Key="DownloadManager">下载管理</sys:String>
     <sys:String x:Key="Toolbox">工具箱</sys:String>
@@ -120,6 +120,7 @@
     <sys:String x:Key="WhisperFollowing">悄悄关注</sys:String>
 
     <!--  VideoDetail  -->
+    <sys:String x:Key="HintText">请输入B站视频播放地址......</sys:String>
     <sys:String x:Key="CopyCover">复制封面图片</sys:String>
     <sys:String x:Key="CopyCoverUrl">复制封面URL</sys:String>
     <sys:String x:Key="Play">播放</sys:String>

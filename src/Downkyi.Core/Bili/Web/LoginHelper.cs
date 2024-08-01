@@ -58,7 +58,7 @@ public static class LoginHelper
     /// 获得登录的cookies
     /// </summary>
     /// <returns></returns>
-    public static CookieContainer GetLoginInfoCookies()
+    public static CookieContainer? GetLoginInfoCookies()
     {
         string tempFile = LOCAL_LOGIN_INFO + "-" + Guid.NewGuid().ToString("N");
 
@@ -80,7 +80,7 @@ public static class LoginHelper
         }
         else { return null; }
 
-        CookieContainer cookies = Cookies.ReadCookiesFromDisk(tempFile);
+        var cookies = Cookies.ReadCookiesFromDisk(tempFile);
 
         if (File.Exists(tempFile))
         {

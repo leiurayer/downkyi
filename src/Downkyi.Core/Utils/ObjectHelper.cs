@@ -15,8 +15,8 @@ public static class ObjectHelper
         try
         {
             using Stream stream = File.Create(file);
-            var formatter = new BinaryFormatter();
 #pragma warning disable SYSLIB0011 // 类型或成员已过时
+            var formatter = new BinaryFormatter();
             formatter.Serialize(stream, obj);
 #pragma warning restore SYSLIB0011 // 类型或成员已过时
 
@@ -39,13 +39,13 @@ public static class ObjectHelper
     /// </summary>
     /// <param name="file"></param>
     /// <returns></returns>
-    public static object ReadObjectFromDisk(string file)
+    public static object? ReadObjectFromDisk(string file)
     {
         try
         {
             using Stream stream = File.Open(file, FileMode.Open);
-            var formatter = new BinaryFormatter();
 #pragma warning disable SYSLIB0011 // 类型或成员已过时
+            var formatter = new BinaryFormatter();
             return formatter.Deserialize(stream);
 #pragma warning restore SYSLIB0011 // 类型或成员已过时
         }

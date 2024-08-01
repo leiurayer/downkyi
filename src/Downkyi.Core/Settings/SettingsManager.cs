@@ -10,7 +10,7 @@ namespace Downkyi.Core.Settings;
 
 public partial class SettingsManager
 {
-    private static SettingsManager instance;
+    private static SettingsManager? instance;
 
     // 内存中保存一份配置
     private AppSettings appSettings;
@@ -41,7 +41,7 @@ public partial class SettingsManager
     /// </summary>
     private SettingsManager()
     {
-        appSettings = GetSettings();
+        appSettings = GetSettings() ?? new AppSettings();
     }
 
     /// <summary>
@@ -67,7 +67,7 @@ public partial class SettingsManager
                 jsonWordTemplate = Encryptor.DecryptString(jsonWordTemplate, password);
 #endif
 
-            return JsonConvert.DeserializeObject<AppSettings>(jsonWordTemplate);
+            return JsonConvert.DeserializeObject<AppSettings>(jsonWordTemplate) ?? new AppSettings();
         }
         catch (Exception e)
         {

@@ -46,6 +46,12 @@ public static class ServiceLocator
     public static UserSpaceViewModel UserSpaceViewModel =>
         Ioc.Default.GetRequiredService<UserSpaceViewModel>();
 
+    // 视频页面
+    public static PublicFavoritesViewModel PublicFavoritesViewModel =>
+      Ioc.Default.GetRequiredService<PublicFavoritesViewModel>();
+    public static VideoDetailViewModel VideoDetailViewModel =>
+      Ioc.Default.GetRequiredService<VideoDetailViewModel>();
+
     // 设置
     public static SettingsViewModel SettingsViewModel =>
         Ioc.Default.GetRequiredService<SettingsViewModel>();
@@ -126,8 +132,8 @@ public static class ServiceLocator
                 .AddSingleton<MySpaceViewModel>()
                 .AddSingleton<UserSpaceViewModel>()
                 //
-                .AddSingleton<VideoDetailViewModel>()
                 .AddSingleton<PublicFavoritesViewModel>()
+                .AddSingleton<VideoDetailViewModel>()
                 .BuildServiceProvider());
         }
     }

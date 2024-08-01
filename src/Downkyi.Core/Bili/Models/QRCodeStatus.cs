@@ -2,8 +2,8 @@
 
 public class QRCodeStatus
 {
-    public string Url { get; set; }
-    public string Token { get; set; }
+    public string Url { get; set; } = string.Empty;
+    public string Token { get; set; } = string.Empty;
     public long Timestamp { get; set; }
 
     /// <summary>
@@ -13,5 +13,5 @@ public class QRCodeStatus
     /// 86101：未扫码
     /// </summary>
     public long Code { get; set; }
-    public string Message { get; set; }
+    public string Message { get; set; } = string.Empty;
 }
