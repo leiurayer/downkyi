@@ -42,7 +42,6 @@
     <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.1.1" />
     <PackageReference Include="Avalonia.Xaml.Behaviors" Version="11.1.0" />
     <PackageReference Include="MessageBox.Avalonia" Version="3.1.6" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
     <PackageReference Include="QRCoder" Version="1.6.0" />
   </ItemGroup>
   

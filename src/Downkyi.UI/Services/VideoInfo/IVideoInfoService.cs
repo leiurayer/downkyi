@@ -1,6 +1,6 @@
 ﻿using Downkyi.UI.Models;
 
-namespace Downkyi.UI.Services;
+namespace Downkyi.UI.Services.VideoInfo;
 
 public interface IVideoInfoService
 {

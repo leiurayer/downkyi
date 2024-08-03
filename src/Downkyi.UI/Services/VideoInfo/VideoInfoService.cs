@@ -1,7 +1,7 @@
 ﻿using Downkyi.Core.Bili;
 using Downkyi.UI.Models;
 
-namespace Downkyi.UI.Services;
+namespace Downkyi.UI.Services.VideoInfo;
 
 public class VideoInfoService : IVideoInfoService
 {
@@ -13,7 +13,7 @@ public class VideoInfoService : IVideoInfoService
         var video = BiliLocator.Video(input);
         var videoInfo = video.GetVideoInfo();
 
-        
+
 
         throw new NotImplementedException();
     }

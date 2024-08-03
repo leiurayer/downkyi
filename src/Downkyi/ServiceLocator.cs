@@ -3,6 +3,7 @@ using Downkyi.Services;
 using Downkyi.UI.Mvvm;
 using Downkyi.UI.Services;
 using Downkyi.UI.Services.Event;
+using Downkyi.UI.Services.VideoInfo;
 using Downkyi.UI.ViewModels;
 using Downkyi.UI.ViewModels.DownloadManager;
 using Downkyi.UI.ViewModels.Login;
@@ -105,6 +106,11 @@ public static class ServiceLocator
                 .AddSingleton<INavigationService, NavigationService>()
                 .AddSingleton<IStoragePicker, StoragePicker>()
                 .AddSingleton<IStorageService, StorageService>()
+                // 注册多个 IVideoInfoService 实现
+                .AddTransient<VideoInfoService>()
+                .AddTransient<BangumiInfoService>()
+                .AddTransient<CheeseInfoService>()
+                .AddSingleton<IVideoInfoServiceFactory, VideoInfoServiceFactory>()
                 //ViewModels
                 .AddSingleton<MainWindowViewModel>()
                 .AddSingleton<IndexViewModel>()

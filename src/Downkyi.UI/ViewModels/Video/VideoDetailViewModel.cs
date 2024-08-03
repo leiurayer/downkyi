@@ -2,17 +2,22 @@
 using CommunityToolkit.Mvvm.Input;
 using Downkyi.Core.Log;
 using Downkyi.Core.Settings;
+using Downkyi.Core.Settings.Enum;
 using Downkyi.Core.Settings.Models;
 using Downkyi.UI.Models;
 using Downkyi.UI.Mvvm;
+using Downkyi.UI.Services.VideoInfo;
 using Downkyi.UI.ViewModels.DownloadManager;
 using Downkyi.UI.ViewModels.User;
+using System.Text.RegularExpressions;
 
 namespace Downkyi.UI.ViewModels.Video;
 
 public partial class VideoDetailViewModel : ViewModelBase
 {
     public const string Key = "VideoDetail";
+
+    private readonly IVideoInfoServiceFactory _videoInfoServiceFactory;
 
     // 保存输入字符串，避免被用户修改
     private string? _input = null;
@@ -33,8 +38,11 @@ public partial class VideoDetailViewModel : ViewModelBase
 
     #endregion
 
-    public VideoDetailViewModel(BaseServices baseServices) : base(baseServices)
+    public VideoDetailViewModel(BaseServices baseServices,
+        IVideoInfoServiceFactory videoInfoServiceFactory) : base(baseServices)
     {
+        _videoInfoServiceFactory = videoInfoServiceFactory;
+
         #region 属性初始化
 
         ContentVisibility = true;
@@ -66,7 +74,28 @@ public partial class VideoDetailViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private void Input() { }
+    private async Task InputAsync()
+    {
+        if (InputText == null || InputText == string.Empty) { return; }
+
+        Log.Logger.Debug($"InputText: {InputText}");
+        _input = Regex.Replace(InputText, @"[【]*[^【]*[^】]*[】 ]", "");
+
+        await Task.Run(() =>
+        {
+            // 根据输入创建对应VideoInfoService（视频、番剧、课程...）
+            IVideoInfoService service = _videoInfoServiceFactory.Create(_input);
+
+            // 更新页面
+            var tryVideoInfoView = service.GetVideoView(_input);
+
+            // 是否自动解析视频
+            if (SettingsManager.GetInstance().IsAutoParseVideo() == AllowStatus.YES)
+            {
+                // TODO
+            }
+        });
+    }
 
     [RelayCommand(FlowExceptionsToTaskScheduler = true)]
     private async Task DownloadManager()
@@ -118,14 +147,20 @@ public partial class VideoDetailViewModel : ViewModelBase
         }
     }
 
-    public override void OnNavigatedTo(Dictionary<string, object>? parameter)
+    public override async void OnNavigatedTo(Dictionary<string, object>? parameter)
     {
         base.OnNavigatedTo(parameter);
 
         if (parameter!.TryGetValue("value", out object? value))
         {
-            _input = (string)value;
-            InputText = _input;
+            // 正在执行任务时不开启新任务
+            if (!LoadingVisibility)
+            {
+                _input = (string)value;
+                InputText = _input;
+
+                await InputAsync();
+            }
         }
 
     }

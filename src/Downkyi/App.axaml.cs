@@ -7,6 +7,7 @@ using Avalonia.Media;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Downkyi.UI.Services;
 using Downkyi.Views;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Downkyi;
 

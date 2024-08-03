@@ -1,4 +1,6 @@
-﻿using Downkyi.BiliSharp.Api.Models.Video;
+﻿using Downkyi.BiliSharp.Api.Login;
+using Downkyi.BiliSharp.Api.Models.Video;
+using Downkyi.BiliSharp.Api.Sign;
 using Downkyi.Core.Bili.Models;
 using Downkyi.Core.Bili.Utils;
 
@@ -18,6 +20,13 @@ internal class Video : IVideo
         }
 
         _input = input;
+
+        // 设置wbi keys
+        var info = LoginInfo.GetNavigationInfo();
+        var imgKey = info.Data.WbiImg.ImgUrl.Split('/').ToList().Last().Split('.')[0];
+        var subKey = info.Data.WbiImg.SubUrl.Split('/').ToList().Last().Split('.')[0];
+        var keys = new Tuple<string, string>(imgKey, subKey);
+        WbiSign.SetKey(keys);
 
         if (ParseEntrance.IsAvId(input) || ParseEntrance.IsAvUrl(input))
         {
