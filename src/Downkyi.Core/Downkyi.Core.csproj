@@ -12,8 +12,7 @@
     <PackageReference Include="Aria2cNet" Version="1.0.1" />
     <PackageReference Include="Downkyi.BiliSharp" Version="0.0.3" />
     <PackageReference Include="NLog" Version="5.3.2" />
-    <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
-    <PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.8" />
+    <PackageReference Include="sqlite-net-sqlcipher" Version="1.9.172" />
   </ItemGroup>
 
 </Project>
