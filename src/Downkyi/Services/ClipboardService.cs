@@ -16,4 +16,19 @@ public class ClipboardService : IClipboardService
 
         return await provider.GetTextAsync() ?? string.Empty;
     }
+
+    public async Task SetTextAsync(string text)
+    {
+        if (Application.Current?.ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime desktop ||
+            desktop.MainWindow?.Clipboard is not { } provider)
+            throw new NullReferenceException("Missing Clipboard instance.");
+
+        await provider.SetTextAsync(text);
+    }
+
+    public Task SetImageAsync(object obj)
+    {
+        throw new NotImplementedException();
+    }
+
 }

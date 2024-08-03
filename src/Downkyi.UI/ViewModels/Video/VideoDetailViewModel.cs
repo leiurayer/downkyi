@@ -1,8 +1,12 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Downkyi.Core.Log;
+using Downkyi.Core.Settings;
+using Downkyi.Core.Settings.Models;
 using Downkyi.UI.Models;
 using Downkyi.UI.Mvvm;
 using Downkyi.UI.ViewModels.DownloadManager;
+using Downkyi.UI.ViewModels.User;
 
 namespace Downkyi.UI.ViewModels.Video;
 
@@ -74,23 +78,56 @@ public partial class VideoDetailViewModel : ViewModelBase
     private void CopyCover() { }
 
     [RelayCommand]
-    private void CopyCoverUrl() { }
+    private async Task CopyCoverUrl()
+    {
+        // 复制封面url到剪贴板
+        await ClipboardService.SetTextAsync(VideoInfoView.CoverUrl);
+        Log.Logger.Info("复制封面url到剪贴板");
+    }
 
-    [RelayCommand]
-    private void Upper() { }
+    [RelayCommand(FlowExceptionsToTaskScheduler = true)]
+    private async Task Upper()
+    {
+        await NavigateToViewUserSpace(VideoInfoView.UpperMid);
+    }
 
     #endregion
+
+    /// <summary>
+    /// 导航到用户空间，
+    /// 如果传入的mid与本地登录的mid一致，
+    /// 则进入我的用户空间。
+    /// </summary>
+    /// <param name="mid"></param>
+    private async Task NavigateToViewUserSpace(long mid)
+    {
+        Dictionary<string, object> parameter = new()
+        {
+            { "key", Key },
+            { "value", mid },
+        };
+
+        UserInfoSettings userInfo = SettingsManager.GetInstance().GetUserInfo();
+        if (userInfo != null && userInfo.Mid == mid)
+        {
+            await NavigationService.ForwardAsync(MySpaceViewModel.Key, parameter);
+        }
+        else
+        {
+            await NavigationService.ForwardAsync(UserSpaceViewModel.Key, parameter);
+        }
+    }
 
     public override void OnNavigatedTo(Dictionary<string, object>? parameter)
     {
         base.OnNavigatedTo(parameter);
 
-        if (parameter!.ContainsKey("value"))
+        if (parameter!.TryGetValue("value", out object? value))
         {
-            _input = (string)parameter["value"];
+            _input = (string)value;
             InputText = _input;
         }
-       
+
     }
 
 }
