@@ -1,30 +1,42 @@
-﻿using Downkyi.Core.Storage;
-using SQLite;
+﻿using SQLite;
 
 namespace Downkyi.Core.Database.Login;
 
 public class LoginDatabase
 {
-    private const SQLiteOpenFlags _flags =
-        SQLiteOpenFlags.ReadWrite |
-        SQLiteOpenFlags.Create |
-        SQLiteOpenFlags.SharedCache;
-
-    private readonly string _databasePath = Constant.Login;
+    private readonly string _databasePath = Storage.StorageManager.GetLogin();
 
     private SQLiteAsyncConnection? _database;
+
+    // 私有构造函数防止外部实例化
+    private LoginDatabase() { }
+
+    // 单例模式
+    private static LoginDatabase? _instance;
+    private static readonly object _lock = new();
+    public static LoginDatabase Instance()
+    {
+        // 双重检查锁定
+        if (_instance == null)
+        {
+            lock (_lock)
+            {
+                _instance ??= new LoginDatabase();
+            }
+        }
+        return _instance;
+    }
 
     private async Task Init()
     {
         if (_database is not null)
             return;
 
-        _database = new SQLiteAsyncConnection(_databasePath, _flags);
+        var options = new SQLiteConnectionString(_databasePath, true, key: "Bu1rj3jc");
+        _database = new SQLiteAsyncConnection(options);
         await _database.CreateTableAsync<Cookies>();
         await _database.CreateTableAsync<Users>();
     }
-
-    // 增删查改
 
     public async Task<int> AddCookiesAsync(Cookies cookies)
     {
