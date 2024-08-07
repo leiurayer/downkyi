@@ -90,7 +90,7 @@ public partial class VideoDetailViewModel : ViewModelBase
             var tryVideoInfoView = service.GetVideoView(_input);
 
             // 是否自动解析视频
-            if (SettingsManager.GetInstance().IsAutoParseVideo() == AllowStatus.YES)
+            if (SettingsManager.Instance.IsAutoParseVideo() == AllowStatus.YES)
             {
                 // TODO
             }
@@ -136,7 +136,7 @@ public partial class VideoDetailViewModel : ViewModelBase
             { "value", mid },
         };
 
-        UserInfoSettings userInfo = SettingsManager.GetInstance().GetUserInfo();
+        UserInfoSettings userInfo = SettingsManager.Instance.GetUserInfo();
         if (userInfo != null && userInfo.Mid == mid)
         {
             await NavigationService.ForwardAsync(MySpaceViewModel.Key, parameter);

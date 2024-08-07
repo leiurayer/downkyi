@@ -145,14 +145,14 @@ public partial class NetworkViewModel : BaseSettingsViewModel
         IsOnNavigatedTo = true;
 
         // 启用https
-        AllowStatus useSSL = SettingsManager.GetInstance().UseSSL();
+        AllowStatus useSSL = SettingsManager.Instance.UseSSL();
         UseSSL = useSSL == AllowStatus.YES;
 
         // UserAgent
-        UserAgent = SettingsManager.GetInstance().GetUserAgent();
+        UserAgent = SettingsManager.Instance.GetUserAgent();
 
         // 选择下载器
-        var downloader = SettingsManager.GetInstance().GetDownloader();
+        var downloader = SettingsManager.Instance.GetDownloader();
         switch (downloader)
         {
             case Downloader.NOT_SET:
@@ -169,58 +169,58 @@ public partial class NetworkViewModel : BaseSettingsViewModel
         }
 
         // builtin同时下载数
-        SelectedMaxCurrentDownload = SettingsManager.GetInstance().GetMaxCurrentDownloads();
+        SelectedMaxCurrentDownload = SettingsManager.Instance.GetMaxCurrentDownloads();
 
         // builtin最大线程数
-        SelectedSplit = SettingsManager.GetInstance().GetSplit();
+        SelectedSplit = SettingsManager.Instance.GetSplit();
 
         // 是否开启builtin http代理
-        AllowStatus isHttpProxy = SettingsManager.GetInstance().IsHttpProxy();
+        AllowStatus isHttpProxy = SettingsManager.Instance.IsHttpProxy();
         IsHttpProxy = isHttpProxy == AllowStatus.YES;
 
         // builtin的http代理的地址
-        HttpProxy = SettingsManager.GetInstance().GetHttpProxy();
+        HttpProxy = SettingsManager.Instance.GetHttpProxy();
 
         // builtin的http代理的端口
-        HttpProxyPort = SettingsManager.GetInstance().GetHttpProxyListenPort();
+        HttpProxyPort = SettingsManager.Instance.GetHttpProxyListenPort();
 
         // Aria服务器host
-        AriaHost = SettingsManager.GetInstance().GetAriaHost();
+        AriaHost = SettingsManager.Instance.GetAriaHost();
 
         // Aria服务器端口
-        AriaListenPort = SettingsManager.GetInstance().GetAriaListenPort();
+        AriaListenPort = SettingsManager.Instance.GetAriaListenPort();
 
         // Aria服务器Token
-        AriaToken = SettingsManager.GetInstance().GetAriaToken();
+        AriaToken = SettingsManager.Instance.GetAriaToken();
 
         // Aria的日志等级
-        AriaConfigLogLevel ariaLogLevel = SettingsManager.GetInstance().GetAriaLogLevel();
+        AriaConfigLogLevel ariaLogLevel = SettingsManager.Instance.GetAriaLogLevel();
         SelectedAriaLogLevel = ariaLogLevel.ToString("G");
 
         // Aria同时下载数
-        SelectedAriaMaxConcurrentDownload = SettingsManager.GetInstance().GetMaxCurrentDownloads();
+        SelectedAriaMaxConcurrentDownload = SettingsManager.Instance.GetMaxCurrentDownloads();
 
         // Aria最大线程数
-        SelectedAriaSplit = SettingsManager.GetInstance().GetAriaSplit();
+        SelectedAriaSplit = SettingsManager.Instance.GetAriaSplit();
 
         // Aria下载速度限制
-        AriaMaxOverallDownloadLimit = SettingsManager.GetInstance().GetAriaMaxOverallDownloadLimit();
+        AriaMaxOverallDownloadLimit = SettingsManager.Instance.GetAriaMaxOverallDownloadLimit();
 
         // Aria下载单文件速度限制
-        AriaMaxDownloadLimit = SettingsManager.GetInstance().GetAriaMaxDownloadLimit();
+        AriaMaxDownloadLimit = SettingsManager.Instance.GetAriaMaxDownloadLimit();
 
         // 是否开启Aria http代理
-        AllowStatus isAriaHttpProxy = SettingsManager.GetInstance().IsAriaHttpProxy();
+        AllowStatus isAriaHttpProxy = SettingsManager.Instance.IsAriaHttpProxy();
         IsAriaHttpProxy = isAriaHttpProxy == AllowStatus.YES;
 
         // Aria的http代理的地址
-        AriaHttpProxy = SettingsManager.GetInstance().GetAriaHttpProxy();
+        AriaHttpProxy = SettingsManager.Instance.GetAriaHttpProxy();
 
         // Aria的http代理的端口
-        AriaHttpProxyPort = SettingsManager.GetInstance().GetAriaHttpProxyListenPort();
+        AriaHttpProxyPort = SettingsManager.Instance.GetAriaHttpProxyListenPort();
 
         // Aria文件预分配
-        AriaConfigFileAllocation ariaFileAllocation = SettingsManager.GetInstance().GetAriaFileAllocation();
+        AriaConfigFileAllocation ariaFileAllocation = SettingsManager.Instance.GetAriaFileAllocation();
         SelectedAriaFileAllocation = ariaFileAllocation.ToString("G");
 
         IsOnNavigatedTo = false;
@@ -234,7 +234,7 @@ public partial class NetworkViewModel : BaseSettingsViewModel
     {
         AllowStatus useSSL = UseSSL ? AllowStatus.YES : AllowStatus.NO;
 
-        bool isSucceed = SettingsManager.GetInstance().UseSSL(useSSL);
+        bool isSucceed = SettingsManager.Instance.UseSSL(useSSL);
         PublishTip(Key, isSucceed);
     }
 
@@ -244,7 +244,7 @@ public partial class NetworkViewModel : BaseSettingsViewModel
     [RelayCommand]
     private void SetUserAgent()
     {
-        bool isSucceed = SettingsManager.GetInstance().SetUserAgent(UserAgent);
+        bool isSucceed = SettingsManager.Instance.SetUserAgent(UserAgent);
         PublishTip(Key, isSucceed);
     }
 
@@ -260,9 +260,9 @@ public partial class NetworkViewModel : BaseSettingsViewModel
             "Builtin" => Downloader.BUILT_IN,
             "Aria2c" => Downloader.ARIA,
             "CustomAria2c" => Downloader.CUSTOM_ARIA,
-            _ => SettingsManager.GetInstance().GetDownloader(),
+            _ => SettingsManager.Instance.GetDownloader(),
         };
-        bool isSucceed = SettingsManager.GetInstance().SetDownloader(downloader);
+        bool isSucceed = SettingsManager.Instance.SetDownloader(downloader);
         PublishTip(Key, isSucceed);
 
         // 弹窗提示是否重启程序
@@ -284,7 +284,7 @@ public partial class NetworkViewModel : BaseSettingsViewModel
     [RelayCommand]
     private void SetMaxCurrentDownloads()
     {
-        bool isSucceed = SettingsManager.GetInstance().SetMaxCurrentDownloads(SelectedMaxCurrentDownload);
+        bool isSucceed = SettingsManager.Instance.SetMaxCurrentDownloads(SelectedMaxCurrentDownload);
         PublishTip(Key, isSucceed);
     }
 
@@ -295,7 +295,7 @@ public partial class NetworkViewModel : BaseSettingsViewModel
     [RelayCommand]
     private void SetSplits()
     {
-        bool isSucceed = SettingsManager.GetInstance().SetSplit(SelectedSplit);
+        bool isSucceed = SettingsManager.Instance.SetSplit(SelectedSplit);
         PublishTip(Key, isSucceed);
     }
 
@@ -307,7 +307,7 @@ public partial class NetworkViewModel : BaseSettingsViewModel
     {
         AllowStatus isHttpProxy = IsHttpProxy ? AllowStatus.YES : AllowStatus.NO;
 
-        bool isSucceed = SettingsManager.GetInstance().IsHttpProxy(isHttpProxy);
+        bool isSucceed = SettingsManager.Instance.IsHttpProxy(isHttpProxy);
         PublishTip(Key, isSucceed);
     }
 
@@ -318,7 +318,7 @@ public partial class NetworkViewModel : BaseSettingsViewModel
     [RelayCommand]
     private void SetHttpProxy(string parameter)
     {
-        bool isSucceed = SettingsManager.GetInstance().SetHttpProxy(parameter);
+        bool isSucceed = SettingsManager.Instance.SetHttpProxy(parameter);
         PublishTip(Key, isSucceed);
     }
 
@@ -332,7 +332,7 @@ public partial class NetworkViewModel : BaseSettingsViewModel
         int httpProxyPort = (int)Number.GetInt(parameter);
         HttpProxyPort = httpProxyPort;
 
-        bool isSucceed = SettingsManager.GetInstance().SetHttpProxyListenPort(HttpProxyPort);
+        bool isSucceed = SettingsManager.Instance.SetHttpProxyListenPort(HttpProxyPort);
         PublishTip(Key, isSucceed);
     }
 
@@ -344,7 +344,7 @@ public partial class NetworkViewModel : BaseSettingsViewModel
     private void SetAriaHost(string parameter)
     {
         AriaHost = parameter;
-        bool isSucceed = SettingsManager.GetInstance().SetAriaHost(AriaHost);
+        bool isSucceed = SettingsManager.Instance.SetAriaHost(AriaHost);
         PublishTip(Key, isSucceed);
     }
 
@@ -358,7 +358,7 @@ public partial class NetworkViewModel : BaseSettingsViewModel
         int listenPort = (int)Number.GetInt(parameter);
         AriaListenPort = listenPort;
 
-        bool isSucceed = SettingsManager.GetInstance().SetAriaListenPort(AriaListenPort);
+        bool isSucceed = SettingsManager.Instance.SetAriaListenPort(AriaListenPort);
         PublishTip(Key, isSucceed);
     }
 
@@ -370,7 +370,7 @@ public partial class NetworkViewModel : BaseSettingsViewModel
     private void SetAriaToken(string parameter)
     {
         AriaToken = parameter;
-        bool isSucceed = SettingsManager.GetInstance().SetAriaToken(AriaToken);
+        bool isSucceed = SettingsManager.Instance.SetAriaToken(AriaToken);
         PublishTip(Key, isSucceed);
     }
 
@@ -390,7 +390,7 @@ public partial class NetworkViewModel : BaseSettingsViewModel
             "ERROR" => AriaConfigLogLevel.ERROR,
             _ => AriaConfigLogLevel.INFO,
         };
-        bool isSucceed = SettingsManager.GetInstance().SetAriaLogLevel(ariaLogLevel);
+        bool isSucceed = SettingsManager.Instance.SetAriaLogLevel(ariaLogLevel);
         PublishTip(Key, isSucceed);
     }
 
@@ -401,7 +401,7 @@ public partial class NetworkViewModel : BaseSettingsViewModel
     [RelayCommand]
     private void SetAriaMaxConcurrentDownloads()
     {
-        bool isSucceed = SettingsManager.GetInstance().SetMaxCurrentDownloads(SelectedAriaMaxConcurrentDownload);
+        bool isSucceed = SettingsManager.Instance.SetMaxCurrentDownloads(SelectedAriaMaxConcurrentDownload);
         PublishTip(Key, isSucceed);
     }
 
@@ -412,7 +412,7 @@ public partial class NetworkViewModel : BaseSettingsViewModel
     [RelayCommand]
     private void SetAriaSplits()
     {
-        bool isSucceed = SettingsManager.GetInstance().SetAriaSplit(SelectedAriaSplit);
+        bool isSucceed = SettingsManager.Instance.SetAriaSplit(SelectedAriaSplit);
         PublishTip(Key, isSucceed);
     }
 
@@ -426,7 +426,7 @@ public partial class NetworkViewModel : BaseSettingsViewModel
         int downloadLimit = (int)Number.GetInt(parameter);
         AriaMaxOverallDownloadLimit = downloadLimit;
 
-        bool isSucceed = SettingsManager.GetInstance().SetAriaMaxOverallDownloadLimit(AriaMaxOverallDownloadLimit);
+        bool isSucceed = SettingsManager.Instance.SetAriaMaxOverallDownloadLimit(AriaMaxOverallDownloadLimit);
         PublishTip(Key, isSucceed);
     }
 
@@ -440,7 +440,7 @@ public partial class NetworkViewModel : BaseSettingsViewModel
         int downloadLimit = (int)Number.GetInt(parameter);
         AriaMaxDownloadLimit = downloadLimit;
 
-        bool isSucceed = SettingsManager.GetInstance().SetAriaMaxDownloadLimit(AriaMaxDownloadLimit);
+        bool isSucceed = SettingsManager.Instance.SetAriaMaxDownloadLimit(AriaMaxDownloadLimit);
         PublishTip(Key, isSucceed);
     }
 
@@ -452,7 +452,7 @@ public partial class NetworkViewModel : BaseSettingsViewModel
     {
         AllowStatus isAriaHttpProxy = IsAriaHttpProxy ? AllowStatus.YES : AllowStatus.NO;
 
-        bool isSucceed = SettingsManager.GetInstance().IsAriaHttpProxy(isAriaHttpProxy);
+        bool isSucceed = SettingsManager.Instance.IsAriaHttpProxy(isAriaHttpProxy);
         PublishTip(Key, isSucceed);
     }
 
@@ -463,7 +463,7 @@ public partial class NetworkViewModel : BaseSettingsViewModel
     [RelayCommand]
     private void SetAriaHttpProxy(string parameter)
     {
-        bool isSucceed = SettingsManager.GetInstance().SetAriaHttpProxy(parameter);
+        bool isSucceed = SettingsManager.Instance.SetAriaHttpProxy(parameter);
         PublishTip(Key, isSucceed);
     }
 
@@ -477,7 +477,7 @@ public partial class NetworkViewModel : BaseSettingsViewModel
         int httpProxyPort = (int)Number.GetInt(parameter);
         AriaHttpProxyPort = httpProxyPort;
 
-        bool isSucceed = SettingsManager.GetInstance().SetAriaHttpProxyListenPort(AriaHttpProxyPort);
+        bool isSucceed = SettingsManager.Instance.SetAriaHttpProxyListenPort(AriaHttpProxyPort);
         PublishTip(Key, isSucceed);
     }
 
@@ -494,7 +494,7 @@ public partial class NetworkViewModel : BaseSettingsViewModel
             "FALLOC" => AriaConfigFileAllocation.FALLOC,
             _ => AriaConfigFileAllocation.PREALLOC,
         };
-        bool isSucceed = SettingsManager.GetInstance().SetAriaFileAllocation(ariaFileAllocation);
+        bool isSucceed = SettingsManager.Instance.SetAriaFileAllocation(ariaFileAllocation);
         PublishTip(Key, isSucceed);
     }
 

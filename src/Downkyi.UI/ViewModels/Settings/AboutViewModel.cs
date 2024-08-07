@@ -48,11 +48,11 @@ public partial class AboutViewModel : BaseSettingsViewModel
         IsOnNavigatedTo = true;
 
         // 是否接收测试版更新
-        var isReceiveBetaVersion = SettingsManager.GetInstance().IsReceiveBetaVersion();
+        var isReceiveBetaVersion = SettingsManager.Instance.IsReceiveBetaVersion();
         IsReceiveBetaVersion = isReceiveBetaVersion == AllowStatus.YES;
 
         // 是否在启动时自动检查更新
-        var isAutoUpdateWhenLaunch = SettingsManager.GetInstance().GetAutoUpdateWhenLaunch();
+        var isAutoUpdateWhenLaunch = SettingsManager.Instance.GetAutoUpdateWhenLaunch();
         IsAutoUpdateWhenLaunch = isAutoUpdateWhenLaunch == AllowStatus.YES;
 
         IsOnNavigatedTo = false;
@@ -94,7 +94,7 @@ public partial class AboutViewModel : BaseSettingsViewModel
     {
         AllowStatus isReceiveBetaVersion = IsReceiveBetaVersion ? AllowStatus.YES : AllowStatus.NO;
 
-        bool isSucceed = SettingsManager.GetInstance().IsReceiveBetaVersion(isReceiveBetaVersion);
+        bool isSucceed = SettingsManager.Instance.IsReceiveBetaVersion(isReceiveBetaVersion);
         PublishTip(Key, isSucceed);
     }
 
@@ -106,7 +106,7 @@ public partial class AboutViewModel : BaseSettingsViewModel
     {
         AllowStatus isAutoUpdateWhenLaunch = IsAutoUpdateWhenLaunch ? AllowStatus.YES : AllowStatus.NO;
 
-        bool isSucceed = SettingsManager.GetInstance().SetAutoUpdateWhenLaunch(isAutoUpdateWhenLaunch);
+        bool isSucceed = SettingsManager.Instance.SetAutoUpdateWhenLaunch(isAutoUpdateWhenLaunch);
         PublishTip(Key, isSucceed);
     }
 

@@ -70,7 +70,7 @@ public partial class IndexViewModel : ViewModelBase
         else
         {
             // 进入用户空间
-            var userInfo = SettingsManager.GetInstance().GetUserInfo();
+            var userInfo = SettingsManager.Instance.GetUserInfo();
             if (userInfo != null && userInfo.Mid != -1)
             {
                 Dictionary<string, object> parameter = new()
@@ -161,7 +161,7 @@ public partial class IndexViewModel : ViewModelBase
             var userInfo = BiliLocator.Login.GetNavigationInfo();
             if (userInfo != null)
             {
-                SettingsManager.GetInstance().SetUserInfo(new UserInfoSettings
+                SettingsManager.Instance.SetUserInfo(new UserInfoSettings
                 {
                     Mid = userInfo.Mid,
                     Name = userInfo.Name,
@@ -171,7 +171,7 @@ public partial class IndexViewModel : ViewModelBase
             }
             else
             {
-                SettingsManager.GetInstance().SetUserInfo(new UserInfoSettings
+                SettingsManager.Instance.SetUserInfo(new UserInfoSettings
                 {
                     Mid = -1,
                     Name = "",

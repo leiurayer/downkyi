@@ -116,7 +116,7 @@ public static class LoginHelper
             {
                 File.Delete(LOCAL_LOGIN_INFO);
 
-                SettingsManager.GetInstance().SetUserInfo(new UserInfoSettings
+                SettingsManager.Instance.SetUserInfo(new UserInfoSettings
                 {
                     Mid = -1,
                     Name = "",

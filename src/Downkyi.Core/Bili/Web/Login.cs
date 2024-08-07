@@ -13,7 +13,7 @@ internal class Login : ILogin
     /// <returns>(url, key)</returns>
     public Tuple<string, string>? GetQRCodeUrl()
     {
-        string userAgent = SettingsManager.GetInstance().GetUserAgent();
+        string userAgent = SettingsManager.Instance.GetUserAgent();
         BiliManager.Instance().SetUserAgent(userAgent);
 
         var qrcode = LoginQR.GenerateQRCode();
@@ -28,7 +28,7 @@ internal class Login : ILogin
     /// <returns></returns>
     public QRCodeStatus? PollQRCode(string qrcodeKey)
     {
-        string userAgent = SettingsManager.GetInstance().GetUserAgent();
+        string userAgent = SettingsManager.Instance.GetUserAgent();
         BiliManager.Instance().SetUserAgent(userAgent);
 
         var qrcode = LoginQR.PollQRCode(qrcodeKey);
@@ -50,7 +50,7 @@ internal class Login : ILogin
     /// <returns></returns>
     public NavigationInfo? GetNavigationInfo()
     {
-        string userAgent = SettingsManager.GetInstance().GetUserAgent();
+        string userAgent = SettingsManager.Instance.GetUserAgent();
         BiliManager.Instance().SetUserAgent(userAgent);
         BiliManager.Instance().SetCookies(LoginHelper.GetLoginInfoCookies());
 

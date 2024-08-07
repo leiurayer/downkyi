@@ -10,8 +10,6 @@ namespace Downkyi.Core.Settings;
 
 public partial class SettingsManager
 {
-    private static SettingsManager? instance;
-
     // 内存中保存一份配置
     private AppSettings appSettings;
 
@@ -26,15 +24,37 @@ public partial class SettingsManager
         private readonly string password = "YO1J$4#p";
 #endif
 
+    // 单例模式
+    private static SettingsManager? _instance;
+    private static readonly object _lock = new();
+    /// <summary>
+    /// 获取SettingsManager唯一实例
+    /// </summary>
+    public static SettingsManager Instance
+    {
+        get
+        {
+            // 双重检查锁定
+            if (_instance == null)
+            {
+                lock (_lock)
+                {
+                    _instance ??= new SettingsManager();
+                }
+            }
+            return _instance;
+        }
+    }
+
     /// <summary>
     /// 获取SettingsManager实例
     /// </summary>
     /// <returns></returns>
-    public static SettingsManager GetInstance()
-    {
-        instance ??= new SettingsManager();
-        return instance;
-    }
+    //public static SettingsManager GetInstance()
+    //{
+    //    instance ??= new SettingsManager();
+    //    return instance;
+    //}
 
     /// <summary>
     /// 隐藏Settings()方法，必须使用单例模式

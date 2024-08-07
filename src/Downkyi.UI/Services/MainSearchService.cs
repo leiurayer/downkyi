@@ -126,7 +126,7 @@ public class MainSearchService : IMainSearchService
             { "value", mid },
         };
 
-        UserInfoSettings userInfo = SettingsManager.GetInstance().GetUserInfo();
+        UserInfoSettings userInfo = SettingsManager.Instance.GetUserInfo();
         if (userInfo != null && userInfo.Mid == mid)
         {
             NavigationService.ForwardAsync(MySpaceViewModel.Key, parameter);

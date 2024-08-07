@@ -62,7 +62,6 @@ public partial class CookiesViewModel : ViewModelBase
         return Task.CompletedTask;
     }
 
-
     [RelayCommand(FlowExceptionsToTaskScheduler = true)]
     private Task SaveCookiesAsync()
     {

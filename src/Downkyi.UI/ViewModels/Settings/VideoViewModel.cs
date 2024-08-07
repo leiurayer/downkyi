@@ -119,7 +119,7 @@ public partial class VideoViewModel : BaseSettingsViewModel
                 fileName.Add(item.Id);
             }
 
-            bool isSucceed = SettingsManager.GetInstance().SetFileNameParts(fileName);
+            bool isSucceed = SettingsManager.Instance.SetFileNameParts(fileName);
             PublishTip(Key, isSucceed);
         });
 
@@ -149,30 +149,30 @@ public partial class VideoViewModel : BaseSettingsViewModel
         IsOnNavigatedTo = true;
 
         // 优先下载的视频编码
-        int videoCodecs = SettingsManager.GetInstance().GetVideoCodecs();
+        int videoCodecs = SettingsManager.Instance.GetVideoCodecs();
         SelectedVideoCodec = VideoCodecs.FirstOrDefault(t => { return t.Id == videoCodecs; });
 
         // 优先下载画质
-        int quality = SettingsManager.GetInstance().GetQuality();
+        int quality = SettingsManager.Instance.GetQuality();
         SelectedVideoQuality = VideoQualityList.FirstOrDefault(t => { return t.Id == quality; });
 
         // 优先下载音质
-        int audioQuality = SettingsManager.GetInstance().GetAudioQuality();
+        int audioQuality = SettingsManager.Instance.GetAudioQuality();
         SelectedAudioQuality = AudioQualityList.FirstOrDefault(t => { return t.Id == audioQuality; });
 
         // 是否下载flv视频后转码为mp4
-        AllowStatus isTranscodingFlvToMp4 = SettingsManager.GetInstance().IsTranscodingFlvToMp4();
+        AllowStatus isTranscodingFlvToMp4 = SettingsManager.Instance.IsTranscodingFlvToMp4();
         IsTranscodingFlvToMp4 = isTranscodingFlvToMp4 == AllowStatus.YES;
 
         // 是否使用默认下载目录
-        AllowStatus isUseSaveVideoRootPath = SettingsManager.GetInstance().IsUseSaveVideoRootPath();
+        AllowStatus isUseSaveVideoRootPath = SettingsManager.Instance.IsUseSaveVideoRootPath();
         IsUseDefaultDirectory = isUseSaveVideoRootPath == AllowStatus.YES;
 
         // 默认下载目录
-        SaveVideoDirectory = SettingsManager.GetInstance().GetSaveVideoRootPath();
+        SaveVideoDirectory = SettingsManager.Instance.GetSaveVideoRootPath();
 
         // 下载内容
-        VideoContentSettings videoContent = SettingsManager.GetInstance().GetVideoContent();
+        VideoContentSettings videoContent = SettingsManager.Instance.GetVideoContent();
 
         DownloadAudio = videoContent.DownloadAudio;
         DownloadVideo = videoContent.DownloadVideo;
@@ -190,7 +190,7 @@ public partial class VideoViewModel : BaseSettingsViewModel
         }
 
         // 文件命名格式
-        List<FileNamePart> fileNameParts = SettingsManager.GetInstance().GetFileNameParts();
+        List<FileNamePart> fileNameParts = SettingsManager.Instance.GetFileNameParts();
         SelectedFileName.Clear();
         foreach (FileNamePart item in fileNameParts)
         {
@@ -208,10 +208,10 @@ public partial class VideoViewModel : BaseSettingsViewModel
         }
 
         // 文件命名中的时间格式
-        SelectedTimeFormat = SettingsManager.GetInstance().GetFileNamePartTimeFormat();
+        SelectedTimeFormat = SettingsManager.Instance.GetFileNamePartTimeFormat();
 
         // 文件命名中的序号格式
-        OrderFormat orderFormat = SettingsManager.GetInstance().GetOrderFormat();
+        OrderFormat orderFormat = SettingsManager.Instance.GetOrderFormat();
         SelectedOrderFormat = OrderFormatList.FirstOrDefault(t => { return t.Id == orderFormat; });
 
         IsOnNavigatedTo = false;
@@ -224,7 +224,7 @@ public partial class VideoViewModel : BaseSettingsViewModel
     [RelayCommand]
     private void SetVideoCodecs()
     {
-        bool isSucceed = SettingsManager.GetInstance().SetVideoCodecs(SelectedVideoCodec!.Id);
+        bool isSucceed = SettingsManager.Instance.SetVideoCodecs(SelectedVideoCodec!.Id);
         PublishTip(Key, isSucceed);
     }
 
@@ -235,7 +235,7 @@ public partial class VideoViewModel : BaseSettingsViewModel
     [RelayCommand]
     private void SetVideoQuality()
     {
-        bool isSucceed = SettingsManager.GetInstance().SetQuality(SelectedVideoQuality!.Id);
+        bool isSucceed = SettingsManager.Instance.SetQuality(SelectedVideoQuality!.Id);
         PublishTip(Key, isSucceed);
     }
 
@@ -246,7 +246,7 @@ public partial class VideoViewModel : BaseSettingsViewModel
     [RelayCommand]
     private void SetAudioQuality()
     {
-        bool isSucceed = SettingsManager.GetInstance().SetAudioQuality(SelectedAudioQuality!.Id);
+        bool isSucceed = SettingsManager.Instance.SetAudioQuality(SelectedAudioQuality!.Id);
         PublishTip(Key, isSucceed);
     }
 
@@ -258,7 +258,7 @@ public partial class VideoViewModel : BaseSettingsViewModel
     {
         AllowStatus isTranscodingFlvToMp4 = IsTranscodingFlvToMp4 ? AllowStatus.YES : AllowStatus.NO;
 
-        bool isSucceed = SettingsManager.GetInstance().IsTranscodingFlvToMp4(isTranscodingFlvToMp4);
+        bool isSucceed = SettingsManager.Instance.IsTranscodingFlvToMp4(isTranscodingFlvToMp4);
         PublishTip(Key, isSucceed);
     }
 
@@ -270,7 +270,7 @@ public partial class VideoViewModel : BaseSettingsViewModel
     {
         AllowStatus isUseDefaultDirectory = IsUseDefaultDirectory ? AllowStatus.YES : AllowStatus.NO;
 
-        bool isSucceed = SettingsManager.GetInstance().IsUseSaveVideoRootPath(isUseDefaultDirectory);
+        bool isSucceed = SettingsManager.Instance.IsUseSaveVideoRootPath(isUseDefaultDirectory);
         PublishTip(Key, isSucceed);
     }
 
@@ -283,7 +283,7 @@ public partial class VideoViewModel : BaseSettingsViewModel
         string directory = await StoragePicker.FolderPicker(SaveVideoDirectory);
         if (directory == "") { return; }
 
-        bool isSucceed = SettingsManager.GetInstance().SetSaveVideoRootPath(directory);
+        bool isSucceed = SettingsManager.Instance.SetSaveVideoRootPath(directory);
         PublishTip(Key, isSucceed);
 
         if (isSucceed)
@@ -420,7 +420,7 @@ public partial class VideoViewModel : BaseSettingsViewModel
     [RelayCommand]
     private void TimeFormat()
     {
-        bool isSucceed = SettingsManager.GetInstance().SetFileNamePartTimeFormat(SelectedTimeFormat);
+        bool isSucceed = SettingsManager.Instance.SetFileNamePartTimeFormat(SelectedTimeFormat);
         PublishTip(Key, isSucceed);
     }
 
@@ -431,7 +431,7 @@ public partial class VideoViewModel : BaseSettingsViewModel
     [RelayCommand]
     private void OrderFormat()
     {
-        bool isSucceed = SettingsManager.GetInstance().SetOrderFormat(SelectedOrderFormat!.Id);
+        bool isSucceed = SettingsManager.Instance.SetOrderFormat(SelectedOrderFormat!.Id);
         PublishTip(Key, isSucceed);
     }
 
@@ -441,10 +441,10 @@ public partial class VideoViewModel : BaseSettingsViewModel
     [RelayCommand]
     private void Reset()
     {
-        bool isSucceed = SettingsManager.GetInstance().SetFileNameParts(null);
+        bool isSucceed = SettingsManager.Instance.SetFileNameParts(null);
         PublishTip(Key, isSucceed);
 
-        List<FileNamePart> fileNameParts = SettingsManager.GetInstance().GetFileNameParts();
+        List<FileNamePart> fileNameParts = SettingsManager.Instance.GetFileNameParts();
         SelectedFileName.Clear();
         foreach (FileNamePart item in fileNameParts)
         {
@@ -480,7 +480,7 @@ public partial class VideoViewModel : BaseSettingsViewModel
             DownloadCover = DownloadCover
         };
 
-        bool isSucceed = SettingsManager.GetInstance().SetVideoContent(videoContent);
+        bool isSucceed = SettingsManager.Instance.SetVideoContent(videoContent);
         PublishTip(Key, isSucceed);
     }
 

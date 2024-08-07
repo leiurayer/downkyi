@@ -78,7 +78,7 @@ public partial class MainWindowViewModel : ViewModelBase
 
             while (true)
             {
-                AllowStatus isListenClipboard = SettingsManager.GetInstance().IsListenClipboard();
+                AllowStatus isListenClipboard = SettingsManager.Instance.IsListenClipboard();
                 if (isListenClipboard != AllowStatus.YES)
                 {
                     continue;

@@ -66,23 +66,23 @@ public partial class BasicViewModel : BaseSettingsViewModel
         IsOnNavigatedTo = true;
 
         // 下载完成后的操作
-        AfterDownloadOperation afterDownload = SettingsManager.GetInstance().GetAfterDownloadOperation();
+        AfterDownloadOperation afterDownload = SettingsManager.Instance.GetAfterDownloadOperation();
         SetAfterDownloadOperation(afterDownload);
 
         // 是否监听剪贴板
-        AllowStatus isListenClipboard = SettingsManager.GetInstance().IsListenClipboard();
+        AllowStatus isListenClipboard = SettingsManager.Instance.IsListenClipboard();
         IsListenClipboard = isListenClipboard == AllowStatus.YES;
 
         // 是否自动解析视频
-        AllowStatus isAutoParseVideo = SettingsManager.GetInstance().IsAutoParseVideo();
+        AllowStatus isAutoParseVideo = SettingsManager.Instance.IsAutoParseVideo();
         IsAutoParseVideo = isAutoParseVideo == AllowStatus.YES;
 
         // 解析范围
-        ParseScope parseScope = SettingsManager.GetInstance().GetParseScope();
+        ParseScope parseScope = SettingsManager.Instance.GetParseScope();
         SelectedParseScope = ParseScopes.FirstOrDefault(t => { return t.ParseScope == parseScope; });
 
         // 解析后是否自动下载解析视频
-        AllowStatus isAutoDownloadAll = SettingsManager.GetInstance().IsAutoDownloadAll();
+        AllowStatus isAutoDownloadAll = SettingsManager.Instance.IsAutoDownloadAll();
         IsAutoDownloadAll = isAutoDownloadAll == AllowStatus.YES;
 
         IsOnNavigatedTo = false;
@@ -104,7 +104,7 @@ public partial class BasicViewModel : BaseSettingsViewModel
             "CloseSystem" => AfterDownloadOperation.CLOSE_SYSTEM,
             _ => AfterDownloadOperation.NONE,
         };
-        bool isSucceed = SettingsManager.GetInstance().SetAfterDownloadOperation(afterDownload);
+        bool isSucceed = SettingsManager.Instance.SetAfterDownloadOperation(afterDownload);
         PublishTip(Key, isSucceed);
     }
 
@@ -116,7 +116,7 @@ public partial class BasicViewModel : BaseSettingsViewModel
     {
         AllowStatus isListenClipboard = IsListenClipboard ? AllowStatus.YES : AllowStatus.NO;
 
-        bool isSucceed = SettingsManager.GetInstance().IsListenClipboard(isListenClipboard);
+        bool isSucceed = SettingsManager.Instance.IsListenClipboard(isListenClipboard);
         PublishTip(Key, isSucceed);
     }
 
@@ -128,7 +128,7 @@ public partial class BasicViewModel : BaseSettingsViewModel
     {
         AllowStatus isAutoParseVideo = IsAutoParseVideo ? AllowStatus.YES : AllowStatus.NO;
 
-        bool isSucceed = SettingsManager.GetInstance().IsAutoParseVideo(isAutoParseVideo);
+        bool isSucceed = SettingsManager.Instance.IsAutoParseVideo(isAutoParseVideo);
         PublishTip(Key, isSucceed);
     }
 
@@ -141,7 +141,7 @@ public partial class BasicViewModel : BaseSettingsViewModel
     {
         //if (parameter is not ParseScopeDisplay parseScope) { return; }
 
-        bool isSucceed = SettingsManager.GetInstance().SetParseScope(SelectedParseScope!.ParseScope);
+        bool isSucceed = SettingsManager.Instance.SetParseScope(SelectedParseScope!.ParseScope);
         PublishTip(Key, isSucceed);
     }
 
@@ -153,7 +153,7 @@ public partial class BasicViewModel : BaseSettingsViewModel
     {
         AllowStatus isAutoDownloadAll = IsAutoDownloadAll ? AllowStatus.YES : AllowStatus.NO;
 
-        bool isSucceed = SettingsManager.GetInstance().IsAutoDownloadAll(isAutoDownloadAll);
+        bool isSucceed = SettingsManager.Instance.IsAutoDownloadAll(isAutoDownloadAll);
         PublishTip(Key, isSucceed);
     }
 

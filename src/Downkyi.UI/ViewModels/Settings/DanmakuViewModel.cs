@@ -65,25 +65,25 @@ public partial class DanmakuViewModel : BaseSettingsViewModel
         IsOnNavigatedTo = true;
 
         // 屏蔽顶部弹幕
-        AllowStatus danmakuTopFilter = SettingsManager.GetInstance().GetDanmakuTopFilter();
+        AllowStatus danmakuTopFilter = SettingsManager.Instance.GetDanmakuTopFilter();
         TopFilter = danmakuTopFilter == AllowStatus.YES;
 
         // 屏蔽底部弹幕
-        AllowStatus danmakuBottomFilter = SettingsManager.GetInstance().GetDanmakuBottomFilter();
+        AllowStatus danmakuBottomFilter = SettingsManager.Instance.GetDanmakuBottomFilter();
         BottomFilter = danmakuBottomFilter == AllowStatus.YES;
 
         // 屏蔽滚动弹幕
-        AllowStatus danmakuScrollFilter = SettingsManager.GetInstance().GetDanmakuScrollFilter();
+        AllowStatus danmakuScrollFilter = SettingsManager.Instance.GetDanmakuScrollFilter();
         ScrollFilter = danmakuScrollFilter == AllowStatus.YES;
 
         // 分辨率-宽
-        ScreenWidth = SettingsManager.GetInstance().GetDanmakuScreenWidth();
+        ScreenWidth = SettingsManager.Instance.GetDanmakuScreenWidth();
 
         // 分辨率-高
-        ScreenHeight = SettingsManager.GetInstance().GetDanmakuScreenHeight();
+        ScreenHeight = SettingsManager.Instance.GetDanmakuScreenHeight();
 
         // 弹幕字体
-        string danmakuFont = SettingsManager.GetInstance().GetDanmakuFontName();
+        string danmakuFont = SettingsManager.Instance.GetDanmakuFontName();
         if (danmakuFont != null && Fonts.Contains(danmakuFont))
         {
             // 只有系统中存在当前设置的字体，才能显示
@@ -91,13 +91,13 @@ public partial class DanmakuViewModel : BaseSettingsViewModel
         }
 
         // 弹幕字体大小
-        FontSize = SettingsManager.GetInstance().GetDanmakuFontSize();
+        FontSize = SettingsManager.Instance.GetDanmakuFontSize();
 
         // 弹幕限制行数
-        LineCount = SettingsManager.GetInstance().GetDanmakuLineCount();
+        LineCount = SettingsManager.Instance.GetDanmakuLineCount();
 
         // 弹幕布局算法
-        DanmakuLayoutAlgorithm layoutAlgorithm = SettingsManager.GetInstance().GetDanmakuLayoutAlgorithm();
+        DanmakuLayoutAlgorithm layoutAlgorithm = SettingsManager.Instance.GetDanmakuLayoutAlgorithm();
         SetLayoutAlgorithm(layoutAlgorithm);
 
         IsOnNavigatedTo = false;
@@ -111,7 +111,7 @@ public partial class DanmakuViewModel : BaseSettingsViewModel
     {
         AllowStatus isTopFilter = TopFilter ? AllowStatus.YES : AllowStatus.NO;
 
-        bool isSucceed = SettingsManager.GetInstance().SetDanmakuTopFilter(isTopFilter);
+        bool isSucceed = SettingsManager.Instance.SetDanmakuTopFilter(isTopFilter);
         PublishTip(Key, isSucceed);
     }
 
@@ -123,7 +123,7 @@ public partial class DanmakuViewModel : BaseSettingsViewModel
     {
         AllowStatus isBottomFilter = BottomFilter ? AllowStatus.YES : AllowStatus.NO;
 
-        bool isSucceed = SettingsManager.GetInstance().SetDanmakuBottomFilter(isBottomFilter);
+        bool isSucceed = SettingsManager.Instance.SetDanmakuBottomFilter(isBottomFilter);
         PublishTip(Key, isSucceed);
     }
 
@@ -135,7 +135,7 @@ public partial class DanmakuViewModel : BaseSettingsViewModel
     {
         AllowStatus isScrollFilter = ScrollFilter ? AllowStatus.YES : AllowStatus.NO;
 
-        bool isSucceed = SettingsManager.GetInstance().SetDanmakuScrollFilter(isScrollFilter);
+        bool isSucceed = SettingsManager.Instance.SetDanmakuScrollFilter(isScrollFilter);
         PublishTip(Key, isSucceed);
     }
 
@@ -149,7 +149,7 @@ public partial class DanmakuViewModel : BaseSettingsViewModel
         int width = (int)Number.GetInt(parameter);
         ScreenWidth = width;
 
-        bool isSucceed = SettingsManager.GetInstance().SetDanmakuScreenWidth(ScreenWidth);
+        bool isSucceed = SettingsManager.Instance.SetDanmakuScreenWidth(ScreenWidth);
         PublishTip(Key, isSucceed);
     }
 
@@ -163,7 +163,7 @@ public partial class DanmakuViewModel : BaseSettingsViewModel
         int height = (int)Number.GetInt(parameter);
         ScreenHeight = height;
 
-        bool isSucceed = SettingsManager.GetInstance().SetDanmakuScreenHeight(ScreenHeight);
+        bool isSucceed = SettingsManager.Instance.SetDanmakuScreenHeight(ScreenHeight);
         PublishTip(Key, isSucceed);
     }
 
@@ -174,7 +174,7 @@ public partial class DanmakuViewModel : BaseSettingsViewModel
     [RelayCommand]
     private void FontSelected(string parameter)
     {
-        bool isSucceed = SettingsManager.GetInstance().SetDanmakuFontName(parameter);
+        bool isSucceed = SettingsManager.Instance.SetDanmakuFontName(parameter);
         PublishTip(Key, isSucceed);
     }
 
@@ -188,7 +188,7 @@ public partial class DanmakuViewModel : BaseSettingsViewModel
         int fontSize = (int)Number.GetInt(parameter);
         FontSize = fontSize;
 
-        bool isSucceed = SettingsManager.GetInstance().SetDanmakuFontSize(FontSize);
+        bool isSucceed = SettingsManager.Instance.SetDanmakuFontSize(FontSize);
         PublishTip(Key, isSucceed);
     }
 
@@ -202,7 +202,7 @@ public partial class DanmakuViewModel : BaseSettingsViewModel
         int lineCount = (int)Number.GetInt(parameter);
         LineCount = lineCount;
 
-        bool isSucceed = SettingsManager.GetInstance().SetDanmakuLineCount(LineCount);
+        bool isSucceed = SettingsManager.Instance.SetDanmakuLineCount(LineCount);
         PublishTip(Key, isSucceed);
     }
 
@@ -213,21 +213,13 @@ public partial class DanmakuViewModel : BaseSettingsViewModel
     [RelayCommand]
     private void SetLayoutAlgorithm(string parameter)
     {
-        DanmakuLayoutAlgorithm layoutAlgorithm;
-        switch (parameter)
+        var layoutAlgorithm = parameter switch
         {
-            case "Sync":
-                layoutAlgorithm = DanmakuLayoutAlgorithm.SYNC;
-                break;
-            case "Async":
-                layoutAlgorithm = DanmakuLayoutAlgorithm.ASYNC;
-                break;
-            default:
-                layoutAlgorithm = DanmakuLayoutAlgorithm.SYNC;
-                break;
-        }
-
-        bool isSucceed = SettingsManager.GetInstance().SetDanmakuLayoutAlgorithm(layoutAlgorithm);
+            "Sync" => DanmakuLayoutAlgorithm.SYNC,
+            "Async" => DanmakuLayoutAlgorithm.ASYNC,
+            _ => DanmakuLayoutAlgorithm.SYNC,
+        };
+        bool isSucceed = SettingsManager.Instance.SetDanmakuLayoutAlgorithm(layoutAlgorithm);
         PublishTip(Key, isSucceed);
 
         if (isSucceed)
