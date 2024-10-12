@@ -120,7 +120,7 @@ namespace DownKyi.Core.BiliApi.Login
         public static BitmapImage GetLoginQRCode(string url)
         {
             // 设置的参数影响app能否成功扫码
-            Bitmap qrCode = Utils.QRCode.EncodeQRCode(url, 10, 10, null, 0, 0, false);
+            Bitmap qrCode = Utils.QRCode.EncodeQRCode(url, 12, 10, null, 0, 0, false);
 
             MemoryStream ms = new MemoryStream();
             qrCode.Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);
