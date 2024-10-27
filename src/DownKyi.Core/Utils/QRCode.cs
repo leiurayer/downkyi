@@ -19,7 +19,7 @@ namespace DownKyi.Core.Utils
         {
             QRCoder.QRCodeGenerator code_generator = new QRCoder.QRCodeGenerator();
 
-            QRCoder.QRCodeData code_data = code_generator.CreateQrCode(msg, QRCoder.QRCodeGenerator.ECCLevel.H/* 这里设置容错率的一个级别 */, true, false, QRCoder.QRCodeGenerator.EciMode.Utf8, version);
+            QRCoder.QRCodeData code_data = code_generator.CreateQrCode(msg, QRCoder.QRCodeGenerator.ECCLevel.L/* 这里设置容错率的一个级别 */, true, false, QRCoder.QRCodeGenerator.EciMode.Utf8, version);
 
             QRCoder.QRCode code = new QRCoder.QRCode(code_data);
 
