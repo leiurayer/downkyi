@@ -1,10 +1,10 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System.Collections.ObjectModel;
+using System.Net;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Downkyi.Core.Bili.Web;
 using Downkyi.Core.Log;
 using Downkyi.UI.Mvvm;
-using System.Collections.ObjectModel;
-using System.Net;
 
 namespace Downkyi.UI.ViewModels.Login;
 
@@ -63,23 +63,23 @@ public partial class CookiesViewModel : ViewModelBase
     }
 
     [RelayCommand(FlowExceptionsToTaskScheduler = true)]
-    private Task SaveCookiesAsync()
+    private async Task SaveCookiesAsync()
     {
         if (_cookieContainer == null)
         {
-            return Task.CompletedTask;
+            return;
         }
 
         // 保存登录信息
         try
         {
-            bool isSucceed = LoginHelper.SaveLoginInfoCookies(_cookieContainer);
+            bool isSucceed = await LoginHelperV2.SaveLoginInfoCookies(_cookieContainer);
             if (!isSucceed)
             {
                 Log.Logger.Error($"{Key}: {LoginFailed}");
                 NotificationEvent.Publish(LoginFailed);
 
-                return Task.CompletedTask;
+                return;
             }
         }
         catch (Exception e)
@@ -87,7 +87,7 @@ public partial class CookiesViewModel : ViewModelBase
             Log.Logger.Error(e);
             NotificationEvent.Publish(LoginFailed);
 
-            return Task.CompletedTask;
+            return;
         }
 
         // 发送通知
@@ -95,7 +95,7 @@ public partial class CookiesViewModel : ViewModelBase
         Log.Logger.Info($"{Key}: {LoginSuccessful}");
 
         BroadcastEvent.Send("cookiesLogin", "loginSuccessful");
-        return Task.CompletedTask;
+        return;
     }
 
     #endregion

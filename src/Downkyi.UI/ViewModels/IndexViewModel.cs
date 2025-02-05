@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System.Text.RegularExpressions;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Downkyi.Core.Bili;
 using Downkyi.Core.Log;
@@ -11,7 +12,6 @@ using Downkyi.UI.ViewModels.Login;
 using Downkyi.UI.ViewModels.Settings;
 using Downkyi.UI.ViewModels.Toolbox;
 using Downkyi.UI.ViewModels.User;
-using System.Text.RegularExpressions;
 
 namespace Downkyi.UI.ViewModels;
 
@@ -47,11 +47,11 @@ public partial class IndexViewModel : ViewModelBase
     /// 导航到页面时执行
     /// </summary>
     /// <param name="parameter"></param>
-    public override async void OnNavigatedTo(Dictionary<string, object>? parameter)
+    public override void OnNavigatedTo(Dictionary<string, object>? parameter)
     {
         base.OnNavigatedTo(parameter);
 
-        await UpdateUserInfo();
+        UpdateUserInfo();
     }
 
     #region 命令申明
@@ -142,7 +142,7 @@ public partial class IndexViewModel : ViewModelBase
         InputText = string.Empty;
     }
 
-    private async Task UpdateUserInfo()
+    private async void UpdateUserInfo()
     {
         LoginPanelVisibility = false;
 
@@ -155,53 +155,50 @@ public partial class IndexViewModel : ViewModelBase
             return;
         }
 
-        await Task.Run(() =>
+        // 获取用户信息
+        var userInfo = await BiliLocator.Login.GetNavigationInfoAsync();
+        if (userInfo != null)
         {
-            // 获取用户信息
-            var userInfo = BiliLocator.Login.GetNavigationInfo();
-            if (userInfo != null)
+            SettingsManager.Instance.SetUserInfo(new UserInfoSettings
             {
-                SettingsManager.Instance.SetUserInfo(new UserInfoSettings
-                {
-                    Mid = userInfo.Mid,
-                    Name = userInfo.Name,
-                    IsLogin = userInfo.IsLogin,
-                    IsVip = userInfo.VipStatus == 1
-                });
-            }
-            else
+                Mid = userInfo.Mid,
+                Name = userInfo.Name,
+                IsLogin = userInfo.IsLogin,
+                IsVip = userInfo.VipStatus == 1
+            });
+        }
+        else
+        {
+            SettingsManager.Instance.SetUserInfo(new UserInfoSettings
             {
-                SettingsManager.Instance.SetUserInfo(new UserInfoSettings
-                {
-                    Mid = -1,
-                    Name = "",
-                    IsLogin = false,
-                    IsVip = false
-                });
-            }
+                Mid = -1,
+                Name = "",
+                IsLogin = false,
+                IsVip = false
+            });
+        }
 
-            //
-            LoginPanelVisibility = true;
+        //
+        LoginPanelVisibility = true;
 
-            // 设置头像和用户名
-            if (userInfo != null)
+        // 设置头像和用户名
+        if (userInfo != null)
+        {
+            if (userInfo.Header != null)
             {
-                if (userInfo.Header != null)
-                {
-                    Header = userInfo.Header;
-                }
-                else
-                {
-                    Header = defaultHeader;
-                }
-                UserName = userInfo.Name;
+                Header = userInfo.Header;
             }
             else
             {
                 Header = defaultHeader;
-                UserName = null;
             }
-        });
+            UserName = userInfo.Name;
+        }
+        else
+        {
+            Header = defaultHeader;
+            UserName = null;
+        }
 
     }
 

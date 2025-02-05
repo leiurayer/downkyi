@@ -5,6 +5,7 @@ using System.Net;
 
 namespace Downkyi.Core.Bili.Web;
 
+[Obsolete("Use LoginHelperV2 instead")]
 public static class LoginHelper
 {
     // 本地位置

@@ -9,27 +9,37 @@ public class LoginDatabase
     private SQLiteAsyncConnection? _database;
 
     // 私有构造函数防止外部实例化
-    private LoginDatabase() { }
+    private LoginDatabase()
+    {
+    }
 
     // 单例模式
     private static LoginDatabase? _instance;
     private static readonly object _lock = new();
-    public static LoginDatabase Instance()
+
+    /// <summary>
+    /// 获取LoginDatabase唯一实例
+    /// </summary>
+    public static LoginDatabase Instance
     {
-        // 双重检查锁定
-        if (_instance == null)
+        get
         {
-            lock (_lock)
+            // 双重检查锁定
+            if (_instance == null)
             {
-                _instance ??= new LoginDatabase();
+                lock (_lock)
+                {
+                    _instance ??= new LoginDatabase();
+                }
             }
+
+            return _instance;
         }
-        return _instance;
     }
 
     private async Task Init()
     {
-        if (_database is not null)
+        if (_database != null)
             return;
 
         var options = new SQLiteConnectionString(_databasePath, true, key: "Bu1rj3jc");
@@ -87,5 +97,4 @@ public class LoginDatabase
             .Where(i => i.Uid == uid)
             .ToListAsync();
     }
-
 }

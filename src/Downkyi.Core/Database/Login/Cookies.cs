@@ -9,7 +9,6 @@ public class Cookies
     [Column("id")]
     public long Id { get; set; }
 
-    [Indexed]
     [Column("uid")]
     public long Uid { get; set; }
 

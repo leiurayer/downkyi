@@ -125,7 +125,7 @@ public partial class QRCodeViewModel : ViewModelBase
                     // 保存登录信息
                     try
                     {
-                        bool isSucceed = LoginHelper.SaveLoginInfoCookies(loginStatus.Url);
+                        bool isSucceed = await LoginHelperV2.SaveLoginInfoCookies(loginStatus.Url);
                         if (!isSucceed)
                         {
                             NotificationEvent.Publish(LoginFailed);

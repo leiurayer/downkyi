@@ -1,5 +1,6 @@
 ﻿using Downkyi.BiliSharp;
 using Downkyi.BiliSharp.Api.Login;
+using Downkyi.BiliSharp.Api.Models.Login;
 using Downkyi.Core.Bili.Models;
 using Downkyi.Core.Settings;
 
@@ -48,13 +49,18 @@ internal class Login : ILogin
     /// 导航栏用户信息
     /// </summary>
     /// <returns></returns>
-    public NavigationInfo? GetNavigationInfo()
+    public async Task<NavigationInfo?> GetNavigationInfoAsync()
     {
         string userAgent = SettingsManager.Instance.GetUserAgent();
         BiliManager.Instance().SetUserAgent(userAgent);
-        BiliManager.Instance().SetCookies(LoginHelper.GetLoginInfoCookies());
+        var cookies = await LoginHelperV2.GetLoginInfoCookies();
+        BiliManager.Instance().SetCookies(cookies);
 
-        var origin = LoginInfo.GetNavigationInfo();
+        NavigationLoginInfo? origin = null;
+        await Task.Run(() =>
+        {
+            origin = LoginInfo.GetNavigationInfo();
+        });
         if (origin == null || origin.Data == null)
         {
             return null;

@@ -9,7 +9,7 @@ public class Users
     [Column("id")]
     public long Id { get; set; }
 
-    [Indexed, Unique]
+    [Indexed(Unique = true)]
     [Column("uid")]
     public long Uid { get; set; }
 
