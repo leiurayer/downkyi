@@ -112,7 +112,27 @@
                 Foreground="{DynamicResource BrushTextDark}"
                 IsChecked="{Binding AutoDownloadAll, Mode=TwoWay}"
                 Style="{StaticResource CheckBoxStyle}" />
+            <StackPanel Margin="0,20,0,0" Orientation="Horizontal">
+                <TextBlock
+                    VerticalAlignment="Center"
+                    FontSize="12"
+                    Foreground="{DynamicResource BrushTextDark}"
+                    Text="{DynamicResource RepeatDownloadStrategy}" />
+                <ComboBox
+                    Name="NameRepeatDownloadStrategy"
+                    Width="120"
+                    VerticalContentAlignment="Center"
+                    DisplayMemberPath=" Name"
+                    ItemsSource="{Binding RepeatDownloadStrategy}"
+                    SelectedItem="{Binding SelectedRepeatDownloadStrategy}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding RepeatDownloadStrategyCommand}" CommandParameter="{Binding ElementName=NameRepeatDownloadStrategy, Path=SelectedItem}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
 
+                </ComboBox>
+            </StackPanel>
             <StackPanel Margin="10" />
         </StackPanel>
     </ScrollViewer>

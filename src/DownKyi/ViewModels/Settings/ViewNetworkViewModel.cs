@@ -371,16 +371,19 @@ namespace DownKyi.ViewModels.Settings
         }
 
         // 设置UserAgent事件
-        private DelegateCommand userAgentCommand;
-        public DelegateCommand UserAgentCommand => userAgentCommand ?? (userAgentCommand = new DelegateCommand(ExecuteUserAgentCommand));
+        private DelegateCommand<string> userAgentCommand;
+        public DelegateCommand<string> UserAgentCommand => userAgentCommand ?? (userAgentCommand = new DelegateCommand<string>(ExecuteUserAgentCommand));
 
         /// <summary>
         /// 设置UserAgent事件
         /// </summary>
-        private void ExecuteUserAgentCommand()
+        private void ExecuteUserAgentCommand(string ua)
         {
-            bool isSucceed = SettingsManager.GetInstance().SetUserAgent(UserAgent);
-            PublishTip(isSucceed);
+            if (ua != null)
+            {
+                bool isSucceed = SettingsManager.GetInstance().SetUserAgent(ua);
+                PublishTip(isSucceed);
+            }
         }
 
         // 下载器选择事件

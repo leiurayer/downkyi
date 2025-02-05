@@ -11,5 +11,6 @@
         public ParseScope ParseScope { get; set; } = ParseScope.NOT_SET;
         public AllowStatus IsAutoDownloadAll { get; set; } = AllowStatus.NONE;
         public DownloadFinishedSort DownloadFinishedSort { get; set; } = DownloadFinishedSort.NOT_SET;
+        public RepeatDownloadStrategy RepeatDownloadStrategy { get; set; } = RepeatDownloadStrategy.Ask;
     }
 }
