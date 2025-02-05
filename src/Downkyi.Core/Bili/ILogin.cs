@@ -21,5 +21,5 @@ public interface ILogin
     /// 导航栏用户信息
     /// </summary>
     /// <returns></returns>
-    NavigationInfo? GetNavigationInfo();
+    Task<NavigationInfo?> GetNavigationInfoAsync();
 }
