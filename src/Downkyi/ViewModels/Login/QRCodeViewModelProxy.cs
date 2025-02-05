@@ -21,7 +21,7 @@ public partial class QRCodeViewModelProxy : QRCodeViewModel
         // 根据请求到的url生成二维码
         _QRCodeAction = new((url) =>
         {
-            byte[]? qrcodeByte = GenerateQrCode(url, 10);
+            byte[]? qrcodeByte = GenerateQrCode(url, 12);
             using var ms = new MemoryStream(qrcodeByte);
             Bitmap img = new(ms);
             QRCode = img;
@@ -43,7 +43,7 @@ public partial class QRCodeViewModelProxy : QRCodeViewModel
     private static byte[] GenerateQrCode(string msg, int version)
     {
         QRCodeGenerator qrGenerator = new();
-        QRCodeData qrCodeData = qrGenerator.CreateQrCode(msg, QRCodeGenerator.ECCLevel.H/* 这里设置容错率的一个级别 */, true, false, QRCodeGenerator.EciMode.Utf8, version);
+        var qrCodeData = qrGenerator.CreateQrCode(msg, QRCodeGenerator.ECCLevel.Q/* 这里设置容错率的一个级别 */, true, false, QRCodeGenerator.EciMode.Utf8, version);
         BitmapByteQRCode qrCode = new(qrCodeData);
         var codeByte = qrCode.GetGraphic(20);
         return codeByte;
