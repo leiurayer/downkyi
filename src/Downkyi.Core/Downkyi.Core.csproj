@@ -10,8 +10,8 @@
 
   <ItemGroup>
     <PackageReference Include="Aria2cNet" Version="1.0.1" />
-    <PackageReference Include="Downkyi.BiliSharp" Version="0.0.3" />
-    <PackageReference Include="NLog" Version="5.3.2" />
+    <PackageReference Include="Downkyi.BiliSharp" Version="0.0.4" />
+    <PackageReference Include="NLog" Version="5.4.0" />
     <PackageReference Include="sqlite-net-sqlcipher" Version="1.9.172" />
   </ItemGroup>
 
