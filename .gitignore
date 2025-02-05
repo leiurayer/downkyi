@@ -1,1 +1,5 @@
 ﻿src/Config/Settings_debug.json
+
+# macOS file
+.DS_Store
+**/.DS_Store
