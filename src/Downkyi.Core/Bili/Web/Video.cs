@@ -21,13 +21,6 @@ internal class Video : IVideo
 
         _input = input;
 
-        // 设置wbi keys
-        var info = LoginInfo.GetNavigationInfo();
-        var imgKey = info.Data.WbiImg.ImgUrl.Split('/').ToList().Last().Split('.')[0];
-        var subKey = info.Data.WbiImg.SubUrl.Split('/').ToList().Last().Split('.')[0];
-        var keys = new Tuple<string, string>(imgKey, subKey);
-        WbiSign.SetKey(keys);
-
         if (ParseEntrance.IsAvId(input) || ParseEntrance.IsAvUrl(input))
         {
             long avid = ParseEntrance.GetAvId(input);

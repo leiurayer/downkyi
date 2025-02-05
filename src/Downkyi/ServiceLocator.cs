@@ -90,12 +90,12 @@ public static class ServiceLocator
     /// </summary>
     public static void ConfigureServices()
     {
+        if (_initialized) return;
+
         // Register services
-        if (!_initialized)
-        {
-            _initialized = true;
-            Ioc.Default.ConfigureServices(
-                new ServiceCollection()
+        _initialized = true;
+        Ioc.Default.ConfigureServices(
+            new ServiceCollection()
                 //Services
                 .AddScoped<BaseServices>()
                 .AddSingleton<IBroadcastEvent, BroadcastEvent>()
@@ -141,6 +141,5 @@ public static class ServiceLocator
                 .AddSingleton<PublicFavoritesViewModel>()
                 .AddSingleton<VideoDetailViewModel>()
                 .BuildServiceProvider());
-        }
     }
 }
