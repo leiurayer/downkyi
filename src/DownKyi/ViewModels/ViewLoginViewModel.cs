@@ -253,7 +253,6 @@ namespace DownKyi.ViewModels
             InitStatus();
 
             Task.Run(Login, (tokenSource = new CancellationTokenSource()).Token);
-            //await loginTask;
         }
 
 
