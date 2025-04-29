@@ -141,5 +141,36 @@ namespace DownKyi.Core.BiliApi
                 return RequestWeb(url, referer, method, parameters, retry - 1);
             }
         }
+
+
+        #region HttpGet 数据请求
+        /// <summary>
+        /// HttpGet 数据请求
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        public static string HttpRequestGetData(string url)
+        {
+            string result = "";
+            try
+            {
+                HttpWebRequest objRequest = (HttpWebRequest)WebRequest.Create(url);
+                objRequest.Method = "GET";
+                HttpWebResponse objResponse = (HttpWebResponse)objRequest.GetResponse();
+                using (StreamReader sr = new StreamReader(objResponse.GetResponseStream()))
+                {
+                    result = sr.ReadToEnd();
+                    sr.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.Out.WriteLine(ex.ToString());
+            }
+            return result;
+        }
+        #endregion
+
+
     }
 }

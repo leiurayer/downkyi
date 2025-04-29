@@ -18,8 +18,10 @@ namespace DownKyi.Core.BiliApi.LoginNew
         public static LoginUrlOrigin GetLoginUrl()
         {
             string getLoginUrl = "https://passport.bilibili.com/x/passport-login/web/qrcode/generate";
-            string response = WebClient.RequestWeb(getLoginUrl);
+            string response = WebClient.HttpRequestGetData(getLoginUrl);
+
             Console.Out.WriteLine(response);
+
             try
             {
                 return JsonConvert.DeserializeObject<LoginUrlOrigin>(response);
