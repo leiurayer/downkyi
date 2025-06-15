@@ -563,10 +563,10 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Hardcodet.NotifyIcon.Wpf">
-      <Version>1.1.0</Version>
+      <Version>2.0.1</Version>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
-      <Version>13.0.2</Version>
+      <Version>13.0.3</Version>
     </PackageReference>
     <PackageReference Include="Prism.DryIoc" Version="8.1.97" />
     <PackageReference Include="System.Data.SQLite.Core">

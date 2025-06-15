@@ -199,7 +199,7 @@ namespace DownKyi.Core.Utils
             destName = Regex.Replace(destName, @"\p{C}+", string.Empty);
 
             // 如果只有空白字符、dot符
-            if (destName == " " || destName == ".")
+            if (string.IsNullOrWhiteSpace(destName) || destName == ".")
             {
                 return "[empty title]";
             }

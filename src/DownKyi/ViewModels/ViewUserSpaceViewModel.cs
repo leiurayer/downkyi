@@ -362,7 +362,7 @@ namespace DownKyi.ViewModels
                         sexUri = new Uri($"pack://application:,,,/Resources/sex/female.png");
                     }
                     // 显示vip信息
-                    if (userInfo.Vip.Label.Text == null || userInfo.Vip.Label.Text == "")
+                    if (userInfo.Vip == null || userInfo.Vip.Label.Text == null || userInfo.Vip.Label.Text == "")
                     {
                         VipTypeVisibility = Visibility.Collapsed;
                     }
